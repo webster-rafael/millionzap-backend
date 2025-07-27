@@ -20,4 +20,3 @@ export enum ConversationStatus {
   RESOLVED = "RESOLVED",
 }
 
-

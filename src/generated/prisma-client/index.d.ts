@@ -44,6 +44,11 @@ export type Conversation = $Result.DefaultSelection<Prisma.$ConversationPayload>
  */
 export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
 /**
+ * Model QuickResponse
+ * 
+ */
+export type QuickResponse = $Result.DefaultSelection<Prisma.$QuickResponsePayload>
+/**
  * Model WhatsAppConnection
  * 
  */
@@ -322,6 +327,16 @@ export class PrismaClient<
     * ```
     */
   get message(): Prisma.MessageDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.quickResponse`: Exposes CRUD operations for the **QuickResponse** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more QuickResponses
+    * const quickResponses = await prisma.quickResponse.findMany()
+    * ```
+    */
+  get quickResponse(): Prisma.QuickResponseDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.whatsAppConnection`: Exposes CRUD operations for the **WhatsAppConnection** model.
@@ -778,6 +793,7 @@ export namespace Prisma {
     QueueUser: 'QueueUser',
     Conversation: 'Conversation',
     Message: 'Message',
+    QuickResponse: 'QuickResponse',
     WhatsAppConnection: 'WhatsAppConnection'
   };
 
@@ -797,7 +813,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "contact" | "queue" | "queueUser" | "conversation" | "message" | "whatsAppConnection"
+      modelProps: "user" | "contact" | "queue" | "queueUser" | "conversation" | "message" | "quickResponse" | "whatsAppConnection"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1245,6 +1261,80 @@ export namespace Prisma {
           }
         }
       }
+      QuickResponse: {
+        payload: Prisma.$QuickResponsePayload<ExtArgs>
+        fields: Prisma.QuickResponseFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.QuickResponseFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickResponsePayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.QuickResponseFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickResponsePayload>
+          }
+          findFirst: {
+            args: Prisma.QuickResponseFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickResponsePayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.QuickResponseFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickResponsePayload>
+          }
+          findMany: {
+            args: Prisma.QuickResponseFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickResponsePayload>[]
+          }
+          create: {
+            args: Prisma.QuickResponseCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickResponsePayload>
+          }
+          createMany: {
+            args: Prisma.QuickResponseCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.QuickResponseCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickResponsePayload>[]
+          }
+          delete: {
+            args: Prisma.QuickResponseDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickResponsePayload>
+          }
+          update: {
+            args: Prisma.QuickResponseUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickResponsePayload>
+          }
+          deleteMany: {
+            args: Prisma.QuickResponseDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.QuickResponseUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.QuickResponseUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickResponsePayload>[]
+          }
+          upsert: {
+            args: Prisma.QuickResponseUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$QuickResponsePayload>
+          }
+          aggregate: {
+            args: Prisma.QuickResponseAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateQuickResponse>
+          }
+          groupBy: {
+            args: Prisma.QuickResponseGroupByArgs<ExtArgs>
+            result: $Utils.Optional<QuickResponseGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.QuickResponseCountArgs<ExtArgs>
+            result: $Utils.Optional<QuickResponseCountAggregateOutputType> | number
+          }
+        }
+      }
       WhatsAppConnection: {
         payload: Prisma.$WhatsAppConnectionPayload<ExtArgs>
         fields: Prisma.WhatsAppConnectionFieldRefs
@@ -1409,6 +1499,7 @@ export namespace Prisma {
     queueUser?: QueueUserOmit
     conversation?: ConversationOmit
     message?: MessageOmit
+    quickResponse?: QuickResponseOmit
     whatsAppConnection?: WhatsAppConnectionOmit
   }
 
@@ -1586,11 +1677,13 @@ export namespace Prisma {
   export type QueueCountOutputType = {
     conversations: number
     users: number
+    quickResponses: number
   }
 
   export type QueueCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversations?: boolean | QueueCountOutputTypeCountConversationsArgs
     users?: boolean | QueueCountOutputTypeCountUsersArgs
+    quickResponses?: boolean | QueueCountOutputTypeCountQuickResponsesArgs
   }
 
   // Custom InputTypes
@@ -1616,6 +1709,13 @@ export namespace Prisma {
    */
   export type QueueCountOutputTypeCountUsersArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: QueueUserWhereInput
+  }
+
+  /**
+   * QueueCountOutputType without action
+   */
+  export type QueueCountOutputTypeCountQuickResponsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuickResponseWhereInput
   }
 
 
@@ -4200,6 +4300,7 @@ export namespace Prisma {
     updatedAt?: boolean
     conversations?: boolean | Queue$conversationsArgs<ExtArgs>
     users?: boolean | Queue$usersArgs<ExtArgs>
+    quickResponses?: boolean | Queue$quickResponsesArgs<ExtArgs>
     _count?: boolean | QueueCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["queue"]>
 
@@ -4240,6 +4341,7 @@ export namespace Prisma {
   export type QueueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversations?: boolean | Queue$conversationsArgs<ExtArgs>
     users?: boolean | Queue$usersArgs<ExtArgs>
+    quickResponses?: boolean | Queue$quickResponsesArgs<ExtArgs>
     _count?: boolean | QueueCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type QueueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4250,6 +4352,7 @@ export namespace Prisma {
     objects: {
       conversations: Prisma.$ConversationPayload<ExtArgs>[]
       users: Prisma.$QueueUserPayload<ExtArgs>[]
+      quickResponses: Prisma.$QuickResponsePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -4656,6 +4759,7 @@ export namespace Prisma {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     conversations<T extends Queue$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Queue$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     users<T extends Queue$usersArgs<ExtArgs> = {}>(args?: Subset<T, Queue$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QueueUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    quickResponses<T extends Queue$quickResponsesArgs<ExtArgs> = {}>(args?: Subset<T, Queue$quickResponsesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -5126,6 +5230,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: QueueUserScalarFieldEnum | QueueUserScalarFieldEnum[]
+  }
+
+  /**
+   * Queue.quickResponses
+   */
+  export type Queue$quickResponsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseInclude<ExtArgs> | null
+    where?: QuickResponseWhereInput
+    orderBy?: QuickResponseOrderByWithRelationInput | QuickResponseOrderByWithRelationInput[]
+    cursor?: QuickResponseWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: QuickResponseScalarFieldEnum | QuickResponseScalarFieldEnum[]
   }
 
   /**
@@ -8623,6 +8751,1096 @@ export namespace Prisma {
 
 
   /**
+   * Model QuickResponse
+   */
+
+  export type AggregateQuickResponse = {
+    _count: QuickResponseCountAggregateOutputType | null
+    _min: QuickResponseMinAggregateOutputType | null
+    _max: QuickResponseMaxAggregateOutputType | null
+  }
+
+  export type QuickResponseMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    shortcut: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    queueId: string | null
+  }
+
+  export type QuickResponseMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    shortcut: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    queueId: string | null
+  }
+
+  export type QuickResponseCountAggregateOutputType = {
+    id: number
+    title: number
+    shortcut: number
+    createdAt: number
+    updatedAt: number
+    queueId: number
+    _all: number
+  }
+
+
+  export type QuickResponseMinAggregateInputType = {
+    id?: true
+    title?: true
+    shortcut?: true
+    createdAt?: true
+    updatedAt?: true
+    queueId?: true
+  }
+
+  export type QuickResponseMaxAggregateInputType = {
+    id?: true
+    title?: true
+    shortcut?: true
+    createdAt?: true
+    updatedAt?: true
+    queueId?: true
+  }
+
+  export type QuickResponseCountAggregateInputType = {
+    id?: true
+    title?: true
+    shortcut?: true
+    createdAt?: true
+    updatedAt?: true
+    queueId?: true
+    _all?: true
+  }
+
+  export type QuickResponseAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which QuickResponse to aggregate.
+     */
+    where?: QuickResponseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuickResponses to fetch.
+     */
+    orderBy?: QuickResponseOrderByWithRelationInput | QuickResponseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: QuickResponseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuickResponses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuickResponses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned QuickResponses
+    **/
+    _count?: true | QuickResponseCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: QuickResponseMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: QuickResponseMaxAggregateInputType
+  }
+
+  export type GetQuickResponseAggregateType<T extends QuickResponseAggregateArgs> = {
+        [P in keyof T & keyof AggregateQuickResponse]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateQuickResponse[P]>
+      : GetScalarType<T[P], AggregateQuickResponse[P]>
+  }
+
+
+
+
+  export type QuickResponseGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: QuickResponseWhereInput
+    orderBy?: QuickResponseOrderByWithAggregationInput | QuickResponseOrderByWithAggregationInput[]
+    by: QuickResponseScalarFieldEnum[] | QuickResponseScalarFieldEnum
+    having?: QuickResponseScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: QuickResponseCountAggregateInputType | true
+    _min?: QuickResponseMinAggregateInputType
+    _max?: QuickResponseMaxAggregateInputType
+  }
+
+  export type QuickResponseGroupByOutputType = {
+    id: string
+    title: string
+    shortcut: string
+    createdAt: Date
+    updatedAt: Date
+    queueId: string
+    _count: QuickResponseCountAggregateOutputType | null
+    _min: QuickResponseMinAggregateOutputType | null
+    _max: QuickResponseMaxAggregateOutputType | null
+  }
+
+  type GetQuickResponseGroupByPayload<T extends QuickResponseGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<QuickResponseGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof QuickResponseGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], QuickResponseGroupByOutputType[P]>
+            : GetScalarType<T[P], QuickResponseGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type QuickResponseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    shortcut?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    queueId?: boolean
+    queue?: boolean | QuickResponse$queueArgs<ExtArgs>
+  }, ExtArgs["result"]["quickResponse"]>
+
+  export type QuickResponseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    shortcut?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    queueId?: boolean
+    queue?: boolean | QuickResponse$queueArgs<ExtArgs>
+  }, ExtArgs["result"]["quickResponse"]>
+
+  export type QuickResponseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    shortcut?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    queueId?: boolean
+    queue?: boolean | QuickResponse$queueArgs<ExtArgs>
+  }, ExtArgs["result"]["quickResponse"]>
+
+  export type QuickResponseSelectScalar = {
+    id?: boolean
+    title?: boolean
+    shortcut?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    queueId?: boolean
+  }
+
+  export type QuickResponseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "shortcut" | "createdAt" | "updatedAt" | "queueId", ExtArgs["result"]["quickResponse"]>
+  export type QuickResponseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    queue?: boolean | QuickResponse$queueArgs<ExtArgs>
+  }
+  export type QuickResponseIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    queue?: boolean | QuickResponse$queueArgs<ExtArgs>
+  }
+  export type QuickResponseIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    queue?: boolean | QuickResponse$queueArgs<ExtArgs>
+  }
+
+  export type $QuickResponsePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "QuickResponse"
+    objects: {
+      queue: Prisma.$QueuePayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      shortcut: string
+      createdAt: Date
+      updatedAt: Date
+      queueId: string
+    }, ExtArgs["result"]["quickResponse"]>
+    composites: {}
+  }
+
+  type QuickResponseGetPayload<S extends boolean | null | undefined | QuickResponseDefaultArgs> = $Result.GetResult<Prisma.$QuickResponsePayload, S>
+
+  type QuickResponseCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<QuickResponseFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: QuickResponseCountAggregateInputType | true
+    }
+
+  export interface QuickResponseDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['QuickResponse'], meta: { name: 'QuickResponse' } }
+    /**
+     * Find zero or one QuickResponse that matches the filter.
+     * @param {QuickResponseFindUniqueArgs} args - Arguments to find a QuickResponse
+     * @example
+     * // Get one QuickResponse
+     * const quickResponse = await prisma.quickResponse.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends QuickResponseFindUniqueArgs>(args: SelectSubset<T, QuickResponseFindUniqueArgs<ExtArgs>>): Prisma__QuickResponseClient<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one QuickResponse that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {QuickResponseFindUniqueOrThrowArgs} args - Arguments to find a QuickResponse
+     * @example
+     * // Get one QuickResponse
+     * const quickResponse = await prisma.quickResponse.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends QuickResponseFindUniqueOrThrowArgs>(args: SelectSubset<T, QuickResponseFindUniqueOrThrowArgs<ExtArgs>>): Prisma__QuickResponseClient<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first QuickResponse that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickResponseFindFirstArgs} args - Arguments to find a QuickResponse
+     * @example
+     * // Get one QuickResponse
+     * const quickResponse = await prisma.quickResponse.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends QuickResponseFindFirstArgs>(args?: SelectSubset<T, QuickResponseFindFirstArgs<ExtArgs>>): Prisma__QuickResponseClient<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first QuickResponse that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickResponseFindFirstOrThrowArgs} args - Arguments to find a QuickResponse
+     * @example
+     * // Get one QuickResponse
+     * const quickResponse = await prisma.quickResponse.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends QuickResponseFindFirstOrThrowArgs>(args?: SelectSubset<T, QuickResponseFindFirstOrThrowArgs<ExtArgs>>): Prisma__QuickResponseClient<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more QuickResponses that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickResponseFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all QuickResponses
+     * const quickResponses = await prisma.quickResponse.findMany()
+     * 
+     * // Get first 10 QuickResponses
+     * const quickResponses = await prisma.quickResponse.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const quickResponseWithIdOnly = await prisma.quickResponse.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends QuickResponseFindManyArgs>(args?: SelectSubset<T, QuickResponseFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a QuickResponse.
+     * @param {QuickResponseCreateArgs} args - Arguments to create a QuickResponse.
+     * @example
+     * // Create one QuickResponse
+     * const QuickResponse = await prisma.quickResponse.create({
+     *   data: {
+     *     // ... data to create a QuickResponse
+     *   }
+     * })
+     * 
+     */
+    create<T extends QuickResponseCreateArgs>(args: SelectSubset<T, QuickResponseCreateArgs<ExtArgs>>): Prisma__QuickResponseClient<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many QuickResponses.
+     * @param {QuickResponseCreateManyArgs} args - Arguments to create many QuickResponses.
+     * @example
+     * // Create many QuickResponses
+     * const quickResponse = await prisma.quickResponse.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends QuickResponseCreateManyArgs>(args?: SelectSubset<T, QuickResponseCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many QuickResponses and returns the data saved in the database.
+     * @param {QuickResponseCreateManyAndReturnArgs} args - Arguments to create many QuickResponses.
+     * @example
+     * // Create many QuickResponses
+     * const quickResponse = await prisma.quickResponse.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many QuickResponses and only return the `id`
+     * const quickResponseWithIdOnly = await prisma.quickResponse.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends QuickResponseCreateManyAndReturnArgs>(args?: SelectSubset<T, QuickResponseCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a QuickResponse.
+     * @param {QuickResponseDeleteArgs} args - Arguments to delete one QuickResponse.
+     * @example
+     * // Delete one QuickResponse
+     * const QuickResponse = await prisma.quickResponse.delete({
+     *   where: {
+     *     // ... filter to delete one QuickResponse
+     *   }
+     * })
+     * 
+     */
+    delete<T extends QuickResponseDeleteArgs>(args: SelectSubset<T, QuickResponseDeleteArgs<ExtArgs>>): Prisma__QuickResponseClient<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one QuickResponse.
+     * @param {QuickResponseUpdateArgs} args - Arguments to update one QuickResponse.
+     * @example
+     * // Update one QuickResponse
+     * const quickResponse = await prisma.quickResponse.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends QuickResponseUpdateArgs>(args: SelectSubset<T, QuickResponseUpdateArgs<ExtArgs>>): Prisma__QuickResponseClient<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more QuickResponses.
+     * @param {QuickResponseDeleteManyArgs} args - Arguments to filter QuickResponses to delete.
+     * @example
+     * // Delete a few QuickResponses
+     * const { count } = await prisma.quickResponse.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends QuickResponseDeleteManyArgs>(args?: SelectSubset<T, QuickResponseDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more QuickResponses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickResponseUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many QuickResponses
+     * const quickResponse = await prisma.quickResponse.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends QuickResponseUpdateManyArgs>(args: SelectSubset<T, QuickResponseUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more QuickResponses and returns the data updated in the database.
+     * @param {QuickResponseUpdateManyAndReturnArgs} args - Arguments to update many QuickResponses.
+     * @example
+     * // Update many QuickResponses
+     * const quickResponse = await prisma.quickResponse.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more QuickResponses and only return the `id`
+     * const quickResponseWithIdOnly = await prisma.quickResponse.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends QuickResponseUpdateManyAndReturnArgs>(args: SelectSubset<T, QuickResponseUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one QuickResponse.
+     * @param {QuickResponseUpsertArgs} args - Arguments to update or create a QuickResponse.
+     * @example
+     * // Update or create a QuickResponse
+     * const quickResponse = await prisma.quickResponse.upsert({
+     *   create: {
+     *     // ... data to create a QuickResponse
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the QuickResponse we want to update
+     *   }
+     * })
+     */
+    upsert<T extends QuickResponseUpsertArgs>(args: SelectSubset<T, QuickResponseUpsertArgs<ExtArgs>>): Prisma__QuickResponseClient<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of QuickResponses.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickResponseCountArgs} args - Arguments to filter QuickResponses to count.
+     * @example
+     * // Count the number of QuickResponses
+     * const count = await prisma.quickResponse.count({
+     *   where: {
+     *     // ... the filter for the QuickResponses we want to count
+     *   }
+     * })
+    **/
+    count<T extends QuickResponseCountArgs>(
+      args?: Subset<T, QuickResponseCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], QuickResponseCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a QuickResponse.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickResponseAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends QuickResponseAggregateArgs>(args: Subset<T, QuickResponseAggregateArgs>): Prisma.PrismaPromise<GetQuickResponseAggregateType<T>>
+
+    /**
+     * Group by QuickResponse.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {QuickResponseGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends QuickResponseGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: QuickResponseGroupByArgs['orderBy'] }
+        : { orderBy?: QuickResponseGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, QuickResponseGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetQuickResponseGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the QuickResponse model
+   */
+  readonly fields: QuickResponseFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for QuickResponse.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__QuickResponseClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    queue<T extends QuickResponse$queueArgs<ExtArgs> = {}>(args?: Subset<T, QuickResponse$queueArgs<ExtArgs>>): Prisma__QueueClient<$Result.GetResult<Prisma.$QueuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the QuickResponse model
+   */
+  interface QuickResponseFieldRefs {
+    readonly id: FieldRef<"QuickResponse", 'String'>
+    readonly title: FieldRef<"QuickResponse", 'String'>
+    readonly shortcut: FieldRef<"QuickResponse", 'String'>
+    readonly createdAt: FieldRef<"QuickResponse", 'DateTime'>
+    readonly updatedAt: FieldRef<"QuickResponse", 'DateTime'>
+    readonly queueId: FieldRef<"QuickResponse", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * QuickResponse findUnique
+   */
+  export type QuickResponseFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseInclude<ExtArgs> | null
+    /**
+     * Filter, which QuickResponse to fetch.
+     */
+    where: QuickResponseWhereUniqueInput
+  }
+
+  /**
+   * QuickResponse findUniqueOrThrow
+   */
+  export type QuickResponseFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseInclude<ExtArgs> | null
+    /**
+     * Filter, which QuickResponse to fetch.
+     */
+    where: QuickResponseWhereUniqueInput
+  }
+
+  /**
+   * QuickResponse findFirst
+   */
+  export type QuickResponseFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseInclude<ExtArgs> | null
+    /**
+     * Filter, which QuickResponse to fetch.
+     */
+    where?: QuickResponseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuickResponses to fetch.
+     */
+    orderBy?: QuickResponseOrderByWithRelationInput | QuickResponseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for QuickResponses.
+     */
+    cursor?: QuickResponseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuickResponses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuickResponses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of QuickResponses.
+     */
+    distinct?: QuickResponseScalarFieldEnum | QuickResponseScalarFieldEnum[]
+  }
+
+  /**
+   * QuickResponse findFirstOrThrow
+   */
+  export type QuickResponseFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseInclude<ExtArgs> | null
+    /**
+     * Filter, which QuickResponse to fetch.
+     */
+    where?: QuickResponseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuickResponses to fetch.
+     */
+    orderBy?: QuickResponseOrderByWithRelationInput | QuickResponseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for QuickResponses.
+     */
+    cursor?: QuickResponseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuickResponses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuickResponses.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of QuickResponses.
+     */
+    distinct?: QuickResponseScalarFieldEnum | QuickResponseScalarFieldEnum[]
+  }
+
+  /**
+   * QuickResponse findMany
+   */
+  export type QuickResponseFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseInclude<ExtArgs> | null
+    /**
+     * Filter, which QuickResponses to fetch.
+     */
+    where?: QuickResponseWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of QuickResponses to fetch.
+     */
+    orderBy?: QuickResponseOrderByWithRelationInput | QuickResponseOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing QuickResponses.
+     */
+    cursor?: QuickResponseWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` QuickResponses from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` QuickResponses.
+     */
+    skip?: number
+    distinct?: QuickResponseScalarFieldEnum | QuickResponseScalarFieldEnum[]
+  }
+
+  /**
+   * QuickResponse create
+   */
+  export type QuickResponseCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseInclude<ExtArgs> | null
+    /**
+     * The data needed to create a QuickResponse.
+     */
+    data: XOR<QuickResponseCreateInput, QuickResponseUncheckedCreateInput>
+  }
+
+  /**
+   * QuickResponse createMany
+   */
+  export type QuickResponseCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many QuickResponses.
+     */
+    data: QuickResponseCreateManyInput | QuickResponseCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * QuickResponse createManyAndReturn
+   */
+  export type QuickResponseCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * The data used to create many QuickResponses.
+     */
+    data: QuickResponseCreateManyInput | QuickResponseCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * QuickResponse update
+   */
+  export type QuickResponseUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseInclude<ExtArgs> | null
+    /**
+     * The data needed to update a QuickResponse.
+     */
+    data: XOR<QuickResponseUpdateInput, QuickResponseUncheckedUpdateInput>
+    /**
+     * Choose, which QuickResponse to update.
+     */
+    where: QuickResponseWhereUniqueInput
+  }
+
+  /**
+   * QuickResponse updateMany
+   */
+  export type QuickResponseUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update QuickResponses.
+     */
+    data: XOR<QuickResponseUpdateManyMutationInput, QuickResponseUncheckedUpdateManyInput>
+    /**
+     * Filter which QuickResponses to update
+     */
+    where?: QuickResponseWhereInput
+    /**
+     * Limit how many QuickResponses to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * QuickResponse updateManyAndReturn
+   */
+  export type QuickResponseUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * The data used to update QuickResponses.
+     */
+    data: XOR<QuickResponseUpdateManyMutationInput, QuickResponseUncheckedUpdateManyInput>
+    /**
+     * Filter which QuickResponses to update
+     */
+    where?: QuickResponseWhereInput
+    /**
+     * Limit how many QuickResponses to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * QuickResponse upsert
+   */
+  export type QuickResponseUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseInclude<ExtArgs> | null
+    /**
+     * The filter to search for the QuickResponse to update in case it exists.
+     */
+    where: QuickResponseWhereUniqueInput
+    /**
+     * In case the QuickResponse found by the `where` argument doesn't exist, create a new QuickResponse with this data.
+     */
+    create: XOR<QuickResponseCreateInput, QuickResponseUncheckedCreateInput>
+    /**
+     * In case the QuickResponse was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<QuickResponseUpdateInput, QuickResponseUncheckedUpdateInput>
+  }
+
+  /**
+   * QuickResponse delete
+   */
+  export type QuickResponseDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseInclude<ExtArgs> | null
+    /**
+     * Filter which QuickResponse to delete.
+     */
+    where: QuickResponseWhereUniqueInput
+  }
+
+  /**
+   * QuickResponse deleteMany
+   */
+  export type QuickResponseDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which QuickResponses to delete
+     */
+    where?: QuickResponseWhereInput
+    /**
+     * Limit how many QuickResponses to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * QuickResponse.queue
+   */
+  export type QuickResponse$queueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Queue
+     */
+    select?: QueueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Queue
+     */
+    omit?: QueueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QueueInclude<ExtArgs> | null
+    where?: QueueWhereInput
+  }
+
+  /**
+   * QuickResponse without action
+   */
+  export type QuickResponseDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the QuickResponse
+     */
+    select?: QuickResponseSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the QuickResponse
+     */
+    omit?: QuickResponseOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QuickResponseInclude<ExtArgs> | null
+  }
+
+
+  /**
    * Model WhatsAppConnection
    */
 
@@ -9789,6 +11007,18 @@ export namespace Prisma {
   export type MessageScalarFieldEnum = (typeof MessageScalarFieldEnum)[keyof typeof MessageScalarFieldEnum]
 
 
+  export const QuickResponseScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    shortcut: 'shortcut',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    queueId: 'queueId'
+  };
+
+  export type QuickResponseScalarFieldEnum = (typeof QuickResponseScalarFieldEnum)[keyof typeof QuickResponseScalarFieldEnum]
+
+
   export const WhatsAppConnectionScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -10164,6 +11394,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Queue"> | Date | string
     conversations?: ConversationListRelationFilter
     users?: QueueUserListRelationFilter
+    quickResponses?: QuickResponseListRelationFilter
   }
 
   export type QueueOrderByWithRelationInput = {
@@ -10177,6 +11408,7 @@ export namespace Prisma {
     updatedAt?: SortOrder
     conversations?: ConversationOrderByRelationAggregateInput
     users?: QueueUserOrderByRelationAggregateInput
+    quickResponses?: QuickResponseOrderByRelationAggregateInput
   }
 
   export type QueueWhereUniqueInput = Prisma.AtLeast<{
@@ -10193,6 +11425,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFilter<"Queue"> | Date | string
     conversations?: ConversationListRelationFilter
     users?: QueueUserListRelationFilter
+    quickResponses?: QuickResponseListRelationFilter
   }, "id">
 
   export type QueueOrderByWithAggregationInput = {
@@ -10474,6 +11707,66 @@ export namespace Prisma {
     deliveredAt?: DateTimeNullableWithAggregatesFilter<"Message"> | Date | string | null
     sentAt?: DateTimeNullableWithAggregatesFilter<"Message"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
+  }
+
+  export type QuickResponseWhereInput = {
+    AND?: QuickResponseWhereInput | QuickResponseWhereInput[]
+    OR?: QuickResponseWhereInput[]
+    NOT?: QuickResponseWhereInput | QuickResponseWhereInput[]
+    id?: StringFilter<"QuickResponse"> | string
+    title?: StringFilter<"QuickResponse"> | string
+    shortcut?: StringFilter<"QuickResponse"> | string
+    createdAt?: DateTimeFilter<"QuickResponse"> | Date | string
+    updatedAt?: DateTimeFilter<"QuickResponse"> | Date | string
+    queueId?: StringFilter<"QuickResponse"> | string
+    queue?: XOR<QueueNullableScalarRelationFilter, QueueWhereInput> | null
+  }
+
+  export type QuickResponseOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    shortcut?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    queueId?: SortOrder
+    queue?: QueueOrderByWithRelationInput
+  }
+
+  export type QuickResponseWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: QuickResponseWhereInput | QuickResponseWhereInput[]
+    OR?: QuickResponseWhereInput[]
+    NOT?: QuickResponseWhereInput | QuickResponseWhereInput[]
+    title?: StringFilter<"QuickResponse"> | string
+    shortcut?: StringFilter<"QuickResponse"> | string
+    createdAt?: DateTimeFilter<"QuickResponse"> | Date | string
+    updatedAt?: DateTimeFilter<"QuickResponse"> | Date | string
+    queueId?: StringFilter<"QuickResponse"> | string
+    queue?: XOR<QueueNullableScalarRelationFilter, QueueWhereInput> | null
+  }, "id">
+
+  export type QuickResponseOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    shortcut?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    queueId?: SortOrder
+    _count?: QuickResponseCountOrderByAggregateInput
+    _max?: QuickResponseMaxOrderByAggregateInput
+    _min?: QuickResponseMinOrderByAggregateInput
+  }
+
+  export type QuickResponseScalarWhereWithAggregatesInput = {
+    AND?: QuickResponseScalarWhereWithAggregatesInput | QuickResponseScalarWhereWithAggregatesInput[]
+    OR?: QuickResponseScalarWhereWithAggregatesInput[]
+    NOT?: QuickResponseScalarWhereWithAggregatesInput | QuickResponseScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"QuickResponse"> | string
+    title?: StringWithAggregatesFilter<"QuickResponse"> | string
+    shortcut?: StringWithAggregatesFilter<"QuickResponse"> | string
+    createdAt?: DateTimeWithAggregatesFilter<"QuickResponse"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"QuickResponse"> | Date | string
+    queueId?: StringWithAggregatesFilter<"QuickResponse"> | string
   }
 
   export type WhatsAppConnectionWhereInput = {
@@ -10762,6 +12055,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutQueueInput
     users?: QueueUserCreateNestedManyWithoutQueueInput
+    quickResponses?: QuickResponseCreateNestedManyWithoutQueueInput
   }
 
   export type QueueUncheckedCreateInput = {
@@ -10775,6 +12069,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutQueueInput
     users?: QueueUserUncheckedCreateNestedManyWithoutQueueInput
+    quickResponses?: QuickResponseUncheckedCreateNestedManyWithoutQueueInput
   }
 
   export type QueueUpdateInput = {
@@ -10788,6 +12083,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutQueueNestedInput
     users?: QueueUserUpdateManyWithoutQueueNestedInput
+    quickResponses?: QuickResponseUpdateManyWithoutQueueNestedInput
   }
 
   export type QueueUncheckedUpdateInput = {
@@ -10801,6 +12097,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutQueueNestedInput
     users?: QueueUserUncheckedUpdateManyWithoutQueueNestedInput
+    quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
   }
 
   export type QueueCreateManyInput = {
@@ -11097,6 +12394,68 @@ export namespace Prisma {
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuickResponseCreateInput = {
+    id?: string
+    title: string
+    shortcut: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    queue?: QueueCreateNestedOneWithoutQuickResponsesInput
+  }
+
+  export type QuickResponseUncheckedCreateInput = {
+    id?: string
+    title: string
+    shortcut: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    queueId?: string
+  }
+
+  export type QuickResponseUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    shortcut?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    queue?: QueueUpdateOneWithoutQuickResponsesNestedInput
+  }
+
+  export type QuickResponseUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    shortcut?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    queueId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type QuickResponseCreateManyInput = {
+    id?: string
+    title: string
+    shortcut: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    queueId?: string
+  }
+
+  export type QuickResponseUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    shortcut?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuickResponseUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    shortcut?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    queueId?: StringFieldUpdateOperationsInput | string
   }
 
   export type WhatsAppConnectionCreateInput = {
@@ -11466,6 +12825,16 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type QuickResponseListRelationFilter = {
+    every?: QuickResponseWhereInput
+    some?: QuickResponseWhereInput
+    none?: QuickResponseWhereInput
+  }
+
+  export type QuickResponseOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
   export type QueueCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -11757,6 +13126,33 @@ export namespace Prisma {
     _max?: NestedEnumMessageStatusFilter<$PrismaModel>
   }
 
+  export type QuickResponseCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    shortcut?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    queueId?: SortOrder
+  }
+
+  export type QuickResponseMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    shortcut?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    queueId?: SortOrder
+  }
+
+  export type QuickResponseMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    shortcut?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    queueId?: SortOrder
+  }
+
   export type WhatsAppConnectionCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
@@ -12011,6 +13407,13 @@ export namespace Prisma {
     connect?: QueueUserWhereUniqueInput | QueueUserWhereUniqueInput[]
   }
 
+  export type QuickResponseCreateNestedManyWithoutQueueInput = {
+    create?: XOR<QuickResponseCreateWithoutQueueInput, QuickResponseUncheckedCreateWithoutQueueInput> | QuickResponseCreateWithoutQueueInput[] | QuickResponseUncheckedCreateWithoutQueueInput[]
+    connectOrCreate?: QuickResponseCreateOrConnectWithoutQueueInput | QuickResponseCreateOrConnectWithoutQueueInput[]
+    createMany?: QuickResponseCreateManyQueueInputEnvelope
+    connect?: QuickResponseWhereUniqueInput | QuickResponseWhereUniqueInput[]
+  }
+
   export type ConversationUncheckedCreateNestedManyWithoutQueueInput = {
     create?: XOR<ConversationCreateWithoutQueueInput, ConversationUncheckedCreateWithoutQueueInput> | ConversationCreateWithoutQueueInput[] | ConversationUncheckedCreateWithoutQueueInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutQueueInput | ConversationCreateOrConnectWithoutQueueInput[]
@@ -12023,6 +13426,13 @@ export namespace Prisma {
     connectOrCreate?: QueueUserCreateOrConnectWithoutQueueInput | QueueUserCreateOrConnectWithoutQueueInput[]
     createMany?: QueueUserCreateManyQueueInputEnvelope
     connect?: QueueUserWhereUniqueInput | QueueUserWhereUniqueInput[]
+  }
+
+  export type QuickResponseUncheckedCreateNestedManyWithoutQueueInput = {
+    create?: XOR<QuickResponseCreateWithoutQueueInput, QuickResponseUncheckedCreateWithoutQueueInput> | QuickResponseCreateWithoutQueueInput[] | QuickResponseUncheckedCreateWithoutQueueInput[]
+    connectOrCreate?: QuickResponseCreateOrConnectWithoutQueueInput | QuickResponseCreateOrConnectWithoutQueueInput[]
+    createMany?: QuickResponseCreateManyQueueInputEnvelope
+    connect?: QuickResponseWhereUniqueInput | QuickResponseWhereUniqueInput[]
   }
 
   export type IntFieldUpdateOperationsInput = {
@@ -12061,6 +13471,20 @@ export namespace Prisma {
     deleteMany?: QueueUserScalarWhereInput | QueueUserScalarWhereInput[]
   }
 
+  export type QuickResponseUpdateManyWithoutQueueNestedInput = {
+    create?: XOR<QuickResponseCreateWithoutQueueInput, QuickResponseUncheckedCreateWithoutQueueInput> | QuickResponseCreateWithoutQueueInput[] | QuickResponseUncheckedCreateWithoutQueueInput[]
+    connectOrCreate?: QuickResponseCreateOrConnectWithoutQueueInput | QuickResponseCreateOrConnectWithoutQueueInput[]
+    upsert?: QuickResponseUpsertWithWhereUniqueWithoutQueueInput | QuickResponseUpsertWithWhereUniqueWithoutQueueInput[]
+    createMany?: QuickResponseCreateManyQueueInputEnvelope
+    set?: QuickResponseWhereUniqueInput | QuickResponseWhereUniqueInput[]
+    disconnect?: QuickResponseWhereUniqueInput | QuickResponseWhereUniqueInput[]
+    delete?: QuickResponseWhereUniqueInput | QuickResponseWhereUniqueInput[]
+    connect?: QuickResponseWhereUniqueInput | QuickResponseWhereUniqueInput[]
+    update?: QuickResponseUpdateWithWhereUniqueWithoutQueueInput | QuickResponseUpdateWithWhereUniqueWithoutQueueInput[]
+    updateMany?: QuickResponseUpdateManyWithWhereWithoutQueueInput | QuickResponseUpdateManyWithWhereWithoutQueueInput[]
+    deleteMany?: QuickResponseScalarWhereInput | QuickResponseScalarWhereInput[]
+  }
+
   export type ConversationUncheckedUpdateManyWithoutQueueNestedInput = {
     create?: XOR<ConversationCreateWithoutQueueInput, ConversationUncheckedCreateWithoutQueueInput> | ConversationCreateWithoutQueueInput[] | ConversationUncheckedCreateWithoutQueueInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutQueueInput | ConversationCreateOrConnectWithoutQueueInput[]
@@ -12087,6 +13511,20 @@ export namespace Prisma {
     update?: QueueUserUpdateWithWhereUniqueWithoutQueueInput | QueueUserUpdateWithWhereUniqueWithoutQueueInput[]
     updateMany?: QueueUserUpdateManyWithWhereWithoutQueueInput | QueueUserUpdateManyWithWhereWithoutQueueInput[]
     deleteMany?: QueueUserScalarWhereInput | QueueUserScalarWhereInput[]
+  }
+
+  export type QuickResponseUncheckedUpdateManyWithoutQueueNestedInput = {
+    create?: XOR<QuickResponseCreateWithoutQueueInput, QuickResponseUncheckedCreateWithoutQueueInput> | QuickResponseCreateWithoutQueueInput[] | QuickResponseUncheckedCreateWithoutQueueInput[]
+    connectOrCreate?: QuickResponseCreateOrConnectWithoutQueueInput | QuickResponseCreateOrConnectWithoutQueueInput[]
+    upsert?: QuickResponseUpsertWithWhereUniqueWithoutQueueInput | QuickResponseUpsertWithWhereUniqueWithoutQueueInput[]
+    createMany?: QuickResponseCreateManyQueueInputEnvelope
+    set?: QuickResponseWhereUniqueInput | QuickResponseWhereUniqueInput[]
+    disconnect?: QuickResponseWhereUniqueInput | QuickResponseWhereUniqueInput[]
+    delete?: QuickResponseWhereUniqueInput | QuickResponseWhereUniqueInput[]
+    connect?: QuickResponseWhereUniqueInput | QuickResponseWhereUniqueInput[]
+    update?: QuickResponseUpdateWithWhereUniqueWithoutQueueInput | QuickResponseUpdateWithWhereUniqueWithoutQueueInput[]
+    updateMany?: QuickResponseUpdateManyWithWhereWithoutQueueInput | QuickResponseUpdateManyWithWhereWithoutQueueInput[]
+    deleteMany?: QuickResponseScalarWhereInput | QuickResponseScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutQueuesInput = {
@@ -12253,6 +13691,22 @@ export namespace Prisma {
     delete?: UserWhereInput | boolean
     connect?: UserWhereUniqueInput
     update?: XOR<XOR<UserUpdateToOneWithWhereWithoutMessagesInput, UserUpdateWithoutMessagesInput>, UserUncheckedUpdateWithoutMessagesInput>
+  }
+
+  export type QueueCreateNestedOneWithoutQuickResponsesInput = {
+    create?: XOR<QueueCreateWithoutQuickResponsesInput, QueueUncheckedCreateWithoutQuickResponsesInput>
+    connectOrCreate?: QueueCreateOrConnectWithoutQuickResponsesInput
+    connect?: QueueWhereUniqueInput
+  }
+
+  export type QueueUpdateOneWithoutQuickResponsesNestedInput = {
+    create?: XOR<QueueCreateWithoutQuickResponsesInput, QueueUncheckedCreateWithoutQuickResponsesInput>
+    connectOrCreate?: QueueCreateOrConnectWithoutQuickResponsesInput
+    upsert?: QueueUpsertWithoutQuickResponsesInput
+    disconnect?: QueueWhereInput | boolean
+    delete?: QueueWhereInput | boolean
+    connect?: QueueWhereUniqueInput
+    update?: XOR<XOR<QueueUpdateToOneWithWhereWithoutQuickResponsesInput, QueueUpdateWithoutQuickResponsesInput>, QueueUncheckedUpdateWithoutQuickResponsesInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -12840,6 +14294,32 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
+  export type QuickResponseCreateWithoutQueueInput = {
+    id?: string
+    title: string
+    shortcut: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuickResponseUncheckedCreateWithoutQueueInput = {
+    id?: string
+    title: string
+    shortcut: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type QuickResponseCreateOrConnectWithoutQueueInput = {
+    where: QuickResponseWhereUniqueInput
+    create: XOR<QuickResponseCreateWithoutQueueInput, QuickResponseUncheckedCreateWithoutQueueInput>
+  }
+
+  export type QuickResponseCreateManyQueueInputEnvelope = {
+    data: QuickResponseCreateManyQueueInput | QuickResponseCreateManyQueueInput[]
+    skipDuplicates?: boolean
+  }
+
   export type ConversationUpsertWithWhereUniqueWithoutQueueInput = {
     where: ConversationWhereUniqueInput
     update: XOR<ConversationUpdateWithoutQueueInput, ConversationUncheckedUpdateWithoutQueueInput>
@@ -12870,6 +14350,34 @@ export namespace Prisma {
   export type QueueUserUpdateManyWithWhereWithoutQueueInput = {
     where: QueueUserScalarWhereInput
     data: XOR<QueueUserUpdateManyMutationInput, QueueUserUncheckedUpdateManyWithoutQueueInput>
+  }
+
+  export type QuickResponseUpsertWithWhereUniqueWithoutQueueInput = {
+    where: QuickResponseWhereUniqueInput
+    update: XOR<QuickResponseUpdateWithoutQueueInput, QuickResponseUncheckedUpdateWithoutQueueInput>
+    create: XOR<QuickResponseCreateWithoutQueueInput, QuickResponseUncheckedCreateWithoutQueueInput>
+  }
+
+  export type QuickResponseUpdateWithWhereUniqueWithoutQueueInput = {
+    where: QuickResponseWhereUniqueInput
+    data: XOR<QuickResponseUpdateWithoutQueueInput, QuickResponseUncheckedUpdateWithoutQueueInput>
+  }
+
+  export type QuickResponseUpdateManyWithWhereWithoutQueueInput = {
+    where: QuickResponseScalarWhereInput
+    data: XOR<QuickResponseUpdateManyMutationInput, QuickResponseUncheckedUpdateManyWithoutQueueInput>
+  }
+
+  export type QuickResponseScalarWhereInput = {
+    AND?: QuickResponseScalarWhereInput | QuickResponseScalarWhereInput[]
+    OR?: QuickResponseScalarWhereInput[]
+    NOT?: QuickResponseScalarWhereInput | QuickResponseScalarWhereInput[]
+    id?: StringFilter<"QuickResponse"> | string
+    title?: StringFilter<"QuickResponse"> | string
+    shortcut?: StringFilter<"QuickResponse"> | string
+    createdAt?: DateTimeFilter<"QuickResponse"> | Date | string
+    updatedAt?: DateTimeFilter<"QuickResponse"> | Date | string
+    queueId?: StringFilter<"QuickResponse"> | string
   }
 
   export type UserCreateWithoutQueuesInput = {
@@ -12915,6 +14423,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutQueueInput
+    quickResponses?: QuickResponseCreateNestedManyWithoutQueueInput
   }
 
   export type QueueUncheckedCreateWithoutUsersInput = {
@@ -12927,6 +14436,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutQueueInput
+    quickResponses?: QuickResponseUncheckedCreateNestedManyWithoutQueueInput
   }
 
   export type QueueCreateOrConnectWithoutUsersInput = {
@@ -12994,6 +14504,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutQueueNestedInput
+    quickResponses?: QuickResponseUpdateManyWithoutQueueNestedInput
   }
 
   export type QueueUncheckedUpdateWithoutUsersInput = {
@@ -13006,6 +14517,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutQueueNestedInput
+    quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
   }
 
   export type ContactCreateWithoutConversationsInput = {
@@ -13084,6 +14596,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: QueueUserCreateNestedManyWithoutQueueInput
+    quickResponses?: QuickResponseCreateNestedManyWithoutQueueInput
   }
 
   export type QueueUncheckedCreateWithoutConversationsInput = {
@@ -13096,6 +14609,7 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: QueueUserUncheckedCreateNestedManyWithoutQueueInput
+    quickResponses?: QuickResponseUncheckedCreateNestedManyWithoutQueueInput
   }
 
   export type QueueCreateOrConnectWithoutConversationsInput = {
@@ -13246,6 +14760,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: QueueUserUpdateManyWithoutQueueNestedInput
+    quickResponses?: QuickResponseUpdateManyWithoutQueueNestedInput
   }
 
   export type QueueUncheckedUpdateWithoutConversationsInput = {
@@ -13258,6 +14773,7 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: QueueUserUncheckedUpdateManyWithoutQueueNestedInput
+    quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -13418,6 +14934,74 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
     queues?: QueueUserUncheckedUpdateManyWithoutUserNestedInput
+  }
+
+  export type QueueCreateWithoutQuickResponsesInput = {
+    id?: string
+    name: string
+    description?: string | null
+    color?: string
+    isActive?: boolean
+    priority?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationCreateNestedManyWithoutQueueInput
+    users?: QueueUserCreateNestedManyWithoutQueueInput
+  }
+
+  export type QueueUncheckedCreateWithoutQuickResponsesInput = {
+    id?: string
+    name: string
+    description?: string | null
+    color?: string
+    isActive?: boolean
+    priority?: number
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationUncheckedCreateNestedManyWithoutQueueInput
+    users?: QueueUserUncheckedCreateNestedManyWithoutQueueInput
+  }
+
+  export type QueueCreateOrConnectWithoutQuickResponsesInput = {
+    where: QueueWhereUniqueInput
+    create: XOR<QueueCreateWithoutQuickResponsesInput, QueueUncheckedCreateWithoutQuickResponsesInput>
+  }
+
+  export type QueueUpsertWithoutQuickResponsesInput = {
+    update: XOR<QueueUpdateWithoutQuickResponsesInput, QueueUncheckedUpdateWithoutQuickResponsesInput>
+    create: XOR<QueueCreateWithoutQuickResponsesInput, QueueUncheckedCreateWithoutQuickResponsesInput>
+    where?: QueueWhereInput
+  }
+
+  export type QueueUpdateToOneWithWhereWithoutQuickResponsesInput = {
+    where?: QueueWhereInput
+    data: XOR<QueueUpdateWithoutQuickResponsesInput, QueueUncheckedUpdateWithoutQuickResponsesInput>
+  }
+
+  export type QueueUpdateWithoutQuickResponsesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    priority?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUpdateManyWithoutQueueNestedInput
+    users?: QueueUserUpdateManyWithoutQueueNestedInput
+  }
+
+  export type QueueUncheckedUpdateWithoutQuickResponsesInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    color?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    priority?: IntFieldUpdateOperationsInput | number
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUncheckedUpdateManyWithoutQueueNestedInput
+    users?: QueueUserUncheckedUpdateManyWithoutQueueNestedInput
   }
 
   export type ConversationCreateManyUserInput = {
@@ -13634,6 +15218,14 @@ export namespace Prisma {
     userId: string
   }
 
+  export type QuickResponseCreateManyQueueInput = {
+    id?: string
+    title: string
+    shortcut: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
   export type ConversationUpdateWithoutQueueInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
@@ -13688,6 +15280,30 @@ export namespace Prisma {
   export type QueueUserUncheckedUpdateManyWithoutQueueInput = {
     id?: StringFieldUpdateOperationsInput | string
     userId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type QuickResponseUpdateWithoutQueueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    shortcut?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuickResponseUncheckedUpdateWithoutQueueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    shortcut?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type QuickResponseUncheckedUpdateManyWithoutQueueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    shortcut?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type MessageCreateManyConversationInput = {

@@ -9,7 +9,7 @@ datasource db {
 }
 
 model User {
-  id        String   @id @default(cuid())
+  id        String   @id @default(uuid())
   name      String
   email     String   @unique
   phone     String   @unique
@@ -28,7 +28,7 @@ model User {
 }
 
 model Contact {
-  id          String   @id @default(cuid())
+  id          String   @id @default(uuid())
   name        String
   phone       String   @unique
   email       String?
@@ -47,7 +47,7 @@ model Contact {
 }
 
 model Queue {
-  id          String   @id @default(cuid())
+  id          String   @id @default(uuid())
   name        String
   description String?
   color       String   @default("#3B82F6")
@@ -59,12 +59,13 @@ model Queue {
   // Relacionamentos
   conversations Conversation[]
   users         QueueUser[]
+  quickResponses QuickResponse[]
 
   @@map("queues")
 }
 
 model QueueUser {
-  id      String @id @default(cuid())
+  id      String @id @default(uuid())
   userId  String
   queueId String
 
@@ -76,7 +77,7 @@ model QueueUser {
 }
 
 model Conversation {
-  id            String            @id @default(cuid())
+  id            String            @id @default(uuid())
   contactId     String
   userId        String?
   queueId       String?
@@ -98,7 +99,7 @@ model Conversation {
 }
 
 model Message {
-  id             String      @id @default(cuid())
+  id             String      @id @default(uuid())
   conversationId String
   userId         String?
   content        String
@@ -121,8 +122,23 @@ model Message {
   @@map("messages")
 }
 
+model QuickResponse {
+  id          String   @id @default(uuid())
+  title      String
+  shortcut    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  queueId    String @default("Atendimento")
+
+
+  // Relacionamentos
+  queue    Queue?    @relation(fields: [queueId], references: [id])
+
+  @@map("quick_responses")
+}
+
 model WhatsAppConnection {
-  id              String   @id @default(cuid())
+  id              String   @id @default(uuid())
   name            String
   phoneNumberId   String   @unique
   accessToken     String

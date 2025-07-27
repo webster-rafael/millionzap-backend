@@ -195,6 +195,15 @@ exports.Prisma.MessageScalarFieldEnum = {
   createdAt: 'createdAt'
 };
 
+exports.Prisma.QuickResponseScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  shortcut: 'shortcut',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  queueId: 'queueId'
+};
+
 exports.Prisma.WhatsAppConnectionScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -271,6 +280,7 @@ exports.Prisma.ModelName = {
   QueueUser: 'QueueUser',
   Conversation: 'Conversation',
   Message: 'Message',
+  QuickResponse: 'QuickResponse',
   WhatsAppConnection: 'WhatsAppConnection'
 };
 
