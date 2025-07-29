@@ -49,6 +49,11 @@ export type Message = $Result.DefaultSelection<Prisma.$MessagePayload>
  */
 export type QuickResponse = $Result.DefaultSelection<Prisma.$QuickResponsePayload>
 /**
+ * Model Prompts
+ * 
+ */
+export type Prompts = $Result.DefaultSelection<Prisma.$PromptsPayload>
+/**
  * Model WhatsAppConnection
  * 
  */
@@ -337,6 +342,16 @@ export class PrismaClient<
     * ```
     */
   get quickResponse(): Prisma.QuickResponseDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.prompts`: Exposes CRUD operations for the **Prompts** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Prompts
+    * const prompts = await prisma.prompts.findMany()
+    * ```
+    */
+  get prompts(): Prisma.PromptsDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.whatsAppConnection`: Exposes CRUD operations for the **WhatsAppConnection** model.
@@ -794,6 +809,7 @@ export namespace Prisma {
     Conversation: 'Conversation',
     Message: 'Message',
     QuickResponse: 'QuickResponse',
+    Prompts: 'Prompts',
     WhatsAppConnection: 'WhatsAppConnection'
   };
 
@@ -813,7 +829,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "contact" | "queue" | "queueUser" | "conversation" | "message" | "quickResponse" | "whatsAppConnection"
+      modelProps: "user" | "contact" | "queue" | "queueUser" | "conversation" | "message" | "quickResponse" | "prompts" | "whatsAppConnection"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1335,6 +1351,80 @@ export namespace Prisma {
           }
         }
       }
+      Prompts: {
+        payload: Prisma.$PromptsPayload<ExtArgs>
+        fields: Prisma.PromptsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.PromptsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PromptsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.PromptsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PromptsPayload>
+          }
+          findFirst: {
+            args: Prisma.PromptsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PromptsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.PromptsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PromptsPayload>
+          }
+          findMany: {
+            args: Prisma.PromptsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PromptsPayload>[]
+          }
+          create: {
+            args: Prisma.PromptsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PromptsPayload>
+          }
+          createMany: {
+            args: Prisma.PromptsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.PromptsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PromptsPayload>[]
+          }
+          delete: {
+            args: Prisma.PromptsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PromptsPayload>
+          }
+          update: {
+            args: Prisma.PromptsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PromptsPayload>
+          }
+          deleteMany: {
+            args: Prisma.PromptsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.PromptsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.PromptsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PromptsPayload>[]
+          }
+          upsert: {
+            args: Prisma.PromptsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$PromptsPayload>
+          }
+          aggregate: {
+            args: Prisma.PromptsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregatePrompts>
+          }
+          groupBy: {
+            args: Prisma.PromptsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<PromptsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.PromptsCountArgs<ExtArgs>
+            result: $Utils.Optional<PromptsCountAggregateOutputType> | number
+          }
+        }
+      }
       WhatsAppConnection: {
         payload: Prisma.$WhatsAppConnectionPayload<ExtArgs>
         fields: Prisma.WhatsAppConnectionFieldRefs
@@ -1500,6 +1590,7 @@ export namespace Prisma {
     conversation?: ConversationOmit
     message?: MessageOmit
     quickResponse?: QuickResponseOmit
+    prompts?: PromptsOmit
     whatsAppConnection?: WhatsAppConnectionOmit
   }
 
@@ -1678,12 +1769,14 @@ export namespace Prisma {
     conversations: number
     users: number
     quickResponses: number
+    prompts: number
   }
 
   export type QueueCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversations?: boolean | QueueCountOutputTypeCountConversationsArgs
     users?: boolean | QueueCountOutputTypeCountUsersArgs
     quickResponses?: boolean | QueueCountOutputTypeCountQuickResponsesArgs
+    prompts?: boolean | QueueCountOutputTypeCountPromptsArgs
   }
 
   // Custom InputTypes
@@ -1716,6 +1809,13 @@ export namespace Prisma {
    */
   export type QueueCountOutputTypeCountQuickResponsesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: QuickResponseWhereInput
+  }
+
+  /**
+   * QueueCountOutputType without action
+   */
+  export type QueueCountOutputTypeCountPromptsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PromptsWhereInput
   }
 
 
@@ -4099,8 +4199,11 @@ export namespace Prisma {
   export type QueueMinAggregateOutputType = {
     id: string | null
     name: string | null
-    description: string | null
     color: string | null
+    greetingMessage: string | null
+    outOfOfficeHoursMessage: string | null
+    promptId: string | null
+    integrationId: string | null
     isActive: boolean | null
     priority: number | null
     createdAt: Date | null
@@ -4110,8 +4213,11 @@ export namespace Prisma {
   export type QueueMaxAggregateOutputType = {
     id: string | null
     name: string | null
-    description: string | null
     color: string | null
+    greetingMessage: string | null
+    outOfOfficeHoursMessage: string | null
+    promptId: string | null
+    integrationId: string | null
     isActive: boolean | null
     priority: number | null
     createdAt: Date | null
@@ -4121,10 +4227,14 @@ export namespace Prisma {
   export type QueueCountAggregateOutputType = {
     id: number
     name: number
-    description: number
     color: number
+    greetingMessage: number
+    outOfOfficeHoursMessage: number
+    promptId: number
+    integrationId: number
     isActive: number
     priority: number
+    schedules: number
     createdAt: number
     updatedAt: number
     _all: number
@@ -4142,8 +4252,11 @@ export namespace Prisma {
   export type QueueMinAggregateInputType = {
     id?: true
     name?: true
-    description?: true
     color?: true
+    greetingMessage?: true
+    outOfOfficeHoursMessage?: true
+    promptId?: true
+    integrationId?: true
     isActive?: true
     priority?: true
     createdAt?: true
@@ -4153,8 +4266,11 @@ export namespace Prisma {
   export type QueueMaxAggregateInputType = {
     id?: true
     name?: true
-    description?: true
     color?: true
+    greetingMessage?: true
+    outOfOfficeHoursMessage?: true
+    promptId?: true
+    integrationId?: true
     isActive?: true
     priority?: true
     createdAt?: true
@@ -4164,10 +4280,14 @@ export namespace Prisma {
   export type QueueCountAggregateInputType = {
     id?: true
     name?: true
-    description?: true
     color?: true
+    greetingMessage?: true
+    outOfOfficeHoursMessage?: true
+    promptId?: true
+    integrationId?: true
     isActive?: true
     priority?: true
+    schedules?: true
     createdAt?: true
     updatedAt?: true
     _all?: true
@@ -4262,10 +4382,14 @@ export namespace Prisma {
   export type QueueGroupByOutputType = {
     id: string
     name: string
-    description: string | null
     color: string
+    greetingMessage: string | null
+    outOfOfficeHoursMessage: string | null
+    promptId: string | null
+    integrationId: string | null
     isActive: boolean
     priority: number
+    schedules: JsonValue[]
     createdAt: Date
     updatedAt: Date
     _count: QueueCountAggregateOutputType | null
@@ -4292,25 +4416,34 @@ export namespace Prisma {
   export type QueueSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    description?: boolean
     color?: boolean
+    greetingMessage?: boolean
+    outOfOfficeHoursMessage?: boolean
+    promptId?: boolean
+    integrationId?: boolean
     isActive?: boolean
     priority?: boolean
+    schedules?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     conversations?: boolean | Queue$conversationsArgs<ExtArgs>
     users?: boolean | Queue$usersArgs<ExtArgs>
     quickResponses?: boolean | Queue$quickResponsesArgs<ExtArgs>
+    prompts?: boolean | Queue$promptsArgs<ExtArgs>
     _count?: boolean | QueueCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["queue"]>
 
   export type QueueSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    description?: boolean
     color?: boolean
+    greetingMessage?: boolean
+    outOfOfficeHoursMessage?: boolean
+    promptId?: boolean
+    integrationId?: boolean
     isActive?: boolean
     priority?: boolean
+    schedules?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["queue"]>
@@ -4318,10 +4451,14 @@ export namespace Prisma {
   export type QueueSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     name?: boolean
-    description?: boolean
     color?: boolean
+    greetingMessage?: boolean
+    outOfOfficeHoursMessage?: boolean
+    promptId?: boolean
+    integrationId?: boolean
     isActive?: boolean
     priority?: boolean
+    schedules?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }, ExtArgs["result"]["queue"]>
@@ -4329,19 +4466,24 @@ export namespace Prisma {
   export type QueueSelectScalar = {
     id?: boolean
     name?: boolean
-    description?: boolean
     color?: boolean
+    greetingMessage?: boolean
+    outOfOfficeHoursMessage?: boolean
+    promptId?: boolean
+    integrationId?: boolean
     isActive?: boolean
     priority?: boolean
+    schedules?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type QueueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "description" | "color" | "isActive" | "priority" | "createdAt" | "updatedAt", ExtArgs["result"]["queue"]>
+  export type QueueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color" | "greetingMessage" | "outOfOfficeHoursMessage" | "promptId" | "integrationId" | "isActive" | "priority" | "schedules" | "createdAt" | "updatedAt", ExtArgs["result"]["queue"]>
   export type QueueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversations?: boolean | Queue$conversationsArgs<ExtArgs>
     users?: boolean | Queue$usersArgs<ExtArgs>
     quickResponses?: boolean | Queue$quickResponsesArgs<ExtArgs>
+    prompts?: boolean | Queue$promptsArgs<ExtArgs>
     _count?: boolean | QueueCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type QueueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
@@ -4353,14 +4495,19 @@ export namespace Prisma {
       conversations: Prisma.$ConversationPayload<ExtArgs>[]
       users: Prisma.$QueueUserPayload<ExtArgs>[]
       quickResponses: Prisma.$QuickResponsePayload<ExtArgs>[]
+      prompts: Prisma.$PromptsPayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
       name: string
-      description: string | null
       color: string
+      greetingMessage: string | null
+      outOfOfficeHoursMessage: string | null
+      promptId: string | null
+      integrationId: string | null
       isActive: boolean
       priority: number
+      schedules: Prisma.JsonValue[]
       createdAt: Date
       updatedAt: Date
     }, ExtArgs["result"]["queue"]>
@@ -4760,6 +4907,7 @@ export namespace Prisma {
     conversations<T extends Queue$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Queue$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     users<T extends Queue$usersArgs<ExtArgs> = {}>(args?: Subset<T, Queue$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QueueUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     quickResponses<T extends Queue$quickResponsesArgs<ExtArgs> = {}>(args?: Subset<T, Queue$quickResponsesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    prompts<T extends Queue$promptsArgs<ExtArgs> = {}>(args?: Subset<T, Queue$promptsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -4791,10 +4939,14 @@ export namespace Prisma {
   interface QueueFieldRefs {
     readonly id: FieldRef<"Queue", 'String'>
     readonly name: FieldRef<"Queue", 'String'>
-    readonly description: FieldRef<"Queue", 'String'>
     readonly color: FieldRef<"Queue", 'String'>
+    readonly greetingMessage: FieldRef<"Queue", 'String'>
+    readonly outOfOfficeHoursMessage: FieldRef<"Queue", 'String'>
+    readonly promptId: FieldRef<"Queue", 'String'>
+    readonly integrationId: FieldRef<"Queue", 'String'>
     readonly isActive: FieldRef<"Queue", 'Boolean'>
     readonly priority: FieldRef<"Queue", 'Int'>
+    readonly schedules: FieldRef<"Queue", 'Json[]'>
     readonly createdAt: FieldRef<"Queue", 'DateTime'>
     readonly updatedAt: FieldRef<"Queue", 'DateTime'>
   }
@@ -5254,6 +5406,30 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: QuickResponseScalarFieldEnum | QuickResponseScalarFieldEnum[]
+  }
+
+  /**
+   * Queue.prompts
+   */
+  export type Queue$promptsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsInclude<ExtArgs> | null
+    where?: PromptsWhereInput
+    orderBy?: PromptsOrderByWithRelationInput | PromptsOrderByWithRelationInput[]
+    cursor?: PromptsWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: PromptsScalarFieldEnum | PromptsScalarFieldEnum[]
   }
 
   /**
@@ -8763,6 +8939,7 @@ export namespace Prisma {
   export type QuickResponseMinAggregateOutputType = {
     id: string | null
     title: string | null
+    message: string | null
     shortcut: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -8772,6 +8949,7 @@ export namespace Prisma {
   export type QuickResponseMaxAggregateOutputType = {
     id: string | null
     title: string | null
+    message: string | null
     shortcut: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -8781,6 +8959,7 @@ export namespace Prisma {
   export type QuickResponseCountAggregateOutputType = {
     id: number
     title: number
+    message: number
     shortcut: number
     createdAt: number
     updatedAt: number
@@ -8792,6 +8971,7 @@ export namespace Prisma {
   export type QuickResponseMinAggregateInputType = {
     id?: true
     title?: true
+    message?: true
     shortcut?: true
     createdAt?: true
     updatedAt?: true
@@ -8801,6 +8981,7 @@ export namespace Prisma {
   export type QuickResponseMaxAggregateInputType = {
     id?: true
     title?: true
+    message?: true
     shortcut?: true
     createdAt?: true
     updatedAt?: true
@@ -8810,6 +8991,7 @@ export namespace Prisma {
   export type QuickResponseCountAggregateInputType = {
     id?: true
     title?: true
+    message?: true
     shortcut?: true
     createdAt?: true
     updatedAt?: true
@@ -8892,6 +9074,7 @@ export namespace Prisma {
   export type QuickResponseGroupByOutputType = {
     id: string
     title: string
+    message: string
     shortcut: string
     createdAt: Date
     updatedAt: Date
@@ -8918,6 +9101,7 @@ export namespace Prisma {
   export type QuickResponseSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    message?: boolean
     shortcut?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -8928,6 +9112,7 @@ export namespace Prisma {
   export type QuickResponseSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    message?: boolean
     shortcut?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -8938,6 +9123,7 @@ export namespace Prisma {
   export type QuickResponseSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
     id?: boolean
     title?: boolean
+    message?: boolean
     shortcut?: boolean
     createdAt?: boolean
     updatedAt?: boolean
@@ -8948,13 +9134,14 @@ export namespace Prisma {
   export type QuickResponseSelectScalar = {
     id?: boolean
     title?: boolean
+    message?: boolean
     shortcut?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     queueId?: boolean
   }
 
-  export type QuickResponseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "shortcut" | "createdAt" | "updatedAt" | "queueId", ExtArgs["result"]["quickResponse"]>
+  export type QuickResponseOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "message" | "shortcut" | "createdAt" | "updatedAt" | "queueId", ExtArgs["result"]["quickResponse"]>
   export type QuickResponseInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     queue?: boolean | QuickResponse$queueArgs<ExtArgs>
   }
@@ -8973,6 +9160,7 @@ export namespace Prisma {
     scalars: $Extensions.GetPayloadResult<{
       id: string
       title: string
+      message: string
       shortcut: string
       createdAt: Date
       updatedAt: Date
@@ -9403,6 +9591,7 @@ export namespace Prisma {
   interface QuickResponseFieldRefs {
     readonly id: FieldRef<"QuickResponse", 'String'>
     readonly title: FieldRef<"QuickResponse", 'String'>
+    readonly message: FieldRef<"QuickResponse", 'String'>
     readonly shortcut: FieldRef<"QuickResponse", 'String'>
     readonly createdAt: FieldRef<"QuickResponse", 'DateTime'>
     readonly updatedAt: FieldRef<"QuickResponse", 'DateTime'>
@@ -9837,6 +10026,1280 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: QuickResponseInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Prompts
+   */
+
+  export type AggregatePrompts = {
+    _count: PromptsCountAggregateOutputType | null
+    _avg: PromptsAvgAggregateOutputType | null
+    _sum: PromptsSumAggregateOutputType | null
+    _min: PromptsMinAggregateOutputType | null
+    _max: PromptsMaxAggregateOutputType | null
+  }
+
+  export type PromptsAvgAggregateOutputType = {
+    maxTokens: number | null
+    maxMessages: number | null
+    promptTokens: number | null
+    completionTokens: number | null
+    totalTokens: number | null
+    temperature: number | null
+  }
+
+  export type PromptsSumAggregateOutputType = {
+    maxTokens: number | null
+    maxMessages: number | null
+    promptTokens: number | null
+    completionTokens: number | null
+    totalTokens: number | null
+    temperature: number | null
+  }
+
+  export type PromptsMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    apiKey: string | null
+    prompt: string | null
+    maxTokens: number | null
+    maxMessages: number | null
+    promptTokens: number | null
+    completionTokens: number | null
+    totalTokens: number | null
+    temperature: number | null
+    assistantId: string | null
+    description: string | null
+    companyResume: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    queueId: string | null
+  }
+
+  export type PromptsMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    apiKey: string | null
+    prompt: string | null
+    maxTokens: number | null
+    maxMessages: number | null
+    promptTokens: number | null
+    completionTokens: number | null
+    totalTokens: number | null
+    temperature: number | null
+    assistantId: string | null
+    description: string | null
+    companyResume: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+    queueId: string | null
+  }
+
+  export type PromptsCountAggregateOutputType = {
+    id: number
+    title: number
+    apiKey: number
+    prompt: number
+    maxTokens: number
+    maxMessages: number
+    promptTokens: number
+    completionTokens: number
+    totalTokens: number
+    temperature: number
+    assistantId: number
+    description: number
+    companyResume: number
+    createdAt: number
+    updatedAt: number
+    queueId: number
+    _all: number
+  }
+
+
+  export type PromptsAvgAggregateInputType = {
+    maxTokens?: true
+    maxMessages?: true
+    promptTokens?: true
+    completionTokens?: true
+    totalTokens?: true
+    temperature?: true
+  }
+
+  export type PromptsSumAggregateInputType = {
+    maxTokens?: true
+    maxMessages?: true
+    promptTokens?: true
+    completionTokens?: true
+    totalTokens?: true
+    temperature?: true
+  }
+
+  export type PromptsMinAggregateInputType = {
+    id?: true
+    title?: true
+    apiKey?: true
+    prompt?: true
+    maxTokens?: true
+    maxMessages?: true
+    promptTokens?: true
+    completionTokens?: true
+    totalTokens?: true
+    temperature?: true
+    assistantId?: true
+    description?: true
+    companyResume?: true
+    createdAt?: true
+    updatedAt?: true
+    queueId?: true
+  }
+
+  export type PromptsMaxAggregateInputType = {
+    id?: true
+    title?: true
+    apiKey?: true
+    prompt?: true
+    maxTokens?: true
+    maxMessages?: true
+    promptTokens?: true
+    completionTokens?: true
+    totalTokens?: true
+    temperature?: true
+    assistantId?: true
+    description?: true
+    companyResume?: true
+    createdAt?: true
+    updatedAt?: true
+    queueId?: true
+  }
+
+  export type PromptsCountAggregateInputType = {
+    id?: true
+    title?: true
+    apiKey?: true
+    prompt?: true
+    maxTokens?: true
+    maxMessages?: true
+    promptTokens?: true
+    completionTokens?: true
+    totalTokens?: true
+    temperature?: true
+    assistantId?: true
+    description?: true
+    companyResume?: true
+    createdAt?: true
+    updatedAt?: true
+    queueId?: true
+    _all?: true
+  }
+
+  export type PromptsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Prompts to aggregate.
+     */
+    where?: PromptsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Prompts to fetch.
+     */
+    orderBy?: PromptsOrderByWithRelationInput | PromptsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: PromptsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Prompts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Prompts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Prompts
+    **/
+    _count?: true | PromptsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: PromptsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: PromptsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: PromptsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: PromptsMaxAggregateInputType
+  }
+
+  export type GetPromptsAggregateType<T extends PromptsAggregateArgs> = {
+        [P in keyof T & keyof AggregatePrompts]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregatePrompts[P]>
+      : GetScalarType<T[P], AggregatePrompts[P]>
+  }
+
+
+
+
+  export type PromptsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: PromptsWhereInput
+    orderBy?: PromptsOrderByWithAggregationInput | PromptsOrderByWithAggregationInput[]
+    by: PromptsScalarFieldEnum[] | PromptsScalarFieldEnum
+    having?: PromptsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: PromptsCountAggregateInputType | true
+    _avg?: PromptsAvgAggregateInputType
+    _sum?: PromptsSumAggregateInputType
+    _min?: PromptsMinAggregateInputType
+    _max?: PromptsMaxAggregateInputType
+  }
+
+  export type PromptsGroupByOutputType = {
+    id: string
+    title: string
+    apiKey: string
+    prompt: string
+    maxTokens: number
+    maxMessages: number
+    promptTokens: number | null
+    completionTokens: number | null
+    totalTokens: number | null
+    temperature: number | null
+    assistantId: string | null
+    description: string | null
+    companyResume: string | null
+    createdAt: Date
+    updatedAt: Date
+    queueId: string
+    _count: PromptsCountAggregateOutputType | null
+    _avg: PromptsAvgAggregateOutputType | null
+    _sum: PromptsSumAggregateOutputType | null
+    _min: PromptsMinAggregateOutputType | null
+    _max: PromptsMaxAggregateOutputType | null
+  }
+
+  type GetPromptsGroupByPayload<T extends PromptsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<PromptsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof PromptsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], PromptsGroupByOutputType[P]>
+            : GetScalarType<T[P], PromptsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type PromptsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    apiKey?: boolean
+    prompt?: boolean
+    maxTokens?: boolean
+    maxMessages?: boolean
+    promptTokens?: boolean
+    completionTokens?: boolean
+    totalTokens?: boolean
+    temperature?: boolean
+    assistantId?: boolean
+    description?: boolean
+    companyResume?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    queueId?: boolean
+    queue?: boolean | Prompts$queueArgs<ExtArgs>
+  }, ExtArgs["result"]["prompts"]>
+
+  export type PromptsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    apiKey?: boolean
+    prompt?: boolean
+    maxTokens?: boolean
+    maxMessages?: boolean
+    promptTokens?: boolean
+    completionTokens?: boolean
+    totalTokens?: boolean
+    temperature?: boolean
+    assistantId?: boolean
+    description?: boolean
+    companyResume?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    queueId?: boolean
+    queue?: boolean | Prompts$queueArgs<ExtArgs>
+  }, ExtArgs["result"]["prompts"]>
+
+  export type PromptsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    apiKey?: boolean
+    prompt?: boolean
+    maxTokens?: boolean
+    maxMessages?: boolean
+    promptTokens?: boolean
+    completionTokens?: boolean
+    totalTokens?: boolean
+    temperature?: boolean
+    assistantId?: boolean
+    description?: boolean
+    companyResume?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    queueId?: boolean
+    queue?: boolean | Prompts$queueArgs<ExtArgs>
+  }, ExtArgs["result"]["prompts"]>
+
+  export type PromptsSelectScalar = {
+    id?: boolean
+    title?: boolean
+    apiKey?: boolean
+    prompt?: boolean
+    maxTokens?: boolean
+    maxMessages?: boolean
+    promptTokens?: boolean
+    completionTokens?: boolean
+    totalTokens?: boolean
+    temperature?: boolean
+    assistantId?: boolean
+    description?: boolean
+    companyResume?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    queueId?: boolean
+  }
+
+  export type PromptsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "apiKey" | "prompt" | "maxTokens" | "maxMessages" | "promptTokens" | "completionTokens" | "totalTokens" | "temperature" | "assistantId" | "description" | "companyResume" | "createdAt" | "updatedAt" | "queueId", ExtArgs["result"]["prompts"]>
+  export type PromptsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    queue?: boolean | Prompts$queueArgs<ExtArgs>
+  }
+  export type PromptsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    queue?: boolean | Prompts$queueArgs<ExtArgs>
+  }
+  export type PromptsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    queue?: boolean | Prompts$queueArgs<ExtArgs>
+  }
+
+  export type $PromptsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Prompts"
+    objects: {
+      queue: Prisma.$QueuePayload<ExtArgs> | null
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      apiKey: string
+      prompt: string
+      maxTokens: number
+      maxMessages: number
+      promptTokens: number | null
+      completionTokens: number | null
+      totalTokens: number | null
+      temperature: number | null
+      assistantId: string | null
+      description: string | null
+      companyResume: string | null
+      createdAt: Date
+      updatedAt: Date
+      queueId: string
+    }, ExtArgs["result"]["prompts"]>
+    composites: {}
+  }
+
+  type PromptsGetPayload<S extends boolean | null | undefined | PromptsDefaultArgs> = $Result.GetResult<Prisma.$PromptsPayload, S>
+
+  type PromptsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<PromptsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: PromptsCountAggregateInputType | true
+    }
+
+  export interface PromptsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Prompts'], meta: { name: 'Prompts' } }
+    /**
+     * Find zero or one Prompts that matches the filter.
+     * @param {PromptsFindUniqueArgs} args - Arguments to find a Prompts
+     * @example
+     * // Get one Prompts
+     * const prompts = await prisma.prompts.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends PromptsFindUniqueArgs>(args: SelectSubset<T, PromptsFindUniqueArgs<ExtArgs>>): Prisma__PromptsClient<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Prompts that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {PromptsFindUniqueOrThrowArgs} args - Arguments to find a Prompts
+     * @example
+     * // Get one Prompts
+     * const prompts = await prisma.prompts.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends PromptsFindUniqueOrThrowArgs>(args: SelectSubset<T, PromptsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__PromptsClient<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Prompts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PromptsFindFirstArgs} args - Arguments to find a Prompts
+     * @example
+     * // Get one Prompts
+     * const prompts = await prisma.prompts.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends PromptsFindFirstArgs>(args?: SelectSubset<T, PromptsFindFirstArgs<ExtArgs>>): Prisma__PromptsClient<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Prompts that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PromptsFindFirstOrThrowArgs} args - Arguments to find a Prompts
+     * @example
+     * // Get one Prompts
+     * const prompts = await prisma.prompts.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends PromptsFindFirstOrThrowArgs>(args?: SelectSubset<T, PromptsFindFirstOrThrowArgs<ExtArgs>>): Prisma__PromptsClient<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Prompts that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PromptsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Prompts
+     * const prompts = await prisma.prompts.findMany()
+     * 
+     * // Get first 10 Prompts
+     * const prompts = await prisma.prompts.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const promptsWithIdOnly = await prisma.prompts.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends PromptsFindManyArgs>(args?: SelectSubset<T, PromptsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Prompts.
+     * @param {PromptsCreateArgs} args - Arguments to create a Prompts.
+     * @example
+     * // Create one Prompts
+     * const Prompts = await prisma.prompts.create({
+     *   data: {
+     *     // ... data to create a Prompts
+     *   }
+     * })
+     * 
+     */
+    create<T extends PromptsCreateArgs>(args: SelectSubset<T, PromptsCreateArgs<ExtArgs>>): Prisma__PromptsClient<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Prompts.
+     * @param {PromptsCreateManyArgs} args - Arguments to create many Prompts.
+     * @example
+     * // Create many Prompts
+     * const prompts = await prisma.prompts.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends PromptsCreateManyArgs>(args?: SelectSubset<T, PromptsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Prompts and returns the data saved in the database.
+     * @param {PromptsCreateManyAndReturnArgs} args - Arguments to create many Prompts.
+     * @example
+     * // Create many Prompts
+     * const prompts = await prisma.prompts.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Prompts and only return the `id`
+     * const promptsWithIdOnly = await prisma.prompts.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends PromptsCreateManyAndReturnArgs>(args?: SelectSubset<T, PromptsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Prompts.
+     * @param {PromptsDeleteArgs} args - Arguments to delete one Prompts.
+     * @example
+     * // Delete one Prompts
+     * const Prompts = await prisma.prompts.delete({
+     *   where: {
+     *     // ... filter to delete one Prompts
+     *   }
+     * })
+     * 
+     */
+    delete<T extends PromptsDeleteArgs>(args: SelectSubset<T, PromptsDeleteArgs<ExtArgs>>): Prisma__PromptsClient<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Prompts.
+     * @param {PromptsUpdateArgs} args - Arguments to update one Prompts.
+     * @example
+     * // Update one Prompts
+     * const prompts = await prisma.prompts.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends PromptsUpdateArgs>(args: SelectSubset<T, PromptsUpdateArgs<ExtArgs>>): Prisma__PromptsClient<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Prompts.
+     * @param {PromptsDeleteManyArgs} args - Arguments to filter Prompts to delete.
+     * @example
+     * // Delete a few Prompts
+     * const { count } = await prisma.prompts.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends PromptsDeleteManyArgs>(args?: SelectSubset<T, PromptsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Prompts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PromptsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Prompts
+     * const prompts = await prisma.prompts.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends PromptsUpdateManyArgs>(args: SelectSubset<T, PromptsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Prompts and returns the data updated in the database.
+     * @param {PromptsUpdateManyAndReturnArgs} args - Arguments to update many Prompts.
+     * @example
+     * // Update many Prompts
+     * const prompts = await prisma.prompts.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Prompts and only return the `id`
+     * const promptsWithIdOnly = await prisma.prompts.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends PromptsUpdateManyAndReturnArgs>(args: SelectSubset<T, PromptsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Prompts.
+     * @param {PromptsUpsertArgs} args - Arguments to update or create a Prompts.
+     * @example
+     * // Update or create a Prompts
+     * const prompts = await prisma.prompts.upsert({
+     *   create: {
+     *     // ... data to create a Prompts
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Prompts we want to update
+     *   }
+     * })
+     */
+    upsert<T extends PromptsUpsertArgs>(args: SelectSubset<T, PromptsUpsertArgs<ExtArgs>>): Prisma__PromptsClient<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Prompts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PromptsCountArgs} args - Arguments to filter Prompts to count.
+     * @example
+     * // Count the number of Prompts
+     * const count = await prisma.prompts.count({
+     *   where: {
+     *     // ... the filter for the Prompts we want to count
+     *   }
+     * })
+    **/
+    count<T extends PromptsCountArgs>(
+      args?: Subset<T, PromptsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], PromptsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Prompts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PromptsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends PromptsAggregateArgs>(args: Subset<T, PromptsAggregateArgs>): Prisma.PrismaPromise<GetPromptsAggregateType<T>>
+
+    /**
+     * Group by Prompts.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {PromptsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends PromptsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: PromptsGroupByArgs['orderBy'] }
+        : { orderBy?: PromptsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, PromptsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetPromptsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Prompts model
+   */
+  readonly fields: PromptsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Prompts.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__PromptsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    queue<T extends Prompts$queueArgs<ExtArgs> = {}>(args?: Subset<T, Prompts$queueArgs<ExtArgs>>): Prisma__QueueClient<$Result.GetResult<Prisma.$QueuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Prompts model
+   */
+  interface PromptsFieldRefs {
+    readonly id: FieldRef<"Prompts", 'String'>
+    readonly title: FieldRef<"Prompts", 'String'>
+    readonly apiKey: FieldRef<"Prompts", 'String'>
+    readonly prompt: FieldRef<"Prompts", 'String'>
+    readonly maxTokens: FieldRef<"Prompts", 'Int'>
+    readonly maxMessages: FieldRef<"Prompts", 'Int'>
+    readonly promptTokens: FieldRef<"Prompts", 'Int'>
+    readonly completionTokens: FieldRef<"Prompts", 'Int'>
+    readonly totalTokens: FieldRef<"Prompts", 'Int'>
+    readonly temperature: FieldRef<"Prompts", 'Float'>
+    readonly assistantId: FieldRef<"Prompts", 'String'>
+    readonly description: FieldRef<"Prompts", 'String'>
+    readonly companyResume: FieldRef<"Prompts", 'String'>
+    readonly createdAt: FieldRef<"Prompts", 'DateTime'>
+    readonly updatedAt: FieldRef<"Prompts", 'DateTime'>
+    readonly queueId: FieldRef<"Prompts", 'String'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Prompts findUnique
+   */
+  export type PromptsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsInclude<ExtArgs> | null
+    /**
+     * Filter, which Prompts to fetch.
+     */
+    where: PromptsWhereUniqueInput
+  }
+
+  /**
+   * Prompts findUniqueOrThrow
+   */
+  export type PromptsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsInclude<ExtArgs> | null
+    /**
+     * Filter, which Prompts to fetch.
+     */
+    where: PromptsWhereUniqueInput
+  }
+
+  /**
+   * Prompts findFirst
+   */
+  export type PromptsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsInclude<ExtArgs> | null
+    /**
+     * Filter, which Prompts to fetch.
+     */
+    where?: PromptsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Prompts to fetch.
+     */
+    orderBy?: PromptsOrderByWithRelationInput | PromptsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Prompts.
+     */
+    cursor?: PromptsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Prompts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Prompts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Prompts.
+     */
+    distinct?: PromptsScalarFieldEnum | PromptsScalarFieldEnum[]
+  }
+
+  /**
+   * Prompts findFirstOrThrow
+   */
+  export type PromptsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsInclude<ExtArgs> | null
+    /**
+     * Filter, which Prompts to fetch.
+     */
+    where?: PromptsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Prompts to fetch.
+     */
+    orderBy?: PromptsOrderByWithRelationInput | PromptsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Prompts.
+     */
+    cursor?: PromptsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Prompts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Prompts.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Prompts.
+     */
+    distinct?: PromptsScalarFieldEnum | PromptsScalarFieldEnum[]
+  }
+
+  /**
+   * Prompts findMany
+   */
+  export type PromptsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsInclude<ExtArgs> | null
+    /**
+     * Filter, which Prompts to fetch.
+     */
+    where?: PromptsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Prompts to fetch.
+     */
+    orderBy?: PromptsOrderByWithRelationInput | PromptsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Prompts.
+     */
+    cursor?: PromptsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Prompts from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Prompts.
+     */
+    skip?: number
+    distinct?: PromptsScalarFieldEnum | PromptsScalarFieldEnum[]
+  }
+
+  /**
+   * Prompts create
+   */
+  export type PromptsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Prompts.
+     */
+    data: XOR<PromptsCreateInput, PromptsUncheckedCreateInput>
+  }
+
+  /**
+   * Prompts createMany
+   */
+  export type PromptsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Prompts.
+     */
+    data: PromptsCreateManyInput | PromptsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Prompts createManyAndReturn
+   */
+  export type PromptsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * The data used to create many Prompts.
+     */
+    data: PromptsCreateManyInput | PromptsCreateManyInput[]
+    skipDuplicates?: boolean
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsIncludeCreateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Prompts update
+   */
+  export type PromptsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Prompts.
+     */
+    data: XOR<PromptsUpdateInput, PromptsUncheckedUpdateInput>
+    /**
+     * Choose, which Prompts to update.
+     */
+    where: PromptsWhereUniqueInput
+  }
+
+  /**
+   * Prompts updateMany
+   */
+  export type PromptsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Prompts.
+     */
+    data: XOR<PromptsUpdateManyMutationInput, PromptsUncheckedUpdateManyInput>
+    /**
+     * Filter which Prompts to update
+     */
+    where?: PromptsWhereInput
+    /**
+     * Limit how many Prompts to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Prompts updateManyAndReturn
+   */
+  export type PromptsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * The data used to update Prompts.
+     */
+    data: XOR<PromptsUpdateManyMutationInput, PromptsUncheckedUpdateManyInput>
+    /**
+     * Filter which Prompts to update
+     */
+    where?: PromptsWhereInput
+    /**
+     * Limit how many Prompts to update.
+     */
+    limit?: number
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsIncludeUpdateManyAndReturn<ExtArgs> | null
+  }
+
+  /**
+   * Prompts upsert
+   */
+  export type PromptsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Prompts to update in case it exists.
+     */
+    where: PromptsWhereUniqueInput
+    /**
+     * In case the Prompts found by the `where` argument doesn't exist, create a new Prompts with this data.
+     */
+    create: XOR<PromptsCreateInput, PromptsUncheckedCreateInput>
+    /**
+     * In case the Prompts was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<PromptsUpdateInput, PromptsUncheckedUpdateInput>
+  }
+
+  /**
+   * Prompts delete
+   */
+  export type PromptsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsInclude<ExtArgs> | null
+    /**
+     * Filter which Prompts to delete.
+     */
+    where: PromptsWhereUniqueInput
+  }
+
+  /**
+   * Prompts deleteMany
+   */
+  export type PromptsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Prompts to delete
+     */
+    where?: PromptsWhereInput
+    /**
+     * Limit how many Prompts to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Prompts.queue
+   */
+  export type Prompts$queueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Queue
+     */
+    select?: QueueSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Queue
+     */
+    omit?: QueueOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: QueueInclude<ExtArgs> | null
+    where?: QueueWhereInput
+  }
+
+  /**
+   * Prompts without action
+   */
+  export type PromptsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Prompts
+     */
+    select?: PromptsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Prompts
+     */
+    omit?: PromptsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: PromptsInclude<ExtArgs> | null
   }
 
 
@@ -10949,10 +12412,14 @@ export namespace Prisma {
   export const QueueScalarFieldEnum: {
     id: 'id',
     name: 'name',
-    description: 'description',
     color: 'color',
+    greetingMessage: 'greetingMessage',
+    outOfOfficeHoursMessage: 'outOfOfficeHoursMessage',
+    promptId: 'promptId',
+    integrationId: 'integrationId',
     isActive: 'isActive',
     priority: 'priority',
+    schedules: 'schedules',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
   };
@@ -11010,6 +12477,7 @@ export namespace Prisma {
   export const QuickResponseScalarFieldEnum: {
     id: 'id',
     title: 'title',
+    message: 'message',
     shortcut: 'shortcut',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
@@ -11017,6 +12485,28 @@ export namespace Prisma {
   };
 
   export type QuickResponseScalarFieldEnum = (typeof QuickResponseScalarFieldEnum)[keyof typeof QuickResponseScalarFieldEnum]
+
+
+  export const PromptsScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    apiKey: 'apiKey',
+    prompt: 'prompt',
+    maxTokens: 'maxTokens',
+    maxMessages: 'maxMessages',
+    promptTokens: 'promptTokens',
+    completionTokens: 'completionTokens',
+    totalTokens: 'totalTokens',
+    temperature: 'temperature',
+    assistantId: 'assistantId',
+    description: 'description',
+    companyResume: 'companyResume',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt',
+    queueId: 'queueId'
+  };
+
+  export type PromptsScalarFieldEnum = (typeof PromptsScalarFieldEnum)[keyof typeof PromptsScalarFieldEnum]
 
 
   export const WhatsAppConnectionScalarFieldEnum: {
@@ -11124,6 +12614,20 @@ export namespace Prisma {
    * Reference to a field of type 'Int[]'
    */
   export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json[]'
+   */
+  export type ListJsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json[]'>
+    
+
+
+  /**
+   * Reference to a field of type 'Json'
+   */
+  export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
     
 
 
@@ -11386,29 +12890,39 @@ export namespace Prisma {
     NOT?: QueueWhereInput | QueueWhereInput[]
     id?: StringFilter<"Queue"> | string
     name?: StringFilter<"Queue"> | string
-    description?: StringNullableFilter<"Queue"> | string | null
     color?: StringFilter<"Queue"> | string
+    greetingMessage?: StringNullableFilter<"Queue"> | string | null
+    outOfOfficeHoursMessage?: StringNullableFilter<"Queue"> | string | null
+    promptId?: StringNullableFilter<"Queue"> | string | null
+    integrationId?: StringNullableFilter<"Queue"> | string | null
     isActive?: BoolFilter<"Queue"> | boolean
     priority?: IntFilter<"Queue"> | number
+    schedules?: JsonNullableListFilter<"Queue">
     createdAt?: DateTimeFilter<"Queue"> | Date | string
     updatedAt?: DateTimeFilter<"Queue"> | Date | string
     conversations?: ConversationListRelationFilter
     users?: QueueUserListRelationFilter
     quickResponses?: QuickResponseListRelationFilter
+    prompts?: PromptsListRelationFilter
   }
 
   export type QueueOrderByWithRelationInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrderInput | SortOrder
     color?: SortOrder
+    greetingMessage?: SortOrderInput | SortOrder
+    outOfOfficeHoursMessage?: SortOrderInput | SortOrder
+    promptId?: SortOrderInput | SortOrder
+    integrationId?: SortOrderInput | SortOrder
     isActive?: SortOrder
     priority?: SortOrder
+    schedules?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     conversations?: ConversationOrderByRelationAggregateInput
     users?: QueueUserOrderByRelationAggregateInput
     quickResponses?: QuickResponseOrderByRelationAggregateInput
+    prompts?: PromptsOrderByRelationAggregateInput
   }
 
   export type QueueWhereUniqueInput = Prisma.AtLeast<{
@@ -11417,24 +12931,33 @@ export namespace Prisma {
     OR?: QueueWhereInput[]
     NOT?: QueueWhereInput | QueueWhereInput[]
     name?: StringFilter<"Queue"> | string
-    description?: StringNullableFilter<"Queue"> | string | null
     color?: StringFilter<"Queue"> | string
+    greetingMessage?: StringNullableFilter<"Queue"> | string | null
+    outOfOfficeHoursMessage?: StringNullableFilter<"Queue"> | string | null
+    promptId?: StringNullableFilter<"Queue"> | string | null
+    integrationId?: StringNullableFilter<"Queue"> | string | null
     isActive?: BoolFilter<"Queue"> | boolean
     priority?: IntFilter<"Queue"> | number
+    schedules?: JsonNullableListFilter<"Queue">
     createdAt?: DateTimeFilter<"Queue"> | Date | string
     updatedAt?: DateTimeFilter<"Queue"> | Date | string
     conversations?: ConversationListRelationFilter
     users?: QueueUserListRelationFilter
     quickResponses?: QuickResponseListRelationFilter
+    prompts?: PromptsListRelationFilter
   }, "id">
 
   export type QueueOrderByWithAggregationInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrderInput | SortOrder
     color?: SortOrder
+    greetingMessage?: SortOrderInput | SortOrder
+    outOfOfficeHoursMessage?: SortOrderInput | SortOrder
+    promptId?: SortOrderInput | SortOrder
+    integrationId?: SortOrderInput | SortOrder
     isActive?: SortOrder
     priority?: SortOrder
+    schedules?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     _count?: QueueCountOrderByAggregateInput
@@ -11450,10 +12973,14 @@ export namespace Prisma {
     NOT?: QueueScalarWhereWithAggregatesInput | QueueScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"Queue"> | string
     name?: StringWithAggregatesFilter<"Queue"> | string
-    description?: StringNullableWithAggregatesFilter<"Queue"> | string | null
     color?: StringWithAggregatesFilter<"Queue"> | string
+    greetingMessage?: StringNullableWithAggregatesFilter<"Queue"> | string | null
+    outOfOfficeHoursMessage?: StringNullableWithAggregatesFilter<"Queue"> | string | null
+    promptId?: StringNullableWithAggregatesFilter<"Queue"> | string | null
+    integrationId?: StringNullableWithAggregatesFilter<"Queue"> | string | null
     isActive?: BoolWithAggregatesFilter<"Queue"> | boolean
     priority?: IntWithAggregatesFilter<"Queue"> | number
+    schedules?: JsonNullableListFilter<"Queue">
     createdAt?: DateTimeWithAggregatesFilter<"Queue"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Queue"> | Date | string
   }
@@ -11715,6 +13242,7 @@ export namespace Prisma {
     NOT?: QuickResponseWhereInput | QuickResponseWhereInput[]
     id?: StringFilter<"QuickResponse"> | string
     title?: StringFilter<"QuickResponse"> | string
+    message?: StringFilter<"QuickResponse"> | string
     shortcut?: StringFilter<"QuickResponse"> | string
     createdAt?: DateTimeFilter<"QuickResponse"> | Date | string
     updatedAt?: DateTimeFilter<"QuickResponse"> | Date | string
@@ -11725,6 +13253,7 @@ export namespace Prisma {
   export type QuickResponseOrderByWithRelationInput = {
     id?: SortOrder
     title?: SortOrder
+    message?: SortOrder
     shortcut?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11738,6 +13267,7 @@ export namespace Prisma {
     OR?: QuickResponseWhereInput[]
     NOT?: QuickResponseWhereInput | QuickResponseWhereInput[]
     title?: StringFilter<"QuickResponse"> | string
+    message?: StringFilter<"QuickResponse"> | string
     shortcut?: StringFilter<"QuickResponse"> | string
     createdAt?: DateTimeFilter<"QuickResponse"> | Date | string
     updatedAt?: DateTimeFilter<"QuickResponse"> | Date | string
@@ -11748,6 +13278,7 @@ export namespace Prisma {
   export type QuickResponseOrderByWithAggregationInput = {
     id?: SortOrder
     title?: SortOrder
+    message?: SortOrder
     shortcut?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -11763,10 +13294,123 @@ export namespace Prisma {
     NOT?: QuickResponseScalarWhereWithAggregatesInput | QuickResponseScalarWhereWithAggregatesInput[]
     id?: StringWithAggregatesFilter<"QuickResponse"> | string
     title?: StringWithAggregatesFilter<"QuickResponse"> | string
+    message?: StringWithAggregatesFilter<"QuickResponse"> | string
     shortcut?: StringWithAggregatesFilter<"QuickResponse"> | string
     createdAt?: DateTimeWithAggregatesFilter<"QuickResponse"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"QuickResponse"> | Date | string
     queueId?: StringWithAggregatesFilter<"QuickResponse"> | string
+  }
+
+  export type PromptsWhereInput = {
+    AND?: PromptsWhereInput | PromptsWhereInput[]
+    OR?: PromptsWhereInput[]
+    NOT?: PromptsWhereInput | PromptsWhereInput[]
+    id?: StringFilter<"Prompts"> | string
+    title?: StringFilter<"Prompts"> | string
+    apiKey?: StringFilter<"Prompts"> | string
+    prompt?: StringFilter<"Prompts"> | string
+    maxTokens?: IntFilter<"Prompts"> | number
+    maxMessages?: IntFilter<"Prompts"> | number
+    promptTokens?: IntNullableFilter<"Prompts"> | number | null
+    completionTokens?: IntNullableFilter<"Prompts"> | number | null
+    totalTokens?: IntNullableFilter<"Prompts"> | number | null
+    temperature?: FloatNullableFilter<"Prompts"> | number | null
+    assistantId?: StringNullableFilter<"Prompts"> | string | null
+    description?: StringNullableFilter<"Prompts"> | string | null
+    companyResume?: StringNullableFilter<"Prompts"> | string | null
+    createdAt?: DateTimeFilter<"Prompts"> | Date | string
+    updatedAt?: DateTimeFilter<"Prompts"> | Date | string
+    queueId?: StringFilter<"Prompts"> | string
+    queue?: XOR<QueueNullableScalarRelationFilter, QueueWhereInput> | null
+  }
+
+  export type PromptsOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    apiKey?: SortOrder
+    prompt?: SortOrder
+    maxTokens?: SortOrder
+    maxMessages?: SortOrder
+    promptTokens?: SortOrderInput | SortOrder
+    completionTokens?: SortOrderInput | SortOrder
+    totalTokens?: SortOrderInput | SortOrder
+    temperature?: SortOrderInput | SortOrder
+    assistantId?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    companyResume?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    queueId?: SortOrder
+    queue?: QueueOrderByWithRelationInput
+  }
+
+  export type PromptsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: PromptsWhereInput | PromptsWhereInput[]
+    OR?: PromptsWhereInput[]
+    NOT?: PromptsWhereInput | PromptsWhereInput[]
+    title?: StringFilter<"Prompts"> | string
+    apiKey?: StringFilter<"Prompts"> | string
+    prompt?: StringFilter<"Prompts"> | string
+    maxTokens?: IntFilter<"Prompts"> | number
+    maxMessages?: IntFilter<"Prompts"> | number
+    promptTokens?: IntNullableFilter<"Prompts"> | number | null
+    completionTokens?: IntNullableFilter<"Prompts"> | number | null
+    totalTokens?: IntNullableFilter<"Prompts"> | number | null
+    temperature?: FloatNullableFilter<"Prompts"> | number | null
+    assistantId?: StringNullableFilter<"Prompts"> | string | null
+    description?: StringNullableFilter<"Prompts"> | string | null
+    companyResume?: StringNullableFilter<"Prompts"> | string | null
+    createdAt?: DateTimeFilter<"Prompts"> | Date | string
+    updatedAt?: DateTimeFilter<"Prompts"> | Date | string
+    queueId?: StringFilter<"Prompts"> | string
+    queue?: XOR<QueueNullableScalarRelationFilter, QueueWhereInput> | null
+  }, "id">
+
+  export type PromptsOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    apiKey?: SortOrder
+    prompt?: SortOrder
+    maxTokens?: SortOrder
+    maxMessages?: SortOrder
+    promptTokens?: SortOrderInput | SortOrder
+    completionTokens?: SortOrderInput | SortOrder
+    totalTokens?: SortOrderInput | SortOrder
+    temperature?: SortOrderInput | SortOrder
+    assistantId?: SortOrderInput | SortOrder
+    description?: SortOrderInput | SortOrder
+    companyResume?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    queueId?: SortOrder
+    _count?: PromptsCountOrderByAggregateInput
+    _avg?: PromptsAvgOrderByAggregateInput
+    _max?: PromptsMaxOrderByAggregateInput
+    _min?: PromptsMinOrderByAggregateInput
+    _sum?: PromptsSumOrderByAggregateInput
+  }
+
+  export type PromptsScalarWhereWithAggregatesInput = {
+    AND?: PromptsScalarWhereWithAggregatesInput | PromptsScalarWhereWithAggregatesInput[]
+    OR?: PromptsScalarWhereWithAggregatesInput[]
+    NOT?: PromptsScalarWhereWithAggregatesInput | PromptsScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Prompts"> | string
+    title?: StringWithAggregatesFilter<"Prompts"> | string
+    apiKey?: StringWithAggregatesFilter<"Prompts"> | string
+    prompt?: StringWithAggregatesFilter<"Prompts"> | string
+    maxTokens?: IntWithAggregatesFilter<"Prompts"> | number
+    maxMessages?: IntWithAggregatesFilter<"Prompts"> | number
+    promptTokens?: IntNullableWithAggregatesFilter<"Prompts"> | number | null
+    completionTokens?: IntNullableWithAggregatesFilter<"Prompts"> | number | null
+    totalTokens?: IntNullableWithAggregatesFilter<"Prompts"> | number | null
+    temperature?: FloatNullableWithAggregatesFilter<"Prompts"> | number | null
+    assistantId?: StringNullableWithAggregatesFilter<"Prompts"> | string | null
+    description?: StringNullableWithAggregatesFilter<"Prompts"> | string | null
+    companyResume?: StringNullableWithAggregatesFilter<"Prompts"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Prompts"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Prompts"> | Date | string
+    queueId?: StringWithAggregatesFilter<"Prompts"> | string
   }
 
   export type WhatsAppConnectionWhereInput = {
@@ -12047,66 +13691,90 @@ export namespace Prisma {
   export type QueueCreateInput = {
     id?: string
     name: string
-    description?: string | null
     color?: string
+    greetingMessage?: string | null
+    outOfOfficeHoursMessage?: string | null
+    promptId?: string | null
+    integrationId?: string | null
     isActive?: boolean
     priority?: number
+    schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutQueueInput
     users?: QueueUserCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseCreateNestedManyWithoutQueueInput
+    prompts?: PromptsCreateNestedManyWithoutQueueInput
   }
 
   export type QueueUncheckedCreateInput = {
     id?: string
     name: string
-    description?: string | null
     color?: string
+    greetingMessage?: string | null
+    outOfOfficeHoursMessage?: string | null
+    promptId?: string | null
+    integrationId?: string | null
     isActive?: boolean
     priority?: number
+    schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutQueueInput
     users?: QueueUserUncheckedCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseUncheckedCreateNestedManyWithoutQueueInput
+    prompts?: PromptsUncheckedCreateNestedManyWithoutQueueInput
   }
 
   export type QueueUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     color?: StringFieldUpdateOperationsInput | string
+    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    promptId?: NullableStringFieldUpdateOperationsInput | string | null
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     priority?: IntFieldUpdateOperationsInput | number
+    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutQueueNestedInput
     users?: QueueUserUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUpdateManyWithoutQueueNestedInput
+    prompts?: PromptsUpdateManyWithoutQueueNestedInput
   }
 
   export type QueueUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     color?: StringFieldUpdateOperationsInput | string
+    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    promptId?: NullableStringFieldUpdateOperationsInput | string | null
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     priority?: IntFieldUpdateOperationsInput | number
+    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutQueueNestedInput
     users?: QueueUserUncheckedUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
+    prompts?: PromptsUncheckedUpdateManyWithoutQueueNestedInput
   }
 
   export type QueueCreateManyInput = {
     id?: string
     name: string
-    description?: string | null
     color?: string
+    greetingMessage?: string | null
+    outOfOfficeHoursMessage?: string | null
+    promptId?: string | null
+    integrationId?: string | null
     isActive?: boolean
     priority?: number
+    schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -12114,10 +13782,14 @@ export namespace Prisma {
   export type QueueUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     color?: StringFieldUpdateOperationsInput | string
+    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    promptId?: NullableStringFieldUpdateOperationsInput | string | null
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     priority?: IntFieldUpdateOperationsInput | number
+    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12125,10 +13797,14 @@ export namespace Prisma {
   export type QueueUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     color?: StringFieldUpdateOperationsInput | string
+    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    promptId?: NullableStringFieldUpdateOperationsInput | string | null
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     priority?: IntFieldUpdateOperationsInput | number
+    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -12399,6 +14075,7 @@ export namespace Prisma {
   export type QuickResponseCreateInput = {
     id?: string
     title: string
+    message: string
     shortcut: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -12408,15 +14085,17 @@ export namespace Prisma {
   export type QuickResponseUncheckedCreateInput = {
     id?: string
     title: string
+    message: string
     shortcut: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    queueId?: string
+    queueId: string
   }
 
   export type QuickResponseUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
     shortcut?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12426,6 +14105,7 @@ export namespace Prisma {
   export type QuickResponseUncheckedUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
     shortcut?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12435,15 +14115,17 @@ export namespace Prisma {
   export type QuickResponseCreateManyInput = {
     id?: string
     title: string
+    message: string
     shortcut: string
     createdAt?: Date | string
     updatedAt?: Date | string
-    queueId?: string
+    queueId: string
   }
 
   export type QuickResponseUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
     shortcut?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -12452,7 +14134,140 @@ export namespace Prisma {
   export type QuickResponseUncheckedUpdateManyInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
     shortcut?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    queueId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PromptsCreateInput = {
+    id?: string
+    title: string
+    apiKey: string
+    prompt: string
+    maxTokens: number
+    maxMessages: number
+    promptTokens?: number | null
+    completionTokens?: number | null
+    totalTokens?: number | null
+    temperature?: number | null
+    assistantId?: string | null
+    description?: string | null
+    companyResume?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    queue?: QueueCreateNestedOneWithoutPromptsInput
+  }
+
+  export type PromptsUncheckedCreateInput = {
+    id?: string
+    title: string
+    apiKey: string
+    prompt: string
+    maxTokens: number
+    maxMessages: number
+    promptTokens?: number | null
+    completionTokens?: number | null
+    totalTokens?: number | null
+    temperature?: number | null
+    assistantId?: string | null
+    description?: string | null
+    companyResume?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    queueId: string
+  }
+
+  export type PromptsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    apiKey?: StringFieldUpdateOperationsInput | string
+    prompt?: StringFieldUpdateOperationsInput | string
+    maxTokens?: IntFieldUpdateOperationsInput | number
+    maxMessages?: IntFieldUpdateOperationsInput | number
+    promptTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    completionTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    totalTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    assistantId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    queue?: QueueUpdateOneWithoutPromptsNestedInput
+  }
+
+  export type PromptsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    apiKey?: StringFieldUpdateOperationsInput | string
+    prompt?: StringFieldUpdateOperationsInput | string
+    maxTokens?: IntFieldUpdateOperationsInput | number
+    maxMessages?: IntFieldUpdateOperationsInput | number
+    promptTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    completionTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    totalTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    assistantId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    queueId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type PromptsCreateManyInput = {
+    id?: string
+    title: string
+    apiKey: string
+    prompt: string
+    maxTokens: number
+    maxMessages: number
+    promptTokens?: number | null
+    completionTokens?: number | null
+    totalTokens?: number | null
+    temperature?: number | null
+    assistantId?: string | null
+    description?: string | null
+    companyResume?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    queueId: string
+  }
+
+  export type PromptsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    apiKey?: StringFieldUpdateOperationsInput | string
+    prompt?: StringFieldUpdateOperationsInput | string
+    maxTokens?: IntFieldUpdateOperationsInput | number
+    maxMessages?: IntFieldUpdateOperationsInput | number
+    promptTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    completionTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    totalTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    assistantId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PromptsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    apiKey?: StringFieldUpdateOperationsInput | string
+    prompt?: StringFieldUpdateOperationsInput | string
+    maxTokens?: IntFieldUpdateOperationsInput | number
+    maxMessages?: IntFieldUpdateOperationsInput | number
+    promptTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    completionTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    totalTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    assistantId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     queueId?: StringFieldUpdateOperationsInput | string
@@ -12824,6 +14639,20 @@ export namespace Prisma {
     gte?: number | IntFieldRefInput<$PrismaModel>
     not?: NestedIntFilter<$PrismaModel> | number
   }
+  export type JsonNullableListFilter<$PrismaModel = never> =
+    | PatchUndefined<
+        Either<Required<JsonNullableListFilterBase<$PrismaModel>>, Exclude<keyof Required<JsonNullableListFilterBase<$PrismaModel>>, 'path'>>,
+        Required<JsonNullableListFilterBase<$PrismaModel>>
+      >
+    | OptionalFlat<Omit<Required<JsonNullableListFilterBase<$PrismaModel>>, 'path'>>
+
+  export type JsonNullableListFilterBase<$PrismaModel = never> = {
+    equals?: InputJsonValue[] | ListJsonFieldRefInput<$PrismaModel> | null
+    has?: InputJsonValue | JsonFieldRefInput<$PrismaModel> | null
+    hasEvery?: InputJsonValue[] | ListJsonFieldRefInput<$PrismaModel>
+    hasSome?: InputJsonValue[] | ListJsonFieldRefInput<$PrismaModel>
+    isEmpty?: boolean
+  }
 
   export type QuickResponseListRelationFilter = {
     every?: QuickResponseWhereInput
@@ -12831,17 +14660,31 @@ export namespace Prisma {
     none?: QuickResponseWhereInput
   }
 
+  export type PromptsListRelationFilter = {
+    every?: PromptsWhereInput
+    some?: PromptsWhereInput
+    none?: PromptsWhereInput
+  }
+
   export type QuickResponseOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PromptsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
   export type QueueCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrder
     color?: SortOrder
+    greetingMessage?: SortOrder
+    outOfOfficeHoursMessage?: SortOrder
+    promptId?: SortOrder
+    integrationId?: SortOrder
     isActive?: SortOrder
     priority?: SortOrder
+    schedules?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -12853,8 +14696,11 @@ export namespace Prisma {
   export type QueueMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrder
     color?: SortOrder
+    greetingMessage?: SortOrder
+    outOfOfficeHoursMessage?: SortOrder
+    promptId?: SortOrder
+    integrationId?: SortOrder
     isActive?: SortOrder
     priority?: SortOrder
     createdAt?: SortOrder
@@ -12864,8 +14710,11 @@ export namespace Prisma {
   export type QueueMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    description?: SortOrder
     color?: SortOrder
+    greetingMessage?: SortOrder
+    outOfOfficeHoursMessage?: SortOrder
+    promptId?: SortOrder
+    integrationId?: SortOrder
     isActive?: SortOrder
     priority?: SortOrder
     createdAt?: SortOrder
@@ -13129,6 +14978,7 @@ export namespace Prisma {
   export type QuickResponseCountOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    message?: SortOrder
     shortcut?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -13138,6 +14988,7 @@ export namespace Prisma {
   export type QuickResponseMaxOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    message?: SortOrder
     shortcut?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -13147,10 +14998,140 @@ export namespace Prisma {
   export type QuickResponseMinOrderByAggregateInput = {
     id?: SortOrder
     title?: SortOrder
+    message?: SortOrder
     shortcut?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrder
+  }
+
+  export type IntNullableFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type FloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type PromptsCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    apiKey?: SortOrder
+    prompt?: SortOrder
+    maxTokens?: SortOrder
+    maxMessages?: SortOrder
+    promptTokens?: SortOrder
+    completionTokens?: SortOrder
+    totalTokens?: SortOrder
+    temperature?: SortOrder
+    assistantId?: SortOrder
+    description?: SortOrder
+    companyResume?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    queueId?: SortOrder
+  }
+
+  export type PromptsAvgOrderByAggregateInput = {
+    maxTokens?: SortOrder
+    maxMessages?: SortOrder
+    promptTokens?: SortOrder
+    completionTokens?: SortOrder
+    totalTokens?: SortOrder
+    temperature?: SortOrder
+  }
+
+  export type PromptsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    apiKey?: SortOrder
+    prompt?: SortOrder
+    maxTokens?: SortOrder
+    maxMessages?: SortOrder
+    promptTokens?: SortOrder
+    completionTokens?: SortOrder
+    totalTokens?: SortOrder
+    temperature?: SortOrder
+    assistantId?: SortOrder
+    description?: SortOrder
+    companyResume?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    queueId?: SortOrder
+  }
+
+  export type PromptsMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    apiKey?: SortOrder
+    prompt?: SortOrder
+    maxTokens?: SortOrder
+    maxMessages?: SortOrder
+    promptTokens?: SortOrder
+    completionTokens?: SortOrder
+    totalTokens?: SortOrder
+    temperature?: SortOrder
+    assistantId?: SortOrder
+    description?: SortOrder
+    companyResume?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    queueId?: SortOrder
+  }
+
+  export type PromptsSumOrderByAggregateInput = {
+    maxTokens?: SortOrder
+    maxMessages?: SortOrder
+    promptTokens?: SortOrder
+    completionTokens?: SortOrder
+    totalTokens?: SortOrder
+    temperature?: SortOrder
+  }
+
+  export type IntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type FloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type WhatsAppConnectionCountOrderByAggregateInput = {
@@ -13393,6 +15374,10 @@ export namespace Prisma {
     deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
   }
 
+  export type QueueCreateschedulesInput = {
+    set: InputJsonValue[]
+  }
+
   export type ConversationCreateNestedManyWithoutQueueInput = {
     create?: XOR<ConversationCreateWithoutQueueInput, ConversationUncheckedCreateWithoutQueueInput> | ConversationCreateWithoutQueueInput[] | ConversationUncheckedCreateWithoutQueueInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutQueueInput | ConversationCreateOrConnectWithoutQueueInput[]
@@ -13412,6 +15397,13 @@ export namespace Prisma {
     connectOrCreate?: QuickResponseCreateOrConnectWithoutQueueInput | QuickResponseCreateOrConnectWithoutQueueInput[]
     createMany?: QuickResponseCreateManyQueueInputEnvelope
     connect?: QuickResponseWhereUniqueInput | QuickResponseWhereUniqueInput[]
+  }
+
+  export type PromptsCreateNestedManyWithoutQueueInput = {
+    create?: XOR<PromptsCreateWithoutQueueInput, PromptsUncheckedCreateWithoutQueueInput> | PromptsCreateWithoutQueueInput[] | PromptsUncheckedCreateWithoutQueueInput[]
+    connectOrCreate?: PromptsCreateOrConnectWithoutQueueInput | PromptsCreateOrConnectWithoutQueueInput[]
+    createMany?: PromptsCreateManyQueueInputEnvelope
+    connect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
   }
 
   export type ConversationUncheckedCreateNestedManyWithoutQueueInput = {
@@ -13435,12 +15427,24 @@ export namespace Prisma {
     connect?: QuickResponseWhereUniqueInput | QuickResponseWhereUniqueInput[]
   }
 
+  export type PromptsUncheckedCreateNestedManyWithoutQueueInput = {
+    create?: XOR<PromptsCreateWithoutQueueInput, PromptsUncheckedCreateWithoutQueueInput> | PromptsCreateWithoutQueueInput[] | PromptsUncheckedCreateWithoutQueueInput[]
+    connectOrCreate?: PromptsCreateOrConnectWithoutQueueInput | PromptsCreateOrConnectWithoutQueueInput[]
+    createMany?: PromptsCreateManyQueueInputEnvelope
+    connect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
+  }
+
   export type IntFieldUpdateOperationsInput = {
     set?: number
     increment?: number
     decrement?: number
     multiply?: number
     divide?: number
+  }
+
+  export type QueueUpdateschedulesInput = {
+    set?: InputJsonValue[]
+    push?: InputJsonValue | InputJsonValue[]
   }
 
   export type ConversationUpdateManyWithoutQueueNestedInput = {
@@ -13485,6 +15489,20 @@ export namespace Prisma {
     deleteMany?: QuickResponseScalarWhereInput | QuickResponseScalarWhereInput[]
   }
 
+  export type PromptsUpdateManyWithoutQueueNestedInput = {
+    create?: XOR<PromptsCreateWithoutQueueInput, PromptsUncheckedCreateWithoutQueueInput> | PromptsCreateWithoutQueueInput[] | PromptsUncheckedCreateWithoutQueueInput[]
+    connectOrCreate?: PromptsCreateOrConnectWithoutQueueInput | PromptsCreateOrConnectWithoutQueueInput[]
+    upsert?: PromptsUpsertWithWhereUniqueWithoutQueueInput | PromptsUpsertWithWhereUniqueWithoutQueueInput[]
+    createMany?: PromptsCreateManyQueueInputEnvelope
+    set?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
+    disconnect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
+    delete?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
+    connect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
+    update?: PromptsUpdateWithWhereUniqueWithoutQueueInput | PromptsUpdateWithWhereUniqueWithoutQueueInput[]
+    updateMany?: PromptsUpdateManyWithWhereWithoutQueueInput | PromptsUpdateManyWithWhereWithoutQueueInput[]
+    deleteMany?: PromptsScalarWhereInput | PromptsScalarWhereInput[]
+  }
+
   export type ConversationUncheckedUpdateManyWithoutQueueNestedInput = {
     create?: XOR<ConversationCreateWithoutQueueInput, ConversationUncheckedCreateWithoutQueueInput> | ConversationCreateWithoutQueueInput[] | ConversationUncheckedCreateWithoutQueueInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutQueueInput | ConversationCreateOrConnectWithoutQueueInput[]
@@ -13525,6 +15543,20 @@ export namespace Prisma {
     update?: QuickResponseUpdateWithWhereUniqueWithoutQueueInput | QuickResponseUpdateWithWhereUniqueWithoutQueueInput[]
     updateMany?: QuickResponseUpdateManyWithWhereWithoutQueueInput | QuickResponseUpdateManyWithWhereWithoutQueueInput[]
     deleteMany?: QuickResponseScalarWhereInput | QuickResponseScalarWhereInput[]
+  }
+
+  export type PromptsUncheckedUpdateManyWithoutQueueNestedInput = {
+    create?: XOR<PromptsCreateWithoutQueueInput, PromptsUncheckedCreateWithoutQueueInput> | PromptsCreateWithoutQueueInput[] | PromptsUncheckedCreateWithoutQueueInput[]
+    connectOrCreate?: PromptsCreateOrConnectWithoutQueueInput | PromptsCreateOrConnectWithoutQueueInput[]
+    upsert?: PromptsUpsertWithWhereUniqueWithoutQueueInput | PromptsUpsertWithWhereUniqueWithoutQueueInput[]
+    createMany?: PromptsCreateManyQueueInputEnvelope
+    set?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
+    disconnect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
+    delete?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
+    connect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
+    update?: PromptsUpdateWithWhereUniqueWithoutQueueInput | PromptsUpdateWithWhereUniqueWithoutQueueInput[]
+    updateMany?: PromptsUpdateManyWithWhereWithoutQueueInput | PromptsUpdateManyWithWhereWithoutQueueInput[]
+    deleteMany?: PromptsScalarWhereInput | PromptsScalarWhereInput[]
   }
 
   export type UserCreateNestedOneWithoutQueuesInput = {
@@ -13707,6 +15739,38 @@ export namespace Prisma {
     delete?: QueueWhereInput | boolean
     connect?: QueueWhereUniqueInput
     update?: XOR<XOR<QueueUpdateToOneWithWhereWithoutQuickResponsesInput, QueueUpdateWithoutQuickResponsesInput>, QueueUncheckedUpdateWithoutQuickResponsesInput>
+  }
+
+  export type QueueCreateNestedOneWithoutPromptsInput = {
+    create?: XOR<QueueCreateWithoutPromptsInput, QueueUncheckedCreateWithoutPromptsInput>
+    connectOrCreate?: QueueCreateOrConnectWithoutPromptsInput
+    connect?: QueueWhereUniqueInput
+  }
+
+  export type NullableIntFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type NullableFloatFieldUpdateOperationsInput = {
+    set?: number | null
+    increment?: number
+    decrement?: number
+    multiply?: number
+    divide?: number
+  }
+
+  export type QueueUpdateOneWithoutPromptsNestedInput = {
+    create?: XOR<QueueCreateWithoutPromptsInput, QueueUncheckedCreateWithoutPromptsInput>
+    connectOrCreate?: QueueCreateOrConnectWithoutPromptsInput
+    upsert?: QueueUpsertWithoutPromptsInput
+    disconnect?: QueueWhereInput | boolean
+    delete?: QueueWhereInput | boolean
+    connect?: QueueWhereUniqueInput
+    update?: XOR<XOR<QueueUpdateToOneWithWhereWithoutPromptsInput, QueueUpdateWithoutPromptsInput>, QueueUncheckedUpdateWithoutPromptsInput>
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -13983,6 +16047,49 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedEnumMessageStatusFilter<$PrismaModel>
     _max?: NestedEnumMessageStatusFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableFilter<$PrismaModel> | number | null
+  }
+
+  export type NestedIntNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | IntFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListIntFieldRefInput<$PrismaModel> | null
+    lt?: number | IntFieldRefInput<$PrismaModel>
+    lte?: number | IntFieldRefInput<$PrismaModel>
+    gt?: number | IntFieldRefInput<$PrismaModel>
+    gte?: number | IntFieldRefInput<$PrismaModel>
+    not?: NestedIntNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedIntNullableFilter<$PrismaModel>
+    _max?: NestedIntNullableFilter<$PrismaModel>
+  }
+
+  export type NestedFloatNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: number | FloatFieldRefInput<$PrismaModel> | null
+    in?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    notIn?: number[] | ListFloatFieldRefInput<$PrismaModel> | null
+    lt?: number | FloatFieldRefInput<$PrismaModel>
+    lte?: number | FloatFieldRefInput<$PrismaModel>
+    gt?: number | FloatFieldRefInput<$PrismaModel>
+    gte?: number | FloatFieldRefInput<$PrismaModel>
+    not?: NestedFloatNullableWithAggregatesFilter<$PrismaModel> | number | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _avg?: NestedFloatNullableFilter<$PrismaModel>
+    _sum?: NestedFloatNullableFilter<$PrismaModel>
+    _min?: NestedFloatNullableFilter<$PrismaModel>
+    _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
   export type ConversationCreateWithoutUserInput = {
@@ -14297,6 +16404,7 @@ export namespace Prisma {
   export type QuickResponseCreateWithoutQueueInput = {
     id?: string
     title: string
+    message: string
     shortcut: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -14305,6 +16413,7 @@ export namespace Prisma {
   export type QuickResponseUncheckedCreateWithoutQueueInput = {
     id?: string
     title: string
+    message: string
     shortcut: string
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -14317,6 +16426,52 @@ export namespace Prisma {
 
   export type QuickResponseCreateManyQueueInputEnvelope = {
     data: QuickResponseCreateManyQueueInput | QuickResponseCreateManyQueueInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type PromptsCreateWithoutQueueInput = {
+    id?: string
+    title: string
+    apiKey: string
+    prompt: string
+    maxTokens: number
+    maxMessages: number
+    promptTokens?: number | null
+    completionTokens?: number | null
+    totalTokens?: number | null
+    temperature?: number | null
+    assistantId?: string | null
+    description?: string | null
+    companyResume?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PromptsUncheckedCreateWithoutQueueInput = {
+    id?: string
+    title: string
+    apiKey: string
+    prompt: string
+    maxTokens: number
+    maxMessages: number
+    promptTokens?: number | null
+    completionTokens?: number | null
+    totalTokens?: number | null
+    temperature?: number | null
+    assistantId?: string | null
+    description?: string | null
+    companyResume?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PromptsCreateOrConnectWithoutQueueInput = {
+    where: PromptsWhereUniqueInput
+    create: XOR<PromptsCreateWithoutQueueInput, PromptsUncheckedCreateWithoutQueueInput>
+  }
+
+  export type PromptsCreateManyQueueInputEnvelope = {
+    data: PromptsCreateManyQueueInput | PromptsCreateManyQueueInput[]
     skipDuplicates?: boolean
   }
 
@@ -14374,10 +16529,49 @@ export namespace Prisma {
     NOT?: QuickResponseScalarWhereInput | QuickResponseScalarWhereInput[]
     id?: StringFilter<"QuickResponse"> | string
     title?: StringFilter<"QuickResponse"> | string
+    message?: StringFilter<"QuickResponse"> | string
     shortcut?: StringFilter<"QuickResponse"> | string
     createdAt?: DateTimeFilter<"QuickResponse"> | Date | string
     updatedAt?: DateTimeFilter<"QuickResponse"> | Date | string
     queueId?: StringFilter<"QuickResponse"> | string
+  }
+
+  export type PromptsUpsertWithWhereUniqueWithoutQueueInput = {
+    where: PromptsWhereUniqueInput
+    update: XOR<PromptsUpdateWithoutQueueInput, PromptsUncheckedUpdateWithoutQueueInput>
+    create: XOR<PromptsCreateWithoutQueueInput, PromptsUncheckedCreateWithoutQueueInput>
+  }
+
+  export type PromptsUpdateWithWhereUniqueWithoutQueueInput = {
+    where: PromptsWhereUniqueInput
+    data: XOR<PromptsUpdateWithoutQueueInput, PromptsUncheckedUpdateWithoutQueueInput>
+  }
+
+  export type PromptsUpdateManyWithWhereWithoutQueueInput = {
+    where: PromptsScalarWhereInput
+    data: XOR<PromptsUpdateManyMutationInput, PromptsUncheckedUpdateManyWithoutQueueInput>
+  }
+
+  export type PromptsScalarWhereInput = {
+    AND?: PromptsScalarWhereInput | PromptsScalarWhereInput[]
+    OR?: PromptsScalarWhereInput[]
+    NOT?: PromptsScalarWhereInput | PromptsScalarWhereInput[]
+    id?: StringFilter<"Prompts"> | string
+    title?: StringFilter<"Prompts"> | string
+    apiKey?: StringFilter<"Prompts"> | string
+    prompt?: StringFilter<"Prompts"> | string
+    maxTokens?: IntFilter<"Prompts"> | number
+    maxMessages?: IntFilter<"Prompts"> | number
+    promptTokens?: IntNullableFilter<"Prompts"> | number | null
+    completionTokens?: IntNullableFilter<"Prompts"> | number | null
+    totalTokens?: IntNullableFilter<"Prompts"> | number | null
+    temperature?: FloatNullableFilter<"Prompts"> | number | null
+    assistantId?: StringNullableFilter<"Prompts"> | string | null
+    description?: StringNullableFilter<"Prompts"> | string | null
+    companyResume?: StringNullableFilter<"Prompts"> | string | null
+    createdAt?: DateTimeFilter<"Prompts"> | Date | string
+    updatedAt?: DateTimeFilter<"Prompts"> | Date | string
+    queueId?: StringFilter<"Prompts"> | string
   }
 
   export type UserCreateWithoutQueuesInput = {
@@ -14416,27 +16610,37 @@ export namespace Prisma {
   export type QueueCreateWithoutUsersInput = {
     id?: string
     name: string
-    description?: string | null
     color?: string
+    greetingMessage?: string | null
+    outOfOfficeHoursMessage?: string | null
+    promptId?: string | null
+    integrationId?: string | null
     isActive?: boolean
     priority?: number
+    schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseCreateNestedManyWithoutQueueInput
+    prompts?: PromptsCreateNestedManyWithoutQueueInput
   }
 
   export type QueueUncheckedCreateWithoutUsersInput = {
     id?: string
     name: string
-    description?: string | null
     color?: string
+    greetingMessage?: string | null
+    outOfOfficeHoursMessage?: string | null
+    promptId?: string | null
+    integrationId?: string | null
     isActive?: boolean
     priority?: number
+    schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseUncheckedCreateNestedManyWithoutQueueInput
+    prompts?: PromptsUncheckedCreateNestedManyWithoutQueueInput
   }
 
   export type QueueCreateOrConnectWithoutUsersInput = {
@@ -14497,27 +16701,37 @@ export namespace Prisma {
   export type QueueUpdateWithoutUsersInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     color?: StringFieldUpdateOperationsInput | string
+    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    promptId?: NullableStringFieldUpdateOperationsInput | string | null
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     priority?: IntFieldUpdateOperationsInput | number
+    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUpdateManyWithoutQueueNestedInput
+    prompts?: PromptsUpdateManyWithoutQueueNestedInput
   }
 
   export type QueueUncheckedUpdateWithoutUsersInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     color?: StringFieldUpdateOperationsInput | string
+    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    promptId?: NullableStringFieldUpdateOperationsInput | string | null
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     priority?: IntFieldUpdateOperationsInput | number
+    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
+    prompts?: PromptsUncheckedUpdateManyWithoutQueueNestedInput
   }
 
   export type ContactCreateWithoutConversationsInput = {
@@ -14589,27 +16803,37 @@ export namespace Prisma {
   export type QueueCreateWithoutConversationsInput = {
     id?: string
     name: string
-    description?: string | null
     color?: string
+    greetingMessage?: string | null
+    outOfOfficeHoursMessage?: string | null
+    promptId?: string | null
+    integrationId?: string | null
     isActive?: boolean
     priority?: number
+    schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: QueueUserCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseCreateNestedManyWithoutQueueInput
+    prompts?: PromptsCreateNestedManyWithoutQueueInput
   }
 
   export type QueueUncheckedCreateWithoutConversationsInput = {
     id?: string
     name: string
-    description?: string | null
     color?: string
+    greetingMessage?: string | null
+    outOfOfficeHoursMessage?: string | null
+    promptId?: string | null
+    integrationId?: string | null
     isActive?: boolean
     priority?: number
+    schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
     users?: QueueUserUncheckedCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseUncheckedCreateNestedManyWithoutQueueInput
+    prompts?: PromptsUncheckedCreateNestedManyWithoutQueueInput
   }
 
   export type QueueCreateOrConnectWithoutConversationsInput = {
@@ -14753,27 +16977,37 @@ export namespace Prisma {
   export type QueueUpdateWithoutConversationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     color?: StringFieldUpdateOperationsInput | string
+    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    promptId?: NullableStringFieldUpdateOperationsInput | string | null
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     priority?: IntFieldUpdateOperationsInput | number
+    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: QueueUserUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUpdateManyWithoutQueueNestedInput
+    prompts?: PromptsUpdateManyWithoutQueueNestedInput
   }
 
   export type QueueUncheckedUpdateWithoutConversationsInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     color?: StringFieldUpdateOperationsInput | string
+    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    promptId?: NullableStringFieldUpdateOperationsInput | string | null
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     priority?: IntFieldUpdateOperationsInput | number
+    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     users?: QueueUserUncheckedUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
+    prompts?: PromptsUncheckedUpdateManyWithoutQueueNestedInput
   }
 
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
@@ -14939,27 +17173,37 @@ export namespace Prisma {
   export type QueueCreateWithoutQuickResponsesInput = {
     id?: string
     name: string
-    description?: string | null
     color?: string
+    greetingMessage?: string | null
+    outOfOfficeHoursMessage?: string | null
+    promptId?: string | null
+    integrationId?: string | null
     isActive?: boolean
     priority?: number
+    schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationCreateNestedManyWithoutQueueInput
     users?: QueueUserCreateNestedManyWithoutQueueInput
+    prompts?: PromptsCreateNestedManyWithoutQueueInput
   }
 
   export type QueueUncheckedCreateWithoutQuickResponsesInput = {
     id?: string
     name: string
-    description?: string | null
     color?: string
+    greetingMessage?: string | null
+    outOfOfficeHoursMessage?: string | null
+    promptId?: string | null
+    integrationId?: string | null
     isActive?: boolean
     priority?: number
+    schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
     conversations?: ConversationUncheckedCreateNestedManyWithoutQueueInput
     users?: QueueUserUncheckedCreateNestedManyWithoutQueueInput
+    prompts?: PromptsUncheckedCreateNestedManyWithoutQueueInput
   }
 
   export type QueueCreateOrConnectWithoutQuickResponsesInput = {
@@ -14981,27 +17225,125 @@ export namespace Prisma {
   export type QueueUpdateWithoutQuickResponsesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     color?: StringFieldUpdateOperationsInput | string
+    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    promptId?: NullableStringFieldUpdateOperationsInput | string | null
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     priority?: IntFieldUpdateOperationsInput | number
+    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUpdateManyWithoutQueueNestedInput
     users?: QueueUserUpdateManyWithoutQueueNestedInput
+    prompts?: PromptsUpdateManyWithoutQueueNestedInput
   }
 
   export type QueueUncheckedUpdateWithoutQuickResponsesInput = {
     id?: StringFieldUpdateOperationsInput | string
     name?: StringFieldUpdateOperationsInput | string
-    description?: NullableStringFieldUpdateOperationsInput | string | null
     color?: StringFieldUpdateOperationsInput | string
+    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    promptId?: NullableStringFieldUpdateOperationsInput | string | null
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
     isActive?: BoolFieldUpdateOperationsInput | boolean
     priority?: IntFieldUpdateOperationsInput | number
+    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversations?: ConversationUncheckedUpdateManyWithoutQueueNestedInput
     users?: QueueUserUncheckedUpdateManyWithoutQueueNestedInput
+    prompts?: PromptsUncheckedUpdateManyWithoutQueueNestedInput
+  }
+
+  export type QueueCreateWithoutPromptsInput = {
+    id?: string
+    name: string
+    color?: string
+    greetingMessage?: string | null
+    outOfOfficeHoursMessage?: string | null
+    promptId?: string | null
+    integrationId?: string | null
+    isActive?: boolean
+    priority?: number
+    schedules?: QueueCreateschedulesInput | InputJsonValue[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationCreateNestedManyWithoutQueueInput
+    users?: QueueUserCreateNestedManyWithoutQueueInput
+    quickResponses?: QuickResponseCreateNestedManyWithoutQueueInput
+  }
+
+  export type QueueUncheckedCreateWithoutPromptsInput = {
+    id?: string
+    name: string
+    color?: string
+    greetingMessage?: string | null
+    outOfOfficeHoursMessage?: string | null
+    promptId?: string | null
+    integrationId?: string | null
+    isActive?: boolean
+    priority?: number
+    schedules?: QueueCreateschedulesInput | InputJsonValue[]
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationUncheckedCreateNestedManyWithoutQueueInput
+    users?: QueueUserUncheckedCreateNestedManyWithoutQueueInput
+    quickResponses?: QuickResponseUncheckedCreateNestedManyWithoutQueueInput
+  }
+
+  export type QueueCreateOrConnectWithoutPromptsInput = {
+    where: QueueWhereUniqueInput
+    create: XOR<QueueCreateWithoutPromptsInput, QueueUncheckedCreateWithoutPromptsInput>
+  }
+
+  export type QueueUpsertWithoutPromptsInput = {
+    update: XOR<QueueUpdateWithoutPromptsInput, QueueUncheckedUpdateWithoutPromptsInput>
+    create: XOR<QueueCreateWithoutPromptsInput, QueueUncheckedCreateWithoutPromptsInput>
+    where?: QueueWhereInput
+  }
+
+  export type QueueUpdateToOneWithWhereWithoutPromptsInput = {
+    where?: QueueWhereInput
+    data: XOR<QueueUpdateWithoutPromptsInput, QueueUncheckedUpdateWithoutPromptsInput>
+  }
+
+  export type QueueUpdateWithoutPromptsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    promptId?: NullableStringFieldUpdateOperationsInput | string | null
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    priority?: IntFieldUpdateOperationsInput | number
+    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUpdateManyWithoutQueueNestedInput
+    users?: QueueUserUpdateManyWithoutQueueNestedInput
+    quickResponses?: QuickResponseUpdateManyWithoutQueueNestedInput
+  }
+
+  export type QueueUncheckedUpdateWithoutPromptsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
+    promptId?: NullableStringFieldUpdateOperationsInput | string | null
+    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
+    isActive?: BoolFieldUpdateOperationsInput | boolean
+    priority?: IntFieldUpdateOperationsInput | number
+    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUncheckedUpdateManyWithoutQueueNestedInput
+    users?: QueueUserUncheckedUpdateManyWithoutQueueNestedInput
+    quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
   }
 
   export type ConversationCreateManyUserInput = {
@@ -15221,7 +17563,26 @@ export namespace Prisma {
   export type QuickResponseCreateManyQueueInput = {
     id?: string
     title: string
+    message: string
     shortcut: string
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type PromptsCreateManyQueueInput = {
+    id?: string
+    title: string
+    apiKey: string
+    prompt: string
+    maxTokens: number
+    maxMessages: number
+    promptTokens?: number | null
+    completionTokens?: number | null
+    totalTokens?: number | null
+    temperature?: number | null
+    assistantId?: string | null
+    description?: string | null
+    companyResume?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -15285,6 +17646,7 @@ export namespace Prisma {
   export type QuickResponseUpdateWithoutQueueInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
     shortcut?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15293,6 +17655,7 @@ export namespace Prisma {
   export type QuickResponseUncheckedUpdateWithoutQueueInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
     shortcut?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15301,7 +17664,62 @@ export namespace Prisma {
   export type QuickResponseUncheckedUpdateManyWithoutQueueInput = {
     id?: StringFieldUpdateOperationsInput | string
     title?: StringFieldUpdateOperationsInput | string
+    message?: StringFieldUpdateOperationsInput | string
     shortcut?: StringFieldUpdateOperationsInput | string
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PromptsUpdateWithoutQueueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    apiKey?: StringFieldUpdateOperationsInput | string
+    prompt?: StringFieldUpdateOperationsInput | string
+    maxTokens?: IntFieldUpdateOperationsInput | number
+    maxMessages?: IntFieldUpdateOperationsInput | number
+    promptTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    completionTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    totalTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    assistantId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PromptsUncheckedUpdateWithoutQueueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    apiKey?: StringFieldUpdateOperationsInput | string
+    prompt?: StringFieldUpdateOperationsInput | string
+    maxTokens?: IntFieldUpdateOperationsInput | number
+    maxMessages?: IntFieldUpdateOperationsInput | number
+    promptTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    completionTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    totalTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    assistantId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type PromptsUncheckedUpdateManyWithoutQueueInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    apiKey?: StringFieldUpdateOperationsInput | string
+    prompt?: StringFieldUpdateOperationsInput | string
+    maxTokens?: IntFieldUpdateOperationsInput | number
+    maxMessages?: IntFieldUpdateOperationsInput | number
+    promptTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    completionTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    totalTokens?: NullableIntFieldUpdateOperationsInput | number | null
+    temperature?: NullableFloatFieldUpdateOperationsInput | number | null
+    assistantId?: NullableStringFieldUpdateOperationsInput | string | null
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }

@@ -1,0 +1,43 @@
+export interface Queue {
+  id: string;
+  name: string;
+  color?: string;
+  greetingMessage?: string | null;
+  outOfOfficeHoursMessage?: string | null;
+  promptId?: string | null;
+  integrationId?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  isActive: boolean;
+  priority?: number;
+  schedules: Schedule[] | null;
+}
+
+export interface QueueCreate {
+  name: string;
+  color?: string;
+  greetingMessage?: string;
+  outOfOfficeHoursMessage?: string;
+  promptId?: string;
+  integrationId?: string;
+  isActive: boolean;
+  priority?: number;
+  schedules?: Schedule[];
+}
+
+export interface Schedule {
+  weekday: string;
+  startTime: string;
+  endTime: string;
+  weekdayEn: string;
+}
+
+export type QueueCreateInput = Omit<Queue, "id" | "createdAt" | "updatedAt">;
+
+export interface QueueRepository {
+  create(queue: QueueCreate): Promise<Queue>;
+  update(queue: Queue): Promise<Queue>;
+  delete(id: string): Promise<void>;
+  findById(id: string): Promise<Queue | null>;
+  findAll(): Promise<Queue[]>;
+}

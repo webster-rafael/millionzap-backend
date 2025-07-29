@@ -149,10 +149,14 @@ exports.Prisma.ContactScalarFieldEnum = {
 exports.Prisma.QueueScalarFieldEnum = {
   id: 'id',
   name: 'name',
-  description: 'description',
   color: 'color',
+  greetingMessage: 'greetingMessage',
+  outOfOfficeHoursMessage: 'outOfOfficeHoursMessage',
+  promptId: 'promptId',
+  integrationId: 'integrationId',
   isActive: 'isActive',
   priority: 'priority',
+  schedules: 'schedules',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -198,7 +202,27 @@ exports.Prisma.MessageScalarFieldEnum = {
 exports.Prisma.QuickResponseScalarFieldEnum = {
   id: 'id',
   title: 'title',
+  message: 'message',
   shortcut: 'shortcut',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  queueId: 'queueId'
+};
+
+exports.Prisma.PromptsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  apiKey: 'apiKey',
+  prompt: 'prompt',
+  maxTokens: 'maxTokens',
+  maxMessages: 'maxMessages',
+  promptTokens: 'promptTokens',
+  completionTokens: 'completionTokens',
+  totalTokens: 'totalTokens',
+  temperature: 'temperature',
+  assistantId: 'assistantId',
+  description: 'description',
+  companyResume: 'companyResume',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   queueId: 'queueId'
@@ -281,6 +305,7 @@ exports.Prisma.ModelName = {
   Conversation: 'Conversation',
   Message: 'Message',
   QuickResponse: 'QuickResponse',
+  Prompts: 'Prompts',
   WhatsAppConnection: 'WhatsAppConnection'
 };
 

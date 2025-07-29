@@ -49,10 +49,14 @@ model Contact {
 model Queue {
   id          String   @id @default(uuid())
   name        String
-  description String?
   color       String   @default("#3B82F6")
+  greetingMessage String?
+  outOfOfficeHoursMessage String?
+  promptId  String?
+  integrationId String?
   isActive    Boolean  @default(true)
   priority    Int      @default(0)
+  schedules   Json[] @default([])
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -60,6 +64,7 @@ model Queue {
   conversations Conversation[]
   users         QueueUser[]
   quickResponses QuickResponse[]
+  prompts      Prompts[]
 
   @@map("queues")
 }
@@ -125,16 +130,40 @@ model Message {
 model QuickResponse {
   id          String   @id @default(uuid())
   title      String
+  message     String
   shortcut    String
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
-  queueId    String @default("Atendimento")
+  queueId    String
 
+  // Relacionamentos
+  queue    Queue?    @relation(fields: [queueId], references: [id], onDelete: Cascade)
+
+  @@map("quick_responses")
+}
+
+model Prompts {
+  id          String   @id @default(uuid())
+  title      String
+  apiKey      String
+  prompt     String
+  maxTokens   Int
+  maxMessages Int
+  promptTokens Int?
+  completionTokens Int?
+  totalTokens Int?
+  temperature Float?
+  assistantId String?
+  description String?
+  companyResume String?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  queueId    String
 
   // Relacionamentos
   queue    Queue?    @relation(fields: [queueId], references: [id])
 
-  @@map("quick_responses")
+  @@map("prompts")
 }
 
 model WhatsAppConnection {

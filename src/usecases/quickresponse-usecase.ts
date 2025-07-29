@@ -2,6 +2,7 @@ import { QuickResponseRepositoryPrisma } from "../repositories/quickresponse-rep
 import {
   QuickResponse,
   QuickResponseCreate,
+  QuickResponseCreateInput,
   QuickResponseRepository,
 } from "../types/quickResponses-interface";
 
@@ -11,28 +12,25 @@ class QuickResponseUseCase {
     this.quickResponseRepository = new QuickResponseRepositoryPrisma();
   }
 
-  async create(data: QuickResponseCreate): Promise<QuickResponse> {
+  async create(data: QuickResponseCreateInput): Promise<QuickResponse> {
     return this.quickResponseRepository.create(data);
   }
 
-  // async findById(id: string): Promise<QuickResponse | null> {
-  //   return this.quickResponseRepository.findById(id);
-  // }
+  async findAll(): Promise<QuickResponse[]> {
+    return this.quickResponseRepository.findAll();
+  }
 
-  // async findAll(): Promise<QuickResponse[]> {
-  //   return this.quickResponseRepository.findAll();
-  // }
+  async findById(id: string): Promise<QuickResponse | null> {
+    return this.quickResponseRepository.findById(id);
+  }
 
-  // async update(
-  //   id: string,
-  //   data: Partial<QuickResponse>
-  // ): Promise<QuickResponse | null> {
-  //   return this.quickResponseRepository.update(id, data);
-  // }
+  async update(data: QuickResponse): Promise<QuickResponse> {
+    return this.quickResponseRepository.update(data);
+  }
 
-  // async delete(id: string): Promise<boolean> {
-  //   return this.quickResponseRepository.delete(id);
-  // }
+  async delete(id: string): Promise<QuickResponse> {
+    return this.quickResponseRepository.delete(id);
+  }
 }
 
 export { QuickResponseUseCase };
