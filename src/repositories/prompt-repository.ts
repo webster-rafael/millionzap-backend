@@ -21,7 +21,7 @@ class PromptRepositoryPrisma implements PromptRepository {
       temperature: createdPrompt.temperature ?? 0,
       assistantId: createdPrompt.assistantId ?? "",
       description: createdPrompt.description ?? "",
-      companyResume: createdPrompt.companyResume ?? "",
+      companyResume: createdPrompt.companyResume,
       createdAt: createdPrompt.createdAt,
       updatedAt: createdPrompt.updatedAt,
       queueId: createdPrompt.queueId ?? "",

@@ -11,7 +11,7 @@ export interface Prompt {
   temperature?: number;
   assistantId?: string;
   description?: string;
-  companyResume?: string;
+  companyResume: string;
   createdAt: Date;
   updatedAt: Date;
   queueId: string;
@@ -28,7 +28,7 @@ export interface PromptCreate {
   temperature?: number;
   assistantId?: string;
   description?: string;
-  companyResume?: string;
+  companyResume: string;
   queueId: string;
   createdAt: Date;
   updatedAt: Date;

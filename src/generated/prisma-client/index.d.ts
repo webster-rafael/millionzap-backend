@@ -10293,7 +10293,7 @@ export namespace Prisma {
     temperature: number | null
     assistantId: string | null
     description: string | null
-    companyResume: string | null
+    companyResume: string
     createdAt: Date
     updatedAt: Date
     queueId: string
@@ -10426,7 +10426,7 @@ export namespace Prisma {
       temperature: number | null
       assistantId: string | null
       description: string | null
-      companyResume: string | null
+      companyResume: string
       createdAt: Date
       updatedAt: Date
       queueId: string
@@ -13317,7 +13317,7 @@ export namespace Prisma {
     temperature?: FloatNullableFilter<"Prompts"> | number | null
     assistantId?: StringNullableFilter<"Prompts"> | string | null
     description?: StringNullableFilter<"Prompts"> | string | null
-    companyResume?: StringNullableFilter<"Prompts"> | string | null
+    companyResume?: StringFilter<"Prompts"> | string
     createdAt?: DateTimeFilter<"Prompts"> | Date | string
     updatedAt?: DateTimeFilter<"Prompts"> | Date | string
     queueId?: StringFilter<"Prompts"> | string
@@ -13337,7 +13337,7 @@ export namespace Prisma {
     temperature?: SortOrderInput | SortOrder
     assistantId?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
-    companyResume?: SortOrderInput | SortOrder
+    companyResume?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrder
@@ -13360,7 +13360,7 @@ export namespace Prisma {
     temperature?: FloatNullableFilter<"Prompts"> | number | null
     assistantId?: StringNullableFilter<"Prompts"> | string | null
     description?: StringNullableFilter<"Prompts"> | string | null
-    companyResume?: StringNullableFilter<"Prompts"> | string | null
+    companyResume?: StringFilter<"Prompts"> | string
     createdAt?: DateTimeFilter<"Prompts"> | Date | string
     updatedAt?: DateTimeFilter<"Prompts"> | Date | string
     queueId?: StringFilter<"Prompts"> | string
@@ -13380,7 +13380,7 @@ export namespace Prisma {
     temperature?: SortOrderInput | SortOrder
     assistantId?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
-    companyResume?: SortOrderInput | SortOrder
+    companyResume?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrder
@@ -13407,7 +13407,7 @@ export namespace Prisma {
     temperature?: FloatNullableWithAggregatesFilter<"Prompts"> | number | null
     assistantId?: StringNullableWithAggregatesFilter<"Prompts"> | string | null
     description?: StringNullableWithAggregatesFilter<"Prompts"> | string | null
-    companyResume?: StringNullableWithAggregatesFilter<"Prompts"> | string | null
+    companyResume?: StringWithAggregatesFilter<"Prompts"> | string
     createdAt?: DateTimeWithAggregatesFilter<"Prompts"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Prompts"> | Date | string
     queueId?: StringWithAggregatesFilter<"Prompts"> | string
@@ -14154,7 +14154,7 @@ export namespace Prisma {
     temperature?: number | null
     assistantId?: string | null
     description?: string | null
-    companyResume?: string | null
+    companyResume: string
     createdAt?: Date | string
     updatedAt?: Date | string
     queue?: QueueCreateNestedOneWithoutPromptsInput
@@ -14173,7 +14173,7 @@ export namespace Prisma {
     temperature?: number | null
     assistantId?: string | null
     description?: string | null
-    companyResume?: string | null
+    companyResume: string
     createdAt?: Date | string
     updatedAt?: Date | string
     queueId: string
@@ -14192,7 +14192,7 @@ export namespace Prisma {
     temperature?: NullableFloatFieldUpdateOperationsInput | number | null
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     queue?: QueueUpdateOneWithoutPromptsNestedInput
@@ -14211,7 +14211,7 @@ export namespace Prisma {
     temperature?: NullableFloatFieldUpdateOperationsInput | number | null
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     queueId?: StringFieldUpdateOperationsInput | string
@@ -14230,7 +14230,7 @@ export namespace Prisma {
     temperature?: number | null
     assistantId?: string | null
     description?: string | null
-    companyResume?: string | null
+    companyResume: string
     createdAt?: Date | string
     updatedAt?: Date | string
     queueId: string
@@ -14249,7 +14249,7 @@ export namespace Prisma {
     temperature?: NullableFloatFieldUpdateOperationsInput | number | null
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14267,7 +14267,7 @@ export namespace Prisma {
     temperature?: NullableFloatFieldUpdateOperationsInput | number | null
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     queueId?: StringFieldUpdateOperationsInput | string
@@ -16442,7 +16442,7 @@ export namespace Prisma {
     temperature?: number | null
     assistantId?: string | null
     description?: string | null
-    companyResume?: string | null
+    companyResume: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16460,7 +16460,7 @@ export namespace Prisma {
     temperature?: number | null
     assistantId?: string | null
     description?: string | null
-    companyResume?: string | null
+    companyResume: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16568,7 +16568,7 @@ export namespace Prisma {
     temperature?: FloatNullableFilter<"Prompts"> | number | null
     assistantId?: StringNullableFilter<"Prompts"> | string | null
     description?: StringNullableFilter<"Prompts"> | string | null
-    companyResume?: StringNullableFilter<"Prompts"> | string | null
+    companyResume?: StringFilter<"Prompts"> | string
     createdAt?: DateTimeFilter<"Prompts"> | Date | string
     updatedAt?: DateTimeFilter<"Prompts"> | Date | string
     queueId?: StringFilter<"Prompts"> | string
@@ -17582,7 +17582,7 @@ export namespace Prisma {
     temperature?: number | null
     assistantId?: string | null
     description?: string | null
-    companyResume?: string | null
+    companyResume: string
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17683,7 +17683,7 @@ export namespace Prisma {
     temperature?: NullableFloatFieldUpdateOperationsInput | number | null
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17701,7 +17701,7 @@ export namespace Prisma {
     temperature?: NullableFloatFieldUpdateOperationsInput | number | null
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17719,7 +17719,7 @@ export namespace Prisma {
     temperature?: NullableFloatFieldUpdateOperationsInput | number | null
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
-    companyResume?: NullableStringFieldUpdateOperationsInput | string | null
+    companyResume?: StringFieldUpdateOperationsInput | string
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
