@@ -4,6 +4,7 @@ import { quickResponseRoutes } from "./routes/quickresponse-route";
 import fastifyCors from "@fastify/cors";
 import { queuesRoutes } from "./routes/queues-route";
 import { promptRoutes } from "./routes/prompt-route";
+import { tagsRoutes } from "./routes/tags-route";
 
 const app: FastifyInstance = Fastify({});
 
@@ -27,6 +28,10 @@ app.register(queuesRoutes, {
 
 app.register(promptRoutes, {
   prefix: "/prompts",
+});
+
+app.register(tagsRoutes, {
+  prefix: "/tags",
 });
 
 app.listen(

@@ -36,8 +36,8 @@ export type QueueCreateInput = Omit<Queue, "id" | "createdAt" | "updatedAt">;
 
 export interface QueueRepository {
   create(queue: QueueCreate): Promise<Queue>;
-  update(queue: Queue): Promise<Queue>;
-  delete(id: string): Promise<void>;
-  findById(id: string): Promise<Queue | null>;
   findAll(): Promise<Queue[]>;
+  update(queue: Queue): Promise<Queue>;
+  findById(id: string): Promise<Queue | null>;
+  delete(id: string): Promise<void>;
 }

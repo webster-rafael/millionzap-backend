@@ -86,6 +86,7 @@ model Conversation {
   contactId     String
   userId        String?
   queueId       String?
+  tagId         String?
   status        ConversationStatus @default(WAITING)
   priority      Priority           @default(MEDIUM)
   subject       String?
@@ -98,6 +99,7 @@ model Conversation {
   contact  Contact   @relation(fields: [contactId], references: [id])
   user     User?     @relation(fields: [userId], references: [id])
   queue    Queue?    @relation(fields: [queueId], references: [id])
+  tag      Tags?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
   messages Message[]
 
   @@map("conversations")
@@ -156,6 +158,7 @@ model Prompts {
   assistantId      String?
   description      String?
   companyResume    String
+  isActive         Boolean  @default(true)
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   queueId          String
@@ -164,6 +167,19 @@ model Prompts {
   queue Queue? @relation(fields: [queueId], references: [id])
 
   @@map("prompts")
+}
+
+model Tags {
+  id            String         @id @default(uuid())
+  title         String
+  color         String
+  order         Int            @default(0)
+  description   String?
+  conversations Conversation[]
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@map("tags")
 }
 
 model WhatsAppConnection {

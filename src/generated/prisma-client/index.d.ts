@@ -54,6 +54,11 @@ export type QuickResponse = $Result.DefaultSelection<Prisma.$QuickResponsePayloa
  */
 export type Prompts = $Result.DefaultSelection<Prisma.$PromptsPayload>
 /**
+ * Model Tags
+ * 
+ */
+export type Tags = $Result.DefaultSelection<Prisma.$TagsPayload>
+/**
  * Model WhatsAppConnection
  * 
  */
@@ -352,6 +357,16 @@ export class PrismaClient<
     * ```
     */
   get prompts(): Prisma.PromptsDelegate<ExtArgs, ClientOptions>;
+
+  /**
+   * `prisma.tags`: Exposes CRUD operations for the **Tags** model.
+    * Example usage:
+    * ```ts
+    * // Fetch zero or more Tags
+    * const tags = await prisma.tags.findMany()
+    * ```
+    */
+  get tags(): Prisma.TagsDelegate<ExtArgs, ClientOptions>;
 
   /**
    * `prisma.whatsAppConnection`: Exposes CRUD operations for the **WhatsAppConnection** model.
@@ -810,6 +825,7 @@ export namespace Prisma {
     Message: 'Message',
     QuickResponse: 'QuickResponse',
     Prompts: 'Prompts',
+    Tags: 'Tags',
     WhatsAppConnection: 'WhatsAppConnection'
   };
 
@@ -829,7 +845,7 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "user" | "contact" | "queue" | "queueUser" | "conversation" | "message" | "quickResponse" | "prompts" | "whatsAppConnection"
+      modelProps: "user" | "contact" | "queue" | "queueUser" | "conversation" | "message" | "quickResponse" | "prompts" | "tags" | "whatsAppConnection"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
@@ -1425,6 +1441,80 @@ export namespace Prisma {
           }
         }
       }
+      Tags: {
+        payload: Prisma.$TagsPayload<ExtArgs>
+        fields: Prisma.TagsFieldRefs
+        operations: {
+          findUnique: {
+            args: Prisma.TagsFindUniqueArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagsPayload> | null
+          }
+          findUniqueOrThrow: {
+            args: Prisma.TagsFindUniqueOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagsPayload>
+          }
+          findFirst: {
+            args: Prisma.TagsFindFirstArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagsPayload> | null
+          }
+          findFirstOrThrow: {
+            args: Prisma.TagsFindFirstOrThrowArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagsPayload>
+          }
+          findMany: {
+            args: Prisma.TagsFindManyArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagsPayload>[]
+          }
+          create: {
+            args: Prisma.TagsCreateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagsPayload>
+          }
+          createMany: {
+            args: Prisma.TagsCreateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          createManyAndReturn: {
+            args: Prisma.TagsCreateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagsPayload>[]
+          }
+          delete: {
+            args: Prisma.TagsDeleteArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagsPayload>
+          }
+          update: {
+            args: Prisma.TagsUpdateArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagsPayload>
+          }
+          deleteMany: {
+            args: Prisma.TagsDeleteManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateMany: {
+            args: Prisma.TagsUpdateManyArgs<ExtArgs>
+            result: BatchPayload
+          }
+          updateManyAndReturn: {
+            args: Prisma.TagsUpdateManyAndReturnArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagsPayload>[]
+          }
+          upsert: {
+            args: Prisma.TagsUpsertArgs<ExtArgs>
+            result: $Utils.PayloadToResult<Prisma.$TagsPayload>
+          }
+          aggregate: {
+            args: Prisma.TagsAggregateArgs<ExtArgs>
+            result: $Utils.Optional<AggregateTags>
+          }
+          groupBy: {
+            args: Prisma.TagsGroupByArgs<ExtArgs>
+            result: $Utils.Optional<TagsGroupByOutputType>[]
+          }
+          count: {
+            args: Prisma.TagsCountArgs<ExtArgs>
+            result: $Utils.Optional<TagsCountAggregateOutputType> | number
+          }
+        }
+      }
       WhatsAppConnection: {
         payload: Prisma.$WhatsAppConnectionPayload<ExtArgs>
         fields: Prisma.WhatsAppConnectionFieldRefs
@@ -1591,6 +1681,7 @@ export namespace Prisma {
     message?: MessageOmit
     quickResponse?: QuickResponseOmit
     prompts?: PromptsOmit
+    tags?: TagsOmit
     whatsAppConnection?: WhatsAppConnectionOmit
   }
 
@@ -1847,6 +1938,37 @@ export namespace Prisma {
    */
   export type ConversationCountOutputTypeCountMessagesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     where?: MessageWhereInput
+  }
+
+
+  /**
+   * Count Type TagsCountOutputType
+   */
+
+  export type TagsCountOutputType = {
+    conversations: number
+  }
+
+  export type TagsCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    conversations?: boolean | TagsCountOutputTypeCountConversationsArgs
+  }
+
+  // Custom InputTypes
+  /**
+   * TagsCountOutputType without action
+   */
+  export type TagsCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the TagsCountOutputType
+     */
+    select?: TagsCountOutputTypeSelect<ExtArgs> | null
+  }
+
+  /**
+   * TagsCountOutputType without action
+   */
+  export type TagsCountOutputTypeCountConversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: ConversationWhereInput
   }
 
 
@@ -6506,6 +6628,7 @@ export namespace Prisma {
     contactId: string | null
     userId: string | null
     queueId: string | null
+    tagId: string | null
     status: $Enums.ConversationStatus | null
     priority: $Enums.Priority | null
     subject: string | null
@@ -6520,6 +6643,7 @@ export namespace Prisma {
     contactId: string | null
     userId: string | null
     queueId: string | null
+    tagId: string | null
     status: $Enums.ConversationStatus | null
     priority: $Enums.Priority | null
     subject: string | null
@@ -6534,6 +6658,7 @@ export namespace Prisma {
     contactId: number
     userId: number
     queueId: number
+    tagId: number
     status: number
     priority: number
     subject: number
@@ -6550,6 +6675,7 @@ export namespace Prisma {
     contactId?: true
     userId?: true
     queueId?: true
+    tagId?: true
     status?: true
     priority?: true
     subject?: true
@@ -6564,6 +6690,7 @@ export namespace Prisma {
     contactId?: true
     userId?: true
     queueId?: true
+    tagId?: true
     status?: true
     priority?: true
     subject?: true
@@ -6578,6 +6705,7 @@ export namespace Prisma {
     contactId?: true
     userId?: true
     queueId?: true
+    tagId?: true
     status?: true
     priority?: true
     subject?: true
@@ -6665,6 +6793,7 @@ export namespace Prisma {
     contactId: string
     userId: string | null
     queueId: string | null
+    tagId: string | null
     status: $Enums.ConversationStatus
     priority: $Enums.Priority
     subject: string | null
@@ -6696,6 +6825,7 @@ export namespace Prisma {
     contactId?: boolean
     userId?: boolean
     queueId?: boolean
+    tagId?: boolean
     status?: boolean
     priority?: boolean
     subject?: boolean
@@ -6706,6 +6836,7 @@ export namespace Prisma {
     contact?: boolean | ContactDefaultArgs<ExtArgs>
     user?: boolean | Conversation$userArgs<ExtArgs>
     queue?: boolean | Conversation$queueArgs<ExtArgs>
+    tag?: boolean | Conversation$tagArgs<ExtArgs>
     messages?: boolean | Conversation$messagesArgs<ExtArgs>
     _count?: boolean | ConversationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["conversation"]>
@@ -6715,6 +6846,7 @@ export namespace Prisma {
     contactId?: boolean
     userId?: boolean
     queueId?: boolean
+    tagId?: boolean
     status?: boolean
     priority?: boolean
     subject?: boolean
@@ -6725,6 +6857,7 @@ export namespace Prisma {
     contact?: boolean | ContactDefaultArgs<ExtArgs>
     user?: boolean | Conversation$userArgs<ExtArgs>
     queue?: boolean | Conversation$queueArgs<ExtArgs>
+    tag?: boolean | Conversation$tagArgs<ExtArgs>
   }, ExtArgs["result"]["conversation"]>
 
   export type ConversationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -6732,6 +6865,7 @@ export namespace Prisma {
     contactId?: boolean
     userId?: boolean
     queueId?: boolean
+    tagId?: boolean
     status?: boolean
     priority?: boolean
     subject?: boolean
@@ -6742,6 +6876,7 @@ export namespace Prisma {
     contact?: boolean | ContactDefaultArgs<ExtArgs>
     user?: boolean | Conversation$userArgs<ExtArgs>
     queue?: boolean | Conversation$queueArgs<ExtArgs>
+    tag?: boolean | Conversation$tagArgs<ExtArgs>
   }, ExtArgs["result"]["conversation"]>
 
   export type ConversationSelectScalar = {
@@ -6749,6 +6884,7 @@ export namespace Prisma {
     contactId?: boolean
     userId?: boolean
     queueId?: boolean
+    tagId?: boolean
     status?: boolean
     priority?: boolean
     subject?: boolean
@@ -6758,11 +6894,12 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type ConversationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "contactId" | "userId" | "queueId" | "status" | "priority" | "subject" | "lastMessageAt" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["conversation"]>
+  export type ConversationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "contactId" | "userId" | "queueId" | "tagId" | "status" | "priority" | "subject" | "lastMessageAt" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["conversation"]>
   export type ConversationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     contact?: boolean | ContactDefaultArgs<ExtArgs>
     user?: boolean | Conversation$userArgs<ExtArgs>
     queue?: boolean | Conversation$queueArgs<ExtArgs>
+    tag?: boolean | Conversation$tagArgs<ExtArgs>
     messages?: boolean | Conversation$messagesArgs<ExtArgs>
     _count?: boolean | ConversationCountOutputTypeDefaultArgs<ExtArgs>
   }
@@ -6770,11 +6907,13 @@ export namespace Prisma {
     contact?: boolean | ContactDefaultArgs<ExtArgs>
     user?: boolean | Conversation$userArgs<ExtArgs>
     queue?: boolean | Conversation$queueArgs<ExtArgs>
+    tag?: boolean | Conversation$tagArgs<ExtArgs>
   }
   export type ConversationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     contact?: boolean | ContactDefaultArgs<ExtArgs>
     user?: boolean | Conversation$userArgs<ExtArgs>
     queue?: boolean | Conversation$queueArgs<ExtArgs>
+    tag?: boolean | Conversation$tagArgs<ExtArgs>
   }
 
   export type $ConversationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
@@ -6783,6 +6922,7 @@ export namespace Prisma {
       contact: Prisma.$ContactPayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs> | null
       queue: Prisma.$QueuePayload<ExtArgs> | null
+      tag: Prisma.$TagsPayload<ExtArgs> | null
       messages: Prisma.$MessagePayload<ExtArgs>[]
     }
     scalars: $Extensions.GetPayloadResult<{
@@ -6790,6 +6930,7 @@ export namespace Prisma {
       contactId: string
       userId: string | null
       queueId: string | null
+      tagId: string | null
       status: $Enums.ConversationStatus
       priority: $Enums.Priority
       subject: string | null
@@ -7194,6 +7335,7 @@ export namespace Prisma {
     contact<T extends ContactDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContactDefaultArgs<ExtArgs>>): Prisma__ContactClient<$Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     user<T extends Conversation$userArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     queue<T extends Conversation$queueArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$queueArgs<ExtArgs>>): Prisma__QueueClient<$Result.GetResult<Prisma.$QueuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+    tag<T extends Conversation$tagArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$tagArgs<ExtArgs>>): Prisma__TagsClient<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     messages<T extends Conversation$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -7228,6 +7370,7 @@ export namespace Prisma {
     readonly contactId: FieldRef<"Conversation", 'String'>
     readonly userId: FieldRef<"Conversation", 'String'>
     readonly queueId: FieldRef<"Conversation", 'String'>
+    readonly tagId: FieldRef<"Conversation", 'String'>
     readonly status: FieldRef<"Conversation", 'ConversationStatus'>
     readonly priority: FieldRef<"Conversation", 'Priority'>
     readonly subject: FieldRef<"Conversation", 'String'>
@@ -7666,6 +7809,25 @@ export namespace Prisma {
      */
     include?: QueueInclude<ExtArgs> | null
     where?: QueueWhereInput
+  }
+
+  /**
+   * Conversation.tag
+   */
+  export type Conversation$tagArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagsInclude<ExtArgs> | null
+    where?: TagsWhereInput
   }
 
   /**
@@ -10073,6 +10235,7 @@ export namespace Prisma {
     assistantId: string | null
     description: string | null
     companyResume: string | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     queueId: string | null
@@ -10092,6 +10255,7 @@ export namespace Prisma {
     assistantId: string | null
     description: string | null
     companyResume: string | null
+    isActive: boolean | null
     createdAt: Date | null
     updatedAt: Date | null
     queueId: string | null
@@ -10111,6 +10275,7 @@ export namespace Prisma {
     assistantId: number
     description: number
     companyResume: number
+    isActive: number
     createdAt: number
     updatedAt: number
     queueId: number
@@ -10150,6 +10315,7 @@ export namespace Prisma {
     assistantId?: true
     description?: true
     companyResume?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     queueId?: true
@@ -10169,6 +10335,7 @@ export namespace Prisma {
     assistantId?: true
     description?: true
     companyResume?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     queueId?: true
@@ -10188,6 +10355,7 @@ export namespace Prisma {
     assistantId?: true
     description?: true
     companyResume?: true
+    isActive?: true
     createdAt?: true
     updatedAt?: true
     queueId?: true
@@ -10294,6 +10462,7 @@ export namespace Prisma {
     assistantId: string | null
     description: string | null
     companyResume: string
+    isActive: boolean
     createdAt: Date
     updatedAt: Date
     queueId: string
@@ -10332,6 +10501,7 @@ export namespace Prisma {
     assistantId?: boolean
     description?: boolean
     companyResume?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     queueId?: boolean
@@ -10352,6 +10522,7 @@ export namespace Prisma {
     assistantId?: boolean
     description?: boolean
     companyResume?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     queueId?: boolean
@@ -10372,6 +10543,7 @@ export namespace Prisma {
     assistantId?: boolean
     description?: boolean
     companyResume?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     queueId?: boolean
@@ -10392,12 +10564,13 @@ export namespace Prisma {
     assistantId?: boolean
     description?: boolean
     companyResume?: boolean
+    isActive?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     queueId?: boolean
   }
 
-  export type PromptsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "apiKey" | "prompt" | "maxTokens" | "maxMessages" | "promptTokens" | "completionTokens" | "totalTokens" | "temperature" | "assistantId" | "description" | "companyResume" | "createdAt" | "updatedAt" | "queueId", ExtArgs["result"]["prompts"]>
+  export type PromptsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "apiKey" | "prompt" | "maxTokens" | "maxMessages" | "promptTokens" | "completionTokens" | "totalTokens" | "temperature" | "assistantId" | "description" | "companyResume" | "isActive" | "createdAt" | "updatedAt" | "queueId", ExtArgs["result"]["prompts"]>
   export type PromptsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     queue?: boolean | Prompts$queueArgs<ExtArgs>
   }
@@ -10427,6 +10600,7 @@ export namespace Prisma {
       assistantId: string | null
       description: string | null
       companyResume: string
+      isActive: boolean
       createdAt: Date
       updatedAt: Date
       queueId: string
@@ -10867,6 +11041,7 @@ export namespace Prisma {
     readonly assistantId: FieldRef<"Prompts", 'String'>
     readonly description: FieldRef<"Prompts", 'String'>
     readonly companyResume: FieldRef<"Prompts", 'String'>
+    readonly isActive: FieldRef<"Prompts", 'Boolean'>
     readonly createdAt: FieldRef<"Prompts", 'DateTime'>
     readonly updatedAt: FieldRef<"Prompts", 'DateTime'>
     readonly queueId: FieldRef<"Prompts", 'String'>
@@ -11300,6 +11475,1136 @@ export namespace Prisma {
      * Choose, which related nodes to fetch as well
      */
     include?: PromptsInclude<ExtArgs> | null
+  }
+
+
+  /**
+   * Model Tags
+   */
+
+  export type AggregateTags = {
+    _count: TagsCountAggregateOutputType | null
+    _avg: TagsAvgAggregateOutputType | null
+    _sum: TagsSumAggregateOutputType | null
+    _min: TagsMinAggregateOutputType | null
+    _max: TagsMaxAggregateOutputType | null
+  }
+
+  export type TagsAvgAggregateOutputType = {
+    order: number | null
+  }
+
+  export type TagsSumAggregateOutputType = {
+    order: number | null
+  }
+
+  export type TagsMinAggregateOutputType = {
+    id: string | null
+    title: string | null
+    color: string | null
+    order: number | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TagsMaxAggregateOutputType = {
+    id: string | null
+    title: string | null
+    color: string | null
+    order: number | null
+    description: string | null
+    createdAt: Date | null
+    updatedAt: Date | null
+  }
+
+  export type TagsCountAggregateOutputType = {
+    id: number
+    title: number
+    color: number
+    order: number
+    description: number
+    createdAt: number
+    updatedAt: number
+    _all: number
+  }
+
+
+  export type TagsAvgAggregateInputType = {
+    order?: true
+  }
+
+  export type TagsSumAggregateInputType = {
+    order?: true
+  }
+
+  export type TagsMinAggregateInputType = {
+    id?: true
+    title?: true
+    color?: true
+    order?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TagsMaxAggregateInputType = {
+    id?: true
+    title?: true
+    color?: true
+    order?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+  }
+
+  export type TagsCountAggregateInputType = {
+    id?: true
+    title?: true
+    color?: true
+    order?: true
+    description?: true
+    createdAt?: true
+    updatedAt?: true
+    _all?: true
+  }
+
+  export type TagsAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tags to aggregate.
+     */
+    where?: TagsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagsOrderByWithRelationInput | TagsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the start position
+     */
+    cursor?: TagsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Count returned Tags
+    **/
+    _count?: true | TagsCountAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to average
+    **/
+    _avg?: TagsAvgAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to sum
+    **/
+    _sum?: TagsSumAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the minimum value
+    **/
+    _min?: TagsMinAggregateInputType
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
+     * 
+     * Select which fields to find the maximum value
+    **/
+    _max?: TagsMaxAggregateInputType
+  }
+
+  export type GetTagsAggregateType<T extends TagsAggregateArgs> = {
+        [P in keyof T & keyof AggregateTags]: P extends '_count' | 'count'
+      ? T[P] extends true
+        ? number
+        : GetScalarType<T[P], AggregateTags[P]>
+      : GetScalarType<T[P], AggregateTags[P]>
+  }
+
+
+
+
+  export type TagsGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    where?: TagsWhereInput
+    orderBy?: TagsOrderByWithAggregationInput | TagsOrderByWithAggregationInput[]
+    by: TagsScalarFieldEnum[] | TagsScalarFieldEnum
+    having?: TagsScalarWhereWithAggregatesInput
+    take?: number
+    skip?: number
+    _count?: TagsCountAggregateInputType | true
+    _avg?: TagsAvgAggregateInputType
+    _sum?: TagsSumAggregateInputType
+    _min?: TagsMinAggregateInputType
+    _max?: TagsMaxAggregateInputType
+  }
+
+  export type TagsGroupByOutputType = {
+    id: string
+    title: string
+    color: string
+    order: number
+    description: string | null
+    createdAt: Date
+    updatedAt: Date
+    _count: TagsCountAggregateOutputType | null
+    _avg: TagsAvgAggregateOutputType | null
+    _sum: TagsSumAggregateOutputType | null
+    _min: TagsMinAggregateOutputType | null
+    _max: TagsMaxAggregateOutputType | null
+  }
+
+  type GetTagsGroupByPayload<T extends TagsGroupByArgs> = Prisma.PrismaPromise<
+    Array<
+      PickEnumerable<TagsGroupByOutputType, T['by']> &
+        {
+          [P in ((keyof T) & (keyof TagsGroupByOutputType))]: P extends '_count'
+            ? T[P] extends boolean
+              ? number
+              : GetScalarType<T[P], TagsGroupByOutputType[P]>
+            : GetScalarType<T[P], TagsGroupByOutputType[P]>
+        }
+      >
+    >
+
+
+  export type TagsSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    color?: boolean
+    order?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+    conversations?: boolean | Tags$conversationsArgs<ExtArgs>
+    _count?: boolean | TagsCountOutputTypeDefaultArgs<ExtArgs>
+  }, ExtArgs["result"]["tags"]>
+
+  export type TagsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    color?: boolean
+    order?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["tags"]>
+
+  export type TagsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
+    id?: boolean
+    title?: boolean
+    color?: boolean
+    order?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }, ExtArgs["result"]["tags"]>
+
+  export type TagsSelectScalar = {
+    id?: boolean
+    title?: boolean
+    color?: boolean
+    order?: boolean
+    description?: boolean
+    createdAt?: boolean
+    updatedAt?: boolean
+  }
+
+  export type TagsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "color" | "order" | "description" | "createdAt" | "updatedAt", ExtArgs["result"]["tags"]>
+  export type TagsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    conversations?: boolean | Tags$conversationsArgs<ExtArgs>
+    _count?: boolean | TagsCountOutputTypeDefaultArgs<ExtArgs>
+  }
+  export type TagsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type TagsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+
+  export type $TagsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    name: "Tags"
+    objects: {
+      conversations: Prisma.$ConversationPayload<ExtArgs>[]
+    }
+    scalars: $Extensions.GetPayloadResult<{
+      id: string
+      title: string
+      color: string
+      order: number
+      description: string | null
+      createdAt: Date
+      updatedAt: Date
+    }, ExtArgs["result"]["tags"]>
+    composites: {}
+  }
+
+  type TagsGetPayload<S extends boolean | null | undefined | TagsDefaultArgs> = $Result.GetResult<Prisma.$TagsPayload, S>
+
+  type TagsCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
+    Omit<TagsFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
+      select?: TagsCountAggregateInputType | true
+    }
+
+  export interface TagsDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
+    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['Tags'], meta: { name: 'Tags' } }
+    /**
+     * Find zero or one Tags that matches the filter.
+     * @param {TagsFindUniqueArgs} args - Arguments to find a Tags
+     * @example
+     * // Get one Tags
+     * const tags = await prisma.tags.findUnique({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUnique<T extends TagsFindUniqueArgs>(args: SelectSubset<T, TagsFindUniqueArgs<ExtArgs>>): Prisma__TagsClient<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find one Tags that matches the filter or throw an error with `error.code='P2025'`
+     * if no matches were found.
+     * @param {TagsFindUniqueOrThrowArgs} args - Arguments to find a Tags
+     * @example
+     * // Get one Tags
+     * const tags = await prisma.tags.findUniqueOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findUniqueOrThrow<T extends TagsFindUniqueOrThrowArgs>(args: SelectSubset<T, TagsFindUniqueOrThrowArgs<ExtArgs>>): Prisma__TagsClient<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Tags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagsFindFirstArgs} args - Arguments to find a Tags
+     * @example
+     * // Get one Tags
+     * const tags = await prisma.tags.findFirst({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirst<T extends TagsFindFirstArgs>(args?: SelectSubset<T, TagsFindFirstArgs<ExtArgs>>): Prisma__TagsClient<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find the first Tags that matches the filter or
+     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagsFindFirstOrThrowArgs} args - Arguments to find a Tags
+     * @example
+     * // Get one Tags
+     * const tags = await prisma.tags.findFirstOrThrow({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     */
+    findFirstOrThrow<T extends TagsFindFirstOrThrowArgs>(args?: SelectSubset<T, TagsFindFirstOrThrowArgs<ExtArgs>>): Prisma__TagsClient<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Find zero or more Tags that matches the filter.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagsFindManyArgs} args - Arguments to filter and select certain fields only.
+     * @example
+     * // Get all Tags
+     * const tags = await prisma.tags.findMany()
+     * 
+     * // Get first 10 Tags
+     * const tags = await prisma.tags.findMany({ take: 10 })
+     * 
+     * // Only select the `id`
+     * const tagsWithIdOnly = await prisma.tags.findMany({ select: { id: true } })
+     * 
+     */
+    findMany<T extends TagsFindManyArgs>(args?: SelectSubset<T, TagsFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
+
+    /**
+     * Create a Tags.
+     * @param {TagsCreateArgs} args - Arguments to create a Tags.
+     * @example
+     * // Create one Tags
+     * const Tags = await prisma.tags.create({
+     *   data: {
+     *     // ... data to create a Tags
+     *   }
+     * })
+     * 
+     */
+    create<T extends TagsCreateArgs>(args: SelectSubset<T, TagsCreateArgs<ExtArgs>>): Prisma__TagsClient<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Create many Tags.
+     * @param {TagsCreateManyArgs} args - Arguments to create many Tags.
+     * @example
+     * // Create many Tags
+     * const tags = await prisma.tags.createMany({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     *     
+     */
+    createMany<T extends TagsCreateManyArgs>(args?: SelectSubset<T, TagsCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Create many Tags and returns the data saved in the database.
+     * @param {TagsCreateManyAndReturnArgs} args - Arguments to create many Tags.
+     * @example
+     * // Create many Tags
+     * const tags = await prisma.tags.createManyAndReturn({
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Create many Tags and only return the `id`
+     * const tagsWithIdOnly = await prisma.tags.createManyAndReturn({
+     *   select: { id: true },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    createManyAndReturn<T extends TagsCreateManyAndReturnArgs>(args?: SelectSubset<T, TagsCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Delete a Tags.
+     * @param {TagsDeleteArgs} args - Arguments to delete one Tags.
+     * @example
+     * // Delete one Tags
+     * const Tags = await prisma.tags.delete({
+     *   where: {
+     *     // ... filter to delete one Tags
+     *   }
+     * })
+     * 
+     */
+    delete<T extends TagsDeleteArgs>(args: SelectSubset<T, TagsDeleteArgs<ExtArgs>>): Prisma__TagsClient<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Update one Tags.
+     * @param {TagsUpdateArgs} args - Arguments to update one Tags.
+     * @example
+     * // Update one Tags
+     * const tags = await prisma.tags.update({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    update<T extends TagsUpdateArgs>(args: SelectSubset<T, TagsUpdateArgs<ExtArgs>>): Prisma__TagsClient<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+    /**
+     * Delete zero or more Tags.
+     * @param {TagsDeleteManyArgs} args - Arguments to filter Tags to delete.
+     * @example
+     * // Delete a few Tags
+     * const { count } = await prisma.tags.deleteMany({
+     *   where: {
+     *     // ... provide filter here
+     *   }
+     * })
+     * 
+     */
+    deleteMany<T extends TagsDeleteManyArgs>(args?: SelectSubset<T, TagsDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagsUpdateManyArgs} args - Arguments to update one or more rows.
+     * @example
+     * // Update many Tags
+     * const tags = await prisma.tags.updateMany({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: {
+     *     // ... provide data here
+     *   }
+     * })
+     * 
+     */
+    updateMany<T extends TagsUpdateManyArgs>(args: SelectSubset<T, TagsUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
+
+    /**
+     * Update zero or more Tags and returns the data updated in the database.
+     * @param {TagsUpdateManyAndReturnArgs} args - Arguments to update many Tags.
+     * @example
+     * // Update many Tags
+     * const tags = await prisma.tags.updateManyAndReturn({
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * 
+     * // Update zero or more Tags and only return the `id`
+     * const tagsWithIdOnly = await prisma.tags.updateManyAndReturn({
+     *   select: { id: true },
+     *   where: {
+     *     // ... provide filter here
+     *   },
+     *   data: [
+     *     // ... provide data here
+     *   ]
+     * })
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * 
+     */
+    updateManyAndReturn<T extends TagsUpdateManyAndReturnArgs>(args: SelectSubset<T, TagsUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
+
+    /**
+     * Create or update one Tags.
+     * @param {TagsUpsertArgs} args - Arguments to update or create a Tags.
+     * @example
+     * // Update or create a Tags
+     * const tags = await prisma.tags.upsert({
+     *   create: {
+     *     // ... data to create a Tags
+     *   },
+     *   update: {
+     *     // ... in case it already exists, update
+     *   },
+     *   where: {
+     *     // ... the filter for the Tags we want to update
+     *   }
+     * })
+     */
+    upsert<T extends TagsUpsertArgs>(args: SelectSubset<T, TagsUpsertArgs<ExtArgs>>): Prisma__TagsClient<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
+
+
+    /**
+     * Count the number of Tags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagsCountArgs} args - Arguments to filter Tags to count.
+     * @example
+     * // Count the number of Tags
+     * const count = await prisma.tags.count({
+     *   where: {
+     *     // ... the filter for the Tags we want to count
+     *   }
+     * })
+    **/
+    count<T extends TagsCountArgs>(
+      args?: Subset<T, TagsCountArgs>,
+    ): Prisma.PrismaPromise<
+      T extends $Utils.Record<'select', any>
+        ? T['select'] extends true
+          ? number
+          : GetScalarType<T['select'], TagsCountAggregateOutputType>
+        : number
+    >
+
+    /**
+     * Allows you to perform aggregations operations on a Tags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagsAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
+     * @example
+     * // Ordered by age ascending
+     * // Where email contains prisma.io
+     * // Limited to the 10 users
+     * const aggregations = await prisma.user.aggregate({
+     *   _avg: {
+     *     age: true,
+     *   },
+     *   where: {
+     *     email: {
+     *       contains: "prisma.io",
+     *     },
+     *   },
+     *   orderBy: {
+     *     age: "asc",
+     *   },
+     *   take: 10,
+     * })
+    **/
+    aggregate<T extends TagsAggregateArgs>(args: Subset<T, TagsAggregateArgs>): Prisma.PrismaPromise<GetTagsAggregateType<T>>
+
+    /**
+     * Group by Tags.
+     * Note, that providing `undefined` is treated as the value not being there.
+     * Read more here: https://pris.ly/d/null-undefined
+     * @param {TagsGroupByArgs} args - Group by arguments.
+     * @example
+     * // Group by city, order by createdAt, get count
+     * const result = await prisma.user.groupBy({
+     *   by: ['city', 'createdAt'],
+     *   orderBy: {
+     *     createdAt: true
+     *   },
+     *   _count: {
+     *     _all: true
+     *   },
+     * })
+     * 
+    **/
+    groupBy<
+      T extends TagsGroupByArgs,
+      HasSelectOrTake extends Or<
+        Extends<'skip', Keys<T>>,
+        Extends<'take', Keys<T>>
+      >,
+      OrderByArg extends True extends HasSelectOrTake
+        ? { orderBy: TagsGroupByArgs['orderBy'] }
+        : { orderBy?: TagsGroupByArgs['orderBy'] },
+      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
+      ByFields extends MaybeTupleToUnion<T['by']>,
+      ByValid extends Has<ByFields, OrderFields>,
+      HavingFields extends GetHavingFields<T['having']>,
+      HavingValid extends Has<ByFields, HavingFields>,
+      ByEmpty extends T['by'] extends never[] ? True : False,
+      InputErrors extends ByEmpty extends True
+      ? `Error: "by" must not be empty.`
+      : HavingValid extends False
+      ? {
+          [P in HavingFields]: P extends ByFields
+            ? never
+            : P extends string
+            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
+            : [
+                Error,
+                'Field ',
+                P,
+                ` in "having" needs to be provided in "by"`,
+              ]
+        }[HavingFields]
+      : 'take' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "take", you also need to provide "orderBy"'
+      : 'skip' extends Keys<T>
+      ? 'orderBy' extends Keys<T>
+        ? ByValid extends True
+          ? {}
+          : {
+              [P in OrderFields]: P extends ByFields
+                ? never
+                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+            }[OrderFields]
+        : 'Error: If you provide "skip", you also need to provide "orderBy"'
+      : ByValid extends True
+      ? {}
+      : {
+          [P in OrderFields]: P extends ByFields
+            ? never
+            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
+        }[OrderFields]
+    >(args: SubsetIntersection<T, TagsGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetTagsGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
+  /**
+   * Fields of the Tags model
+   */
+  readonly fields: TagsFieldRefs;
+  }
+
+  /**
+   * The delegate class that acts as a "Promise-like" for Tags.
+   * Why is this prefixed with `Prisma__`?
+   * Because we want to prevent naming conflicts as mentioned in
+   * https://github.com/prisma/prisma-client-js/issues/707
+   */
+  export interface Prisma__TagsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
+    readonly [Symbol.toStringTag]: "PrismaPromise"
+    conversations<T extends Tags$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, Tags$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    /**
+     * Attaches callbacks for the resolution and/or rejection of the Promise.
+     * @param onfulfilled The callback to execute when the Promise is resolved.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of which ever callback is executed.
+     */
+    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
+    /**
+     * Attaches a callback for only the rejection of the Promise.
+     * @param onrejected The callback to execute when the Promise is rejected.
+     * @returns A Promise for the completion of the callback.
+     */
+    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
+    /**
+     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+     * resolved value cannot be modified from the callback.
+     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+     * @returns A Promise for the completion of the callback.
+     */
+    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
+  }
+
+
+
+
+  /**
+   * Fields of the Tags model
+   */
+  interface TagsFieldRefs {
+    readonly id: FieldRef<"Tags", 'String'>
+    readonly title: FieldRef<"Tags", 'String'>
+    readonly color: FieldRef<"Tags", 'String'>
+    readonly order: FieldRef<"Tags", 'Int'>
+    readonly description: FieldRef<"Tags", 'String'>
+    readonly createdAt: FieldRef<"Tags", 'DateTime'>
+    readonly updatedAt: FieldRef<"Tags", 'DateTime'>
+  }
+    
+
+  // Custom InputTypes
+  /**
+   * Tags findUnique
+   */
+  export type TagsFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagsInclude<ExtArgs> | null
+    /**
+     * Filter, which Tags to fetch.
+     */
+    where: TagsWhereUniqueInput
+  }
+
+  /**
+   * Tags findUniqueOrThrow
+   */
+  export type TagsFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagsInclude<ExtArgs> | null
+    /**
+     * Filter, which Tags to fetch.
+     */
+    where: TagsWhereUniqueInput
+  }
+
+  /**
+   * Tags findFirst
+   */
+  export type TagsFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagsInclude<ExtArgs> | null
+    /**
+     * Filter, which Tags to fetch.
+     */
+    where?: TagsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagsOrderByWithRelationInput | TagsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tags.
+     */
+    cursor?: TagsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tags.
+     */
+    distinct?: TagsScalarFieldEnum | TagsScalarFieldEnum[]
+  }
+
+  /**
+   * Tags findFirstOrThrow
+   */
+  export type TagsFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagsInclude<ExtArgs> | null
+    /**
+     * Filter, which Tags to fetch.
+     */
+    where?: TagsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagsOrderByWithRelationInput | TagsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for searching for Tags.
+     */
+    cursor?: TagsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
+     * 
+     * Filter by unique combinations of Tags.
+     */
+    distinct?: TagsScalarFieldEnum | TagsScalarFieldEnum[]
+  }
+
+  /**
+   * Tags findMany
+   */
+  export type TagsFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagsInclude<ExtArgs> | null
+    /**
+     * Filter, which Tags to fetch.
+     */
+    where?: TagsWhereInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
+     * 
+     * Determine the order of Tags to fetch.
+     */
+    orderBy?: TagsOrderByWithRelationInput | TagsOrderByWithRelationInput[]
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
+     * 
+     * Sets the position for listing Tags.
+     */
+    cursor?: TagsWhereUniqueInput
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Take `±n` Tags from the position of the cursor.
+     */
+    take?: number
+    /**
+     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
+     * 
+     * Skip the first `n` Tags.
+     */
+    skip?: number
+    distinct?: TagsScalarFieldEnum | TagsScalarFieldEnum[]
+  }
+
+  /**
+   * Tags create
+   */
+  export type TagsCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagsInclude<ExtArgs> | null
+    /**
+     * The data needed to create a Tags.
+     */
+    data: XOR<TagsCreateInput, TagsUncheckedCreateInput>
+  }
+
+  /**
+   * Tags createMany
+   */
+  export type TagsCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to create many Tags.
+     */
+    data: TagsCreateManyInput | TagsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Tags createManyAndReturn
+   */
+  export type TagsCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelectCreateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * The data used to create many Tags.
+     */
+    data: TagsCreateManyInput | TagsCreateManyInput[]
+    skipDuplicates?: boolean
+  }
+
+  /**
+   * Tags update
+   */
+  export type TagsUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagsInclude<ExtArgs> | null
+    /**
+     * The data needed to update a Tags.
+     */
+    data: XOR<TagsUpdateInput, TagsUncheckedUpdateInput>
+    /**
+     * Choose, which Tags to update.
+     */
+    where: TagsWhereUniqueInput
+  }
+
+  /**
+   * Tags updateMany
+   */
+  export type TagsUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * The data used to update Tags.
+     */
+    data: XOR<TagsUpdateManyMutationInput, TagsUncheckedUpdateManyInput>
+    /**
+     * Filter which Tags to update
+     */
+    where?: TagsWhereInput
+    /**
+     * Limit how many Tags to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Tags updateManyAndReturn
+   */
+  export type TagsUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelectUpdateManyAndReturn<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * The data used to update Tags.
+     */
+    data: XOR<TagsUpdateManyMutationInput, TagsUncheckedUpdateManyInput>
+    /**
+     * Filter which Tags to update
+     */
+    where?: TagsWhereInput
+    /**
+     * Limit how many Tags to update.
+     */
+    limit?: number
+  }
+
+  /**
+   * Tags upsert
+   */
+  export type TagsUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagsInclude<ExtArgs> | null
+    /**
+     * The filter to search for the Tags to update in case it exists.
+     */
+    where: TagsWhereUniqueInput
+    /**
+     * In case the Tags found by the `where` argument doesn't exist, create a new Tags with this data.
+     */
+    create: XOR<TagsCreateInput, TagsUncheckedCreateInput>
+    /**
+     * In case the Tags was found with the provided `where` argument, update it with this data.
+     */
+    update: XOR<TagsUpdateInput, TagsUncheckedUpdateInput>
+  }
+
+  /**
+   * Tags delete
+   */
+  export type TagsDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagsInclude<ExtArgs> | null
+    /**
+     * Filter which Tags to delete.
+     */
+    where: TagsWhereUniqueInput
+  }
+
+  /**
+   * Tags deleteMany
+   */
+  export type TagsDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Filter which Tags to delete
+     */
+    where?: TagsWhereInput
+    /**
+     * Limit how many Tags to delete.
+     */
+    limit?: number
+  }
+
+  /**
+   * Tags.conversations
+   */
+  export type Tags$conversationsArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Conversation
+     */
+    select?: ConversationSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Conversation
+     */
+    omit?: ConversationOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: ConversationInclude<ExtArgs> | null
+    where?: ConversationWhereInput
+    orderBy?: ConversationOrderByWithRelationInput | ConversationOrderByWithRelationInput[]
+    cursor?: ConversationWhereUniqueInput
+    take?: number
+    skip?: number
+    distinct?: ConversationScalarFieldEnum | ConversationScalarFieldEnum[]
+  }
+
+  /**
+   * Tags without action
+   */
+  export type TagsDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
+    /**
+     * Select specific fields to fetch from the Tags
+     */
+    select?: TagsSelect<ExtArgs> | null
+    /**
+     * Omit specific fields from the Tags
+     */
+    omit?: TagsOmit<ExtArgs> | null
+    /**
+     * Choose, which related nodes to fetch as well
+     */
+    include?: TagsInclude<ExtArgs> | null
   }
 
 
@@ -12441,6 +13746,7 @@ export namespace Prisma {
     contactId: 'contactId',
     userId: 'userId',
     queueId: 'queueId',
+    tagId: 'tagId',
     status: 'status',
     priority: 'priority',
     subject: 'subject',
@@ -12501,12 +13807,26 @@ export namespace Prisma {
     assistantId: 'assistantId',
     description: 'description',
     companyResume: 'companyResume',
+    isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     queueId: 'queueId'
   };
 
   export type PromptsScalarFieldEnum = (typeof PromptsScalarFieldEnum)[keyof typeof PromptsScalarFieldEnum]
+
+
+  export const TagsScalarFieldEnum: {
+    id: 'id',
+    title: 'title',
+    color: 'color',
+    order: 'order',
+    description: 'description',
+    createdAt: 'createdAt',
+    updatedAt: 'updatedAt'
+  };
+
+  export type TagsScalarFieldEnum = (typeof TagsScalarFieldEnum)[keyof typeof TagsScalarFieldEnum]
 
 
   export const WhatsAppConnectionScalarFieldEnum: {
@@ -13042,6 +14362,7 @@ export namespace Prisma {
     contactId?: StringFilter<"Conversation"> | string
     userId?: StringNullableFilter<"Conversation"> | string | null
     queueId?: StringNullableFilter<"Conversation"> | string | null
+    tagId?: StringNullableFilter<"Conversation"> | string | null
     status?: EnumConversationStatusFilter<"Conversation"> | $Enums.ConversationStatus
     priority?: EnumPriorityFilter<"Conversation"> | $Enums.Priority
     subject?: StringNullableFilter<"Conversation"> | string | null
@@ -13052,6 +14373,7 @@ export namespace Prisma {
     contact?: XOR<ContactScalarRelationFilter, ContactWhereInput>
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     queue?: XOR<QueueNullableScalarRelationFilter, QueueWhereInput> | null
+    tag?: XOR<TagsNullableScalarRelationFilter, TagsWhereInput> | null
     messages?: MessageListRelationFilter
   }
 
@@ -13060,6 +14382,7 @@ export namespace Prisma {
     contactId?: SortOrder
     userId?: SortOrderInput | SortOrder
     queueId?: SortOrderInput | SortOrder
+    tagId?: SortOrderInput | SortOrder
     status?: SortOrder
     priority?: SortOrder
     subject?: SortOrderInput | SortOrder
@@ -13070,6 +14393,7 @@ export namespace Prisma {
     contact?: ContactOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
     queue?: QueueOrderByWithRelationInput
+    tag?: TagsOrderByWithRelationInput
     messages?: MessageOrderByRelationAggregateInput
   }
 
@@ -13081,6 +14405,7 @@ export namespace Prisma {
     contactId?: StringFilter<"Conversation"> | string
     userId?: StringNullableFilter<"Conversation"> | string | null
     queueId?: StringNullableFilter<"Conversation"> | string | null
+    tagId?: StringNullableFilter<"Conversation"> | string | null
     status?: EnumConversationStatusFilter<"Conversation"> | $Enums.ConversationStatus
     priority?: EnumPriorityFilter<"Conversation"> | $Enums.Priority
     subject?: StringNullableFilter<"Conversation"> | string | null
@@ -13091,6 +14416,7 @@ export namespace Prisma {
     contact?: XOR<ContactScalarRelationFilter, ContactWhereInput>
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     queue?: XOR<QueueNullableScalarRelationFilter, QueueWhereInput> | null
+    tag?: XOR<TagsNullableScalarRelationFilter, TagsWhereInput> | null
     messages?: MessageListRelationFilter
   }, "id">
 
@@ -13099,6 +14425,7 @@ export namespace Prisma {
     contactId?: SortOrder
     userId?: SortOrderInput | SortOrder
     queueId?: SortOrderInput | SortOrder
+    tagId?: SortOrderInput | SortOrder
     status?: SortOrder
     priority?: SortOrder
     subject?: SortOrderInput | SortOrder
@@ -13119,6 +14446,7 @@ export namespace Prisma {
     contactId?: StringWithAggregatesFilter<"Conversation"> | string
     userId?: StringNullableWithAggregatesFilter<"Conversation"> | string | null
     queueId?: StringNullableWithAggregatesFilter<"Conversation"> | string | null
+    tagId?: StringNullableWithAggregatesFilter<"Conversation"> | string | null
     status?: EnumConversationStatusWithAggregatesFilter<"Conversation"> | $Enums.ConversationStatus
     priority?: EnumPriorityWithAggregatesFilter<"Conversation"> | $Enums.Priority
     subject?: StringNullableWithAggregatesFilter<"Conversation"> | string | null
@@ -13318,6 +14646,7 @@ export namespace Prisma {
     assistantId?: StringNullableFilter<"Prompts"> | string | null
     description?: StringNullableFilter<"Prompts"> | string | null
     companyResume?: StringFilter<"Prompts"> | string
+    isActive?: BoolFilter<"Prompts"> | boolean
     createdAt?: DateTimeFilter<"Prompts"> | Date | string
     updatedAt?: DateTimeFilter<"Prompts"> | Date | string
     queueId?: StringFilter<"Prompts"> | string
@@ -13338,6 +14667,7 @@ export namespace Prisma {
     assistantId?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     companyResume?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrder
@@ -13361,6 +14691,7 @@ export namespace Prisma {
     assistantId?: StringNullableFilter<"Prompts"> | string | null
     description?: StringNullableFilter<"Prompts"> | string | null
     companyResume?: StringFilter<"Prompts"> | string
+    isActive?: BoolFilter<"Prompts"> | boolean
     createdAt?: DateTimeFilter<"Prompts"> | Date | string
     updatedAt?: DateTimeFilter<"Prompts"> | Date | string
     queueId?: StringFilter<"Prompts"> | string
@@ -13381,6 +14712,7 @@ export namespace Prisma {
     assistantId?: SortOrderInput | SortOrder
     description?: SortOrderInput | SortOrder
     companyResume?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrder
@@ -13408,9 +14740,77 @@ export namespace Prisma {
     assistantId?: StringNullableWithAggregatesFilter<"Prompts"> | string | null
     description?: StringNullableWithAggregatesFilter<"Prompts"> | string | null
     companyResume?: StringWithAggregatesFilter<"Prompts"> | string
+    isActive?: BoolWithAggregatesFilter<"Prompts"> | boolean
     createdAt?: DateTimeWithAggregatesFilter<"Prompts"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Prompts"> | Date | string
     queueId?: StringWithAggregatesFilter<"Prompts"> | string
+  }
+
+  export type TagsWhereInput = {
+    AND?: TagsWhereInput | TagsWhereInput[]
+    OR?: TagsWhereInput[]
+    NOT?: TagsWhereInput | TagsWhereInput[]
+    id?: StringFilter<"Tags"> | string
+    title?: StringFilter<"Tags"> | string
+    color?: StringFilter<"Tags"> | string
+    order?: IntFilter<"Tags"> | number
+    description?: StringNullableFilter<"Tags"> | string | null
+    createdAt?: DateTimeFilter<"Tags"> | Date | string
+    updatedAt?: DateTimeFilter<"Tags"> | Date | string
+    conversations?: ConversationListRelationFilter
+  }
+
+  export type TagsOrderByWithRelationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    color?: SortOrder
+    order?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    conversations?: ConversationOrderByRelationAggregateInput
+  }
+
+  export type TagsWhereUniqueInput = Prisma.AtLeast<{
+    id?: string
+    AND?: TagsWhereInput | TagsWhereInput[]
+    OR?: TagsWhereInput[]
+    NOT?: TagsWhereInput | TagsWhereInput[]
+    title?: StringFilter<"Tags"> | string
+    color?: StringFilter<"Tags"> | string
+    order?: IntFilter<"Tags"> | number
+    description?: StringNullableFilter<"Tags"> | string | null
+    createdAt?: DateTimeFilter<"Tags"> | Date | string
+    updatedAt?: DateTimeFilter<"Tags"> | Date | string
+    conversations?: ConversationListRelationFilter
+  }, "id">
+
+  export type TagsOrderByWithAggregationInput = {
+    id?: SortOrder
+    title?: SortOrder
+    color?: SortOrder
+    order?: SortOrder
+    description?: SortOrderInput | SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+    _count?: TagsCountOrderByAggregateInput
+    _avg?: TagsAvgOrderByAggregateInput
+    _max?: TagsMaxOrderByAggregateInput
+    _min?: TagsMinOrderByAggregateInput
+    _sum?: TagsSumOrderByAggregateInput
+  }
+
+  export type TagsScalarWhereWithAggregatesInput = {
+    AND?: TagsScalarWhereWithAggregatesInput | TagsScalarWhereWithAggregatesInput[]
+    OR?: TagsScalarWhereWithAggregatesInput[]
+    NOT?: TagsScalarWhereWithAggregatesInput | TagsScalarWhereWithAggregatesInput[]
+    id?: StringWithAggregatesFilter<"Tags"> | string
+    title?: StringWithAggregatesFilter<"Tags"> | string
+    color?: StringWithAggregatesFilter<"Tags"> | string
+    order?: IntWithAggregatesFilter<"Tags"> | number
+    description?: StringNullableWithAggregatesFilter<"Tags"> | string | null
+    createdAt?: DateTimeWithAggregatesFilter<"Tags"> | Date | string
+    updatedAt?: DateTimeWithAggregatesFilter<"Tags"> | Date | string
   }
 
   export type WhatsAppConnectionWhereInput = {
@@ -13861,6 +15261,7 @@ export namespace Prisma {
     contact: ContactCreateNestedOneWithoutConversationsInput
     user?: UserCreateNestedOneWithoutConversationsInput
     queue?: QueueCreateNestedOneWithoutConversationsInput
+    tag?: TagsCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
   }
 
@@ -13869,6 +15270,7 @@ export namespace Prisma {
     contactId: string
     userId?: string | null
     queueId?: string | null
+    tagId?: string | null
     status?: $Enums.ConversationStatus
     priority?: $Enums.Priority
     subject?: string | null
@@ -13891,6 +15293,7 @@ export namespace Prisma {
     contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
     user?: UserUpdateOneWithoutConversationsNestedInput
     queue?: QueueUpdateOneWithoutConversationsNestedInput
+    tag?: TagsUpdateOneWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
   }
 
@@ -13899,6 +15302,7 @@ export namespace Prisma {
     contactId?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
+    tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     subject?: NullableStringFieldUpdateOperationsInput | string | null
@@ -13914,6 +15318,7 @@ export namespace Prisma {
     contactId: string
     userId?: string | null
     queueId?: string | null
+    tagId?: string | null
     status?: $Enums.ConversationStatus
     priority?: $Enums.Priority
     subject?: string | null
@@ -13939,6 +15344,7 @@ export namespace Prisma {
     contactId?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
+    tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     subject?: NullableStringFieldUpdateOperationsInput | string | null
@@ -14155,6 +15561,7 @@ export namespace Prisma {
     assistantId?: string | null
     description?: string | null
     companyResume: string
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     queue?: QueueCreateNestedOneWithoutPromptsInput
@@ -14174,6 +15581,7 @@ export namespace Prisma {
     assistantId?: string | null
     description?: string | null
     companyResume: string
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     queueId: string
@@ -14193,6 +15601,7 @@ export namespace Prisma {
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     companyResume?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     queue?: QueueUpdateOneWithoutPromptsNestedInput
@@ -14212,6 +15621,7 @@ export namespace Prisma {
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     companyResume?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     queueId?: StringFieldUpdateOperationsInput | string
@@ -14231,6 +15641,7 @@ export namespace Prisma {
     assistantId?: string | null
     description?: string | null
     companyResume: string
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
     queueId: string
@@ -14250,6 +15661,7 @@ export namespace Prisma {
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     companyResume?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -14268,9 +15680,84 @@ export namespace Prisma {
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     companyResume?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     queueId?: StringFieldUpdateOperationsInput | string
+  }
+
+  export type TagsCreateInput = {
+    id?: string
+    title: string
+    color: string
+    order?: number
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationCreateNestedManyWithoutTagInput
+  }
+
+  export type TagsUncheckedCreateInput = {
+    id?: string
+    title: string
+    color: string
+    order?: number
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    conversations?: ConversationUncheckedCreateNestedManyWithoutTagInput
+  }
+
+  export type TagsUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagsUncheckedUpdateInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    conversations?: ConversationUncheckedUpdateManyWithoutTagNestedInput
+  }
+
+  export type TagsCreateManyInput = {
+    id?: string
+    title: string
+    color: string
+    order?: number
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagsUpdateManyMutationInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagsUncheckedUpdateManyInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type WhatsAppConnectionCreateInput = {
@@ -14803,11 +16290,17 @@ export namespace Prisma {
     isNot?: QueueWhereInput | null
   }
 
+  export type TagsNullableScalarRelationFilter = {
+    is?: TagsWhereInput | null
+    isNot?: TagsWhereInput | null
+  }
+
   export type ConversationCountOrderByAggregateInput = {
     id?: SortOrder
     contactId?: SortOrder
     userId?: SortOrder
     queueId?: SortOrder
+    tagId?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     subject?: SortOrder
@@ -14822,6 +16315,7 @@ export namespace Prisma {
     contactId?: SortOrder
     userId?: SortOrder
     queueId?: SortOrder
+    tagId?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     subject?: SortOrder
@@ -14836,6 +16330,7 @@ export namespace Prisma {
     contactId?: SortOrder
     userId?: SortOrder
     queueId?: SortOrder
+    tagId?: SortOrder
     status?: SortOrder
     priority?: SortOrder
     subject?: SortOrder
@@ -15041,6 +16536,7 @@ export namespace Prisma {
     assistantId?: SortOrder
     description?: SortOrder
     companyResume?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrder
@@ -15069,6 +16565,7 @@ export namespace Prisma {
     assistantId?: SortOrder
     description?: SortOrder
     companyResume?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrder
@@ -15088,6 +16585,7 @@ export namespace Prisma {
     assistantId?: SortOrder
     description?: SortOrder
     companyResume?: SortOrder
+    isActive?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrder
@@ -15132,6 +16630,44 @@ export namespace Prisma {
     _sum?: NestedFloatNullableFilter<$PrismaModel>
     _min?: NestedFloatNullableFilter<$PrismaModel>
     _max?: NestedFloatNullableFilter<$PrismaModel>
+  }
+
+  export type TagsCountOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    color?: SortOrder
+    order?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TagsAvgOrderByAggregateInput = {
+    order?: SortOrder
+  }
+
+  export type TagsMaxOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    color?: SortOrder
+    order?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TagsMinOrderByAggregateInput = {
+    id?: SortOrder
+    title?: SortOrder
+    color?: SortOrder
+    order?: SortOrder
+    description?: SortOrder
+    createdAt?: SortOrder
+    updatedAt?: SortOrder
+  }
+
+  export type TagsSumOrderByAggregateInput = {
+    order?: SortOrder
   }
 
   export type WhatsAppConnectionCountOrderByAggregateInput = {
@@ -15605,6 +17141,12 @@ export namespace Prisma {
     connect?: QueueWhereUniqueInput
   }
 
+  export type TagsCreateNestedOneWithoutConversationsInput = {
+    create?: XOR<TagsCreateWithoutConversationsInput, TagsUncheckedCreateWithoutConversationsInput>
+    connectOrCreate?: TagsCreateOrConnectWithoutConversationsInput
+    connect?: TagsWhereUniqueInput
+  }
+
   export type MessageCreateNestedManyWithoutConversationInput = {
     create?: XOR<MessageCreateWithoutConversationInput, MessageUncheckedCreateWithoutConversationInput> | MessageCreateWithoutConversationInput[] | MessageUncheckedCreateWithoutConversationInput[]
     connectOrCreate?: MessageCreateOrConnectWithoutConversationInput | MessageCreateOrConnectWithoutConversationInput[]
@@ -15653,6 +17195,16 @@ export namespace Prisma {
     delete?: QueueWhereInput | boolean
     connect?: QueueWhereUniqueInput
     update?: XOR<XOR<QueueUpdateToOneWithWhereWithoutConversationsInput, QueueUpdateWithoutConversationsInput>, QueueUncheckedUpdateWithoutConversationsInput>
+  }
+
+  export type TagsUpdateOneWithoutConversationsNestedInput = {
+    create?: XOR<TagsCreateWithoutConversationsInput, TagsUncheckedCreateWithoutConversationsInput>
+    connectOrCreate?: TagsCreateOrConnectWithoutConversationsInput
+    upsert?: TagsUpsertWithoutConversationsInput
+    disconnect?: TagsWhereInput | boolean
+    delete?: TagsWhereInput | boolean
+    connect?: TagsWhereUniqueInput
+    update?: XOR<XOR<TagsUpdateToOneWithWhereWithoutConversationsInput, TagsUpdateWithoutConversationsInput>, TagsUncheckedUpdateWithoutConversationsInput>
   }
 
   export type MessageUpdateManyWithoutConversationNestedInput = {
@@ -15771,6 +17323,48 @@ export namespace Prisma {
     delete?: QueueWhereInput | boolean
     connect?: QueueWhereUniqueInput
     update?: XOR<XOR<QueueUpdateToOneWithWhereWithoutPromptsInput, QueueUpdateWithoutPromptsInput>, QueueUncheckedUpdateWithoutPromptsInput>
+  }
+
+  export type ConversationCreateNestedManyWithoutTagInput = {
+    create?: XOR<ConversationCreateWithoutTagInput, ConversationUncheckedCreateWithoutTagInput> | ConversationCreateWithoutTagInput[] | ConversationUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ConversationCreateOrConnectWithoutTagInput | ConversationCreateOrConnectWithoutTagInput[]
+    createMany?: ConversationCreateManyTagInputEnvelope
+    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+  }
+
+  export type ConversationUncheckedCreateNestedManyWithoutTagInput = {
+    create?: XOR<ConversationCreateWithoutTagInput, ConversationUncheckedCreateWithoutTagInput> | ConversationCreateWithoutTagInput[] | ConversationUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ConversationCreateOrConnectWithoutTagInput | ConversationCreateOrConnectWithoutTagInput[]
+    createMany?: ConversationCreateManyTagInputEnvelope
+    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+  }
+
+  export type ConversationUpdateManyWithoutTagNestedInput = {
+    create?: XOR<ConversationCreateWithoutTagInput, ConversationUncheckedCreateWithoutTagInput> | ConversationCreateWithoutTagInput[] | ConversationUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ConversationCreateOrConnectWithoutTagInput | ConversationCreateOrConnectWithoutTagInput[]
+    upsert?: ConversationUpsertWithWhereUniqueWithoutTagInput | ConversationUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: ConversationCreateManyTagInputEnvelope
+    set?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    disconnect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    delete?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    update?: ConversationUpdateWithWhereUniqueWithoutTagInput | ConversationUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: ConversationUpdateManyWithWhereWithoutTagInput | ConversationUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
+  }
+
+  export type ConversationUncheckedUpdateManyWithoutTagNestedInput = {
+    create?: XOR<ConversationCreateWithoutTagInput, ConversationUncheckedCreateWithoutTagInput> | ConversationCreateWithoutTagInput[] | ConversationUncheckedCreateWithoutTagInput[]
+    connectOrCreate?: ConversationCreateOrConnectWithoutTagInput | ConversationCreateOrConnectWithoutTagInput[]
+    upsert?: ConversationUpsertWithWhereUniqueWithoutTagInput | ConversationUpsertWithWhereUniqueWithoutTagInput[]
+    createMany?: ConversationCreateManyTagInputEnvelope
+    set?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    disconnect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    delete?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    connect?: ConversationWhereUniqueInput | ConversationWhereUniqueInput[]
+    update?: ConversationUpdateWithWhereUniqueWithoutTagInput | ConversationUpdateWithWhereUniqueWithoutTagInput[]
+    updateMany?: ConversationUpdateManyWithWhereWithoutTagInput | ConversationUpdateManyWithWhereWithoutTagInput[]
+    deleteMany?: ConversationScalarWhereInput | ConversationScalarWhereInput[]
   }
 
   export type NestedStringFilter<$PrismaModel = never> = {
@@ -16103,6 +17697,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     contact: ContactCreateNestedOneWithoutConversationsInput
     queue?: QueueCreateNestedOneWithoutConversationsInput
+    tag?: TagsCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
   }
 
@@ -16110,6 +17705,7 @@ export namespace Prisma {
     id?: string
     contactId: string
     queueId?: string | null
+    tagId?: string | null
     status?: $Enums.ConversationStatus
     priority?: $Enums.Priority
     subject?: string | null
@@ -16218,6 +17814,7 @@ export namespace Prisma {
     contactId?: StringFilter<"Conversation"> | string
     userId?: StringNullableFilter<"Conversation"> | string | null
     queueId?: StringNullableFilter<"Conversation"> | string | null
+    tagId?: StringNullableFilter<"Conversation"> | string | null
     status?: EnumConversationStatusFilter<"Conversation"> | $Enums.ConversationStatus
     priority?: EnumPriorityFilter<"Conversation"> | $Enums.Priority
     subject?: StringNullableFilter<"Conversation"> | string | null
@@ -16300,6 +17897,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     user?: UserCreateNestedOneWithoutConversationsInput
     queue?: QueueCreateNestedOneWithoutConversationsInput
+    tag?: TagsCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
   }
 
@@ -16307,6 +17905,7 @@ export namespace Prisma {
     id?: string
     userId?: string | null
     queueId?: string | null
+    tagId?: string | null
     status?: $Enums.ConversationStatus
     priority?: $Enums.Priority
     subject?: string | null
@@ -16354,6 +17953,7 @@ export namespace Prisma {
     updatedAt?: Date | string
     contact: ContactCreateNestedOneWithoutConversationsInput
     user?: UserCreateNestedOneWithoutConversationsInput
+    tag?: TagsCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
   }
 
@@ -16361,6 +17961,7 @@ export namespace Prisma {
     id?: string
     contactId: string
     userId?: string | null
+    tagId?: string | null
     status?: $Enums.ConversationStatus
     priority?: $Enums.Priority
     subject?: string | null
@@ -16443,6 +18044,7 @@ export namespace Prisma {
     assistantId?: string | null
     description?: string | null
     companyResume: string
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16461,6 +18063,7 @@ export namespace Prisma {
     assistantId?: string | null
     description?: string | null
     companyResume: string
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -16569,6 +18172,7 @@ export namespace Prisma {
     assistantId?: StringNullableFilter<"Prompts"> | string | null
     description?: StringNullableFilter<"Prompts"> | string | null
     companyResume?: StringFilter<"Prompts"> | string
+    isActive?: BoolFilter<"Prompts"> | boolean
     createdAt?: DateTimeFilter<"Prompts"> | Date | string
     updatedAt?: DateTimeFilter<"Prompts"> | Date | string
     queueId?: StringFilter<"Prompts"> | string
@@ -16841,6 +18445,31 @@ export namespace Prisma {
     create: XOR<QueueCreateWithoutConversationsInput, QueueUncheckedCreateWithoutConversationsInput>
   }
 
+  export type TagsCreateWithoutConversationsInput = {
+    id?: string
+    title: string
+    color: string
+    order?: number
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagsUncheckedCreateWithoutConversationsInput = {
+    id?: string
+    title: string
+    color: string
+    order?: number
+    description?: string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type TagsCreateOrConnectWithoutConversationsInput = {
+    where: TagsWhereUniqueInput
+    create: XOR<TagsCreateWithoutConversationsInput, TagsUncheckedCreateWithoutConversationsInput>
+  }
+
   export type MessageCreateWithoutConversationInput = {
     id?: string
     content: string
@@ -17010,6 +18639,37 @@ export namespace Prisma {
     prompts?: PromptsUncheckedUpdateManyWithoutQueueNestedInput
   }
 
+  export type TagsUpsertWithoutConversationsInput = {
+    update: XOR<TagsUpdateWithoutConversationsInput, TagsUncheckedUpdateWithoutConversationsInput>
+    create: XOR<TagsCreateWithoutConversationsInput, TagsUncheckedCreateWithoutConversationsInput>
+    where?: TagsWhereInput
+  }
+
+  export type TagsUpdateToOneWithWhereWithoutConversationsInput = {
+    where?: TagsWhereInput
+    data: XOR<TagsUpdateWithoutConversationsInput, TagsUncheckedUpdateWithoutConversationsInput>
+  }
+
+  export type TagsUpdateWithoutConversationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type TagsUncheckedUpdateWithoutConversationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    title?: StringFieldUpdateOperationsInput | string
+    color?: StringFieldUpdateOperationsInput | string
+    order?: IntFieldUpdateOperationsInput | number
+    description?: NullableStringFieldUpdateOperationsInput | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
   export type MessageUpsertWithWhereUniqueWithoutConversationInput = {
     where: MessageWhereUniqueInput
     update: XOR<MessageUpdateWithoutConversationInput, MessageUncheckedUpdateWithoutConversationInput>
@@ -17038,6 +18698,7 @@ export namespace Prisma {
     contact: ContactCreateNestedOneWithoutConversationsInput
     user?: UserCreateNestedOneWithoutConversationsInput
     queue?: QueueCreateNestedOneWithoutConversationsInput
+    tag?: TagsCreateNestedOneWithoutConversationsInput
   }
 
   export type ConversationUncheckedCreateWithoutMessagesInput = {
@@ -17045,6 +18706,7 @@ export namespace Prisma {
     contactId: string
     userId?: string | null
     queueId?: string | null
+    tagId?: string | null
     status?: $Enums.ConversationStatus
     priority?: $Enums.Priority
     subject?: string | null
@@ -17115,6 +18777,7 @@ export namespace Prisma {
     contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
     user?: UserUpdateOneWithoutConversationsNestedInput
     queue?: QueueUpdateOneWithoutConversationsNestedInput
+    tag?: TagsUpdateOneWithoutConversationsNestedInput
   }
 
   export type ConversationUncheckedUpdateWithoutMessagesInput = {
@@ -17122,6 +18785,7 @@ export namespace Prisma {
     contactId?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
+    tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     subject?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17346,10 +19010,67 @@ export namespace Prisma {
     quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
   }
 
+  export type ConversationCreateWithoutTagInput = {
+    id?: string
+    status?: $Enums.ConversationStatus
+    priority?: $Enums.Priority
+    subject?: string | null
+    lastMessageAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    contact: ContactCreateNestedOneWithoutConversationsInput
+    user?: UserCreateNestedOneWithoutConversationsInput
+    queue?: QueueCreateNestedOneWithoutConversationsInput
+    messages?: MessageCreateNestedManyWithoutConversationInput
+  }
+
+  export type ConversationUncheckedCreateWithoutTagInput = {
+    id?: string
+    contactId: string
+    userId?: string | null
+    queueId?: string | null
+    status?: $Enums.ConversationStatus
+    priority?: $Enums.Priority
+    subject?: string | null
+    lastMessageAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+    messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
+  }
+
+  export type ConversationCreateOrConnectWithoutTagInput = {
+    where: ConversationWhereUniqueInput
+    create: XOR<ConversationCreateWithoutTagInput, ConversationUncheckedCreateWithoutTagInput>
+  }
+
+  export type ConversationCreateManyTagInputEnvelope = {
+    data: ConversationCreateManyTagInput | ConversationCreateManyTagInput[]
+    skipDuplicates?: boolean
+  }
+
+  export type ConversationUpsertWithWhereUniqueWithoutTagInput = {
+    where: ConversationWhereUniqueInput
+    update: XOR<ConversationUpdateWithoutTagInput, ConversationUncheckedUpdateWithoutTagInput>
+    create: XOR<ConversationCreateWithoutTagInput, ConversationUncheckedCreateWithoutTagInput>
+  }
+
+  export type ConversationUpdateWithWhereUniqueWithoutTagInput = {
+    where: ConversationWhereUniqueInput
+    data: XOR<ConversationUpdateWithoutTagInput, ConversationUncheckedUpdateWithoutTagInput>
+  }
+
+  export type ConversationUpdateManyWithWhereWithoutTagInput = {
+    where: ConversationScalarWhereInput
+    data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutTagInput>
+  }
+
   export type ConversationCreateManyUserInput = {
     id?: string
     contactId: string
     queueId?: string | null
+    tagId?: string | null
     status?: $Enums.ConversationStatus
     priority?: $Enums.Priority
     subject?: string | null
@@ -17392,6 +19113,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
     queue?: QueueUpdateOneWithoutConversationsNestedInput
+    tag?: TagsUpdateOneWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
   }
 
@@ -17399,6 +19121,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     contactId?: StringFieldUpdateOperationsInput | string
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
+    tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     subject?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17413,6 +19136,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     contactId?: StringFieldUpdateOperationsInput | string
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
+    tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     subject?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17492,6 +19216,7 @@ export namespace Prisma {
     id?: string
     userId?: string | null
     queueId?: string | null
+    tagId?: string | null
     status?: $Enums.ConversationStatus
     priority?: $Enums.Priority
     subject?: string | null
@@ -17512,6 +19237,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutConversationsNestedInput
     queue?: QueueUpdateOneWithoutConversationsNestedInput
+    tag?: TagsUpdateOneWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
   }
 
@@ -17519,6 +19245,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
+    tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     subject?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17533,6 +19260,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
+    tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     subject?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17546,6 +19274,7 @@ export namespace Prisma {
     id?: string
     contactId: string
     userId?: string | null
+    tagId?: string | null
     status?: $Enums.ConversationStatus
     priority?: $Enums.Priority
     subject?: string | null
@@ -17583,6 +19312,7 @@ export namespace Prisma {
     assistantId?: string | null
     description?: string | null
     companyResume: string
+    isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
   }
@@ -17598,6 +19328,7 @@ export namespace Prisma {
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
     user?: UserUpdateOneWithoutConversationsNestedInput
+    tag?: TagsUpdateOneWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
   }
 
@@ -17605,6 +19336,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     contactId?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+    tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     subject?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17619,6 +19351,7 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     contactId?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
+    tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
     priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
     subject?: NullableStringFieldUpdateOperationsInput | string | null
@@ -17684,6 +19417,7 @@ export namespace Prisma {
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     companyResume?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17702,6 +19436,7 @@ export namespace Prisma {
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     companyResume?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17720,6 +19455,7 @@ export namespace Prisma {
     assistantId?: NullableStringFieldUpdateOperationsInput | string | null
     description?: NullableStringFieldUpdateOperationsInput | string | null
     companyResume?: StringFieldUpdateOperationsInput | string
+    isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -17790,6 +19526,64 @@ export namespace Prisma {
     deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+  }
+
+  export type ConversationCreateManyTagInput = {
+    id?: string
+    contactId: string
+    userId?: string | null
+    queueId?: string | null
+    status?: $Enums.ConversationStatus
+    priority?: $Enums.Priority
+    subject?: string | null
+    lastMessageAt?: Date | string | null
+    closedAt?: Date | string | null
+    createdAt?: Date | string
+    updatedAt?: Date | string
+  }
+
+  export type ConversationUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
+    user?: UserUpdateOneWithoutConversationsNestedInput
+    queue?: QueueUpdateOneWithoutConversationsNestedInput
+    messages?: MessageUpdateManyWithoutConversationNestedInput
+  }
+
+  export type ConversationUncheckedUpdateWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    queueId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
+  }
+
+  export type ConversationUncheckedUpdateManyWithoutTagInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    contactId?: StringFieldUpdateOperationsInput | string
+    userId?: NullableStringFieldUpdateOperationsInput | string | null
+    queueId?: NullableStringFieldUpdateOperationsInput | string | null
+    status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
+    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    subject?: NullableStringFieldUpdateOperationsInput | string | null
+    lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
 

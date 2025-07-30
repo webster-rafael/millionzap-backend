@@ -172,6 +172,7 @@ exports.Prisma.ConversationScalarFieldEnum = {
   contactId: 'contactId',
   userId: 'userId',
   queueId: 'queueId',
+  tagId: 'tagId',
   status: 'status',
   priority: 'priority',
   subject: 'subject',
@@ -223,9 +224,20 @@ exports.Prisma.PromptsScalarFieldEnum = {
   assistantId: 'assistantId',
   description: 'description',
   companyResume: 'companyResume',
+  isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   queueId: 'queueId'
+};
+
+exports.Prisma.TagsScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  color: 'color',
+  order: 'order',
+  description: 'description',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
 exports.Prisma.WhatsAppConnectionScalarFieldEnum = {
@@ -306,6 +318,7 @@ exports.Prisma.ModelName = {
   Message: 'Message',
   QuickResponse: 'QuickResponse',
   Prompts: 'Prompts',
+  Tags: 'Tags',
   WhatsAppConnection: 'WhatsAppConnection'
 };
 
