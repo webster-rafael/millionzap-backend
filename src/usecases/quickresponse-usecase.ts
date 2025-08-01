@@ -12,8 +12,10 @@ class QuickResponseUseCase {
     this.quickResponseRepository = new QuickResponseRepositoryPrisma();
   }
 
-  async create(data: QuickResponseCreateInput): Promise<QuickResponse> {
-    return this.quickResponseRepository.create(data);
+  async create(
+    quickResponse: QuickResponseCreateInput
+  ): Promise<QuickResponse> {
+    return this.quickResponseRepository.create(quickResponse);
   }
 
   async findAll(): Promise<QuickResponse[]> {
@@ -24,8 +26,8 @@ class QuickResponseUseCase {
     return this.quickResponseRepository.findById(id);
   }
 
-  async update(data: QuickResponse): Promise<QuickResponse> {
-    return this.quickResponseRepository.update(data);
+  async update(quickResponse: QuickResponse): Promise<QuickResponse> {
+    return this.quickResponseRepository.update(quickResponse);
   }
 
   async delete(id: string): Promise<QuickResponse> {

@@ -5,6 +5,8 @@ import fastifyCors from "@fastify/cors";
 import { queuesRoutes } from "./routes/queues-route";
 import { promptRoutes } from "./routes/prompt-route";
 import { tagsRoutes } from "./routes/tags-route";
+import { contactRoutes } from "./routes/contact-route";
+import { whatsAppConnectionRoutes } from "./routes/whatsappConnection-route";
 
 const app: FastifyInstance = Fastify({});
 
@@ -16,6 +18,10 @@ app.register(fastifyCors, {
 
 app.register(userRoutes, {
   prefix: "/users",
+});
+
+app.register(contactRoutes, {
+  prefix: "/contacts",
 });
 
 app.register(quickResponseRoutes, {
@@ -32,6 +38,10 @@ app.register(promptRoutes, {
 
 app.register(tagsRoutes, {
   prefix: "/tags",
+});
+
+app.register(whatsAppConnectionRoutes, {
+  prefix: "/whatsapp-connections",
 });
 
 app.listen(

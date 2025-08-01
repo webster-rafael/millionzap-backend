@@ -24,8 +24,8 @@ class QueueUseCase {
     return this.queueRepository.findById(id);
   }
 
-  async update(queue: Queue): Promise<Queue> {
-    return this.queueRepository.update(queue);
+  async update(id: string, queue: Queue): Promise<Queue> {
+    return this.queueRepository.update(id, queue);
   }
 
   async delete(id: string): Promise<void> {

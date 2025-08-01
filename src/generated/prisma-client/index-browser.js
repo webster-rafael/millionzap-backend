@@ -120,14 +120,39 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.WhatsAppConnectionScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  isDefault: 'isDefault',
+  greetingMessage: 'greetingMessage',
+  conclusionMessage: 'conclusionMessage',
+  outOfOfficeHoursMessage: 'outOfOfficeHoursMessage',
+  reviewMessage: 'reviewMessage',
+  token: 'token',
+  queueId: 'queueId',
+  integrationId: 'integrationId',
+  userId: 'userId',
+  promptId: 'promptId',
+  transferQueueId: 'transferQueueId',
+  timeToTransfer: 'timeToTransfer',
+  expiresInactiveMessage: 'expiresInactiveMessage',
+  companyId: 'companyId',
+  session: 'session',
+  qrCode: 'qrCode',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
   email: 'email',
-  phone: 'phone',
   password: 'password',
   role: 'role',
   isActive: 'isActive',
+  whatsAppConnectionId: 'whatsAppConnectionId',
+  companyId: 'companyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -137,11 +162,10 @@ exports.Prisma.ContactScalarFieldEnum = {
   name: 'name',
   phone: 'phone',
   email: 'email',
-  avatar: 'avatar',
-  isBlocked: 'isBlocked',
   tags: 'tags',
-  notes: 'notes',
-  lastSeenAt: 'lastSeenAt',
+  whatsappId: 'whatsappId',
+  companyId: 'companyId',
+  isCostumer: 'isCostumer',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -158,7 +182,8 @@ exports.Prisma.QueueScalarFieldEnum = {
   priority: 'priority',
   schedules: 'schedules',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  whatsAppConnectionId: 'whatsAppConnectionId'
 };
 
 exports.Prisma.QueueUserScalarFieldEnum = {
@@ -227,7 +252,8 @@ exports.Prisma.PromptsScalarFieldEnum = {
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  queueId: 'queueId'
+  queueId: 'queueId',
+  whatsAppConnectionId: 'whatsAppConnectionId'
 };
 
 exports.Prisma.TagsScalarFieldEnum = {
@@ -236,19 +262,6 @@ exports.Prisma.TagsScalarFieldEnum = {
   color: 'color',
   order: 'order',
   description: 'description',
-  createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
-};
-
-exports.Prisma.WhatsAppConnectionScalarFieldEnum = {
-  id: 'id',
-  name: 'name',
-  phoneNumberId: 'phoneNumberId',
-  accessToken: 'accessToken',
-  webhookUrl: 'webhookUrl',
-  verifyToken: 'verifyToken',
-  isActive: 'isActive',
-  lastSyncAt: 'lastSyncAt',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -267,9 +280,15 @@ exports.Prisma.NullsOrder = {
   first: 'first',
   last: 'last'
 };
+exports.WhatsAppConnectionStatus = exports.$Enums.WhatsAppConnectionStatus = {
+  OPEN: 'OPEN',
+  PENDING: 'PENDING',
+  CLOSED: 'CLOSED'
+};
+
 exports.UserRole = exports.$Enums.UserRole = {
   ADMIN: 'ADMIN',
-  AGENT: 'AGENT'
+  USER: 'USER'
 };
 
 exports.ConversationStatus = exports.$Enums.ConversationStatus = {
@@ -310,6 +329,7 @@ exports.MessageStatus = exports.$Enums.MessageStatus = {
 };
 
 exports.Prisma.ModelName = {
+  WhatsAppConnection: 'WhatsAppConnection',
   User: 'User',
   Contact: 'Contact',
   Queue: 'Queue',
@@ -318,8 +338,7 @@ exports.Prisma.ModelName = {
   Message: 'Message',
   QuickResponse: 'QuickResponse',
   Prompts: 'Prompts',
-  Tags: 'Tags',
-  WhatsAppConnection: 'WhatsAppConnection'
+  Tags: 'Tags'
 };
 
 /**

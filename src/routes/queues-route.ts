@@ -45,10 +45,9 @@ export function queuesRoutes(fastify: FastifyInstance) {
           return reply.status(404).send({ error: "Fila não encontrada" });
         }
 
-        const updated = await queueUseCase.update({
+        const updated = await queueUseCase.update(request.params.id, {
           ...existing,
           ...request.body,
-          id: request.params.id,
         });
 
         reply.status(200).send(updated);

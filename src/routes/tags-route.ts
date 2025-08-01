@@ -47,10 +47,10 @@ export function tagsRoutes(fastify: FastifyInstance) {
           return reply.status(404).send({ error: "Tag não encontrada" });
         }
 
-        const updated = await tagUseCase.update(
-          request.params.id,
-          request.body
-        );
+        const updated = await tagUseCase.update(request.params.id, {
+          ...existing,
+          ...request.body,
+        });
         reply.status(200).send(updated);
       } catch (error) {
         console.error("Erro ao atualizar tag:", error);

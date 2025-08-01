@@ -4,23 +4,12 @@ import { CreateTags, Tags, TagsRepository } from "../types/tag-interface";
 class TagsRepositoryPrisma implements TagsRepository {
   async create(tag: CreateTags): Promise<Tags> {
     const createdTag = await prisma.tags.create({ data: tag });
-    return {
-      ...createdTag,
-      description: createdTag.description || "",
-    };
+    return this.toTags(createdTag);
   }
 
   async findAll(): Promise<Tags[]> {
     const tags = await prisma.tags.findMany();
-    return tags.map((tag) => ({
-      id: tag.id,
-      title: tag.title,
-      color: tag.color,
-      order: tag.order,
-      description: tag.description || "",
-      createdAt: tag.createdAt,
-      updatedAt: tag.updatedAt,
-    }));
+    return tags.map(this.toTags);
   }
 
   async update(id: string, data: Partial<CreateTags>): Promise<Tags> {
@@ -28,10 +17,7 @@ class TagsRepositoryPrisma implements TagsRepository {
       where: { id },
       data,
     });
-    return this.toTags({
-      ...updatedTag,
-      description: updatedTag.description || "",
-    });
+    return this.toTags(updatedTag);
   }
 
   async findById(id: string): Promise<Tags | null> {
@@ -39,12 +25,7 @@ class TagsRepositoryPrisma implements TagsRepository {
       where: { id },
     });
 
-    if (!tag) return null;
-
-    return this.toTags({
-      ...tag,
-      description: tag.description || "",
-    });
+    return tag ? this.toTags(tag) : null;
   }
 
   async delete(id: string): Promise<void> {
@@ -58,7 +39,7 @@ class TagsRepositoryPrisma implements TagsRepository {
     title: tag.title,
     color: tag.color,
     order: tag.order,
-    description: tag.description || "",
+    description: tag.description ?? "",
     createdAt: tag.createdAt,
     updatedAt: tag.updatedAt,
   });

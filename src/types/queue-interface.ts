@@ -1,7 +1,7 @@
 export interface Queue {
   id: string;
   name: string;
-  color?: string;
+  color?: string | null;
   greetingMessage?: string | null;
   outOfOfficeHoursMessage?: string | null;
   promptId?: string | null;
@@ -9,19 +9,19 @@ export interface Queue {
   createdAt: Date;
   updatedAt: Date;
   isActive: boolean;
-  priority?: number;
-  schedules: Schedule[] | null;
+  priority?: number | null;
+  schedules: Schedule[];
 }
 
 export interface QueueCreate {
   name: string;
-  color?: string;
-  greetingMessage?: string;
-  outOfOfficeHoursMessage?: string;
-  promptId?: string;
-  integrationId?: string;
+  color?: string | null;
+  greetingMessage?: string | null;
+  outOfOfficeHoursMessage?: string | null;
+  promptId?: string | null;
+  integrationId?: string | null;
   isActive: boolean;
-  priority?: number;
+  priority?: number | null;
   schedules?: Schedule[];
 }
 
@@ -37,7 +37,7 @@ export type QueueCreateInput = Omit<Queue, "id" | "createdAt" | "updatedAt">;
 export interface QueueRepository {
   create(queue: QueueCreate): Promise<Queue>;
   findAll(): Promise<Queue[]>;
-  update(queue: Queue): Promise<Queue>;
+  update(id: string, queue: Queue): Promise<Queue>;
   findById(id: string): Promise<Queue | null>;
   delete(id: string): Promise<void>;
 }

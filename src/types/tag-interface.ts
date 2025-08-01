@@ -3,7 +3,7 @@ export interface Tags {
   title: string;
   color: string;
   order: number;
-  description?: string;
+  description?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -12,7 +12,7 @@ export interface CreateTags {
   title: string;
   color: string;
   order: number;
-  description?: string;
+  description?: string | null;
 }
 
 export interface TagsRepository {

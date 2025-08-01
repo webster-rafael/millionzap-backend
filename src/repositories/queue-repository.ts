@@ -1,107 +1,76 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "../database/prisma-client";
-import {
-  Queue,
-  QueueCreate,
-  QueueRepository,
-  Schedule,
-} from "../types/queue-interface";
+import { Queue, QueueCreate, QueueRepository } from "../types/queue-interface";
 
 class QueueRepositoryPrisma implements QueueRepository {
   async create(queue: QueueCreate): Promise<Queue> {
-    const createdQueue = await prisma.queue.create({
+    const createQueue = await prisma.queue.create({
       data: {
-        ...queue,
-        schedules: queue.schedules ? queue.schedules.map((s) => s as any) : [],
+        name: queue.name,
+        color: queue.color ?? "",
+        greetingMessage: queue.greetingMessage ?? "",
+        outOfOfficeHoursMessage: queue.outOfOfficeHoursMessage ?? "",
+        promptId: queue.promptId ?? "",
+        integrationId: queue.integrationId ?? "",
+        isActive: queue.isActive,
+        priority: queue.priority ?? 0,
+        schedules: queue.schedules
+          ? JSON.parse(JSON.stringify(queue.schedules))
+          : [],
       },
     });
 
-    return {
-      id: createdQueue.id,
-      name: createdQueue.name,
-      color: createdQueue.color,
-      greetingMessage: createdQueue.greetingMessage ?? "",
-      outOfOfficeHoursMessage: createdQueue.outOfOfficeHoursMessage ?? "",
-      promptId: createdQueue.promptId ?? "",
-      integrationId: createdQueue.integrationId ?? "",
-      schedules: (createdQueue.schedules as unknown as Schedule[]) ?? [],
-      isActive: createdQueue.isActive,
-      priority: createdQueue.priority ?? 0,
-      createdAt: createdQueue.createdAt,
-      updatedAt: createdQueue.updatedAt,
-    };
+    return this.toQueue(createQueue);
   }
 
   async findAll(): Promise<Queue[]> {
     const queues = await prisma.queue.findMany();
-
-    return queues.map((queue) => ({
-      id: queue.id,
-      name: queue.name,
-      color: queue.color,
-      greetingMessage: queue.greetingMessage ?? "",
-      outOfOfficeHoursMessage: queue.outOfOfficeHoursMessage ?? "",
-      promptId: queue.promptId ?? "",
-      integrationId: queue.integrationId ?? "",
-      schedules: (queue.schedules as unknown as Schedule[]) ?? [],
-      isActive: queue.isActive,
-      priority: queue.priority ?? 0,
-      createdAt: queue.createdAt,
-      updatedAt: queue.updatedAt,
-    }));
+    return queues.map(this.toQueue);
   }
 
   async findById(id: string): Promise<Queue | null> {
-    const queue = await prisma.queue.findUnique({
-      where: { id },
-    });
-
+    const queue = await prisma.queue.findUnique({ where: { id } });
     return queue ? this.toQueue(queue) : null;
   }
 
-  async update(queue: Queue): Promise<Queue> {
-    const updatedQueue = await prisma.queue.update({
-      where: { id: queue.id },
+  async update(id: string, data: Partial<QueueCreate>): Promise<Queue> {
+    const updateQueue = await prisma.queue.update({
+      where: { id },
       data: {
-        ...queue,
-        schedules: queue.schedules ? queue.schedules.map((s) => s as any) : [],
+        name: data.name,
+        color: data.color ?? "",
+        greetingMessage: data.greetingMessage ?? "",
+        outOfOfficeHoursMessage: data.outOfOfficeHoursMessage ?? "",
+        promptId: data.promptId ?? "",
+        integrationId: data.integrationId ?? "",
+        isActive: data.isActive ?? true,
+        priority: data.priority ?? 0,
+        schedules: data.schedules
+          ? JSON.parse(JSON.stringify(data.schedules))
+          : [],
       },
     });
 
-    return this.toQueue(updatedQueue);
+    return this.toQueue(updateQueue);
   }
 
   async delete(id: string): Promise<void> {
-    await prisma.queue.delete({
-      where: { id },
-    });
+    await prisma.queue.delete({ where: { id } });
   }
 
-  private toQueue = (data: {
-    id: string;
-    createdAt: Date;
-    updatedAt: Date;
-    name: string;
-    color: string;
-    greetingMessage: string | null;
-    outOfOfficeHoursMessage: string | null;
-    promptId: string | null;
-    integrationId: string | null;
-    isActive: boolean;
-    priority: number;
-    schedules: any[];
-  }): Queue => ({
-    id: data.id,
-    name: data.name,
-    color: data.color,
-    greetingMessage: data.greetingMessage ?? "",
-    outOfOfficeHoursMessage: data.outOfOfficeHoursMessage ?? "",
-    promptId: data.promptId ?? "",
-    integrationId: data.integrationId ?? "",
-    schedules: (data.schedules as unknown as Schedule[]) ?? [],
-    isActive: data.isActive,
-    priority: data.priority ?? 0,
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
+  private toQueue = (queue: any): Queue => ({
+    id: queue.id,
+    name: queue.name,
+    color: queue.color ?? "",
+    greetingMessage: queue.greetingMessage ?? "",
+    outOfOfficeHoursMessage: queue.outOfOfficeHoursMessage ?? "",
+    promptId: queue.promptId ?? "",
+    integrationId: queue.integrationId ?? "",
+    isActive: queue.isActive,
+    priority: queue.priority ?? 0,
+    schedules: queue.schedules ?? [],
+    createdAt: queue.createdAt,
+    updatedAt: queue.updatedAt,
   });
 }
 
