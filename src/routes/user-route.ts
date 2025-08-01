@@ -9,8 +9,14 @@ export function userRoutes(fastify: FastifyInstance) {
     try {
       const user = await userUseCase.create(request.body);
       reply.status(201).send(user);
-    } catch (error) {
+    } catch (error: any) {
       console.error("Erro ao criar usuário:", error);
+      if (error?.code === "P2002") {
+        return reply.status(400).send({
+          code: "P2002",
+          message: "E-mail já cadastrado",
+        });
+      }
       reply.status(500).send({ error: "Erro interno ao criar usuário" });
     }
   });

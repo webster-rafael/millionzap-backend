@@ -1,4 +1,5 @@
 import { prisma } from "../database/prisma-client";
+import { Prisma } from "../generated/prisma-client";
 import {
   User,
   UserCreate,
@@ -8,8 +9,23 @@ import {
 
 class UserRepositoryPrisma implements UserRepository {
   async create(user: UserCreateInput): Promise<User> {
-    const createUser = await prisma.user.create({ data: user });
-    return this.toCreateUser(createUser);
+    try {
+      const createUser = await prisma.user.create({ data: user });
+      return this.toCreateUser(createUser);
+    } catch (error: any) {
+      if (
+        error instanceof Prisma.PrismaClientKnownRequestError &&
+        error.code === "P2002"
+      ) {
+        const customError = new Error("Telefone já cadastrado.") as Error & {
+          code: string;
+        };
+        customError.code = "P2002";
+        throw customError;
+      }
+
+      throw error;
+    }
   }
 
   async findAll(): Promise<User[]> {
