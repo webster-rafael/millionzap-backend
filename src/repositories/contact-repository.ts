@@ -59,7 +59,7 @@ class ContactRepositoryPrisma implements ContactRepository {
     isCostumer: contact.isCostumer ?? true,
     tags: contact.tags ?? [],
     createdAt: contact.createdAt,
-    updatedAt: contact.updatedAt,
+    updatedAt: contact.updatedAt ?? null,
   });
 }
 

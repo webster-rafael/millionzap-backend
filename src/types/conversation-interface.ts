@@ -1,22 +1,50 @@
+import { Prisma } from "../generated/prisma-client";
+
 export interface Conversation {
   id: string;
   contactId: string;
-  userId: string;
-  queueId: string;
-  status: ConversationStatus;
-  subject: string;
-  lastMessageAt: Date;
-  closedAt?: Date;
+  userId?: string | null;
+  queueId?: string | null;
+  tagId?: string | null;
+  status: string;
+  priority?: string | null;
+  subject?: string | null;
+  lastMessageAt?: Date | null;
+  closedAt?: Date | null;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date | null;
+
+  contact?: ContactInfo | null;
+  user?: UserInfo | null;
+  messages?: MessageInfo[];
 }
 
-export enum ConversationStatus {
-  OPEN = "OPEN",
-  CLOSED = "CLOSED",
-  PENDING = "PENDING",
-  WAITING = "WAITING",
-  SERVING = "SERVING",
-  RESOLVED = "RESOLVED",
+export type ConversationCreate = Prisma.ConversationCreateInput;
+type ConversationUpdate = Prisma.ConversationUpdateInput;
+
+interface ContactInfo {
+  id: string;
+  name: string;
+  phone: string;
 }
 
+interface UserInfo {
+  id: string;
+  name: string;
+}
+
+interface MessageInfo {
+  id: string;
+  content: string;
+  createdAt: Date;
+}
+
+export interface ConversationRepository {
+  findAll(): Promise<Conversation[]>;
+  findById(id: string): Promise<Conversation | null>;
+  update(
+    id: string,
+    conversation: Partial<ConversationCreate>
+  ): Promise<Conversation>;
+  findForKanban(): Promise<Conversation[]>;
+}

@@ -7,6 +7,7 @@ import { promptRoutes } from "./routes/prompt-route";
 import { tagsRoutes } from "./routes/tags-route";
 import { contactRoutes } from "./routes/contact-route";
 import { whatsAppConnectionRoutes } from "./routes/whatsappConnection-route";
+import { conversationRoutes } from "./routes/conversation-route";
 
 const app: FastifyInstance = Fastify({});
 
@@ -22,6 +23,10 @@ app.register(userRoutes, {
 
 app.register(contactRoutes, {
   prefix: "/contacts",
+});
+
+app.register(conversationRoutes, {
+  prefix: "/conversations",
 });
 
 app.register(quickResponseRoutes, {
@@ -40,9 +45,9 @@ app.register(tagsRoutes, {
   prefix: "/tags",
 });
 
-app.register(whatsAppConnectionRoutes, {
-  prefix: "/whatsapp-connections",
-});
+// app.register(whatsAppConnectionRoutes, {
+//   prefix: "/whatsapp-connections",
+// });
 
 app.listen(
   {

@@ -8,49 +8,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model WhatsAppConnection {
-  id                      String                   @id @default(uuid())
-  name                    String
-  isDefault               Boolean
-  greetingMessage         String?
-  conclusionMessage       String?
-  outOfOfficeHoursMessage String?
-  reviewMessage           String?
-  token                   String?
-  queueId                 String
-  integrationId           String?
-  userId                  String?
-  promptId                String
-  transferQueueId         String?
-  timeToTransfer          String?
-  expiresInactiveMessage  String?
-  companyId               String?
-  session                 String
-  qrCode                  String
-  status                  WhatsAppConnectionStatus @default(PENDING)
-  createdAt               DateTime                 @default(now())
-  updatedAt               DateTime                 @updatedAt
-
-  user   User?
-  prompt Prompts[]
-  queues Queue[]
-}
-
 model User {
-  id                   String   @id @default(uuid())
-  name                 String
-  email                String   @unique
-  password             String
-  role                 UserRole @default(ADMIN)
-  isActive             Boolean  @default(true)
-  whatsAppConnectionId String   @unique
-  companyId            String?
-  createdAt            DateTime @default(now())
-  updatedAt            DateTime @updatedAt
+  id        String   @id @default(uuid())
+  name      String
+  email     String   @unique
+  password  String
+  role      UserRole @default(ADMIN)
+  isActive  Boolean  @default(true)
+  companyId String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relacionamentos
-  whatsAppConnection WhatsAppConnection @relation(fields: [whatsAppConnectionId], references: [id])
-
   conversations Conversation[]
   messages      Message[]
   queues        QueueUser[]
@@ -59,19 +28,18 @@ model User {
 }
 
 model Contact {
-  id         String   @id @default(uuid())
+  id         String    @id @default(uuid())
   name       String
-  phone      String   @unique
+  phone      String    @unique
   email      String?
   tags       String[]
-  whatsappId String?
   companyId  String?
-  isCostumer Boolean? @default(true)
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  isCostumer Boolean?  @default(true)
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime? @updatedAt
 
   // Relacionamentos
-  conversations Conversation[]
+  conversations  Conversation[]
 
   @@map("contacts")
 }
@@ -91,12 +59,10 @@ model Queue {
   updatedAt               DateTime @updatedAt
 
   // Relacionamentos
-  conversations        Conversation[]
-  users                QueueUser[]
-  quickResponses       QuickResponse[]
-  prompts              Prompts[]
-  whatsAppConnectionId String?
-  whatsAppConnection   WhatsAppConnection? @relation(fields: [whatsAppConnectionId], references: [id], onDelete: SetNull)
+  conversations  Conversation[]
+  users          QueueUser[]
+  quickResponses QuickResponse[]
+  prompts        Prompts[]
 
   @@map("queues")
 }
@@ -120,19 +86,19 @@ model Conversation {
   queueId       String?
   tagId         String?
   status        ConversationStatus @default(WAITING)
-  priority      Priority           @default(MEDIUM)
+  priority      Priority?          @default(MEDIUM)
   subject       String?
   lastMessageAt DateTime?
   closedAt      DateTime?
   createdAt     DateTime           @default(now())
-  updatedAt     DateTime           @updatedAt
+  updatedAt     DateTime?          @updatedAt
 
   // Relacionamentos
-  contact  Contact   @relation(fields: [contactId], references: [id])
   user     User?     @relation(fields: [userId], references: [id])
   queue    Queue?    @relation(fields: [queueId], references: [id])
   tag      Tags?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
   messages Message[]
+  contact  Contact   @relation(fields: [contactId], references: [id], onDelete: Cascade)
 
   @@map("conversations")
 }
@@ -142,16 +108,13 @@ model Message {
   conversationId String
   userId         String?
   content        String
-  messageType    MessageType   @default(TEXT)
+  messageType    String
   direction      Direction
-  whatsappId     String?       @unique
   status         MessageStatus @default(PENDING)
   mediaUrl       String?
+  timestamp      String
   mediaType      String?
   isRead         Boolean       @default(false)
-  readAt         DateTime?
-  deliveredAt    DateTime?
-  sentAt         DateTime?
   createdAt      DateTime      @default(now())
 
   // Relacionamentos
@@ -196,9 +159,7 @@ model Prompts {
   queueId          String?
 
   // Relacionamentos
-  queue                Queue?              @relation(fields: [queueId], references: [id], onDelete: SetNull)
-  WhatsAppConnection   WhatsAppConnection? @relation(fields: [whatsAppConnectionId], references: [id])
-  whatsAppConnectionId String?
+  queue Queue? @relation(fields: [queueId], references: [id], onDelete: SetNull)
 
   @@map("prompts")
 }
@@ -221,13 +182,9 @@ enum UserRole {
   USER
 }
 
-enum WhatsAppConnectionStatus {
+enum ConversationStatus {
   OPEN
   PENDING
-  CLOSED
-}
-
-enum ConversationStatus {
   WAITING
   SERVING
   RESOLVED
@@ -241,16 +198,6 @@ enum Priority {
   URGENT
 }
 
-enum MessageType {
-  TEXT
-  IMAGE
-  DOCUMENT
-  AUDIO
-  VIDEO
-  LOCATION
-  CONTACT
-}
-
 enum Direction {
   INBOUND
   OUTBOUND
@@ -262,4 +209,5 @@ enum MessageStatus {
   DELIVERED
   READ
   FAILED
+  RECEIVED
 }

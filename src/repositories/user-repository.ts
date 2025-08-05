@@ -63,7 +63,6 @@ class UserRepositoryPrisma implements UserRepository {
     password: data.password,
     role: data.role,
     isActive: data.isActive,
-    whatsAppConnectionId: data.whatsAppConnectionId,
     companyId: data.companyId ?? "",
     createdAt: data.createdAt,
     updatedAt: data.updatedAt,

@@ -8,7 +8,7 @@ export interface Contact {
   isCostumer?: boolean | null;
   tags?: string[];
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date | null;
 }
 
 export interface CreateContact {

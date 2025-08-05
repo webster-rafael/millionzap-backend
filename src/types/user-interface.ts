@@ -7,7 +7,6 @@ export interface User {
   password: string;
   role: UserRole;
   isActive: boolean;
-  whatsAppConnectionId: string;
   companyId?: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -17,7 +16,6 @@ export interface UserCreate {
   email: string;
   password: string;
   role: UserRole;
-  whatsAppConnectionId: string;
 }
 
 export type UserCreateInput = Omit<User, "id" | "createdAt" | "updatedAt">;

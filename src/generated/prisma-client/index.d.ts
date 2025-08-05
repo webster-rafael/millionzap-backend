@@ -14,11 +14,6 @@ export type PrismaPromise<T> = $Public.PrismaPromise<T>
 
 
 /**
- * Model WhatsAppConnection
- * 
- */
-export type WhatsAppConnection = $Result.DefaultSelection<Prisma.$WhatsAppConnectionPayload>
-/**
  * Model User
  * 
  */
@@ -76,16 +71,9 @@ export namespace $Enums {
 export type UserRole = (typeof UserRole)[keyof typeof UserRole]
 
 
-export const WhatsAppConnectionStatus: {
+export const ConversationStatus: {
   OPEN: 'OPEN',
   PENDING: 'PENDING',
-  CLOSED: 'CLOSED'
-};
-
-export type WhatsAppConnectionStatus = (typeof WhatsAppConnectionStatus)[keyof typeof WhatsAppConnectionStatus]
-
-
-export const ConversationStatus: {
   WAITING: 'WAITING',
   SERVING: 'SERVING',
   RESOLVED: 'RESOLVED',
@@ -105,19 +93,6 @@ export const Priority: {
 export type Priority = (typeof Priority)[keyof typeof Priority]
 
 
-export const MessageType: {
-  TEXT: 'TEXT',
-  IMAGE: 'IMAGE',
-  DOCUMENT: 'DOCUMENT',
-  AUDIO: 'AUDIO',
-  VIDEO: 'VIDEO',
-  LOCATION: 'LOCATION',
-  CONTACT: 'CONTACT'
-};
-
-export type MessageType = (typeof MessageType)[keyof typeof MessageType]
-
-
 export const Direction: {
   INBOUND: 'INBOUND',
   OUTBOUND: 'OUTBOUND'
@@ -131,7 +106,8 @@ export const MessageStatus: {
   SENT: 'SENT',
   DELIVERED: 'DELIVERED',
   READ: 'READ',
-  FAILED: 'FAILED'
+  FAILED: 'FAILED',
+  RECEIVED: 'RECEIVED'
 };
 
 export type MessageStatus = (typeof MessageStatus)[keyof typeof MessageStatus]
@@ -142,10 +118,6 @@ export type UserRole = $Enums.UserRole
 
 export const UserRole: typeof $Enums.UserRole
 
-export type WhatsAppConnectionStatus = $Enums.WhatsAppConnectionStatus
-
-export const WhatsAppConnectionStatus: typeof $Enums.WhatsAppConnectionStatus
-
 export type ConversationStatus = $Enums.ConversationStatus
 
 export const ConversationStatus: typeof $Enums.ConversationStatus
@@ -153,10 +125,6 @@ export const ConversationStatus: typeof $Enums.ConversationStatus
 export type Priority = $Enums.Priority
 
 export const Priority: typeof $Enums.Priority
-
-export type MessageType = $Enums.MessageType
-
-export const MessageType: typeof $Enums.MessageType
 
 export type Direction = $Enums.Direction
 
@@ -173,8 +141,8 @@ export const MessageStatus: typeof $Enums.MessageStatus
  * @example
  * ```
  * const prisma = new PrismaClient()
- * // Fetch zero or more WhatsAppConnections
- * const whatsAppConnections = await prisma.whatsAppConnection.findMany()
+ * // Fetch zero or more Users
+ * const users = await prisma.user.findMany()
  * ```
  *
  *
@@ -194,8 +162,8 @@ export class PrismaClient<
    * @example
    * ```
    * const prisma = new PrismaClient()
-   * // Fetch zero or more WhatsAppConnections
-   * const whatsAppConnections = await prisma.whatsAppConnection.findMany()
+   * // Fetch zero or more Users
+   * const users = await prisma.user.findMany()
    * ```
    *
    *
@@ -292,16 +260,6 @@ export class PrismaClient<
   }>>
 
       /**
-   * `prisma.whatsAppConnection`: Exposes CRUD operations for the **WhatsAppConnection** model.
-    * Example usage:
-    * ```ts
-    * // Fetch zero or more WhatsAppConnections
-    * const whatsAppConnections = await prisma.whatsAppConnection.findMany()
-    * ```
-    */
-  get whatsAppConnection(): Prisma.WhatsAppConnectionDelegate<ExtArgs, ClientOptions>;
-
-  /**
    * `prisma.user`: Exposes CRUD operations for the **User** model.
     * Example usage:
     * ```ts
@@ -830,7 +788,6 @@ export namespace Prisma {
 
 
   export const ModelName: {
-    WhatsAppConnection: 'WhatsAppConnection',
     User: 'User',
     Contact: 'Contact',
     Queue: 'Queue',
@@ -858,84 +815,10 @@ export namespace Prisma {
       omit: GlobalOmitOptions
     }
     meta: {
-      modelProps: "whatsAppConnection" | "user" | "contact" | "queue" | "queueUser" | "conversation" | "message" | "quickResponse" | "prompts" | "tags"
+      modelProps: "user" | "contact" | "queue" | "queueUser" | "conversation" | "message" | "quickResponse" | "prompts" | "tags"
       txIsolationLevel: Prisma.TransactionIsolationLevel
     }
     model: {
-      WhatsAppConnection: {
-        payload: Prisma.$WhatsAppConnectionPayload<ExtArgs>
-        fields: Prisma.WhatsAppConnectionFieldRefs
-        operations: {
-          findUnique: {
-            args: Prisma.WhatsAppConnectionFindUniqueArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WhatsAppConnectionPayload> | null
-          }
-          findUniqueOrThrow: {
-            args: Prisma.WhatsAppConnectionFindUniqueOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WhatsAppConnectionPayload>
-          }
-          findFirst: {
-            args: Prisma.WhatsAppConnectionFindFirstArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WhatsAppConnectionPayload> | null
-          }
-          findFirstOrThrow: {
-            args: Prisma.WhatsAppConnectionFindFirstOrThrowArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WhatsAppConnectionPayload>
-          }
-          findMany: {
-            args: Prisma.WhatsAppConnectionFindManyArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WhatsAppConnectionPayload>[]
-          }
-          create: {
-            args: Prisma.WhatsAppConnectionCreateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WhatsAppConnectionPayload>
-          }
-          createMany: {
-            args: Prisma.WhatsAppConnectionCreateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          createManyAndReturn: {
-            args: Prisma.WhatsAppConnectionCreateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WhatsAppConnectionPayload>[]
-          }
-          delete: {
-            args: Prisma.WhatsAppConnectionDeleteArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WhatsAppConnectionPayload>
-          }
-          update: {
-            args: Prisma.WhatsAppConnectionUpdateArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WhatsAppConnectionPayload>
-          }
-          deleteMany: {
-            args: Prisma.WhatsAppConnectionDeleteManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateMany: {
-            args: Prisma.WhatsAppConnectionUpdateManyArgs<ExtArgs>
-            result: BatchPayload
-          }
-          updateManyAndReturn: {
-            args: Prisma.WhatsAppConnectionUpdateManyAndReturnArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WhatsAppConnectionPayload>[]
-          }
-          upsert: {
-            args: Prisma.WhatsAppConnectionUpsertArgs<ExtArgs>
-            result: $Utils.PayloadToResult<Prisma.$WhatsAppConnectionPayload>
-          }
-          aggregate: {
-            args: Prisma.WhatsAppConnectionAggregateArgs<ExtArgs>
-            result: $Utils.Optional<AggregateWhatsAppConnection>
-          }
-          groupBy: {
-            args: Prisma.WhatsAppConnectionGroupByArgs<ExtArgs>
-            result: $Utils.Optional<WhatsAppConnectionGroupByOutputType>[]
-          }
-          count: {
-            args: Prisma.WhatsAppConnectionCountArgs<ExtArgs>
-            result: $Utils.Optional<WhatsAppConnectionCountAggregateOutputType> | number
-          }
-        }
-      }
       User: {
         payload: Prisma.$UserPayload<ExtArgs>
         fields: Prisma.UserFieldRefs
@@ -1686,7 +1569,6 @@ export namespace Prisma {
     omit?: Prisma.GlobalOmitConfig
   }
   export type GlobalOmitConfig = {
-    whatsAppConnection?: WhatsAppConnectionOmit
     user?: UserOmit
     contact?: ContactOmit
     queue?: QueueOmit
@@ -1783,46 +1665,6 @@ export namespace Prisma {
   /**
    * Count Types
    */
-
-
-  /**
-   * Count Type WhatsAppConnectionCountOutputType
-   */
-
-  export type WhatsAppConnectionCountOutputType = {
-    prompt: number
-    queues: number
-  }
-
-  export type WhatsAppConnectionCountOutputTypeSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    prompt?: boolean | WhatsAppConnectionCountOutputTypeCountPromptArgs
-    queues?: boolean | WhatsAppConnectionCountOutputTypeCountQueuesArgs
-  }
-
-  // Custom InputTypes
-  /**
-   * WhatsAppConnectionCountOutputType without action
-   */
-  export type WhatsAppConnectionCountOutputTypeDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnectionCountOutputType
-     */
-    select?: WhatsAppConnectionCountOutputTypeSelect<ExtArgs> | null
-  }
-
-  /**
-   * WhatsAppConnectionCountOutputType without action
-   */
-  export type WhatsAppConnectionCountOutputTypeCountPromptArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: PromptsWhereInput
-  }
-
-  /**
-   * WhatsAppConnectionCountOutputType without action
-   */
-  export type WhatsAppConnectionCountOutputTypeCountQueuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: QueueWhereInput
-  }
 
 
   /**
@@ -2030,1335 +1872,6 @@ export namespace Prisma {
    */
 
   /**
-   * Model WhatsAppConnection
-   */
-
-  export type AggregateWhatsAppConnection = {
-    _count: WhatsAppConnectionCountAggregateOutputType | null
-    _min: WhatsAppConnectionMinAggregateOutputType | null
-    _max: WhatsAppConnectionMaxAggregateOutputType | null
-  }
-
-  export type WhatsAppConnectionMinAggregateOutputType = {
-    id: string | null
-    name: string | null
-    isDefault: boolean | null
-    greetingMessage: string | null
-    conclusionMessage: string | null
-    outOfOfficeHoursMessage: string | null
-    reviewMessage: string | null
-    token: string | null
-    queueId: string | null
-    integrationId: string | null
-    userId: string | null
-    promptId: string | null
-    transferQueueId: string | null
-    timeToTransfer: string | null
-    expiresInactiveMessage: string | null
-    companyId: string | null
-    session: string | null
-    qrCode: string | null
-    status: $Enums.WhatsAppConnectionStatus | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type WhatsAppConnectionMaxAggregateOutputType = {
-    id: string | null
-    name: string | null
-    isDefault: boolean | null
-    greetingMessage: string | null
-    conclusionMessage: string | null
-    outOfOfficeHoursMessage: string | null
-    reviewMessage: string | null
-    token: string | null
-    queueId: string | null
-    integrationId: string | null
-    userId: string | null
-    promptId: string | null
-    transferQueueId: string | null
-    timeToTransfer: string | null
-    expiresInactiveMessage: string | null
-    companyId: string | null
-    session: string | null
-    qrCode: string | null
-    status: $Enums.WhatsAppConnectionStatus | null
-    createdAt: Date | null
-    updatedAt: Date | null
-  }
-
-  export type WhatsAppConnectionCountAggregateOutputType = {
-    id: number
-    name: number
-    isDefault: number
-    greetingMessage: number
-    conclusionMessage: number
-    outOfOfficeHoursMessage: number
-    reviewMessage: number
-    token: number
-    queueId: number
-    integrationId: number
-    userId: number
-    promptId: number
-    transferQueueId: number
-    timeToTransfer: number
-    expiresInactiveMessage: number
-    companyId: number
-    session: number
-    qrCode: number
-    status: number
-    createdAt: number
-    updatedAt: number
-    _all: number
-  }
-
-
-  export type WhatsAppConnectionMinAggregateInputType = {
-    id?: true
-    name?: true
-    isDefault?: true
-    greetingMessage?: true
-    conclusionMessage?: true
-    outOfOfficeHoursMessage?: true
-    reviewMessage?: true
-    token?: true
-    queueId?: true
-    integrationId?: true
-    userId?: true
-    promptId?: true
-    transferQueueId?: true
-    timeToTransfer?: true
-    expiresInactiveMessage?: true
-    companyId?: true
-    session?: true
-    qrCode?: true
-    status?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type WhatsAppConnectionMaxAggregateInputType = {
-    id?: true
-    name?: true
-    isDefault?: true
-    greetingMessage?: true
-    conclusionMessage?: true
-    outOfOfficeHoursMessage?: true
-    reviewMessage?: true
-    token?: true
-    queueId?: true
-    integrationId?: true
-    userId?: true
-    promptId?: true
-    transferQueueId?: true
-    timeToTransfer?: true
-    expiresInactiveMessage?: true
-    companyId?: true
-    session?: true
-    qrCode?: true
-    status?: true
-    createdAt?: true
-    updatedAt?: true
-  }
-
-  export type WhatsAppConnectionCountAggregateInputType = {
-    id?: true
-    name?: true
-    isDefault?: true
-    greetingMessage?: true
-    conclusionMessage?: true
-    outOfOfficeHoursMessage?: true
-    reviewMessage?: true
-    token?: true
-    queueId?: true
-    integrationId?: true
-    userId?: true
-    promptId?: true
-    transferQueueId?: true
-    timeToTransfer?: true
-    expiresInactiveMessage?: true
-    companyId?: true
-    session?: true
-    qrCode?: true
-    status?: true
-    createdAt?: true
-    updatedAt?: true
-    _all?: true
-  }
-
-  export type WhatsAppConnectionAggregateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which WhatsAppConnection to aggregate.
-     */
-    where?: WhatsAppConnectionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of WhatsAppConnections to fetch.
-     */
-    orderBy?: WhatsAppConnectionOrderByWithRelationInput | WhatsAppConnectionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the start position
-     */
-    cursor?: WhatsAppConnectionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` WhatsAppConnections from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` WhatsAppConnections.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Count returned WhatsAppConnections
-    **/
-    _count?: true | WhatsAppConnectionCountAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the minimum value
-    **/
-    _min?: WhatsAppConnectionMinAggregateInputType
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/aggregations Aggregation Docs}
-     * 
-     * Select which fields to find the maximum value
-    **/
-    _max?: WhatsAppConnectionMaxAggregateInputType
-  }
-
-  export type GetWhatsAppConnectionAggregateType<T extends WhatsAppConnectionAggregateArgs> = {
-        [P in keyof T & keyof AggregateWhatsAppConnection]: P extends '_count' | 'count'
-      ? T[P] extends true
-        ? number
-        : GetScalarType<T[P], AggregateWhatsAppConnection[P]>
-      : GetScalarType<T[P], AggregateWhatsAppConnection[P]>
-  }
-
-
-
-
-  export type WhatsAppConnectionGroupByArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    where?: WhatsAppConnectionWhereInput
-    orderBy?: WhatsAppConnectionOrderByWithAggregationInput | WhatsAppConnectionOrderByWithAggregationInput[]
-    by: WhatsAppConnectionScalarFieldEnum[] | WhatsAppConnectionScalarFieldEnum
-    having?: WhatsAppConnectionScalarWhereWithAggregatesInput
-    take?: number
-    skip?: number
-    _count?: WhatsAppConnectionCountAggregateInputType | true
-    _min?: WhatsAppConnectionMinAggregateInputType
-    _max?: WhatsAppConnectionMaxAggregateInputType
-  }
-
-  export type WhatsAppConnectionGroupByOutputType = {
-    id: string
-    name: string
-    isDefault: boolean
-    greetingMessage: string | null
-    conclusionMessage: string | null
-    outOfOfficeHoursMessage: string | null
-    reviewMessage: string | null
-    token: string | null
-    queueId: string
-    integrationId: string | null
-    userId: string | null
-    promptId: string
-    transferQueueId: string | null
-    timeToTransfer: string | null
-    expiresInactiveMessage: string | null
-    companyId: string | null
-    session: string
-    qrCode: string
-    status: $Enums.WhatsAppConnectionStatus
-    createdAt: Date
-    updatedAt: Date
-    _count: WhatsAppConnectionCountAggregateOutputType | null
-    _min: WhatsAppConnectionMinAggregateOutputType | null
-    _max: WhatsAppConnectionMaxAggregateOutputType | null
-  }
-
-  type GetWhatsAppConnectionGroupByPayload<T extends WhatsAppConnectionGroupByArgs> = Prisma.PrismaPromise<
-    Array<
-      PickEnumerable<WhatsAppConnectionGroupByOutputType, T['by']> &
-        {
-          [P in ((keyof T) & (keyof WhatsAppConnectionGroupByOutputType))]: P extends '_count'
-            ? T[P] extends boolean
-              ? number
-              : GetScalarType<T[P], WhatsAppConnectionGroupByOutputType[P]>
-            : GetScalarType<T[P], WhatsAppConnectionGroupByOutputType[P]>
-        }
-      >
-    >
-
-
-  export type WhatsAppConnectionSelect<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    isDefault?: boolean
-    greetingMessage?: boolean
-    conclusionMessage?: boolean
-    outOfOfficeHoursMessage?: boolean
-    reviewMessage?: boolean
-    token?: boolean
-    queueId?: boolean
-    integrationId?: boolean
-    userId?: boolean
-    promptId?: boolean
-    transferQueueId?: boolean
-    timeToTransfer?: boolean
-    expiresInactiveMessage?: boolean
-    companyId?: boolean
-    session?: boolean
-    qrCode?: boolean
-    status?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-    user?: boolean | WhatsAppConnection$userArgs<ExtArgs>
-    prompt?: boolean | WhatsAppConnection$promptArgs<ExtArgs>
-    queues?: boolean | WhatsAppConnection$queuesArgs<ExtArgs>
-    _count?: boolean | WhatsAppConnectionCountOutputTypeDefaultArgs<ExtArgs>
-  }, ExtArgs["result"]["whatsAppConnection"]>
-
-  export type WhatsAppConnectionSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    isDefault?: boolean
-    greetingMessage?: boolean
-    conclusionMessage?: boolean
-    outOfOfficeHoursMessage?: boolean
-    reviewMessage?: boolean
-    token?: boolean
-    queueId?: boolean
-    integrationId?: boolean
-    userId?: boolean
-    promptId?: boolean
-    transferQueueId?: boolean
-    timeToTransfer?: boolean
-    expiresInactiveMessage?: boolean
-    companyId?: boolean
-    session?: boolean
-    qrCode?: boolean
-    status?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["whatsAppConnection"]>
-
-  export type WhatsAppConnectionSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
-    id?: boolean
-    name?: boolean
-    isDefault?: boolean
-    greetingMessage?: boolean
-    conclusionMessage?: boolean
-    outOfOfficeHoursMessage?: boolean
-    reviewMessage?: boolean
-    token?: boolean
-    queueId?: boolean
-    integrationId?: boolean
-    userId?: boolean
-    promptId?: boolean
-    transferQueueId?: boolean
-    timeToTransfer?: boolean
-    expiresInactiveMessage?: boolean
-    companyId?: boolean
-    session?: boolean
-    qrCode?: boolean
-    status?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }, ExtArgs["result"]["whatsAppConnection"]>
-
-  export type WhatsAppConnectionSelectScalar = {
-    id?: boolean
-    name?: boolean
-    isDefault?: boolean
-    greetingMessage?: boolean
-    conclusionMessage?: boolean
-    outOfOfficeHoursMessage?: boolean
-    reviewMessage?: boolean
-    token?: boolean
-    queueId?: boolean
-    integrationId?: boolean
-    userId?: boolean
-    promptId?: boolean
-    transferQueueId?: boolean
-    timeToTransfer?: boolean
-    expiresInactiveMessage?: boolean
-    companyId?: boolean
-    session?: boolean
-    qrCode?: boolean
-    status?: boolean
-    createdAt?: boolean
-    updatedAt?: boolean
-  }
-
-  export type WhatsAppConnectionOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "isDefault" | "greetingMessage" | "conclusionMessage" | "outOfOfficeHoursMessage" | "reviewMessage" | "token" | "queueId" | "integrationId" | "userId" | "promptId" | "transferQueueId" | "timeToTransfer" | "expiresInactiveMessage" | "companyId" | "session" | "qrCode" | "status" | "createdAt" | "updatedAt", ExtArgs["result"]["whatsAppConnection"]>
-  export type WhatsAppConnectionInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    user?: boolean | WhatsAppConnection$userArgs<ExtArgs>
-    prompt?: boolean | WhatsAppConnection$promptArgs<ExtArgs>
-    queues?: boolean | WhatsAppConnection$queuesArgs<ExtArgs>
-    _count?: boolean | WhatsAppConnectionCountOutputTypeDefaultArgs<ExtArgs>
-  }
-  export type WhatsAppConnectionIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-  export type WhatsAppConnectionIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
-
-  export type $WhatsAppConnectionPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    name: "WhatsAppConnection"
-    objects: {
-      user: Prisma.$UserPayload<ExtArgs> | null
-      prompt: Prisma.$PromptsPayload<ExtArgs>[]
-      queues: Prisma.$QueuePayload<ExtArgs>[]
-    }
-    scalars: $Extensions.GetPayloadResult<{
-      id: string
-      name: string
-      isDefault: boolean
-      greetingMessage: string | null
-      conclusionMessage: string | null
-      outOfOfficeHoursMessage: string | null
-      reviewMessage: string | null
-      token: string | null
-      queueId: string
-      integrationId: string | null
-      userId: string | null
-      promptId: string
-      transferQueueId: string | null
-      timeToTransfer: string | null
-      expiresInactiveMessage: string | null
-      companyId: string | null
-      session: string
-      qrCode: string
-      status: $Enums.WhatsAppConnectionStatus
-      createdAt: Date
-      updatedAt: Date
-    }, ExtArgs["result"]["whatsAppConnection"]>
-    composites: {}
-  }
-
-  type WhatsAppConnectionGetPayload<S extends boolean | null | undefined | WhatsAppConnectionDefaultArgs> = $Result.GetResult<Prisma.$WhatsAppConnectionPayload, S>
-
-  type WhatsAppConnectionCountArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> =
-    Omit<WhatsAppConnectionFindManyArgs, 'select' | 'include' | 'distinct' | 'omit'> & {
-      select?: WhatsAppConnectionCountAggregateInputType | true
-    }
-
-  export interface WhatsAppConnectionDelegate<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> {
-    [K: symbol]: { types: Prisma.TypeMap<ExtArgs>['model']['WhatsAppConnection'], meta: { name: 'WhatsAppConnection' } }
-    /**
-     * Find zero or one WhatsAppConnection that matches the filter.
-     * @param {WhatsAppConnectionFindUniqueArgs} args - Arguments to find a WhatsAppConnection
-     * @example
-     * // Get one WhatsAppConnection
-     * const whatsAppConnection = await prisma.whatsAppConnection.findUnique({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUnique<T extends WhatsAppConnectionFindUniqueArgs>(args: SelectSubset<T, WhatsAppConnectionFindUniqueArgs<ExtArgs>>): Prisma__WhatsAppConnectionClient<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "findUnique", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find one WhatsAppConnection that matches the filter or throw an error with `error.code='P2025'`
-     * if no matches were found.
-     * @param {WhatsAppConnectionFindUniqueOrThrowArgs} args - Arguments to find a WhatsAppConnection
-     * @example
-     * // Get one WhatsAppConnection
-     * const whatsAppConnection = await prisma.whatsAppConnection.findUniqueOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findUniqueOrThrow<T extends WhatsAppConnectionFindUniqueOrThrowArgs>(args: SelectSubset<T, WhatsAppConnectionFindUniqueOrThrowArgs<ExtArgs>>): Prisma__WhatsAppConnectionClient<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first WhatsAppConnection that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WhatsAppConnectionFindFirstArgs} args - Arguments to find a WhatsAppConnection
-     * @example
-     * // Get one WhatsAppConnection
-     * const whatsAppConnection = await prisma.whatsAppConnection.findFirst({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirst<T extends WhatsAppConnectionFindFirstArgs>(args?: SelectSubset<T, WhatsAppConnectionFindFirstArgs<ExtArgs>>): Prisma__WhatsAppConnectionClient<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "findFirst", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find the first WhatsAppConnection that matches the filter or
-     * throw `PrismaKnownClientError` with `P2025` code if no matches were found.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WhatsAppConnectionFindFirstOrThrowArgs} args - Arguments to find a WhatsAppConnection
-     * @example
-     * // Get one WhatsAppConnection
-     * const whatsAppConnection = await prisma.whatsAppConnection.findFirstOrThrow({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     */
-    findFirstOrThrow<T extends WhatsAppConnectionFindFirstOrThrowArgs>(args?: SelectSubset<T, WhatsAppConnectionFindFirstOrThrowArgs<ExtArgs>>): Prisma__WhatsAppConnectionClient<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "findFirstOrThrow", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Find zero or more WhatsAppConnections that matches the filter.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WhatsAppConnectionFindManyArgs} args - Arguments to filter and select certain fields only.
-     * @example
-     * // Get all WhatsAppConnections
-     * const whatsAppConnections = await prisma.whatsAppConnection.findMany()
-     * 
-     * // Get first 10 WhatsAppConnections
-     * const whatsAppConnections = await prisma.whatsAppConnection.findMany({ take: 10 })
-     * 
-     * // Only select the `id`
-     * const whatsAppConnectionWithIdOnly = await prisma.whatsAppConnection.findMany({ select: { id: true } })
-     * 
-     */
-    findMany<T extends WhatsAppConnectionFindManyArgs>(args?: SelectSubset<T, WhatsAppConnectionFindManyArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "findMany", GlobalOmitOptions>>
-
-    /**
-     * Create a WhatsAppConnection.
-     * @param {WhatsAppConnectionCreateArgs} args - Arguments to create a WhatsAppConnection.
-     * @example
-     * // Create one WhatsAppConnection
-     * const WhatsAppConnection = await prisma.whatsAppConnection.create({
-     *   data: {
-     *     // ... data to create a WhatsAppConnection
-     *   }
-     * })
-     * 
-     */
-    create<T extends WhatsAppConnectionCreateArgs>(args: SelectSubset<T, WhatsAppConnectionCreateArgs<ExtArgs>>): Prisma__WhatsAppConnectionClient<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "create", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Create many WhatsAppConnections.
-     * @param {WhatsAppConnectionCreateManyArgs} args - Arguments to create many WhatsAppConnections.
-     * @example
-     * // Create many WhatsAppConnections
-     * const whatsAppConnection = await prisma.whatsAppConnection.createMany({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     *     
-     */
-    createMany<T extends WhatsAppConnectionCreateManyArgs>(args?: SelectSubset<T, WhatsAppConnectionCreateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Create many WhatsAppConnections and returns the data saved in the database.
-     * @param {WhatsAppConnectionCreateManyAndReturnArgs} args - Arguments to create many WhatsAppConnections.
-     * @example
-     * // Create many WhatsAppConnections
-     * const whatsAppConnection = await prisma.whatsAppConnection.createManyAndReturn({
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Create many WhatsAppConnections and only return the `id`
-     * const whatsAppConnectionWithIdOnly = await prisma.whatsAppConnection.createManyAndReturn({
-     *   select: { id: true },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    createManyAndReturn<T extends WhatsAppConnectionCreateManyAndReturnArgs>(args?: SelectSubset<T, WhatsAppConnectionCreateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "createManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Delete a WhatsAppConnection.
-     * @param {WhatsAppConnectionDeleteArgs} args - Arguments to delete one WhatsAppConnection.
-     * @example
-     * // Delete one WhatsAppConnection
-     * const WhatsAppConnection = await prisma.whatsAppConnection.delete({
-     *   where: {
-     *     // ... filter to delete one WhatsAppConnection
-     *   }
-     * })
-     * 
-     */
-    delete<T extends WhatsAppConnectionDeleteArgs>(args: SelectSubset<T, WhatsAppConnectionDeleteArgs<ExtArgs>>): Prisma__WhatsAppConnectionClient<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "delete", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Update one WhatsAppConnection.
-     * @param {WhatsAppConnectionUpdateArgs} args - Arguments to update one WhatsAppConnection.
-     * @example
-     * // Update one WhatsAppConnection
-     * const whatsAppConnection = await prisma.whatsAppConnection.update({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    update<T extends WhatsAppConnectionUpdateArgs>(args: SelectSubset<T, WhatsAppConnectionUpdateArgs<ExtArgs>>): Prisma__WhatsAppConnectionClient<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "update", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-    /**
-     * Delete zero or more WhatsAppConnections.
-     * @param {WhatsAppConnectionDeleteManyArgs} args - Arguments to filter WhatsAppConnections to delete.
-     * @example
-     * // Delete a few WhatsAppConnections
-     * const { count } = await prisma.whatsAppConnection.deleteMany({
-     *   where: {
-     *     // ... provide filter here
-     *   }
-     * })
-     * 
-     */
-    deleteMany<T extends WhatsAppConnectionDeleteManyArgs>(args?: SelectSubset<T, WhatsAppConnectionDeleteManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more WhatsAppConnections.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WhatsAppConnectionUpdateManyArgs} args - Arguments to update one or more rows.
-     * @example
-     * // Update many WhatsAppConnections
-     * const whatsAppConnection = await prisma.whatsAppConnection.updateMany({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: {
-     *     // ... provide data here
-     *   }
-     * })
-     * 
-     */
-    updateMany<T extends WhatsAppConnectionUpdateManyArgs>(args: SelectSubset<T, WhatsAppConnectionUpdateManyArgs<ExtArgs>>): Prisma.PrismaPromise<BatchPayload>
-
-    /**
-     * Update zero or more WhatsAppConnections and returns the data updated in the database.
-     * @param {WhatsAppConnectionUpdateManyAndReturnArgs} args - Arguments to update many WhatsAppConnections.
-     * @example
-     * // Update many WhatsAppConnections
-     * const whatsAppConnection = await prisma.whatsAppConnection.updateManyAndReturn({
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * 
-     * // Update zero or more WhatsAppConnections and only return the `id`
-     * const whatsAppConnectionWithIdOnly = await prisma.whatsAppConnection.updateManyAndReturn({
-     *   select: { id: true },
-     *   where: {
-     *     // ... provide filter here
-     *   },
-     *   data: [
-     *     // ... provide data here
-     *   ]
-     * })
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * 
-     */
-    updateManyAndReturn<T extends WhatsAppConnectionUpdateManyAndReturnArgs>(args: SelectSubset<T, WhatsAppConnectionUpdateManyAndReturnArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "updateManyAndReturn", GlobalOmitOptions>>
-
-    /**
-     * Create or update one WhatsAppConnection.
-     * @param {WhatsAppConnectionUpsertArgs} args - Arguments to update or create a WhatsAppConnection.
-     * @example
-     * // Update or create a WhatsAppConnection
-     * const whatsAppConnection = await prisma.whatsAppConnection.upsert({
-     *   create: {
-     *     // ... data to create a WhatsAppConnection
-     *   },
-     *   update: {
-     *     // ... in case it already exists, update
-     *   },
-     *   where: {
-     *     // ... the filter for the WhatsAppConnection we want to update
-     *   }
-     * })
-     */
-    upsert<T extends WhatsAppConnectionUpsertArgs>(args: SelectSubset<T, WhatsAppConnectionUpsertArgs<ExtArgs>>): Prisma__WhatsAppConnectionClient<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "upsert", GlobalOmitOptions>, never, ExtArgs, GlobalOmitOptions>
-
-
-    /**
-     * Count the number of WhatsAppConnections.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WhatsAppConnectionCountArgs} args - Arguments to filter WhatsAppConnections to count.
-     * @example
-     * // Count the number of WhatsAppConnections
-     * const count = await prisma.whatsAppConnection.count({
-     *   where: {
-     *     // ... the filter for the WhatsAppConnections we want to count
-     *   }
-     * })
-    **/
-    count<T extends WhatsAppConnectionCountArgs>(
-      args?: Subset<T, WhatsAppConnectionCountArgs>,
-    ): Prisma.PrismaPromise<
-      T extends $Utils.Record<'select', any>
-        ? T['select'] extends true
-          ? number
-          : GetScalarType<T['select'], WhatsAppConnectionCountAggregateOutputType>
-        : number
-    >
-
-    /**
-     * Allows you to perform aggregations operations on a WhatsAppConnection.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WhatsAppConnectionAggregateArgs} args - Select which aggregations you would like to apply and on what fields.
-     * @example
-     * // Ordered by age ascending
-     * // Where email contains prisma.io
-     * // Limited to the 10 users
-     * const aggregations = await prisma.user.aggregate({
-     *   _avg: {
-     *     age: true,
-     *   },
-     *   where: {
-     *     email: {
-     *       contains: "prisma.io",
-     *     },
-     *   },
-     *   orderBy: {
-     *     age: "asc",
-     *   },
-     *   take: 10,
-     * })
-    **/
-    aggregate<T extends WhatsAppConnectionAggregateArgs>(args: Subset<T, WhatsAppConnectionAggregateArgs>): Prisma.PrismaPromise<GetWhatsAppConnectionAggregateType<T>>
-
-    /**
-     * Group by WhatsAppConnection.
-     * Note, that providing `undefined` is treated as the value not being there.
-     * Read more here: https://pris.ly/d/null-undefined
-     * @param {WhatsAppConnectionGroupByArgs} args - Group by arguments.
-     * @example
-     * // Group by city, order by createdAt, get count
-     * const result = await prisma.user.groupBy({
-     *   by: ['city', 'createdAt'],
-     *   orderBy: {
-     *     createdAt: true
-     *   },
-     *   _count: {
-     *     _all: true
-     *   },
-     * })
-     * 
-    **/
-    groupBy<
-      T extends WhatsAppConnectionGroupByArgs,
-      HasSelectOrTake extends Or<
-        Extends<'skip', Keys<T>>,
-        Extends<'take', Keys<T>>
-      >,
-      OrderByArg extends True extends HasSelectOrTake
-        ? { orderBy: WhatsAppConnectionGroupByArgs['orderBy'] }
-        : { orderBy?: WhatsAppConnectionGroupByArgs['orderBy'] },
-      OrderFields extends ExcludeUnderscoreKeys<Keys<MaybeTupleToUnion<T['orderBy']>>>,
-      ByFields extends MaybeTupleToUnion<T['by']>,
-      ByValid extends Has<ByFields, OrderFields>,
-      HavingFields extends GetHavingFields<T['having']>,
-      HavingValid extends Has<ByFields, HavingFields>,
-      ByEmpty extends T['by'] extends never[] ? True : False,
-      InputErrors extends ByEmpty extends True
-      ? `Error: "by" must not be empty.`
-      : HavingValid extends False
-      ? {
-          [P in HavingFields]: P extends ByFields
-            ? never
-            : P extends string
-            ? `Error: Field "${P}" used in "having" needs to be provided in "by".`
-            : [
-                Error,
-                'Field ',
-                P,
-                ` in "having" needs to be provided in "by"`,
-              ]
-        }[HavingFields]
-      : 'take' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "take", you also need to provide "orderBy"'
-      : 'skip' extends Keys<T>
-      ? 'orderBy' extends Keys<T>
-        ? ByValid extends True
-          ? {}
-          : {
-              [P in OrderFields]: P extends ByFields
-                ? never
-                : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-            }[OrderFields]
-        : 'Error: If you provide "skip", you also need to provide "orderBy"'
-      : ByValid extends True
-      ? {}
-      : {
-          [P in OrderFields]: P extends ByFields
-            ? never
-            : `Error: Field "${P}" in "orderBy" needs to be provided in "by"`
-        }[OrderFields]
-    >(args: SubsetIntersection<T, WhatsAppConnectionGroupByArgs, OrderByArg> & InputErrors): {} extends InputErrors ? GetWhatsAppConnectionGroupByPayload<T> : Prisma.PrismaPromise<InputErrors>
-  /**
-   * Fields of the WhatsAppConnection model
-   */
-  readonly fields: WhatsAppConnectionFieldRefs;
-  }
-
-  /**
-   * The delegate class that acts as a "Promise-like" for WhatsAppConnection.
-   * Why is this prefixed with `Prisma__`?
-   * Because we want to prevent naming conflicts as mentioned in
-   * https://github.com/prisma/prisma-client-js/issues/707
-   */
-  export interface Prisma__WhatsAppConnectionClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
-    readonly [Symbol.toStringTag]: "PrismaPromise"
-    user<T extends WhatsAppConnection$userArgs<ExtArgs> = {}>(args?: Subset<T, WhatsAppConnection$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    prompt<T extends WhatsAppConnection$promptArgs<ExtArgs> = {}>(args?: Subset<T, WhatsAppConnection$promptArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    queues<T extends WhatsAppConnection$queuesArgs<ExtArgs> = {}>(args?: Subset<T, WhatsAppConnection$queuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QueuePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    /**
-     * Attaches callbacks for the resolution and/or rejection of the Promise.
-     * @param onfulfilled The callback to execute when the Promise is resolved.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of which ever callback is executed.
-     */
-    then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | undefined | null, onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null): $Utils.JsPromise<TResult1 | TResult2>
-    /**
-     * Attaches a callback for only the rejection of the Promise.
-     * @param onrejected The callback to execute when the Promise is rejected.
-     * @returns A Promise for the completion of the callback.
-     */
-    catch<TResult = never>(onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null): $Utils.JsPromise<T | TResult>
-    /**
-     * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-     * resolved value cannot be modified from the callback.
-     * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
-     * @returns A Promise for the completion of the callback.
-     */
-    finally(onfinally?: (() => void) | undefined | null): $Utils.JsPromise<T>
-  }
-
-
-
-
-  /**
-   * Fields of the WhatsAppConnection model
-   */
-  interface WhatsAppConnectionFieldRefs {
-    readonly id: FieldRef<"WhatsAppConnection", 'String'>
-    readonly name: FieldRef<"WhatsAppConnection", 'String'>
-    readonly isDefault: FieldRef<"WhatsAppConnection", 'Boolean'>
-    readonly greetingMessage: FieldRef<"WhatsAppConnection", 'String'>
-    readonly conclusionMessage: FieldRef<"WhatsAppConnection", 'String'>
-    readonly outOfOfficeHoursMessage: FieldRef<"WhatsAppConnection", 'String'>
-    readonly reviewMessage: FieldRef<"WhatsAppConnection", 'String'>
-    readonly token: FieldRef<"WhatsAppConnection", 'String'>
-    readonly queueId: FieldRef<"WhatsAppConnection", 'String'>
-    readonly integrationId: FieldRef<"WhatsAppConnection", 'String'>
-    readonly userId: FieldRef<"WhatsAppConnection", 'String'>
-    readonly promptId: FieldRef<"WhatsAppConnection", 'String'>
-    readonly transferQueueId: FieldRef<"WhatsAppConnection", 'String'>
-    readonly timeToTransfer: FieldRef<"WhatsAppConnection", 'String'>
-    readonly expiresInactiveMessage: FieldRef<"WhatsAppConnection", 'String'>
-    readonly companyId: FieldRef<"WhatsAppConnection", 'String'>
-    readonly session: FieldRef<"WhatsAppConnection", 'String'>
-    readonly qrCode: FieldRef<"WhatsAppConnection", 'String'>
-    readonly status: FieldRef<"WhatsAppConnection", 'WhatsAppConnectionStatus'>
-    readonly createdAt: FieldRef<"WhatsAppConnection", 'DateTime'>
-    readonly updatedAt: FieldRef<"WhatsAppConnection", 'DateTime'>
-  }
-    
-
-  // Custom InputTypes
-  /**
-   * WhatsAppConnection findUnique
-   */
-  export type WhatsAppConnectionFindUniqueArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WhatsAppConnectionInclude<ExtArgs> | null
-    /**
-     * Filter, which WhatsAppConnection to fetch.
-     */
-    where: WhatsAppConnectionWhereUniqueInput
-  }
-
-  /**
-   * WhatsAppConnection findUniqueOrThrow
-   */
-  export type WhatsAppConnectionFindUniqueOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WhatsAppConnectionInclude<ExtArgs> | null
-    /**
-     * Filter, which WhatsAppConnection to fetch.
-     */
-    where: WhatsAppConnectionWhereUniqueInput
-  }
-
-  /**
-   * WhatsAppConnection findFirst
-   */
-  export type WhatsAppConnectionFindFirstArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WhatsAppConnectionInclude<ExtArgs> | null
-    /**
-     * Filter, which WhatsAppConnection to fetch.
-     */
-    where?: WhatsAppConnectionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of WhatsAppConnections to fetch.
-     */
-    orderBy?: WhatsAppConnectionOrderByWithRelationInput | WhatsAppConnectionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for WhatsAppConnections.
-     */
-    cursor?: WhatsAppConnectionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` WhatsAppConnections from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` WhatsAppConnections.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of WhatsAppConnections.
-     */
-    distinct?: WhatsAppConnectionScalarFieldEnum | WhatsAppConnectionScalarFieldEnum[]
-  }
-
-  /**
-   * WhatsAppConnection findFirstOrThrow
-   */
-  export type WhatsAppConnectionFindFirstOrThrowArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WhatsAppConnectionInclude<ExtArgs> | null
-    /**
-     * Filter, which WhatsAppConnection to fetch.
-     */
-    where?: WhatsAppConnectionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of WhatsAppConnections to fetch.
-     */
-    orderBy?: WhatsAppConnectionOrderByWithRelationInput | WhatsAppConnectionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for searching for WhatsAppConnections.
-     */
-    cursor?: WhatsAppConnectionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` WhatsAppConnections from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` WhatsAppConnections.
-     */
-    skip?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/distinct Distinct Docs}
-     * 
-     * Filter by unique combinations of WhatsAppConnections.
-     */
-    distinct?: WhatsAppConnectionScalarFieldEnum | WhatsAppConnectionScalarFieldEnum[]
-  }
-
-  /**
-   * WhatsAppConnection findMany
-   */
-  export type WhatsAppConnectionFindManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WhatsAppConnectionInclude<ExtArgs> | null
-    /**
-     * Filter, which WhatsAppConnections to fetch.
-     */
-    where?: WhatsAppConnectionWhereInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/sorting Sorting Docs}
-     * 
-     * Determine the order of WhatsAppConnections to fetch.
-     */
-    orderBy?: WhatsAppConnectionOrderByWithRelationInput | WhatsAppConnectionOrderByWithRelationInput[]
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination#cursor-based-pagination Cursor Docs}
-     * 
-     * Sets the position for listing WhatsAppConnections.
-     */
-    cursor?: WhatsAppConnectionWhereUniqueInput
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Take `±n` WhatsAppConnections from the position of the cursor.
-     */
-    take?: number
-    /**
-     * {@link https://www.prisma.io/docs/concepts/components/prisma-client/pagination Pagination Docs}
-     * 
-     * Skip the first `n` WhatsAppConnections.
-     */
-    skip?: number
-    distinct?: WhatsAppConnectionScalarFieldEnum | WhatsAppConnectionScalarFieldEnum[]
-  }
-
-  /**
-   * WhatsAppConnection create
-   */
-  export type WhatsAppConnectionCreateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WhatsAppConnectionInclude<ExtArgs> | null
-    /**
-     * The data needed to create a WhatsAppConnection.
-     */
-    data: XOR<WhatsAppConnectionCreateInput, WhatsAppConnectionUncheckedCreateInput>
-  }
-
-  /**
-   * WhatsAppConnection createMany
-   */
-  export type WhatsAppConnectionCreateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to create many WhatsAppConnections.
-     */
-    data: WhatsAppConnectionCreateManyInput | WhatsAppConnectionCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * WhatsAppConnection createManyAndReturn
-   */
-  export type WhatsAppConnectionCreateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelectCreateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * The data used to create many WhatsAppConnections.
-     */
-    data: WhatsAppConnectionCreateManyInput | WhatsAppConnectionCreateManyInput[]
-    skipDuplicates?: boolean
-  }
-
-  /**
-   * WhatsAppConnection update
-   */
-  export type WhatsAppConnectionUpdateArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WhatsAppConnectionInclude<ExtArgs> | null
-    /**
-     * The data needed to update a WhatsAppConnection.
-     */
-    data: XOR<WhatsAppConnectionUpdateInput, WhatsAppConnectionUncheckedUpdateInput>
-    /**
-     * Choose, which WhatsAppConnection to update.
-     */
-    where: WhatsAppConnectionWhereUniqueInput
-  }
-
-  /**
-   * WhatsAppConnection updateMany
-   */
-  export type WhatsAppConnectionUpdateManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * The data used to update WhatsAppConnections.
-     */
-    data: XOR<WhatsAppConnectionUpdateManyMutationInput, WhatsAppConnectionUncheckedUpdateManyInput>
-    /**
-     * Filter which WhatsAppConnections to update
-     */
-    where?: WhatsAppConnectionWhereInput
-    /**
-     * Limit how many WhatsAppConnections to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * WhatsAppConnection updateManyAndReturn
-   */
-  export type WhatsAppConnectionUpdateManyAndReturnArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelectUpdateManyAndReturn<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * The data used to update WhatsAppConnections.
-     */
-    data: XOR<WhatsAppConnectionUpdateManyMutationInput, WhatsAppConnectionUncheckedUpdateManyInput>
-    /**
-     * Filter which WhatsAppConnections to update
-     */
-    where?: WhatsAppConnectionWhereInput
-    /**
-     * Limit how many WhatsAppConnections to update.
-     */
-    limit?: number
-  }
-
-  /**
-   * WhatsAppConnection upsert
-   */
-  export type WhatsAppConnectionUpsertArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WhatsAppConnectionInclude<ExtArgs> | null
-    /**
-     * The filter to search for the WhatsAppConnection to update in case it exists.
-     */
-    where: WhatsAppConnectionWhereUniqueInput
-    /**
-     * In case the WhatsAppConnection found by the `where` argument doesn't exist, create a new WhatsAppConnection with this data.
-     */
-    create: XOR<WhatsAppConnectionCreateInput, WhatsAppConnectionUncheckedCreateInput>
-    /**
-     * In case the WhatsAppConnection was found with the provided `where` argument, update it with this data.
-     */
-    update: XOR<WhatsAppConnectionUpdateInput, WhatsAppConnectionUncheckedUpdateInput>
-  }
-
-  /**
-   * WhatsAppConnection delete
-   */
-  export type WhatsAppConnectionDeleteArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WhatsAppConnectionInclude<ExtArgs> | null
-    /**
-     * Filter which WhatsAppConnection to delete.
-     */
-    where: WhatsAppConnectionWhereUniqueInput
-  }
-
-  /**
-   * WhatsAppConnection deleteMany
-   */
-  export type WhatsAppConnectionDeleteManyArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Filter which WhatsAppConnections to delete
-     */
-    where?: WhatsAppConnectionWhereInput
-    /**
-     * Limit how many WhatsAppConnections to delete.
-     */
-    limit?: number
-  }
-
-  /**
-   * WhatsAppConnection.user
-   */
-  export type WhatsAppConnection$userArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the User
-     */
-    select?: UserSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the User
-     */
-    omit?: UserOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserInclude<ExtArgs> | null
-    where?: UserWhereInput
-  }
-
-  /**
-   * WhatsAppConnection.prompt
-   */
-  export type WhatsAppConnection$promptArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Prompts
-     */
-    select?: PromptsSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Prompts
-     */
-    omit?: PromptsOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: PromptsInclude<ExtArgs> | null
-    where?: PromptsWhereInput
-    orderBy?: PromptsOrderByWithRelationInput | PromptsOrderByWithRelationInput[]
-    cursor?: PromptsWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: PromptsScalarFieldEnum | PromptsScalarFieldEnum[]
-  }
-
-  /**
-   * WhatsAppConnection.queues
-   */
-  export type WhatsAppConnection$queuesArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the Queue
-     */
-    select?: QueueSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the Queue
-     */
-    omit?: QueueOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: QueueInclude<ExtArgs> | null
-    where?: QueueWhereInput
-    orderBy?: QueueOrderByWithRelationInput | QueueOrderByWithRelationInput[]
-    cursor?: QueueWhereUniqueInput
-    take?: number
-    skip?: number
-    distinct?: QueueScalarFieldEnum | QueueScalarFieldEnum[]
-  }
-
-  /**
-   * WhatsAppConnection without action
-   */
-  export type WhatsAppConnectionDefaultArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WhatsAppConnectionInclude<ExtArgs> | null
-  }
-
-
-  /**
    * Model User
    */
 
@@ -3375,7 +1888,6 @@ export namespace Prisma {
     password: string | null
     role: $Enums.UserRole | null
     isActive: boolean | null
-    whatsAppConnectionId: string | null
     companyId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3388,7 +1900,6 @@ export namespace Prisma {
     password: string | null
     role: $Enums.UserRole | null
     isActive: boolean | null
-    whatsAppConnectionId: string | null
     companyId: string | null
     createdAt: Date | null
     updatedAt: Date | null
@@ -3401,7 +1912,6 @@ export namespace Prisma {
     password: number
     role: number
     isActive: number
-    whatsAppConnectionId: number
     companyId: number
     createdAt: number
     updatedAt: number
@@ -3416,7 +1926,6 @@ export namespace Prisma {
     password?: true
     role?: true
     isActive?: true
-    whatsAppConnectionId?: true
     companyId?: true
     createdAt?: true
     updatedAt?: true
@@ -3429,7 +1938,6 @@ export namespace Prisma {
     password?: true
     role?: true
     isActive?: true
-    whatsAppConnectionId?: true
     companyId?: true
     createdAt?: true
     updatedAt?: true
@@ -3442,7 +1950,6 @@ export namespace Prisma {
     password?: true
     role?: true
     isActive?: true
-    whatsAppConnectionId?: true
     companyId?: true
     createdAt?: true
     updatedAt?: true
@@ -3528,7 +2035,6 @@ export namespace Prisma {
     password: string
     role: $Enums.UserRole
     isActive: boolean
-    whatsAppConnectionId: string
     companyId: string | null
     createdAt: Date
     updatedAt: Date
@@ -3558,11 +2064,9 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     isActive?: boolean
-    whatsAppConnectionId?: boolean
     companyId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    whatsAppConnection?: boolean | WhatsAppConnectionDefaultArgs<ExtArgs>
     conversations?: boolean | User$conversationsArgs<ExtArgs>
     messages?: boolean | User$messagesArgs<ExtArgs>
     queues?: boolean | User$queuesArgs<ExtArgs>
@@ -3576,11 +2080,9 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     isActive?: boolean
-    whatsAppConnectionId?: boolean
     companyId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    whatsAppConnection?: boolean | WhatsAppConnectionDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -3590,11 +2092,9 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     isActive?: boolean
-    whatsAppConnectionId?: boolean
     companyId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    whatsAppConnection?: boolean | WhatsAppConnectionDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["user"]>
 
   export type UserSelectScalar = {
@@ -3604,31 +2104,24 @@ export namespace Prisma {
     password?: boolean
     role?: boolean
     isActive?: boolean
-    whatsAppConnectionId?: boolean
     companyId?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "isActive" | "whatsAppConnectionId" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
+  export type UserOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "email" | "password" | "role" | "isActive" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["user"]>
   export type UserInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    whatsAppConnection?: boolean | WhatsAppConnectionDefaultArgs<ExtArgs>
     conversations?: boolean | User$conversationsArgs<ExtArgs>
     messages?: boolean | User$messagesArgs<ExtArgs>
     queues?: boolean | User$queuesArgs<ExtArgs>
     _count?: boolean | UserCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    whatsAppConnection?: boolean | WhatsAppConnectionDefaultArgs<ExtArgs>
-  }
-  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    whatsAppConnection?: boolean | WhatsAppConnectionDefaultArgs<ExtArgs>
-  }
+  export type UserIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type UserIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $UserPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "User"
     objects: {
-      whatsAppConnection: Prisma.$WhatsAppConnectionPayload<ExtArgs>
       conversations: Prisma.$ConversationPayload<ExtArgs>[]
       messages: Prisma.$MessagePayload<ExtArgs>[]
       queues: Prisma.$QueueUserPayload<ExtArgs>[]
@@ -3640,7 +2133,6 @@ export namespace Prisma {
       password: string
       role: $Enums.UserRole
       isActive: boolean
-      whatsAppConnectionId: string
       companyId: string | null
       createdAt: Date
       updatedAt: Date
@@ -4038,7 +2530,6 @@ export namespace Prisma {
    */
   export interface Prisma__UserClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    whatsAppConnection<T extends WhatsAppConnectionDefaultArgs<ExtArgs> = {}>(args?: Subset<T, WhatsAppConnectionDefaultArgs<ExtArgs>>): Prisma__WhatsAppConnectionClient<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     conversations<T extends User$conversationsArgs<ExtArgs> = {}>(args?: Subset<T, User$conversationsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$ConversationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     messages<T extends User$messagesArgs<ExtArgs> = {}>(args?: Subset<T, User$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     queues<T extends User$queuesArgs<ExtArgs> = {}>(args?: Subset<T, User$queuesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QueueUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
@@ -4077,7 +2568,6 @@ export namespace Prisma {
     readonly password: FieldRef<"User", 'String'>
     readonly role: FieldRef<"User", 'UserRole'>
     readonly isActive: FieldRef<"User", 'Boolean'>
-    readonly whatsAppConnectionId: FieldRef<"User", 'String'>
     readonly companyId: FieldRef<"User", 'String'>
     readonly createdAt: FieldRef<"User", 'DateTime'>
     readonly updatedAt: FieldRef<"User", 'DateTime'>
@@ -4330,10 +2820,6 @@ export namespace Prisma {
      */
     data: UserCreateManyInput | UserCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4404,10 +2890,6 @@ export namespace Prisma {
      * Limit how many Users to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: UserIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -4582,7 +3064,6 @@ export namespace Prisma {
     name: string | null
     phone: string | null
     email: string | null
-    whatsappId: string | null
     companyId: string | null
     isCostumer: boolean | null
     createdAt: Date | null
@@ -4594,7 +3075,6 @@ export namespace Prisma {
     name: string | null
     phone: string | null
     email: string | null
-    whatsappId: string | null
     companyId: string | null
     isCostumer: boolean | null
     createdAt: Date | null
@@ -4607,7 +3087,6 @@ export namespace Prisma {
     phone: number
     email: number
     tags: number
-    whatsappId: number
     companyId: number
     isCostumer: number
     createdAt: number
@@ -4621,7 +3100,6 @@ export namespace Prisma {
     name?: true
     phone?: true
     email?: true
-    whatsappId?: true
     companyId?: true
     isCostumer?: true
     createdAt?: true
@@ -4633,7 +3111,6 @@ export namespace Prisma {
     name?: true
     phone?: true
     email?: true
-    whatsappId?: true
     companyId?: true
     isCostumer?: true
     createdAt?: true
@@ -4646,7 +3123,6 @@ export namespace Prisma {
     phone?: true
     email?: true
     tags?: true
-    whatsappId?: true
     companyId?: true
     isCostumer?: true
     createdAt?: true
@@ -4732,11 +3208,10 @@ export namespace Prisma {
     phone: string
     email: string | null
     tags: string[]
-    whatsappId: string | null
     companyId: string | null
     isCostumer: boolean | null
     createdAt: Date
-    updatedAt: Date
+    updatedAt: Date | null
     _count: ContactCountAggregateOutputType | null
     _min: ContactMinAggregateOutputType | null
     _max: ContactMaxAggregateOutputType | null
@@ -4762,7 +3237,6 @@ export namespace Prisma {
     phone?: boolean
     email?: boolean
     tags?: boolean
-    whatsappId?: boolean
     companyId?: boolean
     isCostumer?: boolean
     createdAt?: boolean
@@ -4777,7 +3251,6 @@ export namespace Prisma {
     phone?: boolean
     email?: boolean
     tags?: boolean
-    whatsappId?: boolean
     companyId?: boolean
     isCostumer?: boolean
     createdAt?: boolean
@@ -4790,7 +3263,6 @@ export namespace Prisma {
     phone?: boolean
     email?: boolean
     tags?: boolean
-    whatsappId?: boolean
     companyId?: boolean
     isCostumer?: boolean
     createdAt?: boolean
@@ -4803,14 +3275,13 @@ export namespace Prisma {
     phone?: boolean
     email?: boolean
     tags?: boolean
-    whatsappId?: boolean
     companyId?: boolean
     isCostumer?: boolean
     createdAt?: boolean
     updatedAt?: boolean
   }
 
-  export type ContactOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phone" | "email" | "tags" | "whatsappId" | "companyId" | "isCostumer" | "createdAt" | "updatedAt", ExtArgs["result"]["contact"]>
+  export type ContactOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phone" | "email" | "tags" | "companyId" | "isCostumer" | "createdAt" | "updatedAt", ExtArgs["result"]["contact"]>
   export type ContactInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversations?: boolean | Contact$conversationsArgs<ExtArgs>
     _count?: boolean | ContactCountOutputTypeDefaultArgs<ExtArgs>
@@ -4829,11 +3300,10 @@ export namespace Prisma {
       phone: string
       email: string | null
       tags: string[]
-      whatsappId: string | null
       companyId: string | null
       isCostumer: boolean | null
       createdAt: Date
-      updatedAt: Date
+      updatedAt: Date | null
     }, ExtArgs["result"]["contact"]>
     composites: {}
   }
@@ -5263,7 +3733,6 @@ export namespace Prisma {
     readonly phone: FieldRef<"Contact", 'String'>
     readonly email: FieldRef<"Contact", 'String'>
     readonly tags: FieldRef<"Contact", 'String[]'>
-    readonly whatsappId: FieldRef<"Contact", 'String'>
     readonly companyId: FieldRef<"Contact", 'String'>
     readonly isCostumer: FieldRef<"Contact", 'Boolean'>
     readonly createdAt: FieldRef<"Contact", 'DateTime'>
@@ -5730,7 +4199,6 @@ export namespace Prisma {
     priority: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    whatsAppConnectionId: string | null
   }
 
   export type QueueMaxAggregateOutputType = {
@@ -5745,7 +4213,6 @@ export namespace Prisma {
     priority: number | null
     createdAt: Date | null
     updatedAt: Date | null
-    whatsAppConnectionId: string | null
   }
 
   export type QueueCountAggregateOutputType = {
@@ -5761,7 +4228,6 @@ export namespace Prisma {
     schedules: number
     createdAt: number
     updatedAt: number
-    whatsAppConnectionId: number
     _all: number
   }
 
@@ -5786,7 +4252,6 @@ export namespace Prisma {
     priority?: true
     createdAt?: true
     updatedAt?: true
-    whatsAppConnectionId?: true
   }
 
   export type QueueMaxAggregateInputType = {
@@ -5801,7 +4266,6 @@ export namespace Prisma {
     priority?: true
     createdAt?: true
     updatedAt?: true
-    whatsAppConnectionId?: true
   }
 
   export type QueueCountAggregateInputType = {
@@ -5817,7 +4281,6 @@ export namespace Prisma {
     schedules?: true
     createdAt?: true
     updatedAt?: true
-    whatsAppConnectionId?: true
     _all?: true
   }
 
@@ -5920,7 +4383,6 @@ export namespace Prisma {
     schedules: JsonValue[]
     createdAt: Date
     updatedAt: Date
-    whatsAppConnectionId: string | null
     _count: QueueCountAggregateOutputType | null
     _avg: QueueAvgAggregateOutputType | null
     _sum: QueueSumAggregateOutputType | null
@@ -5955,12 +4417,10 @@ export namespace Prisma {
     schedules?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    whatsAppConnectionId?: boolean
     conversations?: boolean | Queue$conversationsArgs<ExtArgs>
     users?: boolean | Queue$usersArgs<ExtArgs>
     quickResponses?: boolean | Queue$quickResponsesArgs<ExtArgs>
     prompts?: boolean | Queue$promptsArgs<ExtArgs>
-    whatsAppConnection?: boolean | Queue$whatsAppConnectionArgs<ExtArgs>
     _count?: boolean | QueueCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["queue"]>
 
@@ -5977,8 +4437,6 @@ export namespace Prisma {
     schedules?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    whatsAppConnectionId?: boolean
-    whatsAppConnection?: boolean | Queue$whatsAppConnectionArgs<ExtArgs>
   }, ExtArgs["result"]["queue"]>
 
   export type QueueSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -5994,8 +4452,6 @@ export namespace Prisma {
     schedules?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    whatsAppConnectionId?: boolean
-    whatsAppConnection?: boolean | Queue$whatsAppConnectionArgs<ExtArgs>
   }, ExtArgs["result"]["queue"]>
 
   export type QueueSelectScalar = {
@@ -6011,24 +4467,18 @@ export namespace Prisma {
     schedules?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    whatsAppConnectionId?: boolean
   }
 
-  export type QueueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color" | "greetingMessage" | "outOfOfficeHoursMessage" | "promptId" | "integrationId" | "isActive" | "priority" | "schedules" | "createdAt" | "updatedAt" | "whatsAppConnectionId", ExtArgs["result"]["queue"]>
+  export type QueueOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "color" | "greetingMessage" | "outOfOfficeHoursMessage" | "promptId" | "integrationId" | "isActive" | "priority" | "schedules" | "createdAt" | "updatedAt", ExtArgs["result"]["queue"]>
   export type QueueInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversations?: boolean | Queue$conversationsArgs<ExtArgs>
     users?: boolean | Queue$usersArgs<ExtArgs>
     quickResponses?: boolean | Queue$quickResponsesArgs<ExtArgs>
     prompts?: boolean | Queue$promptsArgs<ExtArgs>
-    whatsAppConnection?: boolean | Queue$whatsAppConnectionArgs<ExtArgs>
     _count?: boolean | QueueCountOutputTypeDefaultArgs<ExtArgs>
   }
-  export type QueueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    whatsAppConnection?: boolean | Queue$whatsAppConnectionArgs<ExtArgs>
-  }
-  export type QueueIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    whatsAppConnection?: boolean | Queue$whatsAppConnectionArgs<ExtArgs>
-  }
+  export type QueueIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
+  export type QueueIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {}
 
   export type $QueuePayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Queue"
@@ -6037,7 +4487,6 @@ export namespace Prisma {
       users: Prisma.$QueueUserPayload<ExtArgs>[]
       quickResponses: Prisma.$QuickResponsePayload<ExtArgs>[]
       prompts: Prisma.$PromptsPayload<ExtArgs>[]
-      whatsAppConnection: Prisma.$WhatsAppConnectionPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -6052,7 +4501,6 @@ export namespace Prisma {
       schedules: Prisma.JsonValue[]
       createdAt: Date
       updatedAt: Date
-      whatsAppConnectionId: string | null
     }, ExtArgs["result"]["queue"]>
     composites: {}
   }
@@ -6451,7 +4899,6 @@ export namespace Prisma {
     users<T extends Queue$usersArgs<ExtArgs> = {}>(args?: Subset<T, Queue$usersArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QueueUserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     quickResponses<T extends Queue$quickResponsesArgs<ExtArgs> = {}>(args?: Subset<T, Queue$quickResponsesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$QuickResponsePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
     prompts<T extends Queue$promptsArgs<ExtArgs> = {}>(args?: Subset<T, Queue$promptsArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$PromptsPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
-    whatsAppConnection<T extends Queue$whatsAppConnectionArgs<ExtArgs> = {}>(args?: Subset<T, Queue$whatsAppConnectionArgs<ExtArgs>>): Prisma__WhatsAppConnectionClient<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -6493,7 +4940,6 @@ export namespace Prisma {
     readonly schedules: FieldRef<"Queue", 'Json[]'>
     readonly createdAt: FieldRef<"Queue", 'DateTime'>
     readonly updatedAt: FieldRef<"Queue", 'DateTime'>
-    readonly whatsAppConnectionId: FieldRef<"Queue", 'String'>
   }
     
 
@@ -6743,10 +5189,6 @@ export namespace Prisma {
      */
     data: QueueCreateManyInput | QueueCreateManyInput[]
     skipDuplicates?: boolean
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: QueueIncludeCreateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -6817,10 +5259,6 @@ export namespace Prisma {
      * Limit how many Queues to update.
      */
     limit?: number
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: QueueIncludeUpdateManyAndReturn<ExtArgs> | null
   }
 
   /**
@@ -6983,25 +5421,6 @@ export namespace Prisma {
     take?: number
     skip?: number
     distinct?: PromptsScalarFieldEnum | PromptsScalarFieldEnum[]
-  }
-
-  /**
-   * Queue.whatsAppConnection
-   */
-  export type Queue$whatsAppConnectionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WhatsAppConnectionInclude<ExtArgs> | null
-    where?: WhatsAppConnectionWhereInput
   }
 
   /**
@@ -8245,12 +6664,12 @@ export namespace Prisma {
     queueId: string | null
     tagId: string | null
     status: $Enums.ConversationStatus
-    priority: $Enums.Priority
+    priority: $Enums.Priority | null
     subject: string | null
     lastMessageAt: Date | null
     closedAt: Date | null
     createdAt: Date
-    updatedAt: Date
+    updatedAt: Date | null
     _count: ConversationCountAggregateOutputType | null
     _min: ConversationMinAggregateOutputType | null
     _max: ConversationMaxAggregateOutputType | null
@@ -8283,11 +6702,11 @@ export namespace Prisma {
     closedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    contact?: boolean | ContactDefaultArgs<ExtArgs>
     user?: boolean | Conversation$userArgs<ExtArgs>
     queue?: boolean | Conversation$queueArgs<ExtArgs>
     tag?: boolean | Conversation$tagArgs<ExtArgs>
     messages?: boolean | Conversation$messagesArgs<ExtArgs>
+    contact?: boolean | ContactDefaultArgs<ExtArgs>
     _count?: boolean | ConversationCountOutputTypeDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["conversation"]>
 
@@ -8304,10 +6723,10 @@ export namespace Prisma {
     closedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    contact?: boolean | ContactDefaultArgs<ExtArgs>
     user?: boolean | Conversation$userArgs<ExtArgs>
     queue?: boolean | Conversation$queueArgs<ExtArgs>
     tag?: boolean | Conversation$tagArgs<ExtArgs>
+    contact?: boolean | ContactDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["conversation"]>
 
   export type ConversationSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -8323,10 +6742,10 @@ export namespace Prisma {
     closedAt?: boolean
     createdAt?: boolean
     updatedAt?: boolean
-    contact?: boolean | ContactDefaultArgs<ExtArgs>
     user?: boolean | Conversation$userArgs<ExtArgs>
     queue?: boolean | Conversation$queueArgs<ExtArgs>
     tag?: boolean | Conversation$tagArgs<ExtArgs>
+    contact?: boolean | ContactDefaultArgs<ExtArgs>
   }, ExtArgs["result"]["conversation"]>
 
   export type ConversationSelectScalar = {
@@ -8346,34 +6765,34 @@ export namespace Prisma {
 
   export type ConversationOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "contactId" | "userId" | "queueId" | "tagId" | "status" | "priority" | "subject" | "lastMessageAt" | "closedAt" | "createdAt" | "updatedAt", ExtArgs["result"]["conversation"]>
   export type ConversationInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    contact?: boolean | ContactDefaultArgs<ExtArgs>
     user?: boolean | Conversation$userArgs<ExtArgs>
     queue?: boolean | Conversation$queueArgs<ExtArgs>
     tag?: boolean | Conversation$tagArgs<ExtArgs>
     messages?: boolean | Conversation$messagesArgs<ExtArgs>
+    contact?: boolean | ContactDefaultArgs<ExtArgs>
     _count?: boolean | ConversationCountOutputTypeDefaultArgs<ExtArgs>
   }
   export type ConversationIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    contact?: boolean | ContactDefaultArgs<ExtArgs>
     user?: boolean | Conversation$userArgs<ExtArgs>
     queue?: boolean | Conversation$queueArgs<ExtArgs>
     tag?: boolean | Conversation$tagArgs<ExtArgs>
+    contact?: boolean | ContactDefaultArgs<ExtArgs>
   }
   export type ConversationIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    contact?: boolean | ContactDefaultArgs<ExtArgs>
     user?: boolean | Conversation$userArgs<ExtArgs>
     queue?: boolean | Conversation$queueArgs<ExtArgs>
     tag?: boolean | Conversation$tagArgs<ExtArgs>
+    contact?: boolean | ContactDefaultArgs<ExtArgs>
   }
 
   export type $ConversationPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Conversation"
     objects: {
-      contact: Prisma.$ContactPayload<ExtArgs>
       user: Prisma.$UserPayload<ExtArgs> | null
       queue: Prisma.$QueuePayload<ExtArgs> | null
       tag: Prisma.$TagsPayload<ExtArgs> | null
       messages: Prisma.$MessagePayload<ExtArgs>[]
+      contact: Prisma.$ContactPayload<ExtArgs>
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -8382,12 +6801,12 @@ export namespace Prisma {
       queueId: string | null
       tagId: string | null
       status: $Enums.ConversationStatus
-      priority: $Enums.Priority
+      priority: $Enums.Priority | null
       subject: string | null
       lastMessageAt: Date | null
       closedAt: Date | null
       createdAt: Date
-      updatedAt: Date
+      updatedAt: Date | null
     }, ExtArgs["result"]["conversation"]>
     composites: {}
   }
@@ -8782,11 +7201,11 @@ export namespace Prisma {
    */
   export interface Prisma__ConversationClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
-    contact<T extends ContactDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContactDefaultArgs<ExtArgs>>): Prisma__ContactClient<$Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     user<T extends Conversation$userArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$userArgs<ExtArgs>>): Prisma__UserClient<$Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     queue<T extends Conversation$queueArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$queueArgs<ExtArgs>>): Prisma__QueueClient<$Result.GetResult<Prisma.$QueuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     tag<T extends Conversation$tagArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$tagArgs<ExtArgs>>): Prisma__TagsClient<$Result.GetResult<Prisma.$TagsPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     messages<T extends Conversation$messagesArgs<ExtArgs> = {}>(args?: Subset<T, Conversation$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<$Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+    contact<T extends ContactDefaultArgs<ExtArgs> = {}>(args?: Subset<T, ContactDefaultArgs<ExtArgs>>): Prisma__ContactClient<$Result.GetResult<Prisma.$ContactPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -9338,16 +7757,13 @@ export namespace Prisma {
     conversationId: string | null
     userId: string | null
     content: string | null
-    messageType: $Enums.MessageType | null
+    messageType: string | null
     direction: $Enums.Direction | null
-    whatsappId: string | null
     status: $Enums.MessageStatus | null
     mediaUrl: string | null
+    timestamp: string | null
     mediaType: string | null
     isRead: boolean | null
-    readAt: Date | null
-    deliveredAt: Date | null
-    sentAt: Date | null
     createdAt: Date | null
   }
 
@@ -9356,16 +7772,13 @@ export namespace Prisma {
     conversationId: string | null
     userId: string | null
     content: string | null
-    messageType: $Enums.MessageType | null
+    messageType: string | null
     direction: $Enums.Direction | null
-    whatsappId: string | null
     status: $Enums.MessageStatus | null
     mediaUrl: string | null
+    timestamp: string | null
     mediaType: string | null
     isRead: boolean | null
-    readAt: Date | null
-    deliveredAt: Date | null
-    sentAt: Date | null
     createdAt: Date | null
   }
 
@@ -9376,14 +7789,11 @@ export namespace Prisma {
     content: number
     messageType: number
     direction: number
-    whatsappId: number
     status: number
     mediaUrl: number
+    timestamp: number
     mediaType: number
     isRead: number
-    readAt: number
-    deliveredAt: number
-    sentAt: number
     createdAt: number
     _all: number
   }
@@ -9396,14 +7806,11 @@ export namespace Prisma {
     content?: true
     messageType?: true
     direction?: true
-    whatsappId?: true
     status?: true
     mediaUrl?: true
+    timestamp?: true
     mediaType?: true
     isRead?: true
-    readAt?: true
-    deliveredAt?: true
-    sentAt?: true
     createdAt?: true
   }
 
@@ -9414,14 +7821,11 @@ export namespace Prisma {
     content?: true
     messageType?: true
     direction?: true
-    whatsappId?: true
     status?: true
     mediaUrl?: true
+    timestamp?: true
     mediaType?: true
     isRead?: true
-    readAt?: true
-    deliveredAt?: true
-    sentAt?: true
     createdAt?: true
   }
 
@@ -9432,14 +7836,11 @@ export namespace Prisma {
     content?: true
     messageType?: true
     direction?: true
-    whatsappId?: true
     status?: true
     mediaUrl?: true
+    timestamp?: true
     mediaType?: true
     isRead?: true
-    readAt?: true
-    deliveredAt?: true
-    sentAt?: true
     createdAt?: true
     _all?: true
   }
@@ -9521,16 +7922,13 @@ export namespace Prisma {
     conversationId: string
     userId: string | null
     content: string
-    messageType: $Enums.MessageType
+    messageType: string
     direction: $Enums.Direction
-    whatsappId: string | null
     status: $Enums.MessageStatus
     mediaUrl: string | null
+    timestamp: string
     mediaType: string | null
     isRead: boolean
-    readAt: Date | null
-    deliveredAt: Date | null
-    sentAt: Date | null
     createdAt: Date
     _count: MessageCountAggregateOutputType | null
     _min: MessageMinAggregateOutputType | null
@@ -9558,14 +7956,11 @@ export namespace Prisma {
     content?: boolean
     messageType?: boolean
     direction?: boolean
-    whatsappId?: boolean
     status?: boolean
     mediaUrl?: boolean
+    timestamp?: boolean
     mediaType?: boolean
     isRead?: boolean
-    readAt?: boolean
-    deliveredAt?: boolean
-    sentAt?: boolean
     createdAt?: boolean
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
     user?: boolean | Message$userArgs<ExtArgs>
@@ -9578,14 +7973,11 @@ export namespace Prisma {
     content?: boolean
     messageType?: boolean
     direction?: boolean
-    whatsappId?: boolean
     status?: boolean
     mediaUrl?: boolean
+    timestamp?: boolean
     mediaType?: boolean
     isRead?: boolean
-    readAt?: boolean
-    deliveredAt?: boolean
-    sentAt?: boolean
     createdAt?: boolean
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
     user?: boolean | Message$userArgs<ExtArgs>
@@ -9598,14 +7990,11 @@ export namespace Prisma {
     content?: boolean
     messageType?: boolean
     direction?: boolean
-    whatsappId?: boolean
     status?: boolean
     mediaUrl?: boolean
+    timestamp?: boolean
     mediaType?: boolean
     isRead?: boolean
-    readAt?: boolean
-    deliveredAt?: boolean
-    sentAt?: boolean
     createdAt?: boolean
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
     user?: boolean | Message$userArgs<ExtArgs>
@@ -9618,18 +8007,15 @@ export namespace Prisma {
     content?: boolean
     messageType?: boolean
     direction?: boolean
-    whatsappId?: boolean
     status?: boolean
     mediaUrl?: boolean
+    timestamp?: boolean
     mediaType?: boolean
     isRead?: boolean
-    readAt?: boolean
-    deliveredAt?: boolean
-    sentAt?: boolean
     createdAt?: boolean
   }
 
-  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "conversationId" | "userId" | "content" | "messageType" | "direction" | "whatsappId" | "status" | "mediaUrl" | "mediaType" | "isRead" | "readAt" | "deliveredAt" | "sentAt" | "createdAt", ExtArgs["result"]["message"]>
+  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "conversationId" | "userId" | "content" | "messageType" | "direction" | "status" | "mediaUrl" | "timestamp" | "mediaType" | "isRead" | "createdAt", ExtArgs["result"]["message"]>
   export type MessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
     user?: boolean | Message$userArgs<ExtArgs>
@@ -9654,16 +8040,13 @@ export namespace Prisma {
       conversationId: string
       userId: string | null
       content: string
-      messageType: $Enums.MessageType
+      messageType: string
       direction: $Enums.Direction
-      whatsappId: string | null
       status: $Enums.MessageStatus
       mediaUrl: string | null
+      timestamp: string
       mediaType: string | null
       isRead: boolean
-      readAt: Date | null
-      deliveredAt: Date | null
-      sentAt: Date | null
       createdAt: Date
     }, ExtArgs["result"]["message"]>
     composites: {}
@@ -10094,16 +8477,13 @@ export namespace Prisma {
     readonly conversationId: FieldRef<"Message", 'String'>
     readonly userId: FieldRef<"Message", 'String'>
     readonly content: FieldRef<"Message", 'String'>
-    readonly messageType: FieldRef<"Message", 'MessageType'>
+    readonly messageType: FieldRef<"Message", 'String'>
     readonly direction: FieldRef<"Message", 'Direction'>
-    readonly whatsappId: FieldRef<"Message", 'String'>
     readonly status: FieldRef<"Message", 'MessageStatus'>
     readonly mediaUrl: FieldRef<"Message", 'String'>
+    readonly timestamp: FieldRef<"Message", 'String'>
     readonly mediaType: FieldRef<"Message", 'String'>
     readonly isRead: FieldRef<"Message", 'Boolean'>
-    readonly readAt: FieldRef<"Message", 'DateTime'>
-    readonly deliveredAt: FieldRef<"Message", 'DateTime'>
-    readonly sentAt: FieldRef<"Message", 'DateTime'>
     readonly createdAt: FieldRef<"Message", 'DateTime'>
   }
     
@@ -11689,7 +10069,6 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     queueId: string | null
-    whatsAppConnectionId: string | null
   }
 
   export type PromptsMaxAggregateOutputType = {
@@ -11710,7 +10089,6 @@ export namespace Prisma {
     createdAt: Date | null
     updatedAt: Date | null
     queueId: string | null
-    whatsAppConnectionId: string | null
   }
 
   export type PromptsCountAggregateOutputType = {
@@ -11731,7 +10109,6 @@ export namespace Prisma {
     createdAt: number
     updatedAt: number
     queueId: number
-    whatsAppConnectionId: number
     _all: number
   }
 
@@ -11772,7 +10149,6 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     queueId?: true
-    whatsAppConnectionId?: true
   }
 
   export type PromptsMaxAggregateInputType = {
@@ -11793,7 +10169,6 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     queueId?: true
-    whatsAppConnectionId?: true
   }
 
   export type PromptsCountAggregateInputType = {
@@ -11814,7 +10189,6 @@ export namespace Prisma {
     createdAt?: true
     updatedAt?: true
     queueId?: true
-    whatsAppConnectionId?: true
     _all?: true
   }
 
@@ -11922,7 +10296,6 @@ export namespace Prisma {
     createdAt: Date
     updatedAt: Date
     queueId: string | null
-    whatsAppConnectionId: string | null
     _count: PromptsCountAggregateOutputType | null
     _avg: PromptsAvgAggregateOutputType | null
     _sum: PromptsSumAggregateOutputType | null
@@ -11962,9 +10335,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     queueId?: boolean
-    whatsAppConnectionId?: boolean
     queue?: boolean | Prompts$queueArgs<ExtArgs>
-    WhatsAppConnection?: boolean | Prompts$WhatsAppConnectionArgs<ExtArgs>
   }, ExtArgs["result"]["prompts"]>
 
   export type PromptsSelectCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -11985,9 +10356,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     queueId?: boolean
-    whatsAppConnectionId?: boolean
     queue?: boolean | Prompts$queueArgs<ExtArgs>
-    WhatsAppConnection?: boolean | Prompts$WhatsAppConnectionArgs<ExtArgs>
   }, ExtArgs["result"]["prompts"]>
 
   export type PromptsSelectUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetSelect<{
@@ -12008,9 +10377,7 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     queueId?: boolean
-    whatsAppConnectionId?: boolean
     queue?: boolean | Prompts$queueArgs<ExtArgs>
-    WhatsAppConnection?: boolean | Prompts$WhatsAppConnectionArgs<ExtArgs>
   }, ExtArgs["result"]["prompts"]>
 
   export type PromptsSelectScalar = {
@@ -12031,28 +10398,23 @@ export namespace Prisma {
     createdAt?: boolean
     updatedAt?: boolean
     queueId?: boolean
-    whatsAppConnectionId?: boolean
   }
 
-  export type PromptsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "apiKey" | "prompt" | "maxTokens" | "maxMessages" | "promptTokens" | "completionTokens" | "totalTokens" | "temperature" | "assistantId" | "description" | "companyResume" | "isActive" | "createdAt" | "updatedAt" | "queueId" | "whatsAppConnectionId", ExtArgs["result"]["prompts"]>
+  export type PromptsOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "title" | "apiKey" | "prompt" | "maxTokens" | "maxMessages" | "promptTokens" | "completionTokens" | "totalTokens" | "temperature" | "assistantId" | "description" | "companyResume" | "isActive" | "createdAt" | "updatedAt" | "queueId", ExtArgs["result"]["prompts"]>
   export type PromptsInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     queue?: boolean | Prompts$queueArgs<ExtArgs>
-    WhatsAppConnection?: boolean | Prompts$WhatsAppConnectionArgs<ExtArgs>
   }
   export type PromptsIncludeCreateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     queue?: boolean | Prompts$queueArgs<ExtArgs>
-    WhatsAppConnection?: boolean | Prompts$WhatsAppConnectionArgs<ExtArgs>
   }
   export type PromptsIncludeUpdateManyAndReturn<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     queue?: boolean | Prompts$queueArgs<ExtArgs>
-    WhatsAppConnection?: boolean | Prompts$WhatsAppConnectionArgs<ExtArgs>
   }
 
   export type $PromptsPayload<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     name: "Prompts"
     objects: {
       queue: Prisma.$QueuePayload<ExtArgs> | null
-      WhatsAppConnection: Prisma.$WhatsAppConnectionPayload<ExtArgs> | null
     }
     scalars: $Extensions.GetPayloadResult<{
       id: string
@@ -12072,7 +10434,6 @@ export namespace Prisma {
       createdAt: Date
       updatedAt: Date
       queueId: string | null
-      whatsAppConnectionId: string | null
     }, ExtArgs["result"]["prompts"]>
     composites: {}
   }
@@ -12468,7 +10829,6 @@ export namespace Prisma {
   export interface Prisma__PromptsClient<T, Null = never, ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs, GlobalOmitOptions = {}> extends Prisma.PrismaPromise<T> {
     readonly [Symbol.toStringTag]: "PrismaPromise"
     queue<T extends Prompts$queueArgs<ExtArgs> = {}>(args?: Subset<T, Prompts$queueArgs<ExtArgs>>): Prisma__QueueClient<$Result.GetResult<Prisma.$QueuePayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
-    WhatsAppConnection<T extends Prompts$WhatsAppConnectionArgs<ExtArgs> = {}>(args?: Subset<T, Prompts$WhatsAppConnectionArgs<ExtArgs>>): Prisma__WhatsAppConnectionClient<$Result.GetResult<Prisma.$WhatsAppConnectionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
     /**
      * Attaches callbacks for the resolution and/or rejection of the Promise.
      * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -12515,7 +10875,6 @@ export namespace Prisma {
     readonly createdAt: FieldRef<"Prompts", 'DateTime'>
     readonly updatedAt: FieldRef<"Prompts", 'DateTime'>
     readonly queueId: FieldRef<"Prompts", 'String'>
-    readonly whatsAppConnectionId: FieldRef<"Prompts", 'String'>
   }
     
 
@@ -12928,25 +11287,6 @@ export namespace Prisma {
      */
     include?: QueueInclude<ExtArgs> | null
     where?: QueueWhereInput
-  }
-
-  /**
-   * Prompts.WhatsAppConnection
-   */
-  export type Prompts$WhatsAppConnectionArgs<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
-    /**
-     * Select specific fields to fetch from the WhatsAppConnection
-     */
-    select?: WhatsAppConnectionSelect<ExtArgs> | null
-    /**
-     * Omit specific fields from the WhatsAppConnection
-     */
-    omit?: WhatsAppConnectionOmit<ExtArgs> | null
-    /**
-     * Choose, which related nodes to fetch as well
-     */
-    include?: WhatsAppConnectionInclude<ExtArgs> | null
-    where?: WhatsAppConnectionWhereInput
   }
 
   /**
@@ -14112,33 +12452,6 @@ export namespace Prisma {
   export type TransactionIsolationLevel = (typeof TransactionIsolationLevel)[keyof typeof TransactionIsolationLevel]
 
 
-  export const WhatsAppConnectionScalarFieldEnum: {
-    id: 'id',
-    name: 'name',
-    isDefault: 'isDefault',
-    greetingMessage: 'greetingMessage',
-    conclusionMessage: 'conclusionMessage',
-    outOfOfficeHoursMessage: 'outOfOfficeHoursMessage',
-    reviewMessage: 'reviewMessage',
-    token: 'token',
-    queueId: 'queueId',
-    integrationId: 'integrationId',
-    userId: 'userId',
-    promptId: 'promptId',
-    transferQueueId: 'transferQueueId',
-    timeToTransfer: 'timeToTransfer',
-    expiresInactiveMessage: 'expiresInactiveMessage',
-    companyId: 'companyId',
-    session: 'session',
-    qrCode: 'qrCode',
-    status: 'status',
-    createdAt: 'createdAt',
-    updatedAt: 'updatedAt'
-  };
-
-  export type WhatsAppConnectionScalarFieldEnum = (typeof WhatsAppConnectionScalarFieldEnum)[keyof typeof WhatsAppConnectionScalarFieldEnum]
-
-
   export const UserScalarFieldEnum: {
     id: 'id',
     name: 'name',
@@ -14146,7 +12459,6 @@ export namespace Prisma {
     password: 'password',
     role: 'role',
     isActive: 'isActive',
-    whatsAppConnectionId: 'whatsAppConnectionId',
     companyId: 'companyId',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt'
@@ -14161,7 +12473,6 @@ export namespace Prisma {
     phone: 'phone',
     email: 'email',
     tags: 'tags',
-    whatsappId: 'whatsappId',
     companyId: 'companyId',
     isCostumer: 'isCostumer',
     createdAt: 'createdAt',
@@ -14183,8 +12494,7 @@ export namespace Prisma {
     priority: 'priority',
     schedules: 'schedules',
     createdAt: 'createdAt',
-    updatedAt: 'updatedAt',
-    whatsAppConnectionId: 'whatsAppConnectionId'
+    updatedAt: 'updatedAt'
   };
 
   export type QueueScalarFieldEnum = (typeof QueueScalarFieldEnum)[keyof typeof QueueScalarFieldEnum]
@@ -14224,14 +12534,11 @@ export namespace Prisma {
     content: 'content',
     messageType: 'messageType',
     direction: 'direction',
-    whatsappId: 'whatsappId',
     status: 'status',
     mediaUrl: 'mediaUrl',
+    timestamp: 'timestamp',
     mediaType: 'mediaType',
     isRead: 'isRead',
-    readAt: 'readAt',
-    deliveredAt: 'deliveredAt',
-    sentAt: 'sentAt',
     createdAt: 'createdAt'
   };
 
@@ -14268,8 +12575,7 @@ export namespace Prisma {
     isActive: 'isActive',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
-    queueId: 'queueId',
-    whatsAppConnectionId: 'whatsAppConnectionId'
+    queueId: 'queueId'
   };
 
   export type PromptsScalarFieldEnum = (typeof PromptsScalarFieldEnum)[keyof typeof PromptsScalarFieldEnum]
@@ -14332,23 +12638,23 @@ export namespace Prisma {
 
 
   /**
+   * Reference to a field of type 'UserRole'
+   */
+  export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
+    
+
+
+  /**
+   * Reference to a field of type 'UserRole[]'
+   */
+  export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
+    
+
+
+  /**
    * Reference to a field of type 'Boolean'
    */
   export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-  /**
-   * Reference to a field of type 'WhatsAppConnectionStatus'
-   */
-  export type EnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppConnectionStatus'>
-    
-
-
-  /**
-   * Reference to a field of type 'WhatsAppConnectionStatus[]'
-   */
-  export type ListEnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'WhatsAppConnectionStatus[]'>
     
 
 
@@ -14363,20 +12669,6 @@ export namespace Prisma {
    * Reference to a field of type 'DateTime[]'
    */
   export type ListDateTimeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'DateTime[]'>
-    
-
-
-  /**
-   * Reference to a field of type 'UserRole'
-   */
-  export type EnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole'>
-    
-
-
-  /**
-   * Reference to a field of type 'UserRole[]'
-   */
-  export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'UserRole[]'>
     
 
 
@@ -14437,20 +12729,6 @@ export namespace Prisma {
 
 
   /**
-   * Reference to a field of type 'MessageType'
-   */
-  export type EnumMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MessageType'>
-    
-
-
-  /**
-   * Reference to a field of type 'MessageType[]'
-   */
-  export type ListEnumMessageTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'MessageType[]'>
-    
-
-
-  /**
    * Reference to a field of type 'Direction'
    */
   export type EnumDirectionFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Direction'>
@@ -14495,147 +12773,6 @@ export namespace Prisma {
    */
 
 
-  export type WhatsAppConnectionWhereInput = {
-    AND?: WhatsAppConnectionWhereInput | WhatsAppConnectionWhereInput[]
-    OR?: WhatsAppConnectionWhereInput[]
-    NOT?: WhatsAppConnectionWhereInput | WhatsAppConnectionWhereInput[]
-    id?: StringFilter<"WhatsAppConnection"> | string
-    name?: StringFilter<"WhatsAppConnection"> | string
-    isDefault?: BoolFilter<"WhatsAppConnection"> | boolean
-    greetingMessage?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    conclusionMessage?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    outOfOfficeHoursMessage?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    reviewMessage?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    token?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    queueId?: StringFilter<"WhatsAppConnection"> | string
-    integrationId?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    userId?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    promptId?: StringFilter<"WhatsAppConnection"> | string
-    transferQueueId?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    timeToTransfer?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    expiresInactiveMessage?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    companyId?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    session?: StringFilter<"WhatsAppConnection"> | string
-    qrCode?: StringFilter<"WhatsAppConnection"> | string
-    status?: EnumWhatsAppConnectionStatusFilter<"WhatsAppConnection"> | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeFilter<"WhatsAppConnection"> | Date | string
-    updatedAt?: DateTimeFilter<"WhatsAppConnection"> | Date | string
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    prompt?: PromptsListRelationFilter
-    queues?: QueueListRelationFilter
-  }
-
-  export type WhatsAppConnectionOrderByWithRelationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    isDefault?: SortOrder
-    greetingMessage?: SortOrderInput | SortOrder
-    conclusionMessage?: SortOrderInput | SortOrder
-    outOfOfficeHoursMessage?: SortOrderInput | SortOrder
-    reviewMessage?: SortOrderInput | SortOrder
-    token?: SortOrderInput | SortOrder
-    queueId?: SortOrder
-    integrationId?: SortOrderInput | SortOrder
-    userId?: SortOrderInput | SortOrder
-    promptId?: SortOrder
-    transferQueueId?: SortOrderInput | SortOrder
-    timeToTransfer?: SortOrderInput | SortOrder
-    expiresInactiveMessage?: SortOrderInput | SortOrder
-    companyId?: SortOrderInput | SortOrder
-    session?: SortOrder
-    qrCode?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    user?: UserOrderByWithRelationInput
-    prompt?: PromptsOrderByRelationAggregateInput
-    queues?: QueueOrderByRelationAggregateInput
-  }
-
-  export type WhatsAppConnectionWhereUniqueInput = Prisma.AtLeast<{
-    id?: string
-    AND?: WhatsAppConnectionWhereInput | WhatsAppConnectionWhereInput[]
-    OR?: WhatsAppConnectionWhereInput[]
-    NOT?: WhatsAppConnectionWhereInput | WhatsAppConnectionWhereInput[]
-    name?: StringFilter<"WhatsAppConnection"> | string
-    isDefault?: BoolFilter<"WhatsAppConnection"> | boolean
-    greetingMessage?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    conclusionMessage?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    outOfOfficeHoursMessage?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    reviewMessage?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    token?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    queueId?: StringFilter<"WhatsAppConnection"> | string
-    integrationId?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    userId?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    promptId?: StringFilter<"WhatsAppConnection"> | string
-    transferQueueId?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    timeToTransfer?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    expiresInactiveMessage?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    companyId?: StringNullableFilter<"WhatsAppConnection"> | string | null
-    session?: StringFilter<"WhatsAppConnection"> | string
-    qrCode?: StringFilter<"WhatsAppConnection"> | string
-    status?: EnumWhatsAppConnectionStatusFilter<"WhatsAppConnection"> | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeFilter<"WhatsAppConnection"> | Date | string
-    updatedAt?: DateTimeFilter<"WhatsAppConnection"> | Date | string
-    user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-    prompt?: PromptsListRelationFilter
-    queues?: QueueListRelationFilter
-  }, "id">
-
-  export type WhatsAppConnectionOrderByWithAggregationInput = {
-    id?: SortOrder
-    name?: SortOrder
-    isDefault?: SortOrder
-    greetingMessage?: SortOrderInput | SortOrder
-    conclusionMessage?: SortOrderInput | SortOrder
-    outOfOfficeHoursMessage?: SortOrderInput | SortOrder
-    reviewMessage?: SortOrderInput | SortOrder
-    token?: SortOrderInput | SortOrder
-    queueId?: SortOrder
-    integrationId?: SortOrderInput | SortOrder
-    userId?: SortOrderInput | SortOrder
-    promptId?: SortOrder
-    transferQueueId?: SortOrderInput | SortOrder
-    timeToTransfer?: SortOrderInput | SortOrder
-    expiresInactiveMessage?: SortOrderInput | SortOrder
-    companyId?: SortOrderInput | SortOrder
-    session?: SortOrder
-    qrCode?: SortOrder
-    status?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-    _count?: WhatsAppConnectionCountOrderByAggregateInput
-    _max?: WhatsAppConnectionMaxOrderByAggregateInput
-    _min?: WhatsAppConnectionMinOrderByAggregateInput
-  }
-
-  export type WhatsAppConnectionScalarWhereWithAggregatesInput = {
-    AND?: WhatsAppConnectionScalarWhereWithAggregatesInput | WhatsAppConnectionScalarWhereWithAggregatesInput[]
-    OR?: WhatsAppConnectionScalarWhereWithAggregatesInput[]
-    NOT?: WhatsAppConnectionScalarWhereWithAggregatesInput | WhatsAppConnectionScalarWhereWithAggregatesInput[]
-    id?: StringWithAggregatesFilter<"WhatsAppConnection"> | string
-    name?: StringWithAggregatesFilter<"WhatsAppConnection"> | string
-    isDefault?: BoolWithAggregatesFilter<"WhatsAppConnection"> | boolean
-    greetingMessage?: StringNullableWithAggregatesFilter<"WhatsAppConnection"> | string | null
-    conclusionMessage?: StringNullableWithAggregatesFilter<"WhatsAppConnection"> | string | null
-    outOfOfficeHoursMessage?: StringNullableWithAggregatesFilter<"WhatsAppConnection"> | string | null
-    reviewMessage?: StringNullableWithAggregatesFilter<"WhatsAppConnection"> | string | null
-    token?: StringNullableWithAggregatesFilter<"WhatsAppConnection"> | string | null
-    queueId?: StringWithAggregatesFilter<"WhatsAppConnection"> | string
-    integrationId?: StringNullableWithAggregatesFilter<"WhatsAppConnection"> | string | null
-    userId?: StringNullableWithAggregatesFilter<"WhatsAppConnection"> | string | null
-    promptId?: StringWithAggregatesFilter<"WhatsAppConnection"> | string
-    transferQueueId?: StringNullableWithAggregatesFilter<"WhatsAppConnection"> | string | null
-    timeToTransfer?: StringNullableWithAggregatesFilter<"WhatsAppConnection"> | string | null
-    expiresInactiveMessage?: StringNullableWithAggregatesFilter<"WhatsAppConnection"> | string | null
-    companyId?: StringNullableWithAggregatesFilter<"WhatsAppConnection"> | string | null
-    session?: StringWithAggregatesFilter<"WhatsAppConnection"> | string
-    qrCode?: StringWithAggregatesFilter<"WhatsAppConnection"> | string
-    status?: EnumWhatsAppConnectionStatusWithAggregatesFilter<"WhatsAppConnection"> | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeWithAggregatesFilter<"WhatsAppConnection"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"WhatsAppConnection"> | Date | string
-  }
-
   export type UserWhereInput = {
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
@@ -14646,11 +12783,9 @@ export namespace Prisma {
     password?: StringFilter<"User"> | string
     role?: EnumUserRoleFilter<"User"> | $Enums.UserRole
     isActive?: BoolFilter<"User"> | boolean
-    whatsAppConnectionId?: StringFilter<"User"> | string
     companyId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    whatsAppConnection?: XOR<WhatsAppConnectionScalarRelationFilter, WhatsAppConnectionWhereInput>
     conversations?: ConversationListRelationFilter
     messages?: MessageListRelationFilter
     queues?: QueueUserListRelationFilter
@@ -14663,11 +12798,9 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     isActive?: SortOrder
-    whatsAppConnectionId?: SortOrder
     companyId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    whatsAppConnection?: WhatsAppConnectionOrderByWithRelationInput
     conversations?: ConversationOrderByRelationAggregateInput
     messages?: MessageOrderByRelationAggregateInput
     queues?: QueueUserOrderByRelationAggregateInput
@@ -14676,7 +12809,6 @@ export namespace Prisma {
   export type UserWhereUniqueInput = Prisma.AtLeast<{
     id?: string
     email?: string
-    whatsAppConnectionId?: string
     AND?: UserWhereInput | UserWhereInput[]
     OR?: UserWhereInput[]
     NOT?: UserWhereInput | UserWhereInput[]
@@ -14687,11 +12819,10 @@ export namespace Prisma {
     companyId?: StringNullableFilter<"User"> | string | null
     createdAt?: DateTimeFilter<"User"> | Date | string
     updatedAt?: DateTimeFilter<"User"> | Date | string
-    whatsAppConnection?: XOR<WhatsAppConnectionScalarRelationFilter, WhatsAppConnectionWhereInput>
     conversations?: ConversationListRelationFilter
     messages?: MessageListRelationFilter
     queues?: QueueUserListRelationFilter
-  }, "id" | "email" | "whatsAppConnectionId">
+  }, "id" | "email">
 
   export type UserOrderByWithAggregationInput = {
     id?: SortOrder
@@ -14700,7 +12831,6 @@ export namespace Prisma {
     password?: SortOrder
     role?: SortOrder
     isActive?: SortOrder
-    whatsAppConnectionId?: SortOrder
     companyId?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
@@ -14719,7 +12849,6 @@ export namespace Prisma {
     password?: StringWithAggregatesFilter<"User"> | string
     role?: EnumUserRoleWithAggregatesFilter<"User"> | $Enums.UserRole
     isActive?: BoolWithAggregatesFilter<"User"> | boolean
-    whatsAppConnectionId?: StringWithAggregatesFilter<"User"> | string
     companyId?: StringNullableWithAggregatesFilter<"User"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"User"> | Date | string
@@ -14734,11 +12863,10 @@ export namespace Prisma {
     phone?: StringFilter<"Contact"> | string
     email?: StringNullableFilter<"Contact"> | string | null
     tags?: StringNullableListFilter<"Contact">
-    whatsappId?: StringNullableFilter<"Contact"> | string | null
     companyId?: StringNullableFilter<"Contact"> | string | null
     isCostumer?: BoolNullableFilter<"Contact"> | boolean | null
     createdAt?: DateTimeFilter<"Contact"> | Date | string
-    updatedAt?: DateTimeFilter<"Contact"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Contact"> | Date | string | null
     conversations?: ConversationListRelationFilter
   }
 
@@ -14748,11 +12876,10 @@ export namespace Prisma {
     phone?: SortOrder
     email?: SortOrderInput | SortOrder
     tags?: SortOrder
-    whatsappId?: SortOrderInput | SortOrder
     companyId?: SortOrderInput | SortOrder
     isCostumer?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     conversations?: ConversationOrderByRelationAggregateInput
   }
 
@@ -14765,11 +12892,10 @@ export namespace Prisma {
     name?: StringFilter<"Contact"> | string
     email?: StringNullableFilter<"Contact"> | string | null
     tags?: StringNullableListFilter<"Contact">
-    whatsappId?: StringNullableFilter<"Contact"> | string | null
     companyId?: StringNullableFilter<"Contact"> | string | null
     isCostumer?: BoolNullableFilter<"Contact"> | boolean | null
     createdAt?: DateTimeFilter<"Contact"> | Date | string
-    updatedAt?: DateTimeFilter<"Contact"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Contact"> | Date | string | null
     conversations?: ConversationListRelationFilter
   }, "id" | "phone">
 
@@ -14779,11 +12905,10 @@ export namespace Prisma {
     phone?: SortOrder
     email?: SortOrderInput | SortOrder
     tags?: SortOrder
-    whatsappId?: SortOrderInput | SortOrder
     companyId?: SortOrderInput | SortOrder
     isCostumer?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: ContactCountOrderByAggregateInput
     _max?: ContactMaxOrderByAggregateInput
     _min?: ContactMinOrderByAggregateInput
@@ -14798,11 +12923,10 @@ export namespace Prisma {
     phone?: StringWithAggregatesFilter<"Contact"> | string
     email?: StringNullableWithAggregatesFilter<"Contact"> | string | null
     tags?: StringNullableListFilter<"Contact">
-    whatsappId?: StringNullableWithAggregatesFilter<"Contact"> | string | null
     companyId?: StringNullableWithAggregatesFilter<"Contact"> | string | null
     isCostumer?: BoolNullableWithAggregatesFilter<"Contact"> | boolean | null
     createdAt?: DateTimeWithAggregatesFilter<"Contact"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Contact"> | Date | string
+    updatedAt?: DateTimeNullableWithAggregatesFilter<"Contact"> | Date | string | null
   }
 
   export type QueueWhereInput = {
@@ -14821,12 +12945,10 @@ export namespace Prisma {
     schedules?: JsonNullableListFilter<"Queue">
     createdAt?: DateTimeFilter<"Queue"> | Date | string
     updatedAt?: DateTimeFilter<"Queue"> | Date | string
-    whatsAppConnectionId?: StringNullableFilter<"Queue"> | string | null
     conversations?: ConversationListRelationFilter
     users?: QueueUserListRelationFilter
     quickResponses?: QuickResponseListRelationFilter
     prompts?: PromptsListRelationFilter
-    whatsAppConnection?: XOR<WhatsAppConnectionNullableScalarRelationFilter, WhatsAppConnectionWhereInput> | null
   }
 
   export type QueueOrderByWithRelationInput = {
@@ -14842,12 +12964,10 @@ export namespace Prisma {
     schedules?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    whatsAppConnectionId?: SortOrderInput | SortOrder
     conversations?: ConversationOrderByRelationAggregateInput
     users?: QueueUserOrderByRelationAggregateInput
     quickResponses?: QuickResponseOrderByRelationAggregateInput
     prompts?: PromptsOrderByRelationAggregateInput
-    whatsAppConnection?: WhatsAppConnectionOrderByWithRelationInput
   }
 
   export type QueueWhereUniqueInput = Prisma.AtLeast<{
@@ -14866,12 +12986,10 @@ export namespace Prisma {
     schedules?: JsonNullableListFilter<"Queue">
     createdAt?: DateTimeFilter<"Queue"> | Date | string
     updatedAt?: DateTimeFilter<"Queue"> | Date | string
-    whatsAppConnectionId?: StringNullableFilter<"Queue"> | string | null
     conversations?: ConversationListRelationFilter
     users?: QueueUserListRelationFilter
     quickResponses?: QuickResponseListRelationFilter
     prompts?: PromptsListRelationFilter
-    whatsAppConnection?: XOR<WhatsAppConnectionNullableScalarRelationFilter, WhatsAppConnectionWhereInput> | null
   }, "id">
 
   export type QueueOrderByWithAggregationInput = {
@@ -14887,7 +13005,6 @@ export namespace Prisma {
     schedules?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    whatsAppConnectionId?: SortOrderInput | SortOrder
     _count?: QueueCountOrderByAggregateInput
     _avg?: QueueAvgOrderByAggregateInput
     _max?: QueueMaxOrderByAggregateInput
@@ -14911,7 +13028,6 @@ export namespace Prisma {
     schedules?: JsonNullableListFilter<"Queue">
     createdAt?: DateTimeWithAggregatesFilter<"Queue"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Queue"> | Date | string
-    whatsAppConnectionId?: StringNullableWithAggregatesFilter<"Queue"> | string | null
   }
 
   export type QueueUserWhereInput = {
@@ -14973,17 +13089,17 @@ export namespace Prisma {
     queueId?: StringNullableFilter<"Conversation"> | string | null
     tagId?: StringNullableFilter<"Conversation"> | string | null
     status?: EnumConversationStatusFilter<"Conversation"> | $Enums.ConversationStatus
-    priority?: EnumPriorityFilter<"Conversation"> | $Enums.Priority
+    priority?: EnumPriorityNullableFilter<"Conversation"> | $Enums.Priority | null
     subject?: StringNullableFilter<"Conversation"> | string | null
     lastMessageAt?: DateTimeNullableFilter<"Conversation"> | Date | string | null
     closedAt?: DateTimeNullableFilter<"Conversation"> | Date | string | null
     createdAt?: DateTimeFilter<"Conversation"> | Date | string
-    updatedAt?: DateTimeFilter<"Conversation"> | Date | string
-    contact?: XOR<ContactScalarRelationFilter, ContactWhereInput>
+    updatedAt?: DateTimeNullableFilter<"Conversation"> | Date | string | null
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     queue?: XOR<QueueNullableScalarRelationFilter, QueueWhereInput> | null
     tag?: XOR<TagsNullableScalarRelationFilter, TagsWhereInput> | null
     messages?: MessageListRelationFilter
+    contact?: XOR<ContactScalarRelationFilter, ContactWhereInput>
   }
 
   export type ConversationOrderByWithRelationInput = {
@@ -14993,17 +13109,17 @@ export namespace Prisma {
     queueId?: SortOrderInput | SortOrder
     tagId?: SortOrderInput | SortOrder
     status?: SortOrder
-    priority?: SortOrder
+    priority?: SortOrderInput | SortOrder
     subject?: SortOrderInput | SortOrder
     lastMessageAt?: SortOrderInput | SortOrder
     closedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
-    contact?: ContactOrderByWithRelationInput
+    updatedAt?: SortOrderInput | SortOrder
     user?: UserOrderByWithRelationInput
     queue?: QueueOrderByWithRelationInput
     tag?: TagsOrderByWithRelationInput
     messages?: MessageOrderByRelationAggregateInput
+    contact?: ContactOrderByWithRelationInput
   }
 
   export type ConversationWhereUniqueInput = Prisma.AtLeast<{
@@ -15016,17 +13132,17 @@ export namespace Prisma {
     queueId?: StringNullableFilter<"Conversation"> | string | null
     tagId?: StringNullableFilter<"Conversation"> | string | null
     status?: EnumConversationStatusFilter<"Conversation"> | $Enums.ConversationStatus
-    priority?: EnumPriorityFilter<"Conversation"> | $Enums.Priority
+    priority?: EnumPriorityNullableFilter<"Conversation"> | $Enums.Priority | null
     subject?: StringNullableFilter<"Conversation"> | string | null
     lastMessageAt?: DateTimeNullableFilter<"Conversation"> | Date | string | null
     closedAt?: DateTimeNullableFilter<"Conversation"> | Date | string | null
     createdAt?: DateTimeFilter<"Conversation"> | Date | string
-    updatedAt?: DateTimeFilter<"Conversation"> | Date | string
-    contact?: XOR<ContactScalarRelationFilter, ContactWhereInput>
+    updatedAt?: DateTimeNullableFilter<"Conversation"> | Date | string | null
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
     queue?: XOR<QueueNullableScalarRelationFilter, QueueWhereInput> | null
     tag?: XOR<TagsNullableScalarRelationFilter, TagsWhereInput> | null
     messages?: MessageListRelationFilter
+    contact?: XOR<ContactScalarRelationFilter, ContactWhereInput>
   }, "id">
 
   export type ConversationOrderByWithAggregationInput = {
@@ -15036,12 +13152,12 @@ export namespace Prisma {
     queueId?: SortOrderInput | SortOrder
     tagId?: SortOrderInput | SortOrder
     status?: SortOrder
-    priority?: SortOrder
+    priority?: SortOrderInput | SortOrder
     subject?: SortOrderInput | SortOrder
     lastMessageAt?: SortOrderInput | SortOrder
     closedAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
-    updatedAt?: SortOrder
+    updatedAt?: SortOrderInput | SortOrder
     _count?: ConversationCountOrderByAggregateInput
     _max?: ConversationMaxOrderByAggregateInput
     _min?: ConversationMinOrderByAggregateInput
@@ -15057,12 +13173,12 @@ export namespace Prisma {
     queueId?: StringNullableWithAggregatesFilter<"Conversation"> | string | null
     tagId?: StringNullableWithAggregatesFilter<"Conversation"> | string | null
     status?: EnumConversationStatusWithAggregatesFilter<"Conversation"> | $Enums.ConversationStatus
-    priority?: EnumPriorityWithAggregatesFilter<"Conversation"> | $Enums.Priority
+    priority?: EnumPriorityNullableWithAggregatesFilter<"Conversation"> | $Enums.Priority | null
     subject?: StringNullableWithAggregatesFilter<"Conversation"> | string | null
     lastMessageAt?: DateTimeNullableWithAggregatesFilter<"Conversation"> | Date | string | null
     closedAt?: DateTimeNullableWithAggregatesFilter<"Conversation"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Conversation"> | Date | string
-    updatedAt?: DateTimeWithAggregatesFilter<"Conversation"> | Date | string
+    updatedAt?: DateTimeNullableWithAggregatesFilter<"Conversation"> | Date | string | null
   }
 
   export type MessageWhereInput = {
@@ -15073,16 +13189,13 @@ export namespace Prisma {
     conversationId?: StringFilter<"Message"> | string
     userId?: StringNullableFilter<"Message"> | string | null
     content?: StringFilter<"Message"> | string
-    messageType?: EnumMessageTypeFilter<"Message"> | $Enums.MessageType
+    messageType?: StringFilter<"Message"> | string
     direction?: EnumDirectionFilter<"Message"> | $Enums.Direction
-    whatsappId?: StringNullableFilter<"Message"> | string | null
     status?: EnumMessageStatusFilter<"Message"> | $Enums.MessageStatus
     mediaUrl?: StringNullableFilter<"Message"> | string | null
+    timestamp?: StringFilter<"Message"> | string
     mediaType?: StringNullableFilter<"Message"> | string | null
     isRead?: BoolFilter<"Message"> | boolean
-    readAt?: DateTimeNullableFilter<"Message"> | Date | string | null
-    deliveredAt?: DateTimeNullableFilter<"Message"> | Date | string | null
-    sentAt?: DateTimeNullableFilter<"Message"> | Date | string | null
     createdAt?: DateTimeFilter<"Message"> | Date | string
     conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
@@ -15095,14 +13208,11 @@ export namespace Prisma {
     content?: SortOrder
     messageType?: SortOrder
     direction?: SortOrder
-    whatsappId?: SortOrderInput | SortOrder
     status?: SortOrder
     mediaUrl?: SortOrderInput | SortOrder
+    timestamp?: SortOrder
     mediaType?: SortOrderInput | SortOrder
     isRead?: SortOrder
-    readAt?: SortOrderInput | SortOrder
-    deliveredAt?: SortOrderInput | SortOrder
-    sentAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     conversation?: ConversationOrderByWithRelationInput
     user?: UserOrderByWithRelationInput
@@ -15110,26 +13220,23 @@ export namespace Prisma {
 
   export type MessageWhereUniqueInput = Prisma.AtLeast<{
     id?: string
-    whatsappId?: string
     AND?: MessageWhereInput | MessageWhereInput[]
     OR?: MessageWhereInput[]
     NOT?: MessageWhereInput | MessageWhereInput[]
     conversationId?: StringFilter<"Message"> | string
     userId?: StringNullableFilter<"Message"> | string | null
     content?: StringFilter<"Message"> | string
-    messageType?: EnumMessageTypeFilter<"Message"> | $Enums.MessageType
+    messageType?: StringFilter<"Message"> | string
     direction?: EnumDirectionFilter<"Message"> | $Enums.Direction
     status?: EnumMessageStatusFilter<"Message"> | $Enums.MessageStatus
     mediaUrl?: StringNullableFilter<"Message"> | string | null
+    timestamp?: StringFilter<"Message"> | string
     mediaType?: StringNullableFilter<"Message"> | string | null
     isRead?: BoolFilter<"Message"> | boolean
-    readAt?: DateTimeNullableFilter<"Message"> | Date | string | null
-    deliveredAt?: DateTimeNullableFilter<"Message"> | Date | string | null
-    sentAt?: DateTimeNullableFilter<"Message"> | Date | string | null
     createdAt?: DateTimeFilter<"Message"> | Date | string
     conversation?: XOR<ConversationScalarRelationFilter, ConversationWhereInput>
     user?: XOR<UserNullableScalarRelationFilter, UserWhereInput> | null
-  }, "id" | "whatsappId">
+  }, "id">
 
   export type MessageOrderByWithAggregationInput = {
     id?: SortOrder
@@ -15138,14 +13245,11 @@ export namespace Prisma {
     content?: SortOrder
     messageType?: SortOrder
     direction?: SortOrder
-    whatsappId?: SortOrderInput | SortOrder
     status?: SortOrder
     mediaUrl?: SortOrderInput | SortOrder
+    timestamp?: SortOrder
     mediaType?: SortOrderInput | SortOrder
     isRead?: SortOrder
-    readAt?: SortOrderInput | SortOrder
-    deliveredAt?: SortOrderInput | SortOrder
-    sentAt?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     _count?: MessageCountOrderByAggregateInput
     _max?: MessageMaxOrderByAggregateInput
@@ -15160,16 +13264,13 @@ export namespace Prisma {
     conversationId?: StringWithAggregatesFilter<"Message"> | string
     userId?: StringNullableWithAggregatesFilter<"Message"> | string | null
     content?: StringWithAggregatesFilter<"Message"> | string
-    messageType?: EnumMessageTypeWithAggregatesFilter<"Message"> | $Enums.MessageType
+    messageType?: StringWithAggregatesFilter<"Message"> | string
     direction?: EnumDirectionWithAggregatesFilter<"Message"> | $Enums.Direction
-    whatsappId?: StringNullableWithAggregatesFilter<"Message"> | string | null
     status?: EnumMessageStatusWithAggregatesFilter<"Message"> | $Enums.MessageStatus
     mediaUrl?: StringNullableWithAggregatesFilter<"Message"> | string | null
+    timestamp?: StringWithAggregatesFilter<"Message"> | string
     mediaType?: StringNullableWithAggregatesFilter<"Message"> | string | null
     isRead?: BoolWithAggregatesFilter<"Message"> | boolean
-    readAt?: DateTimeNullableWithAggregatesFilter<"Message"> | Date | string | null
-    deliveredAt?: DateTimeNullableWithAggregatesFilter<"Message"> | Date | string | null
-    sentAt?: DateTimeNullableWithAggregatesFilter<"Message"> | Date | string | null
     createdAt?: DateTimeWithAggregatesFilter<"Message"> | Date | string
   }
 
@@ -15259,9 +13360,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Prompts"> | Date | string
     updatedAt?: DateTimeFilter<"Prompts"> | Date | string
     queueId?: StringNullableFilter<"Prompts"> | string | null
-    whatsAppConnectionId?: StringNullableFilter<"Prompts"> | string | null
     queue?: XOR<QueueNullableScalarRelationFilter, QueueWhereInput> | null
-    WhatsAppConnection?: XOR<WhatsAppConnectionNullableScalarRelationFilter, WhatsAppConnectionWhereInput> | null
   }
 
   export type PromptsOrderByWithRelationInput = {
@@ -15282,9 +13381,7 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrderInput | SortOrder
-    whatsAppConnectionId?: SortOrderInput | SortOrder
     queue?: QueueOrderByWithRelationInput
-    WhatsAppConnection?: WhatsAppConnectionOrderByWithRelationInput
   }
 
   export type PromptsWhereUniqueInput = Prisma.AtLeast<{
@@ -15308,9 +13405,7 @@ export namespace Prisma {
     createdAt?: DateTimeFilter<"Prompts"> | Date | string
     updatedAt?: DateTimeFilter<"Prompts"> | Date | string
     queueId?: StringNullableFilter<"Prompts"> | string | null
-    whatsAppConnectionId?: StringNullableFilter<"Prompts"> | string | null
     queue?: XOR<QueueNullableScalarRelationFilter, QueueWhereInput> | null
-    WhatsAppConnection?: XOR<WhatsAppConnectionNullableScalarRelationFilter, WhatsAppConnectionWhereInput> | null
   }, "id">
 
   export type PromptsOrderByWithAggregationInput = {
@@ -15331,7 +13426,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrderInput | SortOrder
-    whatsAppConnectionId?: SortOrderInput | SortOrder
     _count?: PromptsCountOrderByAggregateInput
     _avg?: PromptsAvgOrderByAggregateInput
     _max?: PromptsMaxOrderByAggregateInput
@@ -15360,7 +13454,6 @@ export namespace Prisma {
     createdAt?: DateTimeWithAggregatesFilter<"Prompts"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"Prompts"> | Date | string
     queueId?: StringNullableWithAggregatesFilter<"Prompts"> | string | null
-    whatsAppConnectionId?: StringNullableWithAggregatesFilter<"Prompts"> | string | null
   }
 
   export type TagsWhereInput = {
@@ -15430,186 +13523,6 @@ export namespace Prisma {
     updatedAt?: DateTimeWithAggregatesFilter<"Tags"> | Date | string
   }
 
-  export type WhatsAppConnectionCreateInput = {
-    id?: string
-    name: string
-    isDefault: boolean
-    greetingMessage?: string | null
-    conclusionMessage?: string | null
-    outOfOfficeHoursMessage?: string | null
-    reviewMessage?: string | null
-    token?: string | null
-    queueId: string
-    integrationId?: string | null
-    userId?: string | null
-    promptId: string
-    transferQueueId?: string | null
-    timeToTransfer?: string | null
-    expiresInactiveMessage?: string | null
-    companyId?: string | null
-    session: string
-    qrCode: string
-    status?: $Enums.WhatsAppConnectionStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user?: UserCreateNestedOneWithoutWhatsAppConnectionInput
-    prompt?: PromptsCreateNestedManyWithoutWhatsAppConnectionInput
-    queues?: QueueCreateNestedManyWithoutWhatsAppConnectionInput
-  }
-
-  export type WhatsAppConnectionUncheckedCreateInput = {
-    id?: string
-    name: string
-    isDefault: boolean
-    greetingMessage?: string | null
-    conclusionMessage?: string | null
-    outOfOfficeHoursMessage?: string | null
-    reviewMessage?: string | null
-    token?: string | null
-    queueId: string
-    integrationId?: string | null
-    userId?: string | null
-    promptId: string
-    transferQueueId?: string | null
-    timeToTransfer?: string | null
-    expiresInactiveMessage?: string | null
-    companyId?: string | null
-    session: string
-    qrCode: string
-    status?: $Enums.WhatsAppConnectionStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user?: UserUncheckedCreateNestedOneWithoutWhatsAppConnectionInput
-    prompt?: PromptsUncheckedCreateNestedManyWithoutWhatsAppConnectionInput
-    queues?: QueueUncheckedCreateNestedManyWithoutWhatsAppConnectionInput
-  }
-
-  export type WhatsAppConnectionUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    isDefault?: BoolFieldUpdateOperationsInput | boolean
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    conclusionMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    token?: NullableStringFieldUpdateOperationsInput | string | null
-    queueId?: StringFieldUpdateOperationsInput | string
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: StringFieldUpdateOperationsInput | string
-    transferQueueId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeToTransfer?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresInactiveMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    session?: StringFieldUpdateOperationsInput | string
-    qrCode?: StringFieldUpdateOperationsInput | string
-    status?: EnumWhatsAppConnectionStatusFieldUpdateOperationsInput | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneWithoutWhatsAppConnectionNestedInput
-    prompt?: PromptsUpdateManyWithoutWhatsAppConnectionNestedInput
-    queues?: QueueUpdateManyWithoutWhatsAppConnectionNestedInput
-  }
-
-  export type WhatsAppConnectionUncheckedUpdateInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    isDefault?: BoolFieldUpdateOperationsInput | boolean
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    conclusionMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    token?: NullableStringFieldUpdateOperationsInput | string | null
-    queueId?: StringFieldUpdateOperationsInput | string
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: StringFieldUpdateOperationsInput | string
-    transferQueueId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeToTransfer?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresInactiveMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    session?: StringFieldUpdateOperationsInput | string
-    qrCode?: StringFieldUpdateOperationsInput | string
-    status?: EnumWhatsAppConnectionStatusFieldUpdateOperationsInput | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUncheckedUpdateOneWithoutWhatsAppConnectionNestedInput
-    prompt?: PromptsUncheckedUpdateManyWithoutWhatsAppConnectionNestedInput
-    queues?: QueueUncheckedUpdateManyWithoutWhatsAppConnectionNestedInput
-  }
-
-  export type WhatsAppConnectionCreateManyInput = {
-    id?: string
-    name: string
-    isDefault: boolean
-    greetingMessage?: string | null
-    conclusionMessage?: string | null
-    outOfOfficeHoursMessage?: string | null
-    reviewMessage?: string | null
-    token?: string | null
-    queueId: string
-    integrationId?: string | null
-    userId?: string | null
-    promptId: string
-    transferQueueId?: string | null
-    timeToTransfer?: string | null
-    expiresInactiveMessage?: string | null
-    companyId?: string | null
-    session: string
-    qrCode: string
-    status?: $Enums.WhatsAppConnectionStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type WhatsAppConnectionUpdateManyMutationInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    isDefault?: BoolFieldUpdateOperationsInput | boolean
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    conclusionMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    token?: NullableStringFieldUpdateOperationsInput | string | null
-    queueId?: StringFieldUpdateOperationsInput | string
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: StringFieldUpdateOperationsInput | string
-    transferQueueId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeToTransfer?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresInactiveMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    session?: StringFieldUpdateOperationsInput | string
-    qrCode?: StringFieldUpdateOperationsInput | string
-    status?: EnumWhatsAppConnectionStatusFieldUpdateOperationsInput | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type WhatsAppConnectionUncheckedUpdateManyInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    isDefault?: BoolFieldUpdateOperationsInput | boolean
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    conclusionMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    token?: NullableStringFieldUpdateOperationsInput | string | null
-    queueId?: StringFieldUpdateOperationsInput | string
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: StringFieldUpdateOperationsInput | string
-    transferQueueId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeToTransfer?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresInactiveMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    session?: StringFieldUpdateOperationsInput | string
-    qrCode?: StringFieldUpdateOperationsInput | string
-    status?: EnumWhatsAppConnectionStatusFieldUpdateOperationsInput | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type UserCreateInput = {
     id?: string
     name: string
@@ -15620,7 +13533,6 @@ export namespace Prisma {
     companyId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    whatsAppConnection: WhatsAppConnectionCreateNestedOneWithoutUserInput
     conversations?: ConversationCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutUserInput
     queues?: QueueUserCreateNestedManyWithoutUserInput
@@ -15633,7 +13545,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.UserRole
     isActive?: boolean
-    whatsAppConnectionId: string
     companyId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15652,7 +13563,6 @@ export namespace Prisma {
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    whatsAppConnection?: WhatsAppConnectionUpdateOneRequiredWithoutUserNestedInput
     conversations?: ConversationUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutUserNestedInput
     queues?: QueueUserUpdateManyWithoutUserNestedInput
@@ -15665,7 +13575,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    whatsAppConnectionId?: StringFieldUpdateOperationsInput | string
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15681,7 +13590,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.UserRole
     isActive?: boolean
-    whatsAppConnectionId: string
     companyId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -15706,7 +13614,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    whatsAppConnectionId?: StringFieldUpdateOperationsInput | string
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15718,11 +13625,10 @@ export namespace Prisma {
     phone: string
     email?: string | null
     tags?: ContactCreatetagsInput | string[]
-    whatsappId?: string | null
     companyId?: string | null
     isCostumer?: boolean | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
     conversations?: ConversationCreateNestedManyWithoutContactInput
   }
 
@@ -15732,11 +13638,10 @@ export namespace Prisma {
     phone: string
     email?: string | null
     tags?: ContactCreatetagsInput | string[]
-    whatsappId?: string | null
     companyId?: string | null
     isCostumer?: boolean | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
     conversations?: ConversationUncheckedCreateNestedManyWithoutContactInput
   }
 
@@ -15746,11 +13651,10 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContactUpdatetagsInput | string[]
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     isCostumer?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     conversations?: ConversationUpdateManyWithoutContactNestedInput
   }
 
@@ -15760,11 +13664,10 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContactUpdatetagsInput | string[]
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     isCostumer?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     conversations?: ConversationUncheckedUpdateManyWithoutContactNestedInput
   }
 
@@ -15774,11 +13677,10 @@ export namespace Prisma {
     phone: string
     email?: string | null
     tags?: ContactCreatetagsInput | string[]
-    whatsappId?: string | null
     companyId?: string | null
     isCostumer?: boolean | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
   }
 
   export type ContactUpdateManyMutationInput = {
@@ -15787,11 +13689,10 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContactUpdatetagsInput | string[]
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     isCostumer?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ContactUncheckedUpdateManyInput = {
@@ -15800,11 +13701,10 @@ export namespace Prisma {
     phone?: StringFieldUpdateOperationsInput | string
     email?: NullableStringFieldUpdateOperationsInput | string | null
     tags?: ContactUpdatetagsInput | string[]
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     isCostumer?: NullableBoolFieldUpdateOperationsInput | boolean | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type QueueCreateInput = {
@@ -15824,7 +13724,6 @@ export namespace Prisma {
     users?: QueueUserCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseCreateNestedManyWithoutQueueInput
     prompts?: PromptsCreateNestedManyWithoutQueueInput
-    whatsAppConnection?: WhatsAppConnectionCreateNestedOneWithoutQueuesInput
   }
 
   export type QueueUncheckedCreateInput = {
@@ -15840,7 +13739,6 @@ export namespace Prisma {
     schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    whatsAppConnectionId?: string | null
     conversations?: ConversationUncheckedCreateNestedManyWithoutQueueInput
     users?: QueueUserUncheckedCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseUncheckedCreateNestedManyWithoutQueueInput
@@ -15864,7 +13762,6 @@ export namespace Prisma {
     users?: QueueUserUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUpdateManyWithoutQueueNestedInput
     prompts?: PromptsUpdateManyWithoutQueueNestedInput
-    whatsAppConnection?: WhatsAppConnectionUpdateOneWithoutQueuesNestedInput
   }
 
   export type QueueUncheckedUpdateInput = {
@@ -15880,7 +13777,6 @@ export namespace Prisma {
     schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    whatsAppConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     conversations?: ConversationUncheckedUpdateManyWithoutQueueNestedInput
     users?: QueueUserUncheckedUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
@@ -15900,7 +13796,6 @@ export namespace Prisma {
     schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    whatsAppConnectionId?: string | null
   }
 
   export type QueueUpdateManyMutationInput = {
@@ -15931,7 +13826,6 @@ export namespace Prisma {
     schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    whatsAppConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type QueueUserCreateInput = {
@@ -15977,17 +13871,17 @@ export namespace Prisma {
   export type ConversationCreateInput = {
     id?: string
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
-    contact: ContactCreateNestedOneWithoutConversationsInput
+    updatedAt?: Date | string | null
     user?: UserCreateNestedOneWithoutConversationsInput
     queue?: QueueCreateNestedOneWithoutConversationsInput
     tag?: TagsCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
+    contact: ContactCreateNestedOneWithoutConversationsInput
   }
 
   export type ConversationUncheckedCreateInput = {
@@ -15997,29 +13891,29 @@ export namespace Prisma {
     queueId?: string | null
     tagId?: string | null
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
     messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
   }
 
   export type ConversationUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneWithoutConversationsNestedInput
     queue?: QueueUpdateOneWithoutConversationsNestedInput
     tag?: TagsUpdateOneWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
+    contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
   }
 
   export type ConversationUncheckedUpdateInput = {
@@ -16029,12 +13923,12 @@ export namespace Prisma {
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
     tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
   }
 
@@ -16045,23 +13939,23 @@ export namespace Prisma {
     queueId?: string | null
     tagId?: string | null
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
   }
 
   export type ConversationUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ConversationUncheckedUpdateManyInput = {
@@ -16071,27 +13965,24 @@ export namespace Prisma {
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
     tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type MessageCreateInput = {
     id?: string
     content: string
-    messageType?: $Enums.MessageType
+    messageType: string
     direction: $Enums.Direction
-    whatsappId?: string | null
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    timestamp: string
     mediaType?: string | null
     isRead?: boolean
-    readAt?: Date | string | null
-    deliveredAt?: Date | string | null
-    sentAt?: Date | string | null
     createdAt?: Date | string
     conversation: ConversationCreateNestedOneWithoutMessagesInput
     user?: UserCreateNestedOneWithoutMessagesInput
@@ -16102,32 +13993,26 @@ export namespace Prisma {
     conversationId: string
     userId?: string | null
     content: string
-    messageType?: $Enums.MessageType
+    messageType: string
     direction: $Enums.Direction
-    whatsappId?: string | null
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    timestamp: string
     mediaType?: string | null
     isRead?: boolean
-    readAt?: Date | string | null
-    deliveredAt?: Date | string | null
-    sentAt?: Date | string | null
     createdAt?: Date | string
   }
 
   export type MessageUpdateInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    messageType?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    messageType?: StringFieldUpdateOperationsInput | string
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversation?: ConversationUpdateOneRequiredWithoutMessagesNestedInput
     user?: UserUpdateOneWithoutMessagesNestedInput
@@ -16138,16 +14023,13 @@ export namespace Prisma {
     conversationId?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    messageType?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    messageType?: StringFieldUpdateOperationsInput | string
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -16156,32 +14038,26 @@ export namespace Prisma {
     conversationId: string
     userId?: string | null
     content: string
-    messageType?: $Enums.MessageType
+    messageType: string
     direction: $Enums.Direction
-    whatsappId?: string | null
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    timestamp: string
     mediaType?: string | null
     isRead?: boolean
-    readAt?: Date | string | null
-    deliveredAt?: Date | string | null
-    sentAt?: Date | string | null
     createdAt?: Date | string
   }
 
   export type MessageUpdateManyMutationInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    messageType?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    messageType?: StringFieldUpdateOperationsInput | string
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -16190,16 +14066,13 @@ export namespace Prisma {
     conversationId?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    messageType?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    messageType?: StringFieldUpdateOperationsInput | string
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -16290,7 +14163,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     queue?: QueueCreateNestedOneWithoutPromptsInput
-    WhatsAppConnection?: WhatsAppConnectionCreateNestedOneWithoutPromptInput
   }
 
   export type PromptsUncheckedCreateInput = {
@@ -16311,7 +14183,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     queueId?: string | null
-    whatsAppConnectionId?: string | null
   }
 
   export type PromptsUpdateInput = {
@@ -16332,7 +14203,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     queue?: QueueUpdateOneWithoutPromptsNestedInput
-    WhatsAppConnection?: WhatsAppConnectionUpdateOneWithoutPromptNestedInput
   }
 
   export type PromptsUncheckedUpdateInput = {
@@ -16353,7 +14223,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
-    whatsAppConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PromptsCreateManyInput = {
@@ -16374,7 +14243,6 @@ export namespace Prisma {
     createdAt?: Date | string
     updatedAt?: Date | string
     queueId?: string | null
-    whatsAppConnectionId?: string | null
   }
 
   export type PromptsUpdateManyMutationInput = {
@@ -16414,7 +14282,6 @@ export namespace Prisma {
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
-    whatsAppConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type TagsCreateInput = {
@@ -16506,6 +14373,13 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type EnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  }
+
   export type BoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -16526,13 +14400,6 @@ export namespace Prisma {
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
   }
 
-  export type EnumWhatsAppConnectionStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.WhatsAppConnectionStatus | EnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.WhatsAppConnectionStatus[] | ListEnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WhatsAppConnectionStatus[] | ListEnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumWhatsAppConnectionStatusFilter<$PrismaModel> | $Enums.WhatsAppConnectionStatus
-  }
-
   export type DateTimeFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -16544,21 +14411,22 @@ export namespace Prisma {
     not?: NestedDateTimeFilter<$PrismaModel> | Date | string
   }
 
-  export type UserNullableScalarRelationFilter = {
-    is?: UserWhereInput | null
-    isNot?: UserWhereInput | null
+  export type ConversationListRelationFilter = {
+    every?: ConversationWhereInput
+    some?: ConversationWhereInput
+    none?: ConversationWhereInput
   }
 
-  export type PromptsListRelationFilter = {
-    every?: PromptsWhereInput
-    some?: PromptsWhereInput
-    none?: PromptsWhereInput
+  export type MessageListRelationFilter = {
+    every?: MessageWhereInput
+    some?: MessageWhereInput
+    none?: MessageWhereInput
   }
 
-  export type QueueListRelationFilter = {
-    every?: QueueWhereInput
-    some?: QueueWhereInput
-    none?: QueueWhereInput
+  export type QueueUserListRelationFilter = {
+    every?: QueueUserWhereInput
+    some?: QueueUserWhereInput
+    none?: QueueUserWhereInput
   }
 
   export type SortOrderInput = {
@@ -16566,82 +14434,50 @@ export namespace Prisma {
     nulls?: NullsOrder
   }
 
-  export type PromptsOrderByRelationAggregateInput = {
+  export type ConversationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type QueueOrderByRelationAggregateInput = {
+  export type MessageOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
-  export type WhatsAppConnectionCountOrderByAggregateInput = {
+  export type QueueUserOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type UserCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    isDefault?: SortOrder
-    greetingMessage?: SortOrder
-    conclusionMessage?: SortOrder
-    outOfOfficeHoursMessage?: SortOrder
-    reviewMessage?: SortOrder
-    token?: SortOrder
-    queueId?: SortOrder
-    integrationId?: SortOrder
-    userId?: SortOrder
-    promptId?: SortOrder
-    transferQueueId?: SortOrder
-    timeToTransfer?: SortOrder
-    expiresInactiveMessage?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    isActive?: SortOrder
     companyId?: SortOrder
-    session?: SortOrder
-    qrCode?: SortOrder
-    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type WhatsAppConnectionMaxOrderByAggregateInput = {
+  export type UserMaxOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    isDefault?: SortOrder
-    greetingMessage?: SortOrder
-    conclusionMessage?: SortOrder
-    outOfOfficeHoursMessage?: SortOrder
-    reviewMessage?: SortOrder
-    token?: SortOrder
-    queueId?: SortOrder
-    integrationId?: SortOrder
-    userId?: SortOrder
-    promptId?: SortOrder
-    transferQueueId?: SortOrder
-    timeToTransfer?: SortOrder
-    expiresInactiveMessage?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    isActive?: SortOrder
     companyId?: SortOrder
-    session?: SortOrder
-    qrCode?: SortOrder
-    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
 
-  export type WhatsAppConnectionMinOrderByAggregateInput = {
+  export type UserMinOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
-    isDefault?: SortOrder
-    greetingMessage?: SortOrder
-    conclusionMessage?: SortOrder
-    outOfOfficeHoursMessage?: SortOrder
-    reviewMessage?: SortOrder
-    token?: SortOrder
-    queueId?: SortOrder
-    integrationId?: SortOrder
-    userId?: SortOrder
-    promptId?: SortOrder
-    transferQueueId?: SortOrder
-    timeToTransfer?: SortOrder
-    expiresInactiveMessage?: SortOrder
+    email?: SortOrder
+    password?: SortOrder
+    role?: SortOrder
+    isActive?: SortOrder
     companyId?: SortOrder
-    session?: SortOrder
-    qrCode?: SortOrder
-    status?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
   }
@@ -16662,6 +14498,16 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedStringFilter<$PrismaModel>
     _max?: NestedStringFilter<$PrismaModel>
+  }
+
+  export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
   export type BoolWithAggregatesFilter<$PrismaModel = never> = {
@@ -16690,16 +14536,6 @@ export namespace Prisma {
     _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
-  export type EnumWhatsAppConnectionStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.WhatsAppConnectionStatus | EnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.WhatsAppConnectionStatus[] | ListEnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WhatsAppConnectionStatus[] | ListEnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumWhatsAppConnectionStatusWithAggregatesFilter<$PrismaModel> | $Enums.WhatsAppConnectionStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumWhatsAppConnectionStatusFilter<$PrismaModel>
-    _max?: NestedEnumWhatsAppConnectionStatusFilter<$PrismaModel>
-  }
-
   export type DateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -16712,97 +14548,6 @@ export namespace Prisma {
     _count?: NestedIntFilter<$PrismaModel>
     _min?: NestedDateTimeFilter<$PrismaModel>
     _max?: NestedDateTimeFilter<$PrismaModel>
-  }
-
-  export type EnumUserRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
-  }
-
-  export type WhatsAppConnectionScalarRelationFilter = {
-    is?: WhatsAppConnectionWhereInput
-    isNot?: WhatsAppConnectionWhereInput
-  }
-
-  export type ConversationListRelationFilter = {
-    every?: ConversationWhereInput
-    some?: ConversationWhereInput
-    none?: ConversationWhereInput
-  }
-
-  export type MessageListRelationFilter = {
-    every?: MessageWhereInput
-    some?: MessageWhereInput
-    none?: MessageWhereInput
-  }
-
-  export type QueueUserListRelationFilter = {
-    every?: QueueUserWhereInput
-    some?: QueueUserWhereInput
-    none?: QueueUserWhereInput
-  }
-
-  export type ConversationOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type MessageOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type QueueUserOrderByRelationAggregateInput = {
-    _count?: SortOrder
-  }
-
-  export type UserCountOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    role?: SortOrder
-    isActive?: SortOrder
-    whatsAppConnectionId?: SortOrder
-    companyId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type UserMaxOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    role?: SortOrder
-    isActive?: SortOrder
-    whatsAppConnectionId?: SortOrder
-    companyId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type UserMinOrderByAggregateInput = {
-    id?: SortOrder
-    name?: SortOrder
-    email?: SortOrder
-    password?: SortOrder
-    role?: SortOrder
-    isActive?: SortOrder
-    whatsAppConnectionId?: SortOrder
-    companyId?: SortOrder
-    createdAt?: SortOrder
-    updatedAt?: SortOrder
-  }
-
-  export type EnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumUserRoleFilter<$PrismaModel>
-    _max?: NestedEnumUserRoleFilter<$PrismaModel>
   }
 
   export type StringNullableListFilter<$PrismaModel = never> = {
@@ -16818,13 +14563,23 @@ export namespace Prisma {
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
   }
 
+  export type DateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  }
+
   export type ContactCountOrderByAggregateInput = {
     id?: SortOrder
     name?: SortOrder
     phone?: SortOrder
     email?: SortOrder
     tags?: SortOrder
-    whatsappId?: SortOrder
     companyId?: SortOrder
     isCostumer?: SortOrder
     createdAt?: SortOrder
@@ -16836,7 +14591,6 @@ export namespace Prisma {
     name?: SortOrder
     phone?: SortOrder
     email?: SortOrder
-    whatsappId?: SortOrder
     companyId?: SortOrder
     isCostumer?: SortOrder
     createdAt?: SortOrder
@@ -16848,7 +14602,6 @@ export namespace Prisma {
     name?: SortOrder
     phone?: SortOrder
     email?: SortOrder
-    whatsappId?: SortOrder
     companyId?: SortOrder
     isCostumer?: SortOrder
     createdAt?: SortOrder
@@ -16861,6 +14614,20 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBoolNullableFilter<$PrismaModel>
     _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type IntFilter<$PrismaModel = never> = {
@@ -16894,12 +14661,17 @@ export namespace Prisma {
     none?: QuickResponseWhereInput
   }
 
-  export type WhatsAppConnectionNullableScalarRelationFilter = {
-    is?: WhatsAppConnectionWhereInput | null
-    isNot?: WhatsAppConnectionWhereInput | null
+  export type PromptsListRelationFilter = {
+    every?: PromptsWhereInput
+    some?: PromptsWhereInput
+    none?: PromptsWhereInput
   }
 
   export type QuickResponseOrderByRelationAggregateInput = {
+    _count?: SortOrder
+  }
+
+  export type PromptsOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
 
@@ -16916,7 +14688,6 @@ export namespace Prisma {
     schedules?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    whatsAppConnectionId?: SortOrder
   }
 
   export type QueueAvgOrderByAggregateInput = {
@@ -16935,7 +14706,6 @@ export namespace Prisma {
     priority?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    whatsAppConnectionId?: SortOrder
   }
 
   export type QueueMinOrderByAggregateInput = {
@@ -16950,7 +14720,6 @@ export namespace Prisma {
     priority?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
-    whatsAppConnectionId?: SortOrder
   }
 
   export type QueueSumOrderByAggregateInput = {
@@ -17013,27 +14782,16 @@ export namespace Prisma {
     not?: NestedEnumConversationStatusFilter<$PrismaModel> | $Enums.ConversationStatus
   }
 
-  export type EnumPriorityFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
+  export type EnumPriorityNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumPriorityNullableFilter<$PrismaModel> | $Enums.Priority | null
   }
 
-  export type DateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
-  }
-
-  export type ContactScalarRelationFilter = {
-    is?: ContactWhereInput
-    isNot?: ContactWhereInput
+  export type UserNullableScalarRelationFilter = {
+    is?: UserWhereInput | null
+    isNot?: UserWhereInput | null
   }
 
   export type QueueNullableScalarRelationFilter = {
@@ -17044,6 +14802,11 @@ export namespace Prisma {
   export type TagsNullableScalarRelationFilter = {
     is?: TagsWhereInput | null
     isNot?: TagsWhereInput | null
+  }
+
+  export type ContactScalarRelationFilter = {
+    is?: ContactWhereInput
+    isNot?: ContactWhereInput
   }
 
   export type ConversationCountOrderByAggregateInput = {
@@ -17101,35 +14864,14 @@ export namespace Prisma {
     _max?: NestedEnumConversationStatusFilter<$PrismaModel>
   }
 
-  export type EnumPriorityWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumPriorityWithAggregatesFilter<$PrismaModel> | $Enums.Priority
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumPriorityFilter<$PrismaModel>
-    _max?: NestedEnumPriorityFilter<$PrismaModel>
-  }
-
-  export type DateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+  export type EnumPriorityNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumPriorityNullableWithAggregatesFilter<$PrismaModel> | $Enums.Priority | null
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type EnumMessageTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.MessageType | EnumMessageTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumMessageTypeFilter<$PrismaModel> | $Enums.MessageType
+    _min?: NestedEnumPriorityNullableFilter<$PrismaModel>
+    _max?: NestedEnumPriorityNullableFilter<$PrismaModel>
   }
 
   export type EnumDirectionFilter<$PrismaModel = never> = {
@@ -17158,14 +14900,11 @@ export namespace Prisma {
     content?: SortOrder
     messageType?: SortOrder
     direction?: SortOrder
-    whatsappId?: SortOrder
     status?: SortOrder
     mediaUrl?: SortOrder
+    timestamp?: SortOrder
     mediaType?: SortOrder
     isRead?: SortOrder
-    readAt?: SortOrder
-    deliveredAt?: SortOrder
-    sentAt?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -17176,14 +14915,11 @@ export namespace Prisma {
     content?: SortOrder
     messageType?: SortOrder
     direction?: SortOrder
-    whatsappId?: SortOrder
     status?: SortOrder
     mediaUrl?: SortOrder
+    timestamp?: SortOrder
     mediaType?: SortOrder
     isRead?: SortOrder
-    readAt?: SortOrder
-    deliveredAt?: SortOrder
-    sentAt?: SortOrder
     createdAt?: SortOrder
   }
 
@@ -17194,25 +14930,12 @@ export namespace Prisma {
     content?: SortOrder
     messageType?: SortOrder
     direction?: SortOrder
-    whatsappId?: SortOrder
     status?: SortOrder
     mediaUrl?: SortOrder
+    timestamp?: SortOrder
     mediaType?: SortOrder
     isRead?: SortOrder
-    readAt?: SortOrder
-    deliveredAt?: SortOrder
-    sentAt?: SortOrder
     createdAt?: SortOrder
-  }
-
-  export type EnumMessageTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.MessageType | EnumMessageTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumMessageTypeWithAggregatesFilter<$PrismaModel> | $Enums.MessageType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumMessageTypeFilter<$PrismaModel>
-    _max?: NestedEnumMessageTypeFilter<$PrismaModel>
   }
 
   export type EnumDirectionWithAggregatesFilter<$PrismaModel = never> = {
@@ -17305,7 +15028,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrder
-    whatsAppConnectionId?: SortOrder
   }
 
   export type PromptsAvgOrderByAggregateInput = {
@@ -17335,7 +15057,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrder
-    whatsAppConnectionId?: SortOrder
   }
 
   export type PromptsMinOrderByAggregateInput = {
@@ -17356,7 +15077,6 @@ export namespace Prisma {
     createdAt?: SortOrder
     updatedAt?: SortOrder
     queueId?: SortOrder
-    whatsAppConnectionId?: SortOrder
   }
 
   export type PromptsSumOrderByAggregateInput = {
@@ -17438,148 +15158,6 @@ export namespace Prisma {
     order?: SortOrder
   }
 
-  export type UserCreateNestedOneWithoutWhatsAppConnectionInput = {
-    create?: XOR<UserCreateWithoutWhatsAppConnectionInput, UserUncheckedCreateWithoutWhatsAppConnectionInput>
-    connectOrCreate?: UserCreateOrConnectWithoutWhatsAppConnectionInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type PromptsCreateNestedManyWithoutWhatsAppConnectionInput = {
-    create?: XOR<PromptsCreateWithoutWhatsAppConnectionInput, PromptsUncheckedCreateWithoutWhatsAppConnectionInput> | PromptsCreateWithoutWhatsAppConnectionInput[] | PromptsUncheckedCreateWithoutWhatsAppConnectionInput[]
-    connectOrCreate?: PromptsCreateOrConnectWithoutWhatsAppConnectionInput | PromptsCreateOrConnectWithoutWhatsAppConnectionInput[]
-    createMany?: PromptsCreateManyWhatsAppConnectionInputEnvelope
-    connect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
-  }
-
-  export type QueueCreateNestedManyWithoutWhatsAppConnectionInput = {
-    create?: XOR<QueueCreateWithoutWhatsAppConnectionInput, QueueUncheckedCreateWithoutWhatsAppConnectionInput> | QueueCreateWithoutWhatsAppConnectionInput[] | QueueUncheckedCreateWithoutWhatsAppConnectionInput[]
-    connectOrCreate?: QueueCreateOrConnectWithoutWhatsAppConnectionInput | QueueCreateOrConnectWithoutWhatsAppConnectionInput[]
-    createMany?: QueueCreateManyWhatsAppConnectionInputEnvelope
-    connect?: QueueWhereUniqueInput | QueueWhereUniqueInput[]
-  }
-
-  export type UserUncheckedCreateNestedOneWithoutWhatsAppConnectionInput = {
-    create?: XOR<UserCreateWithoutWhatsAppConnectionInput, UserUncheckedCreateWithoutWhatsAppConnectionInput>
-    connectOrCreate?: UserCreateOrConnectWithoutWhatsAppConnectionInput
-    connect?: UserWhereUniqueInput
-  }
-
-  export type PromptsUncheckedCreateNestedManyWithoutWhatsAppConnectionInput = {
-    create?: XOR<PromptsCreateWithoutWhatsAppConnectionInput, PromptsUncheckedCreateWithoutWhatsAppConnectionInput> | PromptsCreateWithoutWhatsAppConnectionInput[] | PromptsUncheckedCreateWithoutWhatsAppConnectionInput[]
-    connectOrCreate?: PromptsCreateOrConnectWithoutWhatsAppConnectionInput | PromptsCreateOrConnectWithoutWhatsAppConnectionInput[]
-    createMany?: PromptsCreateManyWhatsAppConnectionInputEnvelope
-    connect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
-  }
-
-  export type QueueUncheckedCreateNestedManyWithoutWhatsAppConnectionInput = {
-    create?: XOR<QueueCreateWithoutWhatsAppConnectionInput, QueueUncheckedCreateWithoutWhatsAppConnectionInput> | QueueCreateWithoutWhatsAppConnectionInput[] | QueueUncheckedCreateWithoutWhatsAppConnectionInput[]
-    connectOrCreate?: QueueCreateOrConnectWithoutWhatsAppConnectionInput | QueueCreateOrConnectWithoutWhatsAppConnectionInput[]
-    createMany?: QueueCreateManyWhatsAppConnectionInputEnvelope
-    connect?: QueueWhereUniqueInput | QueueWhereUniqueInput[]
-  }
-
-  export type StringFieldUpdateOperationsInput = {
-    set?: string
-  }
-
-  export type BoolFieldUpdateOperationsInput = {
-    set?: boolean
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
-  }
-
-  export type EnumWhatsAppConnectionStatusFieldUpdateOperationsInput = {
-    set?: $Enums.WhatsAppConnectionStatus
-  }
-
-  export type DateTimeFieldUpdateOperationsInput = {
-    set?: Date | string
-  }
-
-  export type UserUpdateOneWithoutWhatsAppConnectionNestedInput = {
-    create?: XOR<UserCreateWithoutWhatsAppConnectionInput, UserUncheckedCreateWithoutWhatsAppConnectionInput>
-    connectOrCreate?: UserCreateOrConnectWithoutWhatsAppConnectionInput
-    upsert?: UserUpsertWithoutWhatsAppConnectionInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWhatsAppConnectionInput, UserUpdateWithoutWhatsAppConnectionInput>, UserUncheckedUpdateWithoutWhatsAppConnectionInput>
-  }
-
-  export type PromptsUpdateManyWithoutWhatsAppConnectionNestedInput = {
-    create?: XOR<PromptsCreateWithoutWhatsAppConnectionInput, PromptsUncheckedCreateWithoutWhatsAppConnectionInput> | PromptsCreateWithoutWhatsAppConnectionInput[] | PromptsUncheckedCreateWithoutWhatsAppConnectionInput[]
-    connectOrCreate?: PromptsCreateOrConnectWithoutWhatsAppConnectionInput | PromptsCreateOrConnectWithoutWhatsAppConnectionInput[]
-    upsert?: PromptsUpsertWithWhereUniqueWithoutWhatsAppConnectionInput | PromptsUpsertWithWhereUniqueWithoutWhatsAppConnectionInput[]
-    createMany?: PromptsCreateManyWhatsAppConnectionInputEnvelope
-    set?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
-    disconnect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
-    delete?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
-    connect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
-    update?: PromptsUpdateWithWhereUniqueWithoutWhatsAppConnectionInput | PromptsUpdateWithWhereUniqueWithoutWhatsAppConnectionInput[]
-    updateMany?: PromptsUpdateManyWithWhereWithoutWhatsAppConnectionInput | PromptsUpdateManyWithWhereWithoutWhatsAppConnectionInput[]
-    deleteMany?: PromptsScalarWhereInput | PromptsScalarWhereInput[]
-  }
-
-  export type QueueUpdateManyWithoutWhatsAppConnectionNestedInput = {
-    create?: XOR<QueueCreateWithoutWhatsAppConnectionInput, QueueUncheckedCreateWithoutWhatsAppConnectionInput> | QueueCreateWithoutWhatsAppConnectionInput[] | QueueUncheckedCreateWithoutWhatsAppConnectionInput[]
-    connectOrCreate?: QueueCreateOrConnectWithoutWhatsAppConnectionInput | QueueCreateOrConnectWithoutWhatsAppConnectionInput[]
-    upsert?: QueueUpsertWithWhereUniqueWithoutWhatsAppConnectionInput | QueueUpsertWithWhereUniqueWithoutWhatsAppConnectionInput[]
-    createMany?: QueueCreateManyWhatsAppConnectionInputEnvelope
-    set?: QueueWhereUniqueInput | QueueWhereUniqueInput[]
-    disconnect?: QueueWhereUniqueInput | QueueWhereUniqueInput[]
-    delete?: QueueWhereUniqueInput | QueueWhereUniqueInput[]
-    connect?: QueueWhereUniqueInput | QueueWhereUniqueInput[]
-    update?: QueueUpdateWithWhereUniqueWithoutWhatsAppConnectionInput | QueueUpdateWithWhereUniqueWithoutWhatsAppConnectionInput[]
-    updateMany?: QueueUpdateManyWithWhereWithoutWhatsAppConnectionInput | QueueUpdateManyWithWhereWithoutWhatsAppConnectionInput[]
-    deleteMany?: QueueScalarWhereInput | QueueScalarWhereInput[]
-  }
-
-  export type UserUncheckedUpdateOneWithoutWhatsAppConnectionNestedInput = {
-    create?: XOR<UserCreateWithoutWhatsAppConnectionInput, UserUncheckedCreateWithoutWhatsAppConnectionInput>
-    connectOrCreate?: UserCreateOrConnectWithoutWhatsAppConnectionInput
-    upsert?: UserUpsertWithoutWhatsAppConnectionInput
-    disconnect?: UserWhereInput | boolean
-    delete?: UserWhereInput | boolean
-    connect?: UserWhereUniqueInput
-    update?: XOR<XOR<UserUpdateToOneWithWhereWithoutWhatsAppConnectionInput, UserUpdateWithoutWhatsAppConnectionInput>, UserUncheckedUpdateWithoutWhatsAppConnectionInput>
-  }
-
-  export type PromptsUncheckedUpdateManyWithoutWhatsAppConnectionNestedInput = {
-    create?: XOR<PromptsCreateWithoutWhatsAppConnectionInput, PromptsUncheckedCreateWithoutWhatsAppConnectionInput> | PromptsCreateWithoutWhatsAppConnectionInput[] | PromptsUncheckedCreateWithoutWhatsAppConnectionInput[]
-    connectOrCreate?: PromptsCreateOrConnectWithoutWhatsAppConnectionInput | PromptsCreateOrConnectWithoutWhatsAppConnectionInput[]
-    upsert?: PromptsUpsertWithWhereUniqueWithoutWhatsAppConnectionInput | PromptsUpsertWithWhereUniqueWithoutWhatsAppConnectionInput[]
-    createMany?: PromptsCreateManyWhatsAppConnectionInputEnvelope
-    set?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
-    disconnect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
-    delete?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
-    connect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
-    update?: PromptsUpdateWithWhereUniqueWithoutWhatsAppConnectionInput | PromptsUpdateWithWhereUniqueWithoutWhatsAppConnectionInput[]
-    updateMany?: PromptsUpdateManyWithWhereWithoutWhatsAppConnectionInput | PromptsUpdateManyWithWhereWithoutWhatsAppConnectionInput[]
-    deleteMany?: PromptsScalarWhereInput | PromptsScalarWhereInput[]
-  }
-
-  export type QueueUncheckedUpdateManyWithoutWhatsAppConnectionNestedInput = {
-    create?: XOR<QueueCreateWithoutWhatsAppConnectionInput, QueueUncheckedCreateWithoutWhatsAppConnectionInput> | QueueCreateWithoutWhatsAppConnectionInput[] | QueueUncheckedCreateWithoutWhatsAppConnectionInput[]
-    connectOrCreate?: QueueCreateOrConnectWithoutWhatsAppConnectionInput | QueueCreateOrConnectWithoutWhatsAppConnectionInput[]
-    upsert?: QueueUpsertWithWhereUniqueWithoutWhatsAppConnectionInput | QueueUpsertWithWhereUniqueWithoutWhatsAppConnectionInput[]
-    createMany?: QueueCreateManyWhatsAppConnectionInputEnvelope
-    set?: QueueWhereUniqueInput | QueueWhereUniqueInput[]
-    disconnect?: QueueWhereUniqueInput | QueueWhereUniqueInput[]
-    delete?: QueueWhereUniqueInput | QueueWhereUniqueInput[]
-    connect?: QueueWhereUniqueInput | QueueWhereUniqueInput[]
-    update?: QueueUpdateWithWhereUniqueWithoutWhatsAppConnectionInput | QueueUpdateWithWhereUniqueWithoutWhatsAppConnectionInput[]
-    updateMany?: QueueUpdateManyWithWhereWithoutWhatsAppConnectionInput | QueueUpdateManyWithWhereWithoutWhatsAppConnectionInput[]
-    deleteMany?: QueueScalarWhereInput | QueueScalarWhereInput[]
-  }
-
-  export type WhatsAppConnectionCreateNestedOneWithoutUserInput = {
-    create?: XOR<WhatsAppConnectionCreateWithoutUserInput, WhatsAppConnectionUncheckedCreateWithoutUserInput>
-    connectOrCreate?: WhatsAppConnectionCreateOrConnectWithoutUserInput
-    connect?: WhatsAppConnectionWhereUniqueInput
-  }
-
   export type ConversationCreateNestedManyWithoutUserInput = {
     create?: XOR<ConversationCreateWithoutUserInput, ConversationUncheckedCreateWithoutUserInput> | ConversationCreateWithoutUserInput[] | ConversationUncheckedCreateWithoutUserInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutUserInput | ConversationCreateOrConnectWithoutUserInput[]
@@ -17622,16 +15200,24 @@ export namespace Prisma {
     connect?: QueueUserWhereUniqueInput | QueueUserWhereUniqueInput[]
   }
 
+  export type StringFieldUpdateOperationsInput = {
+    set?: string
+  }
+
   export type EnumUserRoleFieldUpdateOperationsInput = {
     set?: $Enums.UserRole
   }
 
-  export type WhatsAppConnectionUpdateOneRequiredWithoutUserNestedInput = {
-    create?: XOR<WhatsAppConnectionCreateWithoutUserInput, WhatsAppConnectionUncheckedCreateWithoutUserInput>
-    connectOrCreate?: WhatsAppConnectionCreateOrConnectWithoutUserInput
-    upsert?: WhatsAppConnectionUpsertWithoutUserInput
-    connect?: WhatsAppConnectionWhereUniqueInput
-    update?: XOR<XOR<WhatsAppConnectionUpdateToOneWithWhereWithoutUserInput, WhatsAppConnectionUpdateWithoutUserInput>, WhatsAppConnectionUncheckedUpdateWithoutUserInput>
+  export type BoolFieldUpdateOperationsInput = {
+    set?: boolean
+  }
+
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
+  export type DateTimeFieldUpdateOperationsInput = {
+    set?: Date | string
   }
 
   export type ConversationUpdateManyWithoutUserNestedInput = {
@@ -17745,6 +15331,10 @@ export namespace Prisma {
     set?: boolean | null
   }
 
+  export type NullableDateTimeFieldUpdateOperationsInput = {
+    set?: Date | string | null
+  }
+
   export type ConversationUpdateManyWithoutContactNestedInput = {
     create?: XOR<ConversationCreateWithoutContactInput, ConversationUncheckedCreateWithoutContactInput> | ConversationCreateWithoutContactInput[] | ConversationUncheckedCreateWithoutContactInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutContactInput | ConversationCreateOrConnectWithoutContactInput[]
@@ -17803,12 +15393,6 @@ export namespace Prisma {
     connectOrCreate?: PromptsCreateOrConnectWithoutQueueInput | PromptsCreateOrConnectWithoutQueueInput[]
     createMany?: PromptsCreateManyQueueInputEnvelope
     connect?: PromptsWhereUniqueInput | PromptsWhereUniqueInput[]
-  }
-
-  export type WhatsAppConnectionCreateNestedOneWithoutQueuesInput = {
-    create?: XOR<WhatsAppConnectionCreateWithoutQueuesInput, WhatsAppConnectionUncheckedCreateWithoutQueuesInput>
-    connectOrCreate?: WhatsAppConnectionCreateOrConnectWithoutQueuesInput
-    connect?: WhatsAppConnectionWhereUniqueInput
   }
 
   export type ConversationUncheckedCreateNestedManyWithoutQueueInput = {
@@ -17908,16 +15492,6 @@ export namespace Prisma {
     deleteMany?: PromptsScalarWhereInput | PromptsScalarWhereInput[]
   }
 
-  export type WhatsAppConnectionUpdateOneWithoutQueuesNestedInput = {
-    create?: XOR<WhatsAppConnectionCreateWithoutQueuesInput, WhatsAppConnectionUncheckedCreateWithoutQueuesInput>
-    connectOrCreate?: WhatsAppConnectionCreateOrConnectWithoutQueuesInput
-    upsert?: WhatsAppConnectionUpsertWithoutQueuesInput
-    disconnect?: WhatsAppConnectionWhereInput | boolean
-    delete?: WhatsAppConnectionWhereInput | boolean
-    connect?: WhatsAppConnectionWhereUniqueInput
-    update?: XOR<XOR<WhatsAppConnectionUpdateToOneWithWhereWithoutQueuesInput, WhatsAppConnectionUpdateWithoutQueuesInput>, WhatsAppConnectionUncheckedUpdateWithoutQueuesInput>
-  }
-
   export type ConversationUncheckedUpdateManyWithoutQueueNestedInput = {
     create?: XOR<ConversationCreateWithoutQueueInput, ConversationUncheckedCreateWithoutQueueInput> | ConversationCreateWithoutQueueInput[] | ConversationUncheckedCreateWithoutQueueInput[]
     connectOrCreate?: ConversationCreateOrConnectWithoutQueueInput | ConversationCreateOrConnectWithoutQueueInput[]
@@ -18002,12 +15576,6 @@ export namespace Prisma {
     update?: XOR<XOR<QueueUpdateToOneWithWhereWithoutUsersInput, QueueUpdateWithoutUsersInput>, QueueUncheckedUpdateWithoutUsersInput>
   }
 
-  export type ContactCreateNestedOneWithoutConversationsInput = {
-    create?: XOR<ContactCreateWithoutConversationsInput, ContactUncheckedCreateWithoutConversationsInput>
-    connectOrCreate?: ContactCreateOrConnectWithoutConversationsInput
-    connect?: ContactWhereUniqueInput
-  }
-
   export type UserCreateNestedOneWithoutConversationsInput = {
     create?: XOR<UserCreateWithoutConversationsInput, UserUncheckedCreateWithoutConversationsInput>
     connectOrCreate?: UserCreateOrConnectWithoutConversationsInput
@@ -18033,6 +15601,12 @@ export namespace Prisma {
     connect?: MessageWhereUniqueInput | MessageWhereUniqueInput[]
   }
 
+  export type ContactCreateNestedOneWithoutConversationsInput = {
+    create?: XOR<ContactCreateWithoutConversationsInput, ContactUncheckedCreateWithoutConversationsInput>
+    connectOrCreate?: ContactCreateOrConnectWithoutConversationsInput
+    connect?: ContactWhereUniqueInput
+  }
+
   export type MessageUncheckedCreateNestedManyWithoutConversationInput = {
     create?: XOR<MessageCreateWithoutConversationInput, MessageUncheckedCreateWithoutConversationInput> | MessageCreateWithoutConversationInput[] | MessageUncheckedCreateWithoutConversationInput[]
     connectOrCreate?: MessageCreateOrConnectWithoutConversationInput | MessageCreateOrConnectWithoutConversationInput[]
@@ -18044,20 +15618,8 @@ export namespace Prisma {
     set?: $Enums.ConversationStatus
   }
 
-  export type EnumPriorityFieldUpdateOperationsInput = {
-    set?: $Enums.Priority
-  }
-
-  export type NullableDateTimeFieldUpdateOperationsInput = {
-    set?: Date | string | null
-  }
-
-  export type ContactUpdateOneRequiredWithoutConversationsNestedInput = {
-    create?: XOR<ContactCreateWithoutConversationsInput, ContactUncheckedCreateWithoutConversationsInput>
-    connectOrCreate?: ContactCreateOrConnectWithoutConversationsInput
-    upsert?: ContactUpsertWithoutConversationsInput
-    connect?: ContactWhereUniqueInput
-    update?: XOR<XOR<ContactUpdateToOneWithWhereWithoutConversationsInput, ContactUpdateWithoutConversationsInput>, ContactUncheckedUpdateWithoutConversationsInput>
+  export type NullableEnumPriorityFieldUpdateOperationsInput = {
+    set?: $Enums.Priority | null
   }
 
   export type UserUpdateOneWithoutConversationsNestedInput = {
@@ -18104,6 +15666,14 @@ export namespace Prisma {
     deleteMany?: MessageScalarWhereInput | MessageScalarWhereInput[]
   }
 
+  export type ContactUpdateOneRequiredWithoutConversationsNestedInput = {
+    create?: XOR<ContactCreateWithoutConversationsInput, ContactUncheckedCreateWithoutConversationsInput>
+    connectOrCreate?: ContactCreateOrConnectWithoutConversationsInput
+    upsert?: ContactUpsertWithoutConversationsInput
+    connect?: ContactWhereUniqueInput
+    update?: XOR<XOR<ContactUpdateToOneWithWhereWithoutConversationsInput, ContactUpdateWithoutConversationsInput>, ContactUncheckedUpdateWithoutConversationsInput>
+  }
+
   export type MessageUncheckedUpdateManyWithoutConversationNestedInput = {
     create?: XOR<MessageCreateWithoutConversationInput, MessageUncheckedCreateWithoutConversationInput> | MessageCreateWithoutConversationInput[] | MessageUncheckedCreateWithoutConversationInput[]
     connectOrCreate?: MessageCreateOrConnectWithoutConversationInput | MessageCreateOrConnectWithoutConversationInput[]
@@ -18128,10 +15698,6 @@ export namespace Prisma {
     create?: XOR<UserCreateWithoutMessagesInput, UserUncheckedCreateWithoutMessagesInput>
     connectOrCreate?: UserCreateOrConnectWithoutMessagesInput
     connect?: UserWhereUniqueInput
-  }
-
-  export type EnumMessageTypeFieldUpdateOperationsInput = {
-    set?: $Enums.MessageType
   }
 
   export type EnumDirectionFieldUpdateOperationsInput = {
@@ -18182,12 +15748,6 @@ export namespace Prisma {
     connect?: QueueWhereUniqueInput
   }
 
-  export type WhatsAppConnectionCreateNestedOneWithoutPromptInput = {
-    create?: XOR<WhatsAppConnectionCreateWithoutPromptInput, WhatsAppConnectionUncheckedCreateWithoutPromptInput>
-    connectOrCreate?: WhatsAppConnectionCreateOrConnectWithoutPromptInput
-    connect?: WhatsAppConnectionWhereUniqueInput
-  }
-
   export type NullableIntFieldUpdateOperationsInput = {
     set?: number | null
     increment?: number
@@ -18212,16 +15772,6 @@ export namespace Prisma {
     delete?: QueueWhereInput | boolean
     connect?: QueueWhereUniqueInput
     update?: XOR<XOR<QueueUpdateToOneWithWhereWithoutPromptsInput, QueueUpdateWithoutPromptsInput>, QueueUncheckedUpdateWithoutPromptsInput>
-  }
-
-  export type WhatsAppConnectionUpdateOneWithoutPromptNestedInput = {
-    create?: XOR<WhatsAppConnectionCreateWithoutPromptInput, WhatsAppConnectionUncheckedCreateWithoutPromptInput>
-    connectOrCreate?: WhatsAppConnectionCreateOrConnectWithoutPromptInput
-    upsert?: WhatsAppConnectionUpsertWithoutPromptInput
-    disconnect?: WhatsAppConnectionWhereInput | boolean
-    delete?: WhatsAppConnectionWhereInput | boolean
-    connect?: WhatsAppConnectionWhereUniqueInput
-    update?: XOR<XOR<WhatsAppConnectionUpdateToOneWithWhereWithoutPromptInput, WhatsAppConnectionUpdateWithoutPromptInput>, WhatsAppConnectionUncheckedUpdateWithoutPromptInput>
   }
 
   export type ConversationCreateNestedManyWithoutTagInput = {
@@ -18280,6 +15830,13 @@ export namespace Prisma {
     not?: NestedStringFilter<$PrismaModel> | string
   }
 
+  export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
+  }
+
   export type NestedBoolFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolFilter<$PrismaModel> | boolean
@@ -18297,13 +15854,6 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
-  }
-
-  export type NestedEnumWhatsAppConnectionStatusFilter<$PrismaModel = never> = {
-    equals?: $Enums.WhatsAppConnectionStatus | EnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.WhatsAppConnectionStatus[] | ListEnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WhatsAppConnectionStatus[] | ListEnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumWhatsAppConnectionStatusFilter<$PrismaModel> | $Enums.WhatsAppConnectionStatus
   }
 
   export type NestedDateTimeFilter<$PrismaModel = never> = {
@@ -18345,6 +15895,16 @@ export namespace Prisma {
     not?: NestedIntFilter<$PrismaModel> | number
   }
 
+  export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
+    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
+    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedEnumUserRoleFilter<$PrismaModel>
+    _max?: NestedEnumUserRoleFilter<$PrismaModel>
+  }
+
   export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel>
     not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
@@ -18381,16 +15941,6 @@ export namespace Prisma {
     not?: NestedIntNullableFilter<$PrismaModel> | number | null
   }
 
-  export type NestedEnumWhatsAppConnectionStatusWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.WhatsAppConnectionStatus | EnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel>
-    in?: $Enums.WhatsAppConnectionStatus[] | ListEnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel>
-    notIn?: $Enums.WhatsAppConnectionStatus[] | ListEnumWhatsAppConnectionStatusFieldRefInput<$PrismaModel>
-    not?: NestedEnumWhatsAppConnectionStatusWithAggregatesFilter<$PrismaModel> | $Enums.WhatsAppConnectionStatus
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumWhatsAppConnectionStatusFilter<$PrismaModel>
-    _max?: NestedEnumWhatsAppConnectionStatusFilter<$PrismaModel>
-  }
-
   export type NestedDateTimeWithAggregatesFilter<$PrismaModel = never> = {
     equals?: Date | string | DateTimeFieldRefInput<$PrismaModel>
     in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel>
@@ -18405,26 +15955,20 @@ export namespace Prisma {
     _max?: NestedDateTimeFilter<$PrismaModel>
   }
 
-  export type NestedEnumUserRoleFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserRoleFilter<$PrismaModel> | $Enums.UserRole
-  }
-
-  export type NestedEnumUserRoleWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.UserRole | EnumUserRoleFieldRefInput<$PrismaModel>
-    in?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    notIn?: $Enums.UserRole[] | ListEnumUserRoleFieldRefInput<$PrismaModel>
-    not?: NestedEnumUserRoleWithAggregatesFilter<$PrismaModel> | $Enums.UserRole
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumUserRoleFilter<$PrismaModel>
-    _max?: NestedEnumUserRoleFilter<$PrismaModel>
-  }
-
   export type NestedBoolNullableFilter<$PrismaModel = never> = {
     equals?: boolean | BooleanFieldRefInput<$PrismaModel> | null
     not?: NestedBoolNullableFilter<$PrismaModel> | boolean | null
+  }
+
+  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
   }
 
   export type NestedBoolNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -18433,6 +15977,20 @@ export namespace Prisma {
     _count?: NestedIntNullableFilter<$PrismaModel>
     _min?: NestedBoolNullableFilter<$PrismaModel>
     _max?: NestedBoolNullableFilter<$PrismaModel>
+  }
+
+  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
+    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
+    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
+    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedDateTimeNullableFilter<$PrismaModel>
+    _max?: NestedDateTimeNullableFilter<$PrismaModel>
   }
 
   export type NestedIntWithAggregatesFilter<$PrismaModel = never> = {
@@ -18469,22 +16027,11 @@ export namespace Prisma {
     not?: NestedEnumConversationStatusFilter<$PrismaModel> | $Enums.ConversationStatus
   }
 
-  export type NestedEnumPriorityFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumPriorityFilter<$PrismaModel> | $Enums.Priority
-  }
-
-  export type NestedDateTimeNullableFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableFilter<$PrismaModel> | Date | string | null
+  export type NestedEnumPriorityNullableFilter<$PrismaModel = never> = {
+    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumPriorityNullableFilter<$PrismaModel> | $Enums.Priority | null
   }
 
   export type NestedEnumConversationStatusWithAggregatesFilter<$PrismaModel = never> = {
@@ -18497,35 +16044,14 @@ export namespace Prisma {
     _max?: NestedEnumConversationStatusFilter<$PrismaModel>
   }
 
-  export type NestedEnumPriorityWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel>
-    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel>
-    not?: NestedEnumPriorityWithAggregatesFilter<$PrismaModel> | $Enums.Priority
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumPriorityFilter<$PrismaModel>
-    _max?: NestedEnumPriorityFilter<$PrismaModel>
-  }
-
-  export type NestedDateTimeNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: Date | string | DateTimeFieldRefInput<$PrismaModel> | null
-    in?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    notIn?: Date[] | string[] | ListDateTimeFieldRefInput<$PrismaModel> | null
-    lt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    lte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gt?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    gte?: Date | string | DateTimeFieldRefInput<$PrismaModel>
-    not?: NestedDateTimeNullableWithAggregatesFilter<$PrismaModel> | Date | string | null
+  export type NestedEnumPriorityNullableWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: $Enums.Priority | EnumPriorityFieldRefInput<$PrismaModel> | null
+    in?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
+    notIn?: $Enums.Priority[] | ListEnumPriorityFieldRefInput<$PrismaModel> | null
+    not?: NestedEnumPriorityNullableWithAggregatesFilter<$PrismaModel> | $Enums.Priority | null
     _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedDateTimeNullableFilter<$PrismaModel>
-    _max?: NestedDateTimeNullableFilter<$PrismaModel>
-  }
-
-  export type NestedEnumMessageTypeFilter<$PrismaModel = never> = {
-    equals?: $Enums.MessageType | EnumMessageTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumMessageTypeFilter<$PrismaModel> | $Enums.MessageType
+    _min?: NestedEnumPriorityNullableFilter<$PrismaModel>
+    _max?: NestedEnumPriorityNullableFilter<$PrismaModel>
   }
 
   export type NestedEnumDirectionFilter<$PrismaModel = never> = {
@@ -18540,16 +16066,6 @@ export namespace Prisma {
     in?: $Enums.MessageStatus[] | ListEnumMessageStatusFieldRefInput<$PrismaModel>
     notIn?: $Enums.MessageStatus[] | ListEnumMessageStatusFieldRefInput<$PrismaModel>
     not?: NestedEnumMessageStatusFilter<$PrismaModel> | $Enums.MessageStatus
-  }
-
-  export type NestedEnumMessageTypeWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: $Enums.MessageType | EnumMessageTypeFieldRefInput<$PrismaModel>
-    in?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
-    notIn?: $Enums.MessageType[] | ListEnumMessageTypeFieldRefInput<$PrismaModel>
-    not?: NestedEnumMessageTypeWithAggregatesFilter<$PrismaModel> | $Enums.MessageType
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedEnumMessageTypeFilter<$PrismaModel>
-    _max?: NestedEnumMessageTypeFilter<$PrismaModel>
   }
 
   export type NestedEnumDirectionWithAggregatesFilter<$PrismaModel = never> = {
@@ -18615,325 +16131,19 @@ export namespace Prisma {
     _max?: NestedFloatNullableFilter<$PrismaModel>
   }
 
-  export type UserCreateWithoutWhatsAppConnectionInput = {
-    id?: string
-    name: string
-    email: string
-    password: string
-    role?: $Enums.UserRole
-    isActive?: boolean
-    companyId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    conversations?: ConversationCreateNestedManyWithoutUserInput
-    messages?: MessageCreateNestedManyWithoutUserInput
-    queues?: QueueUserCreateNestedManyWithoutUserInput
-  }
-
-  export type UserUncheckedCreateWithoutWhatsAppConnectionInput = {
-    id?: string
-    name: string
-    email: string
-    password: string
-    role?: $Enums.UserRole
-    isActive?: boolean
-    companyId?: string | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    conversations?: ConversationUncheckedCreateNestedManyWithoutUserInput
-    messages?: MessageUncheckedCreateNestedManyWithoutUserInput
-    queues?: QueueUserUncheckedCreateNestedManyWithoutUserInput
-  }
-
-  export type UserCreateOrConnectWithoutWhatsAppConnectionInput = {
-    where: UserWhereUniqueInput
-    create: XOR<UserCreateWithoutWhatsAppConnectionInput, UserUncheckedCreateWithoutWhatsAppConnectionInput>
-  }
-
-  export type PromptsCreateWithoutWhatsAppConnectionInput = {
-    id?: string
-    title: string
-    apiKey: string
-    prompt: string
-    maxTokens: number
-    maxMessages: number
-    promptTokens?: number | null
-    completionTokens?: number | null
-    totalTokens?: number | null
-    temperature?: number | null
-    assistantId?: string | null
-    description?: string | null
-    companyResume: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    queue?: QueueCreateNestedOneWithoutPromptsInput
-  }
-
-  export type PromptsUncheckedCreateWithoutWhatsAppConnectionInput = {
-    id?: string
-    title: string
-    apiKey: string
-    prompt: string
-    maxTokens: number
-    maxMessages: number
-    promptTokens?: number | null
-    completionTokens?: number | null
-    totalTokens?: number | null
-    temperature?: number | null
-    assistantId?: string | null
-    description?: string | null
-    companyResume: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    queueId?: string | null
-  }
-
-  export type PromptsCreateOrConnectWithoutWhatsAppConnectionInput = {
-    where: PromptsWhereUniqueInput
-    create: XOR<PromptsCreateWithoutWhatsAppConnectionInput, PromptsUncheckedCreateWithoutWhatsAppConnectionInput>
-  }
-
-  export type PromptsCreateManyWhatsAppConnectionInputEnvelope = {
-    data: PromptsCreateManyWhatsAppConnectionInput | PromptsCreateManyWhatsAppConnectionInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type QueueCreateWithoutWhatsAppConnectionInput = {
-    id?: string
-    name: string
-    color?: string
-    greetingMessage?: string | null
-    outOfOfficeHoursMessage?: string | null
-    promptId?: string | null
-    integrationId?: string | null
-    isActive?: boolean
-    priority?: number
-    schedules?: QueueCreateschedulesInput | InputJsonValue[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    conversations?: ConversationCreateNestedManyWithoutQueueInput
-    users?: QueueUserCreateNestedManyWithoutQueueInput
-    quickResponses?: QuickResponseCreateNestedManyWithoutQueueInput
-    prompts?: PromptsCreateNestedManyWithoutQueueInput
-  }
-
-  export type QueueUncheckedCreateWithoutWhatsAppConnectionInput = {
-    id?: string
-    name: string
-    color?: string
-    greetingMessage?: string | null
-    outOfOfficeHoursMessage?: string | null
-    promptId?: string | null
-    integrationId?: string | null
-    isActive?: boolean
-    priority?: number
-    schedules?: QueueCreateschedulesInput | InputJsonValue[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    conversations?: ConversationUncheckedCreateNestedManyWithoutQueueInput
-    users?: QueueUserUncheckedCreateNestedManyWithoutQueueInput
-    quickResponses?: QuickResponseUncheckedCreateNestedManyWithoutQueueInput
-    prompts?: PromptsUncheckedCreateNestedManyWithoutQueueInput
-  }
-
-  export type QueueCreateOrConnectWithoutWhatsAppConnectionInput = {
-    where: QueueWhereUniqueInput
-    create: XOR<QueueCreateWithoutWhatsAppConnectionInput, QueueUncheckedCreateWithoutWhatsAppConnectionInput>
-  }
-
-  export type QueueCreateManyWhatsAppConnectionInputEnvelope = {
-    data: QueueCreateManyWhatsAppConnectionInput | QueueCreateManyWhatsAppConnectionInput[]
-    skipDuplicates?: boolean
-  }
-
-  export type UserUpsertWithoutWhatsAppConnectionInput = {
-    update: XOR<UserUpdateWithoutWhatsAppConnectionInput, UserUncheckedUpdateWithoutWhatsAppConnectionInput>
-    create: XOR<UserCreateWithoutWhatsAppConnectionInput, UserUncheckedCreateWithoutWhatsAppConnectionInput>
-    where?: UserWhereInput
-  }
-
-  export type UserUpdateToOneWithWhereWithoutWhatsAppConnectionInput = {
-    where?: UserWhereInput
-    data: XOR<UserUpdateWithoutWhatsAppConnectionInput, UserUncheckedUpdateWithoutWhatsAppConnectionInput>
-  }
-
-  export type UserUpdateWithoutWhatsAppConnectionInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    conversations?: ConversationUpdateManyWithoutUserNestedInput
-    messages?: MessageUpdateManyWithoutUserNestedInput
-    queues?: QueueUserUpdateManyWithoutUserNestedInput
-  }
-
-  export type UserUncheckedUpdateWithoutWhatsAppConnectionInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
-    role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    conversations?: ConversationUncheckedUpdateManyWithoutUserNestedInput
-    messages?: MessageUncheckedUpdateManyWithoutUserNestedInput
-    queues?: QueueUserUncheckedUpdateManyWithoutUserNestedInput
-  }
-
-  export type PromptsUpsertWithWhereUniqueWithoutWhatsAppConnectionInput = {
-    where: PromptsWhereUniqueInput
-    update: XOR<PromptsUpdateWithoutWhatsAppConnectionInput, PromptsUncheckedUpdateWithoutWhatsAppConnectionInput>
-    create: XOR<PromptsCreateWithoutWhatsAppConnectionInput, PromptsUncheckedCreateWithoutWhatsAppConnectionInput>
-  }
-
-  export type PromptsUpdateWithWhereUniqueWithoutWhatsAppConnectionInput = {
-    where: PromptsWhereUniqueInput
-    data: XOR<PromptsUpdateWithoutWhatsAppConnectionInput, PromptsUncheckedUpdateWithoutWhatsAppConnectionInput>
-  }
-
-  export type PromptsUpdateManyWithWhereWithoutWhatsAppConnectionInput = {
-    where: PromptsScalarWhereInput
-    data: XOR<PromptsUpdateManyMutationInput, PromptsUncheckedUpdateManyWithoutWhatsAppConnectionInput>
-  }
-
-  export type PromptsScalarWhereInput = {
-    AND?: PromptsScalarWhereInput | PromptsScalarWhereInput[]
-    OR?: PromptsScalarWhereInput[]
-    NOT?: PromptsScalarWhereInput | PromptsScalarWhereInput[]
-    id?: StringFilter<"Prompts"> | string
-    title?: StringFilter<"Prompts"> | string
-    apiKey?: StringFilter<"Prompts"> | string
-    prompt?: StringFilter<"Prompts"> | string
-    maxTokens?: IntFilter<"Prompts"> | number
-    maxMessages?: IntFilter<"Prompts"> | number
-    promptTokens?: IntNullableFilter<"Prompts"> | number | null
-    completionTokens?: IntNullableFilter<"Prompts"> | number | null
-    totalTokens?: IntNullableFilter<"Prompts"> | number | null
-    temperature?: FloatNullableFilter<"Prompts"> | number | null
-    assistantId?: StringNullableFilter<"Prompts"> | string | null
-    description?: StringNullableFilter<"Prompts"> | string | null
-    companyResume?: StringFilter<"Prompts"> | string
-    isActive?: BoolFilter<"Prompts"> | boolean
-    createdAt?: DateTimeFilter<"Prompts"> | Date | string
-    updatedAt?: DateTimeFilter<"Prompts"> | Date | string
-    queueId?: StringNullableFilter<"Prompts"> | string | null
-    whatsAppConnectionId?: StringNullableFilter<"Prompts"> | string | null
-  }
-
-  export type QueueUpsertWithWhereUniqueWithoutWhatsAppConnectionInput = {
-    where: QueueWhereUniqueInput
-    update: XOR<QueueUpdateWithoutWhatsAppConnectionInput, QueueUncheckedUpdateWithoutWhatsAppConnectionInput>
-    create: XOR<QueueCreateWithoutWhatsAppConnectionInput, QueueUncheckedCreateWithoutWhatsAppConnectionInput>
-  }
-
-  export type QueueUpdateWithWhereUniqueWithoutWhatsAppConnectionInput = {
-    where: QueueWhereUniqueInput
-    data: XOR<QueueUpdateWithoutWhatsAppConnectionInput, QueueUncheckedUpdateWithoutWhatsAppConnectionInput>
-  }
-
-  export type QueueUpdateManyWithWhereWithoutWhatsAppConnectionInput = {
-    where: QueueScalarWhereInput
-    data: XOR<QueueUpdateManyMutationInput, QueueUncheckedUpdateManyWithoutWhatsAppConnectionInput>
-  }
-
-  export type QueueScalarWhereInput = {
-    AND?: QueueScalarWhereInput | QueueScalarWhereInput[]
-    OR?: QueueScalarWhereInput[]
-    NOT?: QueueScalarWhereInput | QueueScalarWhereInput[]
-    id?: StringFilter<"Queue"> | string
-    name?: StringFilter<"Queue"> | string
-    color?: StringFilter<"Queue"> | string
-    greetingMessage?: StringNullableFilter<"Queue"> | string | null
-    outOfOfficeHoursMessage?: StringNullableFilter<"Queue"> | string | null
-    promptId?: StringNullableFilter<"Queue"> | string | null
-    integrationId?: StringNullableFilter<"Queue"> | string | null
-    isActive?: BoolFilter<"Queue"> | boolean
-    priority?: IntFilter<"Queue"> | number
-    schedules?: JsonNullableListFilter<"Queue">
-    createdAt?: DateTimeFilter<"Queue"> | Date | string
-    updatedAt?: DateTimeFilter<"Queue"> | Date | string
-    whatsAppConnectionId?: StringNullableFilter<"Queue"> | string | null
-  }
-
-  export type WhatsAppConnectionCreateWithoutUserInput = {
-    id?: string
-    name: string
-    isDefault: boolean
-    greetingMessage?: string | null
-    conclusionMessage?: string | null
-    outOfOfficeHoursMessage?: string | null
-    reviewMessage?: string | null
-    token?: string | null
-    queueId: string
-    integrationId?: string | null
-    userId?: string | null
-    promptId: string
-    transferQueueId?: string | null
-    timeToTransfer?: string | null
-    expiresInactiveMessage?: string | null
-    companyId?: string | null
-    session: string
-    qrCode: string
-    status?: $Enums.WhatsAppConnectionStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    prompt?: PromptsCreateNestedManyWithoutWhatsAppConnectionInput
-    queues?: QueueCreateNestedManyWithoutWhatsAppConnectionInput
-  }
-
-  export type WhatsAppConnectionUncheckedCreateWithoutUserInput = {
-    id?: string
-    name: string
-    isDefault: boolean
-    greetingMessage?: string | null
-    conclusionMessage?: string | null
-    outOfOfficeHoursMessage?: string | null
-    reviewMessage?: string | null
-    token?: string | null
-    queueId: string
-    integrationId?: string | null
-    userId?: string | null
-    promptId: string
-    transferQueueId?: string | null
-    timeToTransfer?: string | null
-    expiresInactiveMessage?: string | null
-    companyId?: string | null
-    session: string
-    qrCode: string
-    status?: $Enums.WhatsAppConnectionStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    prompt?: PromptsUncheckedCreateNestedManyWithoutWhatsAppConnectionInput
-    queues?: QueueUncheckedCreateNestedManyWithoutWhatsAppConnectionInput
-  }
-
-  export type WhatsAppConnectionCreateOrConnectWithoutUserInput = {
-    where: WhatsAppConnectionWhereUniqueInput
-    create: XOR<WhatsAppConnectionCreateWithoutUserInput, WhatsAppConnectionUncheckedCreateWithoutUserInput>
-  }
-
   export type ConversationCreateWithoutUserInput = {
     id?: string
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
-    contact: ContactCreateNestedOneWithoutConversationsInput
+    updatedAt?: Date | string | null
     queue?: QueueCreateNestedOneWithoutConversationsInput
     tag?: TagsCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
+    contact: ContactCreateNestedOneWithoutConversationsInput
   }
 
   export type ConversationUncheckedCreateWithoutUserInput = {
@@ -18942,12 +16152,12 @@ export namespace Prisma {
     queueId?: string | null
     tagId?: string | null
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
     messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
   }
 
@@ -18964,16 +16174,13 @@ export namespace Prisma {
   export type MessageCreateWithoutUserInput = {
     id?: string
     content: string
-    messageType?: $Enums.MessageType
+    messageType: string
     direction: $Enums.Direction
-    whatsappId?: string | null
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    timestamp: string
     mediaType?: string | null
     isRead?: boolean
-    readAt?: Date | string | null
-    deliveredAt?: Date | string | null
-    sentAt?: Date | string | null
     createdAt?: Date | string
     conversation: ConversationCreateNestedOneWithoutMessagesInput
   }
@@ -18982,16 +16189,13 @@ export namespace Prisma {
     id?: string
     conversationId: string
     content: string
-    messageType?: $Enums.MessageType
+    messageType: string
     direction: $Enums.Direction
-    whatsappId?: string | null
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    timestamp: string
     mediaType?: string | null
     isRead?: boolean
-    readAt?: Date | string | null
-    deliveredAt?: Date | string | null
-    sentAt?: Date | string | null
     createdAt?: Date | string
   }
 
@@ -19025,69 +16229,6 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type WhatsAppConnectionUpsertWithoutUserInput = {
-    update: XOR<WhatsAppConnectionUpdateWithoutUserInput, WhatsAppConnectionUncheckedUpdateWithoutUserInput>
-    create: XOR<WhatsAppConnectionCreateWithoutUserInput, WhatsAppConnectionUncheckedCreateWithoutUserInput>
-    where?: WhatsAppConnectionWhereInput
-  }
-
-  export type WhatsAppConnectionUpdateToOneWithWhereWithoutUserInput = {
-    where?: WhatsAppConnectionWhereInput
-    data: XOR<WhatsAppConnectionUpdateWithoutUserInput, WhatsAppConnectionUncheckedUpdateWithoutUserInput>
-  }
-
-  export type WhatsAppConnectionUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    isDefault?: BoolFieldUpdateOperationsInput | boolean
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    conclusionMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    token?: NullableStringFieldUpdateOperationsInput | string | null
-    queueId?: StringFieldUpdateOperationsInput | string
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: StringFieldUpdateOperationsInput | string
-    transferQueueId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeToTransfer?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresInactiveMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    session?: StringFieldUpdateOperationsInput | string
-    qrCode?: StringFieldUpdateOperationsInput | string
-    status?: EnumWhatsAppConnectionStatusFieldUpdateOperationsInput | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    prompt?: PromptsUpdateManyWithoutWhatsAppConnectionNestedInput
-    queues?: QueueUpdateManyWithoutWhatsAppConnectionNestedInput
-  }
-
-  export type WhatsAppConnectionUncheckedUpdateWithoutUserInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    isDefault?: BoolFieldUpdateOperationsInput | boolean
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    conclusionMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    token?: NullableStringFieldUpdateOperationsInput | string | null
-    queueId?: StringFieldUpdateOperationsInput | string
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: StringFieldUpdateOperationsInput | string
-    transferQueueId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeToTransfer?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresInactiveMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    session?: StringFieldUpdateOperationsInput | string
-    qrCode?: StringFieldUpdateOperationsInput | string
-    status?: EnumWhatsAppConnectionStatusFieldUpdateOperationsInput | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    prompt?: PromptsUncheckedUpdateManyWithoutWhatsAppConnectionNestedInput
-    queues?: QueueUncheckedUpdateManyWithoutWhatsAppConnectionNestedInput
-  }
-
   export type ConversationUpsertWithWhereUniqueWithoutUserInput = {
     where: ConversationWhereUniqueInput
     update: XOR<ConversationUpdateWithoutUserInput, ConversationUncheckedUpdateWithoutUserInput>
@@ -19114,12 +16255,12 @@ export namespace Prisma {
     queueId?: StringNullableFilter<"Conversation"> | string | null
     tagId?: StringNullableFilter<"Conversation"> | string | null
     status?: EnumConversationStatusFilter<"Conversation"> | $Enums.ConversationStatus
-    priority?: EnumPriorityFilter<"Conversation"> | $Enums.Priority
+    priority?: EnumPriorityNullableFilter<"Conversation"> | $Enums.Priority | null
     subject?: StringNullableFilter<"Conversation"> | string | null
     lastMessageAt?: DateTimeNullableFilter<"Conversation"> | Date | string | null
     closedAt?: DateTimeNullableFilter<"Conversation"> | Date | string | null
     createdAt?: DateTimeFilter<"Conversation"> | Date | string
-    updatedAt?: DateTimeFilter<"Conversation"> | Date | string
+    updatedAt?: DateTimeNullableFilter<"Conversation"> | Date | string | null
   }
 
   export type MessageUpsertWithWhereUniqueWithoutUserInput = {
@@ -19146,16 +16287,13 @@ export namespace Prisma {
     conversationId?: StringFilter<"Message"> | string
     userId?: StringNullableFilter<"Message"> | string | null
     content?: StringFilter<"Message"> | string
-    messageType?: EnumMessageTypeFilter<"Message"> | $Enums.MessageType
+    messageType?: StringFilter<"Message"> | string
     direction?: EnumDirectionFilter<"Message"> | $Enums.Direction
-    whatsappId?: StringNullableFilter<"Message"> | string | null
     status?: EnumMessageStatusFilter<"Message"> | $Enums.MessageStatus
     mediaUrl?: StringNullableFilter<"Message"> | string | null
+    timestamp?: StringFilter<"Message"> | string
     mediaType?: StringNullableFilter<"Message"> | string | null
     isRead?: BoolFilter<"Message"> | boolean
-    readAt?: DateTimeNullableFilter<"Message"> | Date | string | null
-    deliveredAt?: DateTimeNullableFilter<"Message"> | Date | string | null
-    sentAt?: DateTimeNullableFilter<"Message"> | Date | string | null
     createdAt?: DateTimeFilter<"Message"> | Date | string
   }
 
@@ -19187,12 +16325,12 @@ export namespace Prisma {
   export type ConversationCreateWithoutContactInput = {
     id?: string
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
     user?: UserCreateNestedOneWithoutConversationsInput
     queue?: QueueCreateNestedOneWithoutConversationsInput
     tag?: TagsCreateNestedOneWithoutConversationsInput
@@ -19205,12 +16343,12 @@ export namespace Prisma {
     queueId?: string | null
     tagId?: string | null
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
     messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
   }
 
@@ -19243,16 +16381,16 @@ export namespace Prisma {
   export type ConversationCreateWithoutQueueInput = {
     id?: string
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
-    contact: ContactCreateNestedOneWithoutConversationsInput
+    updatedAt?: Date | string | null
     user?: UserCreateNestedOneWithoutConversationsInput
     tag?: TagsCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
+    contact: ContactCreateNestedOneWithoutConversationsInput
   }
 
   export type ConversationUncheckedCreateWithoutQueueInput = {
@@ -19261,12 +16399,12 @@ export namespace Prisma {
     userId?: string | null
     tagId?: string | null
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
     messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
   }
 
@@ -19345,7 +16483,6 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    WhatsAppConnection?: WhatsAppConnectionCreateNestedOneWithoutPromptInput
   }
 
   export type PromptsUncheckedCreateWithoutQueueInput = {
@@ -19365,7 +16502,6 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    whatsAppConnectionId?: string | null
   }
 
   export type PromptsCreateOrConnectWithoutQueueInput = {
@@ -19376,63 +16512,6 @@ export namespace Prisma {
   export type PromptsCreateManyQueueInputEnvelope = {
     data: PromptsCreateManyQueueInput | PromptsCreateManyQueueInput[]
     skipDuplicates?: boolean
-  }
-
-  export type WhatsAppConnectionCreateWithoutQueuesInput = {
-    id?: string
-    name: string
-    isDefault: boolean
-    greetingMessage?: string | null
-    conclusionMessage?: string | null
-    outOfOfficeHoursMessage?: string | null
-    reviewMessage?: string | null
-    token?: string | null
-    queueId: string
-    integrationId?: string | null
-    userId?: string | null
-    promptId: string
-    transferQueueId?: string | null
-    timeToTransfer?: string | null
-    expiresInactiveMessage?: string | null
-    companyId?: string | null
-    session: string
-    qrCode: string
-    status?: $Enums.WhatsAppConnectionStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user?: UserCreateNestedOneWithoutWhatsAppConnectionInput
-    prompt?: PromptsCreateNestedManyWithoutWhatsAppConnectionInput
-  }
-
-  export type WhatsAppConnectionUncheckedCreateWithoutQueuesInput = {
-    id?: string
-    name: string
-    isDefault: boolean
-    greetingMessage?: string | null
-    conclusionMessage?: string | null
-    outOfOfficeHoursMessage?: string | null
-    reviewMessage?: string | null
-    token?: string | null
-    queueId: string
-    integrationId?: string | null
-    userId?: string | null
-    promptId: string
-    transferQueueId?: string | null
-    timeToTransfer?: string | null
-    expiresInactiveMessage?: string | null
-    companyId?: string | null
-    session: string
-    qrCode: string
-    status?: $Enums.WhatsAppConnectionStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user?: UserUncheckedCreateNestedOneWithoutWhatsAppConnectionInput
-    prompt?: PromptsUncheckedCreateNestedManyWithoutWhatsAppConnectionInput
-  }
-
-  export type WhatsAppConnectionCreateOrConnectWithoutQueuesInput = {
-    where: WhatsAppConnectionWhereUniqueInput
-    create: XOR<WhatsAppConnectionCreateWithoutQueuesInput, WhatsAppConnectionUncheckedCreateWithoutQueuesInput>
   }
 
   export type ConversationUpsertWithWhereUniqueWithoutQueueInput = {
@@ -19512,67 +16591,27 @@ export namespace Prisma {
     data: XOR<PromptsUpdateManyMutationInput, PromptsUncheckedUpdateManyWithoutQueueInput>
   }
 
-  export type WhatsAppConnectionUpsertWithoutQueuesInput = {
-    update: XOR<WhatsAppConnectionUpdateWithoutQueuesInput, WhatsAppConnectionUncheckedUpdateWithoutQueuesInput>
-    create: XOR<WhatsAppConnectionCreateWithoutQueuesInput, WhatsAppConnectionUncheckedCreateWithoutQueuesInput>
-    where?: WhatsAppConnectionWhereInput
-  }
-
-  export type WhatsAppConnectionUpdateToOneWithWhereWithoutQueuesInput = {
-    where?: WhatsAppConnectionWhereInput
-    data: XOR<WhatsAppConnectionUpdateWithoutQueuesInput, WhatsAppConnectionUncheckedUpdateWithoutQueuesInput>
-  }
-
-  export type WhatsAppConnectionUpdateWithoutQueuesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    isDefault?: BoolFieldUpdateOperationsInput | boolean
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    conclusionMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    token?: NullableStringFieldUpdateOperationsInput | string | null
-    queueId?: StringFieldUpdateOperationsInput | string
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: StringFieldUpdateOperationsInput | string
-    transferQueueId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeToTransfer?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresInactiveMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    session?: StringFieldUpdateOperationsInput | string
-    qrCode?: StringFieldUpdateOperationsInput | string
-    status?: EnumWhatsAppConnectionStatusFieldUpdateOperationsInput | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneWithoutWhatsAppConnectionNestedInput
-    prompt?: PromptsUpdateManyWithoutWhatsAppConnectionNestedInput
-  }
-
-  export type WhatsAppConnectionUncheckedUpdateWithoutQueuesInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    isDefault?: BoolFieldUpdateOperationsInput | boolean
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    conclusionMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    token?: NullableStringFieldUpdateOperationsInput | string | null
-    queueId?: StringFieldUpdateOperationsInput | string
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: StringFieldUpdateOperationsInput | string
-    transferQueueId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeToTransfer?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresInactiveMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    session?: StringFieldUpdateOperationsInput | string
-    qrCode?: StringFieldUpdateOperationsInput | string
-    status?: EnumWhatsAppConnectionStatusFieldUpdateOperationsInput | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUncheckedUpdateOneWithoutWhatsAppConnectionNestedInput
-    prompt?: PromptsUncheckedUpdateManyWithoutWhatsAppConnectionNestedInput
+  export type PromptsScalarWhereInput = {
+    AND?: PromptsScalarWhereInput | PromptsScalarWhereInput[]
+    OR?: PromptsScalarWhereInput[]
+    NOT?: PromptsScalarWhereInput | PromptsScalarWhereInput[]
+    id?: StringFilter<"Prompts"> | string
+    title?: StringFilter<"Prompts"> | string
+    apiKey?: StringFilter<"Prompts"> | string
+    prompt?: StringFilter<"Prompts"> | string
+    maxTokens?: IntFilter<"Prompts"> | number
+    maxMessages?: IntFilter<"Prompts"> | number
+    promptTokens?: IntNullableFilter<"Prompts"> | number | null
+    completionTokens?: IntNullableFilter<"Prompts"> | number | null
+    totalTokens?: IntNullableFilter<"Prompts"> | number | null
+    temperature?: FloatNullableFilter<"Prompts"> | number | null
+    assistantId?: StringNullableFilter<"Prompts"> | string | null
+    description?: StringNullableFilter<"Prompts"> | string | null
+    companyResume?: StringFilter<"Prompts"> | string
+    isActive?: BoolFilter<"Prompts"> | boolean
+    createdAt?: DateTimeFilter<"Prompts"> | Date | string
+    updatedAt?: DateTimeFilter<"Prompts"> | Date | string
+    queueId?: StringNullableFilter<"Prompts"> | string | null
   }
 
   export type UserCreateWithoutQueuesInput = {
@@ -19585,7 +16624,6 @@ export namespace Prisma {
     companyId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    whatsAppConnection: WhatsAppConnectionCreateNestedOneWithoutUserInput
     conversations?: ConversationCreateNestedManyWithoutUserInput
     messages?: MessageCreateNestedManyWithoutUserInput
   }
@@ -19597,7 +16635,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.UserRole
     isActive?: boolean
-    whatsAppConnectionId: string
     companyId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -19626,7 +16663,6 @@ export namespace Prisma {
     conversations?: ConversationCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseCreateNestedManyWithoutQueueInput
     prompts?: PromptsCreateNestedManyWithoutQueueInput
-    whatsAppConnection?: WhatsAppConnectionCreateNestedOneWithoutQueuesInput
   }
 
   export type QueueUncheckedCreateWithoutUsersInput = {
@@ -19642,7 +16678,6 @@ export namespace Prisma {
     schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    whatsAppConnectionId?: string | null
     conversations?: ConversationUncheckedCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseUncheckedCreateNestedManyWithoutQueueInput
     prompts?: PromptsUncheckedCreateNestedManyWithoutQueueInput
@@ -19674,7 +16709,6 @@ export namespace Prisma {
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    whatsAppConnection?: WhatsAppConnectionUpdateOneRequiredWithoutUserNestedInput
     conversations?: ConversationUpdateManyWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutUserNestedInput
   }
@@ -19686,7 +16720,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    whatsAppConnectionId?: StringFieldUpdateOperationsInput | string
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19721,7 +16754,6 @@ export namespace Prisma {
     conversations?: ConversationUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUpdateManyWithoutQueueNestedInput
     prompts?: PromptsUpdateManyWithoutQueueNestedInput
-    whatsAppConnection?: WhatsAppConnectionUpdateOneWithoutQueuesNestedInput
   }
 
   export type QueueUncheckedUpdateWithoutUsersInput = {
@@ -19737,41 +16769,9 @@ export namespace Prisma {
     schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    whatsAppConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     conversations?: ConversationUncheckedUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
     prompts?: PromptsUncheckedUpdateManyWithoutQueueNestedInput
-  }
-
-  export type ContactCreateWithoutConversationsInput = {
-    id?: string
-    name: string
-    phone: string
-    email?: string | null
-    tags?: ContactCreatetagsInput | string[]
-    whatsappId?: string | null
-    companyId?: string | null
-    isCostumer?: boolean | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ContactUncheckedCreateWithoutConversationsInput = {
-    id?: string
-    name: string
-    phone: string
-    email?: string | null
-    tags?: ContactCreatetagsInput | string[]
-    whatsappId?: string | null
-    companyId?: string | null
-    isCostumer?: boolean | null
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type ContactCreateOrConnectWithoutConversationsInput = {
-    where: ContactWhereUniqueInput
-    create: XOR<ContactCreateWithoutConversationsInput, ContactUncheckedCreateWithoutConversationsInput>
   }
 
   export type UserCreateWithoutConversationsInput = {
@@ -19784,7 +16784,6 @@ export namespace Prisma {
     companyId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    whatsAppConnection: WhatsAppConnectionCreateNestedOneWithoutUserInput
     messages?: MessageCreateNestedManyWithoutUserInput
     queues?: QueueUserCreateNestedManyWithoutUserInput
   }
@@ -19796,7 +16795,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.UserRole
     isActive?: boolean
-    whatsAppConnectionId: string
     companyId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -19825,7 +16823,6 @@ export namespace Prisma {
     users?: QueueUserCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseCreateNestedManyWithoutQueueInput
     prompts?: PromptsCreateNestedManyWithoutQueueInput
-    whatsAppConnection?: WhatsAppConnectionCreateNestedOneWithoutQueuesInput
   }
 
   export type QueueUncheckedCreateWithoutConversationsInput = {
@@ -19841,7 +16838,6 @@ export namespace Prisma {
     schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    whatsAppConnectionId?: string | null
     users?: QueueUserUncheckedCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseUncheckedCreateNestedManyWithoutQueueInput
     prompts?: PromptsUncheckedCreateNestedManyWithoutQueueInput
@@ -19880,16 +16876,13 @@ export namespace Prisma {
   export type MessageCreateWithoutConversationInput = {
     id?: string
     content: string
-    messageType?: $Enums.MessageType
+    messageType: string
     direction: $Enums.Direction
-    whatsappId?: string | null
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    timestamp: string
     mediaType?: string | null
     isRead?: boolean
-    readAt?: Date | string | null
-    deliveredAt?: Date | string | null
-    sentAt?: Date | string | null
     createdAt?: Date | string
     user?: UserCreateNestedOneWithoutMessagesInput
   }
@@ -19898,16 +16891,13 @@ export namespace Prisma {
     id?: string
     userId?: string | null
     content: string
-    messageType?: $Enums.MessageType
+    messageType: string
     direction: $Enums.Direction
-    whatsappId?: string | null
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    timestamp: string
     mediaType?: string | null
     isRead?: boolean
-    readAt?: Date | string | null
-    deliveredAt?: Date | string | null
-    sentAt?: Date | string | null
     createdAt?: Date | string
   }
 
@@ -19921,41 +16911,33 @@ export namespace Prisma {
     skipDuplicates?: boolean
   }
 
-  export type ContactUpsertWithoutConversationsInput = {
-    update: XOR<ContactUpdateWithoutConversationsInput, ContactUncheckedUpdateWithoutConversationsInput>
+  export type ContactCreateWithoutConversationsInput = {
+    id?: string
+    name: string
+    phone: string
+    email?: string | null
+    tags?: ContactCreatetagsInput | string[]
+    companyId?: string | null
+    isCostumer?: boolean | null
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+  }
+
+  export type ContactUncheckedCreateWithoutConversationsInput = {
+    id?: string
+    name: string
+    phone: string
+    email?: string | null
+    tags?: ContactCreatetagsInput | string[]
+    companyId?: string | null
+    isCostumer?: boolean | null
+    createdAt?: Date | string
+    updatedAt?: Date | string | null
+  }
+
+  export type ContactCreateOrConnectWithoutConversationsInput = {
+    where: ContactWhereUniqueInput
     create: XOR<ContactCreateWithoutConversationsInput, ContactUncheckedCreateWithoutConversationsInput>
-    where?: ContactWhereInput
-  }
-
-  export type ContactUpdateToOneWithWhereWithoutConversationsInput = {
-    where?: ContactWhereInput
-    data: XOR<ContactUpdateWithoutConversationsInput, ContactUncheckedUpdateWithoutConversationsInput>
-  }
-
-  export type ContactUpdateWithoutConversationsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: ContactUpdatetagsInput | string[]
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    isCostumer?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
-  export type ContactUncheckedUpdateWithoutConversationsInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    phone?: StringFieldUpdateOperationsInput | string
-    email?: NullableStringFieldUpdateOperationsInput | string | null
-    tags?: ContactUpdatetagsInput | string[]
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    isCostumer?: NullableBoolFieldUpdateOperationsInput | boolean | null
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
   export type UserUpsertWithoutConversationsInput = {
@@ -19979,7 +16961,6 @@ export namespace Prisma {
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    whatsAppConnection?: WhatsAppConnectionUpdateOneRequiredWithoutUserNestedInput
     messages?: MessageUpdateManyWithoutUserNestedInput
     queues?: QueueUserUpdateManyWithoutUserNestedInput
   }
@@ -19991,7 +16972,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    whatsAppConnectionId?: StringFieldUpdateOperationsInput | string
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20026,7 +17006,6 @@ export namespace Prisma {
     users?: QueueUserUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUpdateManyWithoutQueueNestedInput
     prompts?: PromptsUpdateManyWithoutQueueNestedInput
-    whatsAppConnection?: WhatsAppConnectionUpdateOneWithoutQueuesNestedInput
   }
 
   export type QueueUncheckedUpdateWithoutConversationsInput = {
@@ -20042,7 +17021,6 @@ export namespace Prisma {
     schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    whatsAppConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     users?: QueueUserUncheckedUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
     prompts?: PromptsUncheckedUpdateManyWithoutQueueNestedInput
@@ -20095,19 +17073,54 @@ export namespace Prisma {
     data: XOR<MessageUpdateManyMutationInput, MessageUncheckedUpdateManyWithoutConversationInput>
   }
 
+  export type ContactUpsertWithoutConversationsInput = {
+    update: XOR<ContactUpdateWithoutConversationsInput, ContactUncheckedUpdateWithoutConversationsInput>
+    create: XOR<ContactCreateWithoutConversationsInput, ContactUncheckedCreateWithoutConversationsInput>
+    where?: ContactWhereInput
+  }
+
+  export type ContactUpdateToOneWithWhereWithoutConversationsInput = {
+    where?: ContactWhereInput
+    data: XOR<ContactUpdateWithoutConversationsInput, ContactUncheckedUpdateWithoutConversationsInput>
+  }
+
+  export type ContactUpdateWithoutConversationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContactUpdatetagsInput | string[]
+    companyId?: NullableStringFieldUpdateOperationsInput | string | null
+    isCostumer?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
+  export type ContactUncheckedUpdateWithoutConversationsInput = {
+    id?: StringFieldUpdateOperationsInput | string
+    name?: StringFieldUpdateOperationsInput | string
+    phone?: StringFieldUpdateOperationsInput | string
+    email?: NullableStringFieldUpdateOperationsInput | string | null
+    tags?: ContactUpdatetagsInput | string[]
+    companyId?: NullableStringFieldUpdateOperationsInput | string | null
+    isCostumer?: NullableBoolFieldUpdateOperationsInput | boolean | null
+    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  }
+
   export type ConversationCreateWithoutMessagesInput = {
     id?: string
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
-    contact: ContactCreateNestedOneWithoutConversationsInput
+    updatedAt?: Date | string | null
     user?: UserCreateNestedOneWithoutConversationsInput
     queue?: QueueCreateNestedOneWithoutConversationsInput
     tag?: TagsCreateNestedOneWithoutConversationsInput
+    contact: ContactCreateNestedOneWithoutConversationsInput
   }
 
   export type ConversationUncheckedCreateWithoutMessagesInput = {
@@ -20117,12 +17130,12 @@ export namespace Prisma {
     queueId?: string | null
     tagId?: string | null
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
   }
 
   export type ConversationCreateOrConnectWithoutMessagesInput = {
@@ -20140,7 +17153,6 @@ export namespace Prisma {
     companyId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
-    whatsAppConnection: WhatsAppConnectionCreateNestedOneWithoutUserInput
     conversations?: ConversationCreateNestedManyWithoutUserInput
     queues?: QueueUserCreateNestedManyWithoutUserInput
   }
@@ -20152,7 +17164,6 @@ export namespace Prisma {
     password: string
     role?: $Enums.UserRole
     isActive?: boolean
-    whatsAppConnectionId: string
     companyId?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
@@ -20179,16 +17190,16 @@ export namespace Prisma {
   export type ConversationUpdateWithoutMessagesInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneWithoutConversationsNestedInput
     queue?: QueueUpdateOneWithoutConversationsNestedInput
     tag?: TagsUpdateOneWithoutConversationsNestedInput
+    contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
   }
 
   export type ConversationUncheckedUpdateWithoutMessagesInput = {
@@ -20198,12 +17209,12 @@ export namespace Prisma {
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
     tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type UserUpsertWithoutMessagesInput = {
@@ -20227,7 +17238,6 @@ export namespace Prisma {
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    whatsAppConnection?: WhatsAppConnectionUpdateOneRequiredWithoutUserNestedInput
     conversations?: ConversationUpdateManyWithoutUserNestedInput
     queues?: QueueUserUpdateManyWithoutUserNestedInput
   }
@@ -20239,7 +17249,6 @@ export namespace Prisma {
     password?: StringFieldUpdateOperationsInput | string
     role?: EnumUserRoleFieldUpdateOperationsInput | $Enums.UserRole
     isActive?: BoolFieldUpdateOperationsInput | boolean
-    whatsAppConnectionId?: StringFieldUpdateOperationsInput | string
     companyId?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20263,7 +17272,6 @@ export namespace Prisma {
     conversations?: ConversationCreateNestedManyWithoutQueueInput
     users?: QueueUserCreateNestedManyWithoutQueueInput
     prompts?: PromptsCreateNestedManyWithoutQueueInput
-    whatsAppConnection?: WhatsAppConnectionCreateNestedOneWithoutQueuesInput
   }
 
   export type QueueUncheckedCreateWithoutQuickResponsesInput = {
@@ -20279,7 +17287,6 @@ export namespace Prisma {
     schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    whatsAppConnectionId?: string | null
     conversations?: ConversationUncheckedCreateNestedManyWithoutQueueInput
     users?: QueueUserUncheckedCreateNestedManyWithoutQueueInput
     prompts?: PromptsUncheckedCreateNestedManyWithoutQueueInput
@@ -20317,7 +17324,6 @@ export namespace Prisma {
     conversations?: ConversationUpdateManyWithoutQueueNestedInput
     users?: QueueUserUpdateManyWithoutQueueNestedInput
     prompts?: PromptsUpdateManyWithoutQueueNestedInput
-    whatsAppConnection?: WhatsAppConnectionUpdateOneWithoutQueuesNestedInput
   }
 
   export type QueueUncheckedUpdateWithoutQuickResponsesInput = {
@@ -20333,7 +17339,6 @@ export namespace Prisma {
     schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    whatsAppConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     conversations?: ConversationUncheckedUpdateManyWithoutQueueNestedInput
     users?: QueueUserUncheckedUpdateManyWithoutQueueNestedInput
     prompts?: PromptsUncheckedUpdateManyWithoutQueueNestedInput
@@ -20355,7 +17360,6 @@ export namespace Prisma {
     conversations?: ConversationCreateNestedManyWithoutQueueInput
     users?: QueueUserCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseCreateNestedManyWithoutQueueInput
-    whatsAppConnection?: WhatsAppConnectionCreateNestedOneWithoutQueuesInput
   }
 
   export type QueueUncheckedCreateWithoutPromptsInput = {
@@ -20371,7 +17375,6 @@ export namespace Prisma {
     schedules?: QueueCreateschedulesInput | InputJsonValue[]
     createdAt?: Date | string
     updatedAt?: Date | string
-    whatsAppConnectionId?: string | null
     conversations?: ConversationUncheckedCreateNestedManyWithoutQueueInput
     users?: QueueUserUncheckedCreateNestedManyWithoutQueueInput
     quickResponses?: QuickResponseUncheckedCreateNestedManyWithoutQueueInput
@@ -20380,63 +17383,6 @@ export namespace Prisma {
   export type QueueCreateOrConnectWithoutPromptsInput = {
     where: QueueWhereUniqueInput
     create: XOR<QueueCreateWithoutPromptsInput, QueueUncheckedCreateWithoutPromptsInput>
-  }
-
-  export type WhatsAppConnectionCreateWithoutPromptInput = {
-    id?: string
-    name: string
-    isDefault: boolean
-    greetingMessage?: string | null
-    conclusionMessage?: string | null
-    outOfOfficeHoursMessage?: string | null
-    reviewMessage?: string | null
-    token?: string | null
-    queueId: string
-    integrationId?: string | null
-    userId?: string | null
-    promptId: string
-    transferQueueId?: string | null
-    timeToTransfer?: string | null
-    expiresInactiveMessage?: string | null
-    companyId?: string | null
-    session: string
-    qrCode: string
-    status?: $Enums.WhatsAppConnectionStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user?: UserCreateNestedOneWithoutWhatsAppConnectionInput
-    queues?: QueueCreateNestedManyWithoutWhatsAppConnectionInput
-  }
-
-  export type WhatsAppConnectionUncheckedCreateWithoutPromptInput = {
-    id?: string
-    name: string
-    isDefault: boolean
-    greetingMessage?: string | null
-    conclusionMessage?: string | null
-    outOfOfficeHoursMessage?: string | null
-    reviewMessage?: string | null
-    token?: string | null
-    queueId: string
-    integrationId?: string | null
-    userId?: string | null
-    promptId: string
-    transferQueueId?: string | null
-    timeToTransfer?: string | null
-    expiresInactiveMessage?: string | null
-    companyId?: string | null
-    session: string
-    qrCode: string
-    status?: $Enums.WhatsAppConnectionStatus
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    user?: UserUncheckedCreateNestedOneWithoutWhatsAppConnectionInput
-    queues?: QueueUncheckedCreateNestedManyWithoutWhatsAppConnectionInput
-  }
-
-  export type WhatsAppConnectionCreateOrConnectWithoutPromptInput = {
-    where: WhatsAppConnectionWhereUniqueInput
-    create: XOR<WhatsAppConnectionCreateWithoutPromptInput, WhatsAppConnectionUncheckedCreateWithoutPromptInput>
   }
 
   export type QueueUpsertWithoutPromptsInput = {
@@ -20466,7 +17412,6 @@ export namespace Prisma {
     conversations?: ConversationUpdateManyWithoutQueueNestedInput
     users?: QueueUserUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUpdateManyWithoutQueueNestedInput
-    whatsAppConnection?: WhatsAppConnectionUpdateOneWithoutQueuesNestedInput
   }
 
   export type QueueUncheckedUpdateWithoutPromptsInput = {
@@ -20482,88 +17427,24 @@ export namespace Prisma {
     schedules?: QueueUpdateschedulesInput | InputJsonValue[]
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    whatsAppConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
     conversations?: ConversationUncheckedUpdateManyWithoutQueueNestedInput
     users?: QueueUserUncheckedUpdateManyWithoutQueueNestedInput
     quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
   }
 
-  export type WhatsAppConnectionUpsertWithoutPromptInput = {
-    update: XOR<WhatsAppConnectionUpdateWithoutPromptInput, WhatsAppConnectionUncheckedUpdateWithoutPromptInput>
-    create: XOR<WhatsAppConnectionCreateWithoutPromptInput, WhatsAppConnectionUncheckedCreateWithoutPromptInput>
-    where?: WhatsAppConnectionWhereInput
-  }
-
-  export type WhatsAppConnectionUpdateToOneWithWhereWithoutPromptInput = {
-    where?: WhatsAppConnectionWhereInput
-    data: XOR<WhatsAppConnectionUpdateWithoutPromptInput, WhatsAppConnectionUncheckedUpdateWithoutPromptInput>
-  }
-
-  export type WhatsAppConnectionUpdateWithoutPromptInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    isDefault?: BoolFieldUpdateOperationsInput | boolean
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    conclusionMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    token?: NullableStringFieldUpdateOperationsInput | string | null
-    queueId?: StringFieldUpdateOperationsInput | string
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: StringFieldUpdateOperationsInput | string
-    transferQueueId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeToTransfer?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresInactiveMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    session?: StringFieldUpdateOperationsInput | string
-    qrCode?: StringFieldUpdateOperationsInput | string
-    status?: EnumWhatsAppConnectionStatusFieldUpdateOperationsInput | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUpdateOneWithoutWhatsAppConnectionNestedInput
-    queues?: QueueUpdateManyWithoutWhatsAppConnectionNestedInput
-  }
-
-  export type WhatsAppConnectionUncheckedUpdateWithoutPromptInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    isDefault?: BoolFieldUpdateOperationsInput | boolean
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    conclusionMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    reviewMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    token?: NullableStringFieldUpdateOperationsInput | string | null
-    queueId?: StringFieldUpdateOperationsInput | string
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    userId?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: StringFieldUpdateOperationsInput | string
-    transferQueueId?: NullableStringFieldUpdateOperationsInput | string | null
-    timeToTransfer?: NullableStringFieldUpdateOperationsInput | string | null
-    expiresInactiveMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    companyId?: NullableStringFieldUpdateOperationsInput | string | null
-    session?: StringFieldUpdateOperationsInput | string
-    qrCode?: StringFieldUpdateOperationsInput | string
-    status?: EnumWhatsAppConnectionStatusFieldUpdateOperationsInput | $Enums.WhatsAppConnectionStatus
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    user?: UserUncheckedUpdateOneWithoutWhatsAppConnectionNestedInput
-    queues?: QueueUncheckedUpdateManyWithoutWhatsAppConnectionNestedInput
-  }
-
   export type ConversationCreateWithoutTagInput = {
     id?: string
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
-    contact: ContactCreateNestedOneWithoutConversationsInput
+    updatedAt?: Date | string | null
     user?: UserCreateNestedOneWithoutConversationsInput
     queue?: QueueCreateNestedOneWithoutConversationsInput
     messages?: MessageCreateNestedManyWithoutConversationInput
+    contact: ContactCreateNestedOneWithoutConversationsInput
   }
 
   export type ConversationUncheckedCreateWithoutTagInput = {
@@ -20572,12 +17453,12 @@ export namespace Prisma {
     userId?: string | null
     queueId?: string | null
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
     messages?: MessageUncheckedCreateNestedManyWithoutConversationInput
   }
 
@@ -20607,182 +17488,31 @@ export namespace Prisma {
     data: XOR<ConversationUpdateManyMutationInput, ConversationUncheckedUpdateManyWithoutTagInput>
   }
 
-  export type PromptsCreateManyWhatsAppConnectionInput = {
-    id?: string
-    title: string
-    apiKey: string
-    prompt: string
-    maxTokens: number
-    maxMessages: number
-    promptTokens?: number | null
-    completionTokens?: number | null
-    totalTokens?: number | null
-    temperature?: number | null
-    assistantId?: string | null
-    description?: string | null
-    companyResume: string
-    isActive?: boolean
-    createdAt?: Date | string
-    updatedAt?: Date | string
-    queueId?: string | null
-  }
-
-  export type QueueCreateManyWhatsAppConnectionInput = {
-    id?: string
-    name: string
-    color?: string
-    greetingMessage?: string | null
-    outOfOfficeHoursMessage?: string | null
-    promptId?: string | null
-    integrationId?: string | null
-    isActive?: boolean
-    priority?: number
-    schedules?: QueueCreateschedulesInput | InputJsonValue[]
-    createdAt?: Date | string
-    updatedAt?: Date | string
-  }
-
-  export type PromptsUpdateWithoutWhatsAppConnectionInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    apiKey?: StringFieldUpdateOperationsInput | string
-    prompt?: StringFieldUpdateOperationsInput | string
-    maxTokens?: IntFieldUpdateOperationsInput | number
-    maxMessages?: IntFieldUpdateOperationsInput | number
-    promptTokens?: NullableIntFieldUpdateOperationsInput | number | null
-    completionTokens?: NullableIntFieldUpdateOperationsInput | number | null
-    totalTokens?: NullableIntFieldUpdateOperationsInput | number | null
-    temperature?: NullableFloatFieldUpdateOperationsInput | number | null
-    assistantId?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    companyResume?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    queue?: QueueUpdateOneWithoutPromptsNestedInput
-  }
-
-  export type PromptsUncheckedUpdateWithoutWhatsAppConnectionInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    apiKey?: StringFieldUpdateOperationsInput | string
-    prompt?: StringFieldUpdateOperationsInput | string
-    maxTokens?: IntFieldUpdateOperationsInput | number
-    maxMessages?: IntFieldUpdateOperationsInput | number
-    promptTokens?: NullableIntFieldUpdateOperationsInput | number | null
-    completionTokens?: NullableIntFieldUpdateOperationsInput | number | null
-    totalTokens?: NullableIntFieldUpdateOperationsInput | number | null
-    temperature?: NullableFloatFieldUpdateOperationsInput | number | null
-    assistantId?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    companyResume?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    queueId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type PromptsUncheckedUpdateManyWithoutWhatsAppConnectionInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    title?: StringFieldUpdateOperationsInput | string
-    apiKey?: StringFieldUpdateOperationsInput | string
-    prompt?: StringFieldUpdateOperationsInput | string
-    maxTokens?: IntFieldUpdateOperationsInput | number
-    maxMessages?: IntFieldUpdateOperationsInput | number
-    promptTokens?: NullableIntFieldUpdateOperationsInput | number | null
-    completionTokens?: NullableIntFieldUpdateOperationsInput | number | null
-    totalTokens?: NullableIntFieldUpdateOperationsInput | number | null
-    temperature?: NullableFloatFieldUpdateOperationsInput | number | null
-    assistantId?: NullableStringFieldUpdateOperationsInput | string | null
-    description?: NullableStringFieldUpdateOperationsInput | string | null
-    companyResume?: StringFieldUpdateOperationsInput | string
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    queueId?: NullableStringFieldUpdateOperationsInput | string | null
-  }
-
-  export type QueueUpdateWithoutWhatsAppConnectionInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: NullableStringFieldUpdateOperationsInput | string | null
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    priority?: IntFieldUpdateOperationsInput | number
-    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    conversations?: ConversationUpdateManyWithoutQueueNestedInput
-    users?: QueueUserUpdateManyWithoutQueueNestedInput
-    quickResponses?: QuickResponseUpdateManyWithoutQueueNestedInput
-    prompts?: PromptsUpdateManyWithoutQueueNestedInput
-  }
-
-  export type QueueUncheckedUpdateWithoutWhatsAppConnectionInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: NullableStringFieldUpdateOperationsInput | string | null
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    priority?: IntFieldUpdateOperationsInput | number
-    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    conversations?: ConversationUncheckedUpdateManyWithoutQueueNestedInput
-    users?: QueueUserUncheckedUpdateManyWithoutQueueNestedInput
-    quickResponses?: QuickResponseUncheckedUpdateManyWithoutQueueNestedInput
-    prompts?: PromptsUncheckedUpdateManyWithoutQueueNestedInput
-  }
-
-  export type QueueUncheckedUpdateManyWithoutWhatsAppConnectionInput = {
-    id?: StringFieldUpdateOperationsInput | string
-    name?: StringFieldUpdateOperationsInput | string
-    color?: StringFieldUpdateOperationsInput | string
-    greetingMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    outOfOfficeHoursMessage?: NullableStringFieldUpdateOperationsInput | string | null
-    promptId?: NullableStringFieldUpdateOperationsInput | string | null
-    integrationId?: NullableStringFieldUpdateOperationsInput | string | null
-    isActive?: BoolFieldUpdateOperationsInput | boolean
-    priority?: IntFieldUpdateOperationsInput | number
-    schedules?: QueueUpdateschedulesInput | InputJsonValue[]
-    createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-  }
-
   export type ConversationCreateManyUserInput = {
     id?: string
     contactId: string
     queueId?: string | null
     tagId?: string | null
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
   }
 
   export type MessageCreateManyUserInput = {
     id?: string
     conversationId: string
     content: string
-    messageType?: $Enums.MessageType
+    messageType: string
     direction: $Enums.Direction
-    whatsappId?: string | null
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    timestamp: string
     mediaType?: string | null
     isRead?: boolean
-    readAt?: Date | string | null
-    deliveredAt?: Date | string | null
-    sentAt?: Date | string | null
     createdAt?: Date | string
   }
 
@@ -20794,16 +17524,16 @@ export namespace Prisma {
   export type ConversationUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     queue?: QueueUpdateOneWithoutConversationsNestedInput
     tag?: TagsUpdateOneWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
+    contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
   }
 
   export type ConversationUncheckedUpdateWithoutUserInput = {
@@ -20812,12 +17542,12 @@ export namespace Prisma {
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
     tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
   }
 
@@ -20827,27 +17557,24 @@ export namespace Prisma {
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
     tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type MessageUpdateWithoutUserInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    messageType?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    messageType?: StringFieldUpdateOperationsInput | string
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     conversation?: ConversationUpdateOneRequiredWithoutMessagesNestedInput
   }
@@ -20856,16 +17583,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     conversationId?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    messageType?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    messageType?: StringFieldUpdateOperationsInput | string
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20873,16 +17597,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     conversationId?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    messageType?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    messageType?: StringFieldUpdateOperationsInput | string
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -20907,23 +17628,23 @@ export namespace Prisma {
     queueId?: string | null
     tagId?: string | null
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
   }
 
   export type ConversationUpdateWithoutContactInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneWithoutConversationsNestedInput
     queue?: QueueUpdateOneWithoutConversationsNestedInput
     tag?: TagsUpdateOneWithoutConversationsNestedInput
@@ -20936,12 +17657,12 @@ export namespace Prisma {
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
     tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
   }
 
@@ -20951,12 +17672,12 @@ export namespace Prisma {
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
     tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type ConversationCreateManyQueueInput = {
@@ -20965,12 +17686,12 @@ export namespace Prisma {
     userId?: string | null
     tagId?: string | null
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
   }
 
   export type QueueUserCreateManyQueueInput = {
@@ -21004,22 +17725,21 @@ export namespace Prisma {
     isActive?: boolean
     createdAt?: Date | string
     updatedAt?: Date | string
-    whatsAppConnectionId?: string | null
   }
 
   export type ConversationUpdateWithoutQueueInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneWithoutConversationsNestedInput
     tag?: TagsUpdateOneWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
+    contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
   }
 
   export type ConversationUncheckedUpdateWithoutQueueInput = {
@@ -21028,12 +17748,12 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
   }
 
@@ -21043,12 +17763,12 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     tagId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
   export type QueueUserUpdateWithoutQueueInput = {
@@ -21110,7 +17830,6 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    WhatsAppConnection?: WhatsAppConnectionUpdateOneWithoutPromptNestedInput
   }
 
   export type PromptsUncheckedUpdateWithoutQueueInput = {
@@ -21130,7 +17849,6 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    whatsAppConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type PromptsUncheckedUpdateManyWithoutQueueInput = {
@@ -21150,39 +17868,32 @@ export namespace Prisma {
     isActive?: BoolFieldUpdateOperationsInput | boolean
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    whatsAppConnectionId?: NullableStringFieldUpdateOperationsInput | string | null
   }
 
   export type MessageCreateManyConversationInput = {
     id?: string
     userId?: string | null
     content: string
-    messageType?: $Enums.MessageType
+    messageType: string
     direction: $Enums.Direction
-    whatsappId?: string | null
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    timestamp: string
     mediaType?: string | null
     isRead?: boolean
-    readAt?: Date | string | null
-    deliveredAt?: Date | string | null
-    sentAt?: Date | string | null
     createdAt?: Date | string
   }
 
   export type MessageUpdateWithoutConversationInput = {
     id?: StringFieldUpdateOperationsInput | string
     content?: StringFieldUpdateOperationsInput | string
-    messageType?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    messageType?: StringFieldUpdateOperationsInput | string
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneWithoutMessagesNestedInput
   }
@@ -21191,16 +17902,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    messageType?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    messageType?: StringFieldUpdateOperationsInput | string
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -21208,16 +17916,13 @@ export namespace Prisma {
     id?: StringFieldUpdateOperationsInput | string
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     content?: StringFieldUpdateOperationsInput | string
-    messageType?: EnumMessageTypeFieldUpdateOperationsInput | $Enums.MessageType
+    messageType?: StringFieldUpdateOperationsInput | string
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
-    whatsappId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
-    readAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    deliveredAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
-    sentAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
 
@@ -21227,27 +17932,27 @@ export namespace Prisma {
     userId?: string | null
     queueId?: string | null
     status?: $Enums.ConversationStatus
-    priority?: $Enums.Priority
+    priority?: $Enums.Priority | null
     subject?: string | null
     lastMessageAt?: Date | string | null
     closedAt?: Date | string | null
     createdAt?: Date | string
-    updatedAt?: Date | string
+    updatedAt?: Date | string | null
   }
 
   export type ConversationUpdateWithoutTagInput = {
     id?: StringFieldUpdateOperationsInput | string
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     user?: UserUpdateOneWithoutConversationsNestedInput
     queue?: QueueUpdateOneWithoutConversationsNestedInput
     messages?: MessageUpdateManyWithoutConversationNestedInput
+    contact?: ContactUpdateOneRequiredWithoutConversationsNestedInput
   }
 
   export type ConversationUncheckedUpdateWithoutTagInput = {
@@ -21256,12 +17961,12 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     messages?: MessageUncheckedUpdateManyWithoutConversationNestedInput
   }
 
@@ -21271,12 +17976,12 @@ export namespace Prisma {
     userId?: NullableStringFieldUpdateOperationsInput | string | null
     queueId?: NullableStringFieldUpdateOperationsInput | string | null
     status?: EnumConversationStatusFieldUpdateOperationsInput | $Enums.ConversationStatus
-    priority?: EnumPriorityFieldUpdateOperationsInput | $Enums.Priority
+    priority?: NullableEnumPriorityFieldUpdateOperationsInput | $Enums.Priority | null
     subject?: NullableStringFieldUpdateOperationsInput | string | null
     lastMessageAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     closedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
-    updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
+    updatedAt?: NullableDateTimeFieldUpdateOperationsInput | Date | string | null
   }
 
 
