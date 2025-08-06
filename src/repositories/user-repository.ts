@@ -8,10 +8,25 @@ import {
 } from "../types/user-interface";
 
 class UserRepositoryPrisma implements UserRepository {
-  async create(user: UserCreateInput): Promise<User> {
+  async create(data: UserCreate & { queueIds?: string[] }): Promise<User> {
+    const { queueIds, ...userData } = data;
     try {
-      const createUser = await prisma.user.create({ data: user });
-      return this.toCreateUser(createUser);
+      const createdUser = await prisma.user.create({
+        data: {
+          ...userData,
+          queues: {
+            create: queueIds?.map((queueId) => ({
+              queue: {
+                connect: { id: queueId },
+              },
+            })),
+          },
+        },
+        include: {
+          queues: { include: { queue: true } },
+        },
+      });
+      return createdUser;
     } catch (error: any) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -29,25 +44,73 @@ class UserRepositoryPrisma implements UserRepository {
   }
 
   async findAll(): Promise<User[]> {
-    const users = await prisma.user.findMany();
-    return users.map(this.toCreateUser);
+    const users = await prisma.user.findMany({
+      include: {
+        queues: {
+          include: {
+            queue: true,
+          },
+        },
+      },
+    });
+    return users;
   }
 
-  async update(id: string, user: Partial<UserCreate>): Promise<User> {
-    const updateUser = await prisma.user.update({
-      where: { id },
-      data: user,
+  async update(
+    id: string,
+    user: Partial<UserCreate & { queueIds?: string[]; queues?: any[] }>
+  ): Promise<User> {
+    const { queueIds, queues, ...userData } = user;
+
+    const transactionResult = await prisma.$transaction(async (tx) => {
+      await tx.user.update({
+        where: { id },
+        data: userData,
+      });
+
+      if (Array.isArray(queueIds)) {
+        await tx.queueUser.deleteMany({
+          where: { userId: id },
+        });
+        if (queueIds.length > 0) {
+          await tx.queueUser.createMany({
+            data: queueIds.map((queueId: string) => ({
+              userId: id,
+              queueId: queueId,
+            })),
+          });
+        }
+      }
+      const result = await tx.user.findUniqueOrThrow({
+        where: { id },
+        include: {
+          queues: {
+            include: {
+              queue: true,
+            },
+          },
+        },
+      });
+
+      return result;
     });
 
-    return this.toCreateUser(updateUser);
+    return transactionResult;
   }
 
   async findById(id: string): Promise<User | null> {
     const user = await prisma.user.findUnique({
       where: { id },
+      include: {
+        queues: {
+          include: {
+            queue: true,
+          },
+        },
+      },
     });
 
-    return user ? this.toCreateUser(user) : null;
+    return user;
   }
 
   async delete(id: string): Promise<void> {
@@ -55,18 +118,6 @@ class UserRepositoryPrisma implements UserRepository {
       where: { id },
     });
   }
-
-  private toCreateUser = (data: User): User => ({
-    id: data.id,
-    name: data.name,
-    email: data.email,
-    password: data.password,
-    role: data.role,
-    isActive: data.isActive,
-    companyId: data.companyId ?? "",
-    createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
-  });
 }
 
 export { UserRepositoryPrisma };

@@ -8,9 +8,30 @@ import {
 class ConversationRepositoryPrisma implements ConversationRepository {
   async findAll(): Promise<Conversation[]> {
     const conversations = await prisma.conversation.findMany({
-      orderBy: { updatedAt: "desc" },
+      include: {
+        contact: true,
+        messages: {
+          orderBy: {
+            createdAt: "asc",
+          },
+        },
+        user: true,
+        queue: true,
+      },
     });
-    return conversations.map(this.toConversation);
+
+    const sorted = conversations.sort((a, b) => {
+      const lastMessageA =
+        a.messages.length > 0 ? a.messages[a.messages.length - 1] : null;
+      const lastMessageB =
+        b.messages.length > 0 ? b.messages[b.messages.length - 1] : null;
+      const timestampA = lastMessageA ? Number(lastMessageA.timestamp) : 0;
+      const timestampB = lastMessageB ? Number(lastMessageB.timestamp) : 0;
+
+      return timestampB - timestampA;
+    });
+
+    return sorted as Conversation[];
   }
 
   async findById(id: string): Promise<Conversation | null> {
@@ -46,7 +67,6 @@ class ConversationRepositoryPrisma implements ConversationRepository {
       },
     });
 
-    // Ordena no JS pela data da última mensagem
     const sorted = conversationsWithIncludes.sort((a, b) => {
       const dateA = a.messages[0]?.createdAt
         ? new Date(a.messages[0].createdAt).getTime()
