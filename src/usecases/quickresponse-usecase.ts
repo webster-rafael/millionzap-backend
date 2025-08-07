@@ -1,7 +1,6 @@
 import { QuickResponseRepositoryPrisma } from "../repositories/quickresponse-repository";
 import {
   QuickResponse,
-  QuickResponseCreate,
   QuickResponseCreateInput,
   QuickResponseRepository,
 } from "../types/quickResponses-interface";

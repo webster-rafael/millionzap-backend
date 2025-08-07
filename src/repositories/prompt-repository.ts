@@ -25,7 +25,7 @@ class PromptRepositoryPrisma implements PromptRepository {
       createdAt: createdPrompt.createdAt,
       updatedAt: createdPrompt.updatedAt,
       queueId: createdPrompt.queueId ?? "",
-      isActive: createdPrompt.isActive,
+      companyId: createdPrompt.companyId,
     };
   }
 
@@ -49,6 +49,7 @@ class PromptRepositoryPrisma implements PromptRepository {
       createdAt: prompt.createdAt,
       updatedAt: prompt.updatedAt,
       queueId: prompt.queueId ?? "",
+      companyId: prompt.companyId,
     }));
   }
 
@@ -75,6 +76,7 @@ class PromptRepositoryPrisma implements PromptRepository {
           createdAt: prompt.createdAt,
           updatedAt: prompt.updatedAt,
           queueId: prompt.queueId ?? "",
+          companyId: prompt.companyId,
         }
       : null;
   }
@@ -97,6 +99,7 @@ class PromptRepositoryPrisma implements PromptRepository {
         companyResume: prompt.companyResume ?? "",
         isActive: prompt.isActive,
         queueId: prompt.queueId ?? "",
+        companyId: prompt.companyId,
       },
     });
     return this.toPrompt(updatedPrompt);
@@ -126,6 +129,7 @@ class PromptRepositoryPrisma implements PromptRepository {
     createdAt: Date;
     updatedAt: Date;
     queueId: string | null;
+    companyId: string;
   }): Prompt => ({
     id: data.id,
     title: data.title,
@@ -144,6 +148,7 @@ class PromptRepositoryPrisma implements PromptRepository {
     createdAt: data.createdAt,
     updatedAt: data.updatedAt,
     queueId: data.queueId ?? "",
+    companyId: data.companyId,
   });
 }
 

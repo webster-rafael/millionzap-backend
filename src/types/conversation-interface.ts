@@ -11,6 +11,7 @@ export interface Conversation {
   subject?: string | null;
   lastMessageAt?: Date | null;
   closedAt?: Date | null;
+  companyId: string;
   createdAt: Date;
   updatedAt?: Date | null;
 

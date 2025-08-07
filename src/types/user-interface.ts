@@ -7,7 +7,7 @@ export interface User {
   password: string;
   role: UserRole;
   isActive: boolean;
-  companyId?: string | null;
+  companyId: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -16,6 +16,7 @@ export interface UserCreate {
   email: string;
   password: string;
   role: UserRole;
+  companyId: string;
 }
 
 export type UserCreateInput = Omit<User, "id" | "createdAt" | "updatedAt">;

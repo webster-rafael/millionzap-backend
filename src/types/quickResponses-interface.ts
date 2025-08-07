@@ -6,6 +6,7 @@ export interface QuickResponse {
   createdAt: Date;
   updatedAt: Date;
   queueId: string;
+  companyId: string;
 }
 
 export interface QuickResponseCreate {
@@ -13,6 +14,7 @@ export interface QuickResponseCreate {
   message: string;
   shortcut: string;
   queueId: string;
+  companyId: string;
   createdAt: Date;
   updatedAt: Date;
 }

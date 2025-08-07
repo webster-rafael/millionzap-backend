@@ -7,24 +7,28 @@ class TagUseCase {
     this.tagRepository = new TagsRepositoryPrisma();
   }
 
-  async create(tag: CreateTags): Promise<Tags> {
-    return this.tagRepository.create(tag);
+  async create(tag: CreateTags, companyId: string): Promise<Tags> {
+    return this.tagRepository.create(tag, companyId);
   }
 
-  async findAll(): Promise<Tags[]> {
-    return this.tagRepository.findAll();
+  async findAll(companyId: string): Promise<Tags[]> {
+    return this.tagRepository.findAll(companyId);
   }
 
-  async update(id: string, tag: CreateTags): Promise<Tags> {
-    return this.tagRepository.update(id, tag);
+  async update(
+    id: string,
+    tag: Partial<CreateTags>,
+    companyId: string
+  ): Promise<Tags> {
+    return this.tagRepository.update(id, tag, companyId);
   }
 
-  async findById(id: string): Promise<Tags | null> {
-    return this.tagRepository.findById(id);
+  async findById(id: string, companyId: string): Promise<Tags | null> {
+    return this.tagRepository.findById(id, companyId);
   }
 
-  async delete(id: string): Promise<void> {
-    return this.tagRepository.delete(id);
+  async delete(id: string, companyId: string): Promise<void> {
+    return this.tagRepository.delete(id, companyId);
   }
 }
 

@@ -11,6 +11,7 @@ export interface Queue {
   isActive: boolean;
   priority?: number | null;
   schedules: Schedule[];
+  companyId: string;
 }
 
 export interface QueueCreate {
@@ -23,6 +24,7 @@ export interface QueueCreate {
   isActive: boolean;
   priority?: number | null;
   schedules?: Schedule[];
+  companyId: string;
 }
 
 export interface Schedule {

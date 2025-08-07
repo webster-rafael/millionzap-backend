@@ -12,6 +12,7 @@ export interface Prompt {
   assistantId?: string;
   description?: string;
   companyResume: string;
+  companyId: string;
   isActive?: boolean;
   createdAt: Date;
   updatedAt: Date;
@@ -34,6 +35,7 @@ export interface PromptCreate {
   createdAt: Date;
   updatedAt: Date;
   queueId: string;
+  companyId: string;
 }
 
 export type PromptCreateInput = Omit<Prompt, "id" | "createdAt" | "updatedAt">;

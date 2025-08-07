@@ -120,6 +120,19 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
+exports.Prisma.CompanyScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  phone: 'phone',
+  email: 'email',
+  password: 'password',
+  status: 'status',
+  planId: 'planId',
+  dueDate: 'dueDate',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+};
+
 exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
   name: 'name',
@@ -155,6 +168,7 @@ exports.Prisma.QueueScalarFieldEnum = {
   isActive: 'isActive',
   priority: 'priority',
   schedules: 'schedules',
+  companyId: 'companyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -176,6 +190,7 @@ exports.Prisma.ConversationScalarFieldEnum = {
   subject: 'subject',
   lastMessageAt: 'lastMessageAt',
   closedAt: 'closedAt',
+  companyId: 'companyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 };
@@ -191,6 +206,7 @@ exports.Prisma.MessageScalarFieldEnum = {
   mediaUrl: 'mediaUrl',
   timestamp: 'timestamp',
   mediaType: 'mediaType',
+  companyId: 'companyId',
   isRead: 'isRead',
   createdAt: 'createdAt'
 };
@@ -202,7 +218,8 @@ exports.Prisma.QuickResponseScalarFieldEnum = {
   shortcut: 'shortcut',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  queueId: 'queueId'
+  queueId: 'queueId',
+  companyId: 'companyId'
 };
 
 exports.Prisma.PromptsScalarFieldEnum = {
@@ -222,7 +239,8 @@ exports.Prisma.PromptsScalarFieldEnum = {
   isActive: 'isActive',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
-  queueId: 'queueId'
+  queueId: 'queueId',
+  companyId: 'companyId'
 };
 
 exports.Prisma.TagsScalarFieldEnum = {
@@ -232,7 +250,8 @@ exports.Prisma.TagsScalarFieldEnum = {
   order: 'order',
   description: 'description',
   createdAt: 'createdAt',
-  updatedAt: 'updatedAt'
+  updatedAt: 'updatedAt',
+  companyId: 'companyId'
 };
 
 exports.Prisma.SortOrder = {
@@ -285,6 +304,7 @@ exports.MessageStatus = exports.$Enums.MessageStatus = {
 };
 
 exports.Prisma.ModelName = {
+  Company: 'Company',
   User: 'User',
   Contact: 'Contact',
   Queue: 'Queue',

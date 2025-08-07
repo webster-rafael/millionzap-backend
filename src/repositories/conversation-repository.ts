@@ -91,6 +91,7 @@ class ConversationRepositoryPrisma implements ConversationRepository {
     lastMessageAt: conversation.lastMessageAt ?? null,
     closedAt: conversation.closedAt ?? null,
     createdAt: conversation.createdAt,
+    companyId: conversation.companyId,
     updatedAt: conversation.updatedAt ?? null,
   });
 }

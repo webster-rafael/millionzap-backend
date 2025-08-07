@@ -22,7 +22,7 @@ export interface Message {
   mediaType: string | null;
   isRead: boolean;
   createdAt: Date;
-
+  companyId: string;
   // Relacionamentos (opcionais)
   user?: UserInfo | null;
   conversation?: ConversationInfo;

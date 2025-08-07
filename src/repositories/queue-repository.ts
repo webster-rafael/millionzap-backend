@@ -16,6 +16,7 @@ class QueueRepositoryPrisma implements QueueRepository {
         schedules: queue.schedules
           ? JSON.parse(JSON.stringify(queue.schedules))
           : [],
+        companyId: queue.companyId,
       },
     });
 
@@ -70,6 +71,7 @@ class QueueRepositoryPrisma implements QueueRepository {
     schedules: queue.schedules ?? [],
     createdAt: queue.createdAt,
     updatedAt: queue.updatedAt,
+    companyId: queue.companyId,
   });
 }
 

@@ -8,17 +8,38 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model User {
-  id        String   @id @default(uuid())
-  name      String
-  email     String   @unique
-  password  String
-  role      UserRole @default(ADMIN)
-  isActive  Boolean  @default(true)
-  companyId String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+model Company {
+  id             String          @id @default(uuid())
+  name           String
+  phone          String
+  email          String          @unique
+  password       String
+  status         Boolean
+  planId         String
+  dueDate        DateTime
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  users          User[]
+  contacts       Contact[]
+  conversations  Conversation[]
+  messages       Message[]
+  queues         Queue[]
+  quickResponses QuickResponse[]
+  prompts        Prompts[]
+  tags           Tags[]
+}
 
+model User {
+  id            String         @id @default(uuid())
+  name          String
+  email         String         @unique
+  password      String
+  role          UserRole       @default(ADMIN)
+  isActive      Boolean        @default(true)
+  companyId     String
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+  company       Company?       @relation(fields: [companyId], references: [id])
   // Relacionamentos
   conversations Conversation[]
   messages      Message[]
@@ -33,13 +54,14 @@ model Contact {
   phone      String    @unique
   email      String?
   tags       String[]
-  companyId  String?
+  companyId  String
   isCostumer Boolean?  @default(true)
   createdAt  DateTime  @default(now())
   updatedAt  DateTime? @updatedAt
 
   // Relacionamentos
   conversations Conversation[]
+  Company       Company?       @relation(fields: [companyId], references: [id])
 
   @@map("contacts")
 }
@@ -55,6 +77,7 @@ model Queue {
   isActive                Boolean  @default(true)
   priority                Int      @default(0)
   schedules               Json[]   @default([])
+  companyId               String
   createdAt               DateTime @default(now())
   updatedAt               DateTime @updatedAt
 
@@ -63,6 +86,7 @@ model Queue {
   users          QueueUser[]
   quickResponses QuickResponse[]
   prompts        Prompts[]
+  Company        Company?        @relation(fields: [companyId], references: [id])
 
   @@map("queues")
 }
@@ -90,6 +114,7 @@ model Conversation {
   subject       String?
   lastMessageAt DateTime?
   closedAt      DateTime?
+  companyId     String
   createdAt     DateTime           @default(now())
   updatedAt     DateTime?          @updatedAt
 
@@ -99,6 +124,7 @@ model Conversation {
   tag      Tags?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
   messages Message[]
   contact  Contact   @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  Company  Company?  @relation(fields: [companyId], references: [id])
 
   @@map("conversations")
 }
@@ -114,12 +140,14 @@ model Message {
   mediaUrl       String?
   timestamp      String
   mediaType      String?
+  companyId      String
   isRead         Boolean       @default(false)
   createdAt      DateTime      @default(now())
 
   // Relacionamentos
   conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
   user         User?        @relation(fields: [userId], references: [id])
+  Company      Company?     @relation(fields: [companyId], references: [id])
 
   @@map("messages")
 }
@@ -132,9 +160,11 @@ model QuickResponse {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   queueId   String
+  companyId String
 
   // Relacionamentos
-  queue Queue? @relation(fields: [queueId], references: [id], onDelete: Cascade)
+  queue   Queue?   @relation(fields: [queueId], references: [id], onDelete: Cascade)
+  Company Company? @relation(fields: [companyId], references: [id])
 
   @@map("quick_responses")
 }
@@ -157,9 +187,11 @@ model Prompts {
   createdAt        DateTime @default(now())
   updatedAt        DateTime @updatedAt
   queueId          String?
+  companyId        String
 
   // Relacionamentos
-  queue Queue? @relation(fields: [queueId], references: [id], onDelete: SetNull)
+  queue   Queue?   @relation(fields: [queueId], references: [id], onDelete: SetNull)
+  Company Company? @relation(fields: [companyId], references: [id])
 
   @@map("prompts")
 }
@@ -173,6 +205,8 @@ model Tags {
   conversations Conversation[]
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
+  Company       Company?       @relation(fields: [companyId], references: [id])
+  companyId     String
 
   @@map("tags")
 }

@@ -2,35 +2,45 @@ import { prisma } from "../database/prisma-client";
 import { CreateTags, Tags, TagsRepository } from "../types/tag-interface";
 
 class TagsRepositoryPrisma implements TagsRepository {
-  async create(tag: CreateTags): Promise<Tags> {
-    const createdTag = await prisma.tags.create({ data: tag });
+  async create(tag: CreateTags, companyId: string): Promise<Tags> {
+    const createdTag = await prisma.tags.create({
+      data: { ...tag, companyId },
+    });
     return this.toTags(createdTag);
   }
 
-  async findAll(): Promise<Tags[]> {
-    const tags = await prisma.tags.findMany();
+  async findAll(companyId: string): Promise<Tags[]> {
+    const tags = await prisma.tags.findMany({
+      where: {
+        companyId: companyId,
+      },
+    });
     return tags.map(this.toTags);
   }
 
-  async update(id: string, data: Partial<CreateTags>): Promise<Tags> {
+  async update(
+    id: string,
+    data: Partial<CreateTags>,
+    companyId: string
+  ): Promise<Tags> {
     const updatedTag = await prisma.tags.update({
-      where: { id },
+      where: { id, companyId },
       data,
     });
     return this.toTags(updatedTag);
   }
 
-  async findById(id: string): Promise<Tags | null> {
+  async findById(id: string, companyId: string): Promise<Tags | null> {
     const tag = await prisma.tags.findUnique({
-      where: { id },
+      where: { id, companyId },
     });
 
     return tag ? this.toTags(tag) : null;
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(id: string, companyId: string): Promise<void> {
     await prisma.tags.delete({
-      where: { id },
+      where: { id, companyId },
     });
   }
 
@@ -42,6 +52,7 @@ class TagsRepositoryPrisma implements TagsRepository {
     description: tag.description ?? "",
     createdAt: tag.createdAt,
     updatedAt: tag.updatedAt,
+    companyId: tag.companyId,
   });
 }
 

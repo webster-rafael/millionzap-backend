@@ -54,7 +54,7 @@ class ContactRepositoryPrisma implements ContactRepository {
     name: contact.name,
     phone: contact.phone,
     email: contact.email ?? "",
-    companyId: contact.companyId ?? "",
+    companyId: contact.companyId,
     whatsappId: contact.whatsappId ?? "",
     isCostumer: contact.isCostumer ?? true,
     tags: contact.tags ?? [],

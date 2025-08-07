@@ -8,6 +8,7 @@ import { tagsRoutes } from "./routes/tags-route";
 import { contactRoutes } from "./routes/contact-route";
 import { whatsAppConnectionRoutes } from "./routes/whatsappConnection-route";
 import { conversationRoutes } from "./routes/conversation-route";
+import { companyRoutes } from "./routes/company-route";
 
 const app: FastifyInstance = Fastify({});
 
@@ -15,6 +16,10 @@ app.register(fastifyCors, {
   origin: "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type", "Authorization"],
+});
+
+app.register(companyRoutes, {
+  prefix: "/companies",
 });
 
 app.register(userRoutes, {
