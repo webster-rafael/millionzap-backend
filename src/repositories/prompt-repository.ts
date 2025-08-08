@@ -6,8 +6,13 @@ import {
 } from "../types/prompt-interface";
 
 class PromptRepositoryPrisma implements PromptRepository {
-  async create(prompt: PromptCreateInput): Promise<Prompt> {
-    const createdPrompt = await prisma.prompts.create({ data: prompt });
+  async create(prompt: PromptCreateInput, companyId: string): Promise<Prompt> {
+    const createdPrompt = await prisma.prompts.create({
+      data: {
+        ...prompt,
+        companyId,
+      },
+    });
     return {
       id: createdPrompt.id,
       title: createdPrompt.title,
@@ -25,12 +30,14 @@ class PromptRepositoryPrisma implements PromptRepository {
       createdAt: createdPrompt.createdAt,
       updatedAt: createdPrompt.updatedAt,
       queueId: createdPrompt.queueId ?? "",
-      companyId: createdPrompt.companyId,
+      companyId,
     };
   }
 
-  async findAll(): Promise<Prompt[]> {
-    const prompts = await prisma.prompts.findMany();
+  async findAll(companyId: string): Promise<Prompt[]> {
+    const prompts = await prisma.prompts.findMany({
+      where: { companyId },
+    });
     return prompts.map((prompt) => ({
       id: prompt.id,
       title: prompt.title,
@@ -53,7 +60,7 @@ class PromptRepositoryPrisma implements PromptRepository {
     }));
   }
 
-  async findById(id: string): Promise<Prompt | null> {
+  async findById(id: string, companyId: string): Promise<Prompt | null> {
     const prompt = await prisma.prompts.findUnique({
       where: { id },
     });
@@ -76,12 +83,12 @@ class PromptRepositoryPrisma implements PromptRepository {
           createdAt: prompt.createdAt,
           updatedAt: prompt.updatedAt,
           queueId: prompt.queueId ?? "",
-          companyId: prompt.companyId,
+          companyId
         }
       : null;
   }
 
-  async update(prompt: Prompt): Promise<Prompt> {
+  async update(prompt: Prompt, companyId: string): Promise<Prompt> {
     const updatedPrompt = await prisma.prompts.update({
       where: { id: prompt.id },
       data: {
@@ -99,13 +106,13 @@ class PromptRepositoryPrisma implements PromptRepository {
         companyResume: prompt.companyResume ?? "",
         isActive: prompt.isActive,
         queueId: prompt.queueId ?? "",
-        companyId: prompt.companyId,
+        companyId
       },
     });
     return this.toPrompt(updatedPrompt);
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(id: string, companyId: string): Promise<void> {
     await prisma.prompts.delete({
       where: { id },
     });

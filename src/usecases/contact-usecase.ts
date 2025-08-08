@@ -11,24 +11,37 @@ class ContactUseCase {
     this.contactRepository = new ContactRepositoryPrisma();
   }
 
-  async create(contact: ContactCreateInput): Promise<Contact> {
-    return this.contactRepository.create(contact);
+  async create(
+    contact: ContactCreateInput,
+    companyId: string
+  ): Promise<Contact> {
+    return this.contactRepository.create(contact, companyId);
   }
 
-  async findAll(): Promise<Contact[]> {
-    return this.contactRepository.findAll();
+  async findAll(companyId: string): Promise<Contact[]> {
+    return this.contactRepository.findAll(companyId);
   }
 
-  async update(id: string, contact: Contact): Promise<Contact> {
-    return this.contactRepository.update(id, contact);
+  async update(
+    id: string,
+    contact: ContactCreateInput,
+    companyId: string
+  ): Promise<Contact> {
+    return this.contactRepository.update(id, contact, companyId);
   }
 
-  async findById(id: string): Promise<Contact | null> {
-    return this.contactRepository.findById(id);
+  async findById(
+    id: string,
+    companyId: string
+  ): Promise<Contact | null> {
+    return this.contactRepository.findById(id, companyId);
   }
 
-  async delete(id: string): Promise<void> {
-    return this.contactRepository.delete(id);
+  async delete(
+    id: string,
+    companyId: string
+  ): Promise<void> {
+    return this.contactRepository.delete(id, companyId);
   }
 }
 

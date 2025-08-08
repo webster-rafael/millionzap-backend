@@ -1,13 +1,15 @@
 import { FastifyInstance } from "fastify";
 import { ContactUseCase } from "../usecases/contact-usecase";
 import { CreateContact } from "../types/contact-interface";
+import { authHook } from "../hooks/auth";
 
 export function contactRoutes(fastify: FastifyInstance) {
   const contactUseCase = new ContactUseCase();
-
+  fastify.addHook("onRequest", authHook);
   fastify.post<{ Body: CreateContact }>("/", async (request, reply) => {
     try {
-      const contact = await contactUseCase.create(request.body);
+      const companyId = request.company!.id;
+      const contact = await contactUseCase.create(request.body, companyId);
       reply.status(201).send(contact);
     } catch (error: any) {
       console.error("Erro ao criar contato:", error);
@@ -22,9 +24,10 @@ export function contactRoutes(fastify: FastifyInstance) {
     }
   });
 
-  fastify.get("/", async (_, reply) => {
+  fastify.get("/", async (request, reply) => {
     try {
-      const contacts = await contactUseCase.findAll();
+      const companyId = request.company!.id;
+      const contacts = await contactUseCase.findAll(companyId);
       reply.status(200).send(contacts);
     } catch (error) {
       console.error("Erro ao buscar contatos:", error);
@@ -34,7 +37,11 @@ export function contactRoutes(fastify: FastifyInstance) {
 
   fastify.get<{ Params: { id: string } }>("/:id", async (request, reply) => {
     try {
-      const contact = await contactUseCase.findById(request.params.id);
+      const companyId = request.company!.id;
+      const contact = await contactUseCase.findById(
+        request.params.id,
+        companyId
+      );
       if (!contact) {
         return reply.status(404).send({ error: "Contato não encontrado" });
       }
@@ -49,15 +56,23 @@ export function contactRoutes(fastify: FastifyInstance) {
     "/:id",
     async (request, reply) => {
       try {
-        const existing = await contactUseCase.findById(request.params.id);
+        const companyId = request.company!.id;
+        const existing = await contactUseCase.findById(
+          request.params.id,
+          companyId
+        );
         if (!existing) {
           return reply.status(404).send({ error: "Contato não encontrado" });
         }
 
-        const updated = await contactUseCase.update(request.params.id, {
-          ...existing,
-          ...request.body,
-        });
+        const updated = await contactUseCase.update(
+          request.params.id,
+          {
+            ...existing,
+            ...request.body,
+          },
+          companyId
+        );
         reply.status(200).send(updated);
       } catch (error) {
         console.error("Erro ao atualizar contato:", error);
@@ -68,12 +83,16 @@ export function contactRoutes(fastify: FastifyInstance) {
 
   fastify.delete<{ Params: { id: string } }>("/:id", async (request, reply) => {
     try {
-      const existing = await contactUseCase.findById(request.params.id);
+      const companyId = request.company!.id;
+      const existing = await contactUseCase.findById(
+        request.params.id,
+        companyId
+      );
       if (!existing) {
         return reply.status(404).send({ error: "Contato não encontrado" });
       }
 
-      await contactUseCase.delete(request.params.id);
+      await contactUseCase.delete(request.params.id, companyId);
       reply.status(204).send();
     } catch (error) {
       console.error("Erro ao deletar contato:", error);

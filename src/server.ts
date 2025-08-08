@@ -6,7 +6,6 @@ import { queuesRoutes } from "./routes/queues-route";
 import { promptRoutes } from "./routes/prompt-route";
 import { tagsRoutes } from "./routes/tags-route";
 import { contactRoutes } from "./routes/contact-route";
-import { whatsAppConnectionRoutes } from "./routes/whatsappConnection-route";
 import { conversationRoutes } from "./routes/conversation-route";
 import { companyRoutes } from "./routes/company-route";
 

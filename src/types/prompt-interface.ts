@@ -41,9 +41,9 @@ export interface PromptCreate {
 export type PromptCreateInput = Omit<Prompt, "id" | "createdAt" | "updatedAt">;
 
 export interface PromptRepository {
-  create(prompt: PromptCreateInput): Promise<Prompt>;
-  findAll(): Promise<Prompt[]>;
-  findById(id: string): Promise<Prompt | null>;
-  update(prompt: Prompt): Promise<Prompt>;
-  delete(id: string): Promise<void>;
+  create(prompt: PromptCreateInput, companyId: string): Promise<Prompt>;
+  findAll(companyId: string): Promise<Prompt[]>;
+  findById(id: string, companyId: string): Promise<Prompt | null>;
+  update(prompt: Prompt, companyId: string): Promise<Prompt>;
+  delete(id: string, companyId: string): Promise<void>;
 }

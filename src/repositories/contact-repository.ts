@@ -7,10 +7,15 @@ import {
 } from "../types/contact-interface";
 
 class ContactRepositoryPrisma implements ContactRepository {
-  async create(contact: CreateContact): Promise<Contact> {
+  async create(contact: CreateContact, companyId: string): Promise<Contact> {
     try {
-      const createContact = await prisma.contact.create({ data: contact });
-      return this.toContact(createContact);
+      const createContact = await prisma.contact.create({
+        data: {
+          ...contact,
+          companyId: companyId,
+        },
+      });
+      return this.toContact(createContact, companyId);
     } catch (error: unknown) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -27,34 +32,38 @@ class ContactRepositoryPrisma implements ContactRepository {
     }
   }
 
-  async findAll(): Promise<Contact[]> {
-    const contacts = await prisma.contact.findMany();
-    return contacts.map(this.toContact);
+  async findAll(companyId: string): Promise<Contact[]> {
+    const contacts = await prisma.contact.findMany({ where: { companyId } });
+    return contacts.map((contact) => this.toContact(contact, companyId));
   }
 
-  async update(id: string, contact: Partial<CreateContact>): Promise<Contact> {
+  async update(
+    id: string,
+    contact: Partial<CreateContact>,
+    companyId: string
+  ): Promise<Contact> {
     const updateContact = await prisma.contact.update({
       where: { id },
       data: contact,
     });
-    return this.toContact(updateContact);
+    return this.toContact(updateContact, companyId);
   }
 
-  async findById(id: string): Promise<Contact | null> {
+  async findById(id: string, companyId: string): Promise<Contact | null> {
     const contact = await prisma.contact.findUnique({ where: { id } });
-    return contact ? this.toContact(contact) : null;
+    return contact ? this.toContact(contact, companyId) : null;
   }
 
-  async delete(id: string): Promise<void> {
+  async delete(id: string, companyId: string): Promise<void> {
     await prisma.contact.delete({ where: { id } });
   }
 
-  private toContact = (contact: Contact): Contact => ({
+  private toContact = (contact: Contact, companyId: string): Contact => ({
     id: contact.id,
     name: contact.name,
     phone: contact.phone,
     email: contact.email ?? "",
-    companyId: contact.companyId,
+    companyId,
     whatsappId: contact.whatsappId ?? "",
     isCostumer: contact.isCostumer ?? true,
     tags: contact.tags ?? [],

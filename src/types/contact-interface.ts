@@ -27,9 +27,13 @@ export type ContactCreateInput = Omit<
 >;
 
 export interface ContactRepository {
-  create(contact: ContactCreateInput): Promise<Contact>;
-  findAll(): Promise<Contact[]>;
-  update(id: string, contact: CreateContact): Promise<Contact>;
-  findById(id: string): Promise<Contact | null>;
-  delete(id: string): Promise<void>;
+  create(contact: ContactCreateInput, companyId: string): Promise<Contact>;
+  findAll(companyId: string): Promise<Contact[]>;
+  update(
+    id: string,
+    contact: ContactCreateInput,
+    companyId: string
+  ): Promise<Contact>;
+  findById(id: string, companyId: string): Promise<Contact | null>;
+  delete(id: string, companyId: string): Promise<void>;
 }

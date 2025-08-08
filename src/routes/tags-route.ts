@@ -1,7 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { TagUseCase } from "../usecases/tag-usecase";
 import { CreateTags } from "../types/tag-interface";
-import { authHook } from "../hooks/auth"; // 1. Importe o hook de autenticação
+import { authHook } from "../hooks/auth";
 
 export function tagsRoutes(fastify: FastifyInstance) {
   const tagUseCase = new TagUseCase();

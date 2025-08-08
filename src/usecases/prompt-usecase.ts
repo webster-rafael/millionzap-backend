@@ -10,23 +10,23 @@ class PromptUseCase {
   constructor() {
     this.promptRepository = new PromptRepositoryPrisma();
   }
-  async create(prompt: PromptCreateInput): Promise<Prompt> {
-    return this.promptRepository.create(prompt);
+  async create(prompt: PromptCreateInput, companyId: string): Promise<Prompt> {
+    return this.promptRepository.create(prompt, companyId);
   }
 
-  async findAll(): Promise<Prompt[]> {
-    return this.promptRepository.findAll();
+  async findAll(companyId: string): Promise<Prompt[]> {
+    return this.promptRepository.findAll(companyId);
   }
-  async findById(id: string): Promise<Prompt | null> {
-    return this.promptRepository.findById(id);
-  }
-
-  async update(prompt: Prompt): Promise<Prompt> {
-    return this.promptRepository.update(prompt);
+  async findById(id: string, companyId: string): Promise<Prompt | null> {
+    return this.promptRepository.findById(id, companyId);
   }
 
-  async delete(id: string): Promise<void> {
-    return this.promptRepository.delete(id);
+  async update(prompt: Prompt, companyId: string): Promise<Prompt> {
+    return this.promptRepository.update(prompt, companyId);
+  }
+
+  async delete(id: string, companyId: string): Promise<void> {
+    return this.promptRepository.delete(id, companyId);
   }
 }
 export { PromptUseCase };
