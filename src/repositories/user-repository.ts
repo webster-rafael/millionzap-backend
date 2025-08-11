@@ -8,12 +8,16 @@ import {
 } from "../types/user-interface";
 
 class UserRepositoryPrisma implements UserRepository {
-  async create(data: UserCreate & { queueIds?: string[] }): Promise<User> {
+  async create(
+    data: UserCreate & { queueIds?: string[] },
+    companyId: string
+  ): Promise<User> {
     const { queueIds, ...userData } = data;
     try {
       const createdUser = await prisma.user.create({
         data: {
           ...userData,
+          companyId,
           queues: {
             create: queueIds?.map((queueId) => ({
               queue: {
@@ -43,8 +47,11 @@ class UserRepositoryPrisma implements UserRepository {
     }
   }
 
-  async findAll(): Promise<User[]> {
+  async findAll(companyId: string): Promise<User[]> {
     const users = await prisma.user.findMany({
+      where: {
+        companyId,
+      },
       include: {
         queues: {
           include: {
@@ -58,9 +65,11 @@ class UserRepositoryPrisma implements UserRepository {
 
   async update(
     id: string,
-    user: Partial<UserCreate & { queueIds?: string[]; queues?: any[] }>
+    user: Partial<
+      UserCreate & { queueIds?: string[]; queues?: any[]; companyId?: string }
+    >
   ): Promise<User> {
-    const { queueIds, queues, ...userData } = user;
+    const { queueIds, queues, companyId, ...userData } = user;
 
     const transactionResult = await prisma.$transaction(async (tx) => {
       await tx.user.update({
@@ -98,9 +107,9 @@ class UserRepositoryPrisma implements UserRepository {
     return transactionResult;
   }
 
-  async findById(id: string): Promise<User | null> {
+  async findById(id: string, companyId: string): Promise<User | null> {
     const user = await prisma.user.findUnique({
-      where: { id },
+      where: { id, companyId },
       include: {
         queues: {
           include: {
@@ -113,9 +122,17 @@ class UserRepositoryPrisma implements UserRepository {
     return user;
   }
 
-  async delete(id: string): Promise<void> {
+  async findByEmail(email: string): Promise<User | null> {
+    const user = await prisma.user.findUnique({
+      where: { email },
+    });
+
+    return user;
+  }
+
+  async delete(id: string, companyId: string): Promise<void> {
     await prisma.user.delete({
-      where: { id },
+      where: { id, companyId },
     });
   }
 }

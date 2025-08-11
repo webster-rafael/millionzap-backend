@@ -3,7 +3,6 @@ export interface Company {
   name: string;
   phone: string;
   email: string;
-  password: string;
   planId: string;
   status: boolean;
   dueDate: Date;

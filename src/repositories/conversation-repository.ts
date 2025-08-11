@@ -6,8 +6,9 @@ import {
 } from "../types/conversation-interface";
 
 class ConversationRepositoryPrisma implements ConversationRepository {
-  async findAll(): Promise<Conversation[]> {
+  async findAll(companyId: string): Promise<Conversation[]> {
     const conversations = await prisma.conversation.findMany({
+      where: { companyId },
       include: {
         contact: true,
         messages: {
@@ -34,11 +35,17 @@ class ConversationRepositoryPrisma implements ConversationRepository {
     return sorted as Conversation[];
   }
 
-  async findById(id: string): Promise<Conversation | null> {
+  async findById(id: string, companyId: string): Promise<Conversation | null> {
     const conversation = await prisma.conversation.findUnique({
-      where: { id },
+      where: { id, companyId },
+      include: {
+        contact: true,
+        messages: { orderBy: { createdAt: "asc" } },
+        user: true,
+        queue: true,
+      },
     });
-    return conversation ? this.toConversation(conversation) : null;
+    return conversation;
   }
 
   async update(
@@ -48,13 +55,20 @@ class ConversationRepositoryPrisma implements ConversationRepository {
     const updatedConversation = await prisma.conversation.update({
       where: { id },
       data: conversation,
+      include: {
+        contact: true,
+        messages: { orderBy: { createdAt: "asc" } },
+        user: true,
+        queue: true,
+      },
     });
 
-    return this.toConversation(updatedConversation);
+    return updatedConversation;
   }
 
-  async findForKanban(): Promise<Conversation[]> {
+  async findForKanban(companyId: string): Promise<Conversation[]> {
     const conversationsWithIncludes = await prisma.conversation.findMany({
+      where: { companyId },
       include: {
         contact: true,
         user: true,
@@ -79,20 +93,5 @@ class ConversationRepositoryPrisma implements ConversationRepository {
 
     return sorted as Conversation[];
   }
-
-  private toConversation = (conversation: Conversation): Conversation => ({
-    id: conversation.id,
-    contactId: conversation.contactId,
-    userId: conversation.userId ?? "",
-    queueId: conversation.queueId ?? "",
-    status: conversation.status,
-    priority: conversation.priority ?? null,
-    subject: conversation.subject ?? "",
-    lastMessageAt: conversation.lastMessageAt ?? null,
-    closedAt: conversation.closedAt ?? null,
-    createdAt: conversation.createdAt,
-    companyId: conversation.companyId,
-    updatedAt: conversation.updatedAt ?? null,
-  });
 }
 export { ConversationRepositoryPrisma };

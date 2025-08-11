@@ -2071,7 +2071,6 @@ export namespace Prisma {
     name: string | null
     phone: string | null
     email: string | null
-    password: string | null
     status: boolean | null
     planId: string | null
     dueDate: Date | null
@@ -2084,7 +2083,6 @@ export namespace Prisma {
     name: string | null
     phone: string | null
     email: string | null
-    password: string | null
     status: boolean | null
     planId: string | null
     dueDate: Date | null
@@ -2097,7 +2095,6 @@ export namespace Prisma {
     name: number
     phone: number
     email: number
-    password: number
     status: number
     planId: number
     dueDate: number
@@ -2112,7 +2109,6 @@ export namespace Prisma {
     name?: true
     phone?: true
     email?: true
-    password?: true
     status?: true
     planId?: true
     dueDate?: true
@@ -2125,7 +2121,6 @@ export namespace Prisma {
     name?: true
     phone?: true
     email?: true
-    password?: true
     status?: true
     planId?: true
     dueDate?: true
@@ -2138,7 +2133,6 @@ export namespace Prisma {
     name?: true
     phone?: true
     email?: true
-    password?: true
     status?: true
     planId?: true
     dueDate?: true
@@ -2224,7 +2218,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date
@@ -2254,7 +2247,6 @@ export namespace Prisma {
     name?: boolean
     phone?: boolean
     email?: boolean
-    password?: boolean
     status?: boolean
     planId?: boolean
     dueDate?: boolean
@@ -2276,7 +2268,6 @@ export namespace Prisma {
     name?: boolean
     phone?: boolean
     email?: boolean
-    password?: boolean
     status?: boolean
     planId?: boolean
     dueDate?: boolean
@@ -2289,7 +2280,6 @@ export namespace Prisma {
     name?: boolean
     phone?: boolean
     email?: boolean
-    password?: boolean
     status?: boolean
     planId?: boolean
     dueDate?: boolean
@@ -2302,7 +2292,6 @@ export namespace Prisma {
     name?: boolean
     phone?: boolean
     email?: boolean
-    password?: boolean
     status?: boolean
     planId?: boolean
     dueDate?: boolean
@@ -2310,7 +2299,7 @@ export namespace Prisma {
     updatedAt?: boolean
   }
 
-  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phone" | "email" | "password" | "status" | "planId" | "dueDate" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
+  export type CompanyOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "name" | "phone" | "email" | "status" | "planId" | "dueDate" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
   export type CompanyInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     users?: boolean | Company$usersArgs<ExtArgs>
     contacts?: boolean | Company$contactsArgs<ExtArgs>
@@ -2342,7 +2331,6 @@ export namespace Prisma {
       name: string
       phone: string
       email: string
-      password: string
       status: boolean
       planId: string
       dueDate: Date
@@ -2783,7 +2771,6 @@ export namespace Prisma {
     readonly name: FieldRef<"Company", 'String'>
     readonly phone: FieldRef<"Company", 'String'>
     readonly email: FieldRef<"Company", 'String'>
-    readonly password: FieldRef<"Company", 'String'>
     readonly status: FieldRef<"Company", 'Boolean'>
     readonly planId: FieldRef<"Company", 'String'>
     readonly dueDate: FieldRef<"Company", 'DateTime'>
@@ -14307,7 +14294,6 @@ export namespace Prisma {
     name: 'name',
     phone: 'phone',
     email: 'email',
-    password: 'password',
     status: 'status',
     planId: 'planId',
     dueDate: 'dueDate',
@@ -14653,7 +14639,6 @@ export namespace Prisma {
     name?: StringFilter<"Company"> | string
     phone?: StringFilter<"Company"> | string
     email?: StringFilter<"Company"> | string
-    password?: StringFilter<"Company"> | string
     status?: BoolFilter<"Company"> | boolean
     planId?: StringFilter<"Company"> | string
     dueDate?: DateTimeFilter<"Company"> | Date | string
@@ -14674,7 +14659,6 @@ export namespace Prisma {
     name?: SortOrder
     phone?: SortOrder
     email?: SortOrder
-    password?: SortOrder
     status?: SortOrder
     planId?: SortOrder
     dueDate?: SortOrder
@@ -14698,7 +14682,6 @@ export namespace Prisma {
     NOT?: CompanyWhereInput | CompanyWhereInput[]
     name?: StringFilter<"Company"> | string
     phone?: StringFilter<"Company"> | string
-    password?: StringFilter<"Company"> | string
     status?: BoolFilter<"Company"> | boolean
     planId?: StringFilter<"Company"> | string
     dueDate?: DateTimeFilter<"Company"> | Date | string
@@ -14719,7 +14702,6 @@ export namespace Prisma {
     name?: SortOrder
     phone?: SortOrder
     email?: SortOrder
-    password?: SortOrder
     status?: SortOrder
     planId?: SortOrder
     dueDate?: SortOrder
@@ -14738,7 +14720,6 @@ export namespace Prisma {
     name?: StringWithAggregatesFilter<"Company"> | string
     phone?: StringWithAggregatesFilter<"Company"> | string
     email?: StringWithAggregatesFilter<"Company"> | string
-    password?: StringWithAggregatesFilter<"Company"> | string
     status?: BoolWithAggregatesFilter<"Company"> | boolean
     planId?: StringWithAggregatesFilter<"Company"> | string
     dueDate?: DateTimeWithAggregatesFilter<"Company"> | Date | string
@@ -15555,7 +15536,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -15576,7 +15556,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -15597,7 +15576,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15618,7 +15596,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15639,7 +15616,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -15652,7 +15628,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -15665,7 +15640,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -16658,7 +16632,6 @@ export namespace Prisma {
     name?: SortOrder
     phone?: SortOrder
     email?: SortOrder
-    password?: SortOrder
     status?: SortOrder
     planId?: SortOrder
     dueDate?: SortOrder
@@ -16671,7 +16644,6 @@ export namespace Prisma {
     name?: SortOrder
     phone?: SortOrder
     email?: SortOrder
-    password?: SortOrder
     status?: SortOrder
     planId?: SortOrder
     dueDate?: SortOrder
@@ -16684,7 +16656,6 @@ export namespace Prisma {
     name?: SortOrder
     phone?: SortOrder
     email?: SortOrder
-    password?: SortOrder
     status?: SortOrder
     planId?: SortOrder
     dueDate?: SortOrder
@@ -19467,7 +19438,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -19487,7 +19457,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -19625,7 +19594,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19645,7 +19613,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19764,7 +19731,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -19784,7 +19750,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -19836,7 +19801,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -19856,7 +19820,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20018,7 +19981,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -20038,7 +20000,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -20138,7 +20099,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20158,7 +20118,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20514,7 +20473,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -20534,7 +20492,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -20742,7 +20699,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20762,7 +20718,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -20852,7 +20807,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -20872,7 +20826,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -20990,7 +20943,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21010,7 +20962,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21073,7 +21024,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -21093,7 +21043,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -21178,7 +21127,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21198,7 +21146,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21261,7 +21208,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -21281,7 +21227,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -21366,7 +21311,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21386,7 +21330,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21448,7 +21391,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -21468,7 +21410,6 @@ export namespace Prisma {
     name: string
     phone: string
     email: string
-    password: string
     status: boolean
     planId: string
     dueDate: Date | string
@@ -21520,7 +21461,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string
@@ -21540,7 +21480,6 @@ export namespace Prisma {
     name?: StringFieldUpdateOperationsInput | string
     phone?: StringFieldUpdateOperationsInput | string
     email?: StringFieldUpdateOperationsInput | string
-    password?: StringFieldUpdateOperationsInput | string
     status?: BoolFieldUpdateOperationsInput | boolean
     planId?: StringFieldUpdateOperationsInput | string
     dueDate?: DateTimeFieldUpdateOperationsInput | Date | string

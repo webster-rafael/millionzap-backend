@@ -3,12 +3,12 @@ import { ContactUseCase } from "../usecases/contact-usecase";
 import { CreateContact } from "../types/contact-interface";
 import { authHook } from "../hooks/auth";
 
-export function contactRoutes(fastify: FastifyInstance) {
+export async function contactRoutes(fastify: FastifyInstance) {
   const contactUseCase = new ContactUseCase();
   fastify.addHook("onRequest", authHook);
   fastify.post<{ Body: CreateContact }>("/", async (request, reply) => {
     try {
-      const companyId = request.company!.id;
+      const companyId = request.user!.companyId;
       const contact = await contactUseCase.create(request.body, companyId);
       reply.status(201).send(contact);
     } catch (error: any) {
@@ -26,7 +26,7 @@ export function contactRoutes(fastify: FastifyInstance) {
 
   fastify.get("/", async (request, reply) => {
     try {
-      const companyId = request.company!.id;
+      const companyId = request.user!.companyId;
       const contacts = await contactUseCase.findAll(companyId);
       reply.status(200).send(contacts);
     } catch (error) {
@@ -37,7 +37,7 @@ export function contactRoutes(fastify: FastifyInstance) {
 
   fastify.get<{ Params: { id: string } }>("/:id", async (request, reply) => {
     try {
-      const companyId = request.company!.id;
+      const companyId = request.user!.companyId;
       const contact = await contactUseCase.findById(
         request.params.id,
         companyId
@@ -56,7 +56,7 @@ export function contactRoutes(fastify: FastifyInstance) {
     "/:id",
     async (request, reply) => {
       try {
-        const companyId = request.company!.id;
+        const companyId = request.user!.companyId;
         const existing = await contactUseCase.findById(
           request.params.id,
           companyId
@@ -83,7 +83,7 @@ export function contactRoutes(fastify: FastifyInstance) {
 
   fastify.delete<{ Params: { id: string } }>("/:id", async (request, reply) => {
     try {
-      const companyId = request.company!.id;
+      const companyId = request.user!.companyId;
       const existing = await contactUseCase.findById(
         request.params.id,
         companyId

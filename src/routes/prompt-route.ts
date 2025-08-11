@@ -3,12 +3,12 @@ import { PromptUseCase } from "../usecases/prompt-usecase";
 import { PromptCreate, PromptCreateInput } from "../types/prompt-interface";
 import { authHook } from "../hooks/auth";
 
-export function promptRoutes(fastify: FastifyInstance) {
+export async function promptRoutes(fastify: FastifyInstance) {
   const promptUseCase = new PromptUseCase();
   fastify.addHook("onRequest", authHook);
   fastify.post<{ Body: PromptCreate }>("/", async (request, reply) => {
     try {
-      const companyId = request.company!.id;
+      const companyId = request.user!.companyId;
       const prompt = await promptUseCase.create(
         request.body as PromptCreateInput,
         companyId
@@ -22,7 +22,7 @@ export function promptRoutes(fastify: FastifyInstance) {
 
   fastify.get("/", async (request, reply) => {
     try {
-      const companyId = request.company!.id;
+      const companyId = request.user!.companyId;
       const prompts = await promptUseCase.findAll(companyId);
       reply.status(200).send(prompts);
     } catch (error) {
@@ -33,7 +33,7 @@ export function promptRoutes(fastify: FastifyInstance) {
 
   fastify.get<{ Params: { id: string } }>("/:id", async (request, reply) => {
     try {
-      const companyId = request.company!.id;
+      const companyId = request.user!.companyId;
       const prompt = await promptUseCase.findById(request.params.id, companyId);
       if (!prompt) {
         return reply.status(404).send({ error: "Prompt não encontrado" });
@@ -49,7 +49,7 @@ export function promptRoutes(fastify: FastifyInstance) {
     "/:id",
     async (request, reply) => {
       try {
-        const companyId = request.company!.id;
+        const companyId = request.user!.companyId;
         const existing = await promptUseCase.findById(
           request.params.id,
           companyId
@@ -77,7 +77,7 @@ export function promptRoutes(fastify: FastifyInstance) {
 
   fastify.delete<{ Params: { id: string } }>("/:id", async (request, reply) => {
     try {
-      const companyId = request.company!.id;
+      const companyId = request.user!.companyId;
       const existing = await promptUseCase.findById(
         request.params.id,
         companyId

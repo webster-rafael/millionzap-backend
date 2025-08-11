@@ -41,11 +41,11 @@ interface MessageInfo {
 }
 
 export interface ConversationRepository {
-  findAll(): Promise<Conversation[]>;
-  findById(id: string): Promise<Conversation | null>;
+  findAll(companyId: string): Promise<Conversation[]>;
+  findById(id: string, companyId: string): Promise<Conversation | null>;
   update(
     id: string,
     conversation: Partial<ConversationCreate>
   ): Promise<Conversation>;
-  findForKanban(): Promise<Conversation[]>;
+  findForKanban(companyId: string): Promise<Conversation[]>;
 }

@@ -3,12 +3,12 @@ import { TagUseCase } from "../usecases/tag-usecase";
 import { CreateTags } from "../types/tag-interface";
 import { authHook } from "../hooks/auth";
 
-export function tagsRoutes(fastify: FastifyInstance) {
+export async function tagsRoutes(fastify: FastifyInstance) {
   const tagUseCase = new TagUseCase();
   fastify.addHook("onRequest", authHook);
   fastify.post<{ Body: CreateTags }>("/", async (request, reply) => {
     try {
-      const companyId = request.company!.id;
+      const companyId = request.user!.companyId;
 
       const tag = await tagUseCase.create(request.body, companyId);
       reply.status(201).send(tag);
@@ -20,7 +20,7 @@ export function tagsRoutes(fastify: FastifyInstance) {
 
   fastify.get("/", async (request, reply) => {
     try {
-      const companyId = request.company!.id;
+      const companyId = request.user!.companyId;
       const tags = await tagUseCase.findAll(companyId);
       reply.status(200).send(tags);
     } catch (error) {
@@ -31,7 +31,7 @@ export function tagsRoutes(fastify: FastifyInstance) {
 
   fastify.get<{ Params: { id: string } }>("/:id", async (request, reply) => {
     try {
-      const companyId = request.company!.id;
+      const companyId = request.user!.companyId;
       const tag = await tagUseCase.findById(request.params.id, companyId);
       if (!tag) {
         return reply.status(404).send({ error: "Tag não encontrada" });
@@ -47,7 +47,7 @@ export function tagsRoutes(fastify: FastifyInstance) {
     "/:id",
     async (request, reply) => {
       try {
-        const companyId = request.company!.id;
+        const companyId = request.user!.companyId;
         const updated = await tagUseCase.update(
           request.params.id,
           request.body,
@@ -63,7 +63,7 @@ export function tagsRoutes(fastify: FastifyInstance) {
 
   fastify.delete<{ Params: { id: string } }>("/:id", async (request, reply) => {
     try {
-      const companyId = request.company!.id;
+      const companyId = request.user!.companyId;
       await tagUseCase.delete(request.params.id, companyId);
       reply.status(204).send();
     } catch (error) {

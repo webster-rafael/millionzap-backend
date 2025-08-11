@@ -1,4 +1,3 @@
-import { ConversationRepositoryPrisma } from "../repositories/conversation-repository";
 import {
   Conversation,
   ConversationCreate,
@@ -7,15 +6,15 @@ import {
 
 class ConversationUseCase {
   private conversationRepository: ConversationRepository;
-  constructor() {
-    this.conversationRepository = new ConversationRepositoryPrisma();
+  constructor(conversationRepository: ConversationRepository) {
+    this.conversationRepository = conversationRepository;
   }
-  async findAll(): Promise<Conversation[]> {
-    return this.conversationRepository.findAll();
+  async findAll(companyId: string): Promise<Conversation[]> {
+    return this.conversationRepository.findAll(companyId);
   }
 
-  async findById(id: string): Promise<Conversation | null> {
-    return this.conversationRepository.findById(id);
+  async findById(id: string, companyId: string): Promise<Conversation | null> {
+    return this.conversationRepository.findById(id, companyId);
   }
 
   async update(
@@ -25,8 +24,8 @@ class ConversationUseCase {
     return this.conversationRepository.update(id, conversation);
   }
 
-  async findForKanban(): Promise<Conversation[]> {
-    return this.conversationRepository.findForKanban();
+  async findForKanban(companyId: string): Promise<Conversation[]> {
+    return this.conversationRepository.findForKanban(companyId);
   }
 }
 export { ConversationUseCase };

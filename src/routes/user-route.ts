@@ -1,13 +1,22 @@
 import { FastifyInstance } from "fastify";
 import { UserUseCase } from "../usecases/user-usecase";
 import { UserCreate, UserCreateInput } from "../types/user-interface";
+import { UserRepositoryPrisma } from "../repositories/user-repository";
 
-export function userRoutes(fastify: FastifyInstance) {
-  const userUseCase = new UserUseCase();
+export async function userRoutes(fastify: FastifyInstance) {
+  const userRepository = new UserRepositoryPrisma();
+  const userUseCase = new UserUseCase(userRepository);
 
   fastify.post<{ Body: UserCreateInput }>("/", async (request, reply) => {
     try {
-      const user = await userUseCase.create(request.body);
+      const loggedUser = request.user;
+      if (!loggedUser?.companyId) {
+        return reply.status(401).send({
+          message: "Informações de usuário ou empresa ausentes no token.",
+        });
+      }
+      const companyId = loggedUser.companyId;
+      const user = await userUseCase.create(request.body, companyId);
       reply.status(201).send(user);
     } catch (error: any) {
       console.error("Erro ao criar usuário:", error);
@@ -21,9 +30,19 @@ export function userRoutes(fastify: FastifyInstance) {
     }
   });
 
-  fastify.get("/", async (_, reply) => {
+  fastify.get("/", async (request, reply) => {
     try {
-      const users = await userUseCase.findAll();
+      const loggedUser = request.user;
+      if (!loggedUser?.companyId) {
+        return reply.status(401).send({
+          message: "Informações de usuário ou empresa ausentes no token.",
+        });
+      }
+
+      const companyId = loggedUser.companyId;
+
+      const users = await userUseCase.findAll(companyId);
+
       reply.status(200).send(users);
     } catch (error) {
       console.error("Erro ao buscar usuários:", error);
@@ -33,7 +52,14 @@ export function userRoutes(fastify: FastifyInstance) {
 
   fastify.get<{ Params: { id: string } }>("/:id", async (request, reply) => {
     try {
-      const user = await userUseCase.findById(request.params.id);
+      const loggedUser = request.user;
+      if (!loggedUser?.companyId) {
+        return reply.status(401).send({
+          message: "Informações de usuário ou empresa ausentes no token.",
+        });
+      }
+      const companyId = loggedUser.companyId;
+      const user = await userUseCase.findById(request.params.id, companyId);
       if (!user) {
         return reply.status(404).send({ error: "Usuário não encontrado" });
       }
@@ -48,15 +74,29 @@ export function userRoutes(fastify: FastifyInstance) {
     "/:id",
     async (request, reply) => {
       try {
-        const existing = await userUseCase.findById(request.params.id);
+        const loggedUser = request.user;
+        if (!loggedUser?.companyId) {
+          return reply.status(401).send({
+            message: "Informações de usuário ou empresa ausentes no token.",
+          });
+        }
+        const companyId = loggedUser.companyId;
+        const existing = await userUseCase.findById(
+          request.params.id,
+          companyId
+        );
         if (!existing) {
           return reply.status(404).send({ error: "Usuário não encontrado" });
         }
 
-        const updated = await userUseCase.update(request.params.id, {
-          ...existing,
-          ...request.body,
-        });
+        const updated = await userUseCase.update(
+          request.params.id,
+          {
+            ...existing,
+            ...request.body,
+          },
+          companyId
+        );
         reply.status(200).send(updated);
       } catch (error) {
         console.error("Erro ao atualizar usuário:", error);
@@ -65,14 +105,44 @@ export function userRoutes(fastify: FastifyInstance) {
     }
   );
 
+  fastify.get<{ Querystring: { email: string } }>(
+    "/email",
+    async (request, reply) => {
+      try {
+        const loggedUser = request.user;
+        if (!loggedUser?.companyId) {
+          return reply.status(401).send({
+            message: "Informações de usuário ou empresa ausentes no token.",
+          });
+        }
+
+        const user = await userUseCase.findByEmail(request.query.email);
+        if (!user) {
+          return reply.status(404).send({ error: "Usuário não encontrado" });
+        }
+        reply.status(200).send(user);
+      } catch (error) {
+        console.error("Erro ao buscar usuário:", error);
+        reply.status(500).send({ error: "Erro interno ao buscar usuário" });
+      }
+    }
+  );
+
   fastify.delete<{ Params: { id: string } }>("/:id", async (request, reply) => {
     try {
-      const existing = await userUseCase.findById(request.params.id);
+      const loggedUser = request.user;
+      if (!loggedUser?.companyId) {
+        return reply.status(401).send({
+          message: "Informações de usuário ou empresa ausentes no token.",
+        });
+      }
+      const companyId = loggedUser.companyId;
+      const existing = await userUseCase.findById(request.params.id, companyId);
       if (!existing) {
         return reply.status(404).send({ error: "Usuário não encontrado" });
       }
 
-      await userUseCase.delete(request.params.id);
+      await userUseCase.delete(request.params.id, companyId);
       reply.status(204).send();
     } catch (error) {
       console.error("Erro ao deletar usuário:", error);

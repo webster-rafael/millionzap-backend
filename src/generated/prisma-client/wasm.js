@@ -125,7 +125,6 @@ exports.Prisma.CompanyScalarFieldEnum = {
   name: 'name',
   phone: 'phone',
   email: 'email',
-  password: 'password',
   status: 'status',
   planId: 'planId',
   dueDate: 'dueDate',

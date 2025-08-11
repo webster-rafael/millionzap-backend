@@ -2,8 +2,9 @@ import { FastifyInstance } from "fastify";
 import { CompanyUseCase, LoginCredentials } from "../usecases/company-usecase";
 import { CreateCompany } from "../types/company-interface";
 import { authHook } from "../hooks/auth";
+import { prisma } from "../database/prisma-client";
 
-export function companyRoutes(fastify: FastifyInstance) {
+export async function companyRoutes(fastify: FastifyInstance) {
   const companyUseCase = new CompanyUseCase();
 
   fastify.post<{ Body: CreateCompany }>("/", async (request, reply) => {
@@ -23,8 +24,19 @@ export function companyRoutes(fastify: FastifyInstance) {
 
   fastify.post<{ Body: LoginCredentials }>("/login", async (request, reply) => {
     try {
-      const result = await companyUseCase.login(request.body);
-      reply.status(200).send(result);
+      const loginResult = await companyUseCase.login(request.body);
+      const { token, ...companyData } = loginResult;
+
+      reply.setCookie("authToken", token, {
+        path: "/",
+        domain: "localhost",
+        httpOnly: true,
+        secure: process.env.NODE_ENV === "production",
+        sameSite: "lax",
+        maxAge: 60 * 60 * 24 * 7,
+      });
+
+      return reply.status(200).send(companyData);
     } catch (error: any) {
       return reply.status(401).send({ message: error.message });
     }
@@ -32,15 +44,32 @@ export function companyRoutes(fastify: FastifyInstance) {
 
   fastify.get("/me", { onRequest: [authHook] }, async (request, reply) => {
     try {
-      const companyId = request.company!.id;
-      const company = await companyUseCase.findById(companyId);
+      const userWithDetails = await prisma.user.findUnique({
+        where: {
+          id: request.user?.id,
+        },
+        include: {
+          company: true,
+          queues: {
+            include: {
+              queue: true,
+            },
+          },
+        },
+      });
 
-      if (!company) {
+      if (!userWithDetails) {
         return reply
           .status(404)
-          .send({ error: "Empresa do token não encontrada." });
+          .send({ error: "Usuário do token não encontrado." });
       }
-      reply.status(200).send(company);
+
+      const { company, ...restUser } = userWithDetails;
+
+      return reply.status(200).send({
+        ...restUser,
+        companyName: company?.name ?? null,
+      });
     } catch (error) {
       reply
         .status(500)
@@ -85,4 +114,9 @@ export function companyRoutes(fastify: FastifyInstance) {
       reply.status(204).send();
     }
   );
+
+  fastify.post("/logout", { onRequest: [authHook] }, (request, reply) => {
+    reply.clearCookie("authToken", { path: "/" });
+    return reply.status(200).send({ message: "Logout realizado com sucesso." });
+  });
 }

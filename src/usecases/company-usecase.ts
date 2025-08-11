@@ -2,6 +2,13 @@ import { CompanyRepositoryPrisma } from "../repositories/company-repository";
 import { Company, CreateCompany } from "../types/company-interface";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
+import { UserRepositoryPrisma } from "../repositories/user-repository";
+import { Prisma } from "../generated/prisma-client";
+import { User } from "../types/user-interface";
+
+type CompanyWithUsers = Prisma.CompanyGetPayload<{
+  include: { users: true };
+}>;
 
 export interface CreateCompanyResponse {
   company: Omit<Company, "password">;
@@ -13,53 +20,69 @@ export interface LoginCredentials {
   password: string;
 }
 
-export type LoginResponse = CreateCompanyResponse;
+export interface LoginResponse {
+  user: User;
+  token: string;
+}
 
 class CompanyUseCase {
   private companyRepository: CompanyRepositoryPrisma;
+  private userRepository: UserRepositoryPrisma;
   constructor() {
     this.companyRepository = new CompanyRepositoryPrisma();
+    this.userRepository = new UserRepositoryPrisma();
   }
 
   async login(credentials: LoginCredentials): Promise<LoginResponse> {
-    const company = await this.companyRepository.findByEmail(credentials.email);
-    if (!company) {
+    const user = await this.userRepository.findByEmail(credentials.email);
+    if (!user) {
       throw new Error("Credenciais inválidas");
     }
 
     const isPasswordValid = await bcrypt.compare(
       credentials.password,
-      company.password
+      user.password
     );
     if (!isPasswordValid) {
       throw new Error("Credenciais inválidas");
     }
+    const company = await this.companyRepository.findById(user.companyId);
 
-    const token = jwt.sign(
-      {
-        id: company.id,
-        email: company.email,
-      },
-      process.env.JWT_SECRET as string,
-      {
-        expiresIn: "1d",
-      }
-    );
+    const payload = {
+      id: user.id,
+      companyId: user.companyId,
+      role: user.role,
+      companyName: company?.name,
+    };
 
-    const { password, ...companyWithoutPassword } = company;
+    const token = jwt.sign(payload, process.env.JWT_SECRET as string, {
+      expiresIn: "1d",
+    });
+
+    if (!company) {
+      throw new Error("Empresa associada ao usuário não encontrada.");
+    }
     return {
-      company: companyWithoutPassword as Company,
+      user: user,
       token,
     };
   }
 
   async create(companyData: CreateCompany): Promise<CreateCompanyResponse> {
-    const company = await this.companyRepository.create(companyData);
+    const company = (await this.companyRepository.create(
+      companyData
+    )) as CompanyWithUsers;
+
+    const initialUser = company.users?.[0];
+
+    if (!initialUser) {
+      throw new Error("Falha ao criar o usuário inicial para a empresa.");
+    }
 
     const token = jwt.sign(
       {
-        id: company.id,
-        email: company.email,
+        id: initialUser.id,
+        companyId: company.id,
       },
       process.env.JWT_SECRET as string,
       {
@@ -67,7 +90,8 @@ class CompanyUseCase {
       }
     );
 
-    return { company, token };
+    const { users, ...companyToReturn } = company;
+    return { company: companyToReturn, token };
   }
 
   async findAll(): Promise<Company[]> {

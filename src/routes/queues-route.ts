@@ -2,7 +2,7 @@ import { FastifyInstance } from "fastify";
 import { QueueUseCase } from "../usecases/queue-usecase";
 import { QueueCreate, QueueCreateInput } from "../types/queue-interface";
 
-export function queuesRoutes(fastify: FastifyInstance) {
+export async function queuesRoutes(fastify: FastifyInstance) {
   const queueUseCase = new QueueUseCase();
   fastify.post<{ Body: QueueCreate }>("/", async (request, reply) => {
     try {

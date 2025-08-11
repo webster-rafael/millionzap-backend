@@ -22,9 +22,14 @@ export interface UserCreate {
 export type UserCreateInput = Omit<User, "id" | "createdAt" | "updatedAt">;
 
 export interface UserRepository {
-  create(user: UserCreateInput): Promise<User>;
-  findAll(): Promise<User[]>;
-  update(id: string, user: Partial<UserCreate>): Promise<User>;
-  findById(id: string): Promise<User | null>;
-  delete(id: string): Promise<void>;
+  create(user: UserCreateInput, companyId: string): Promise<User>;
+  findAll(companyId: string): Promise<User[]>;
+  update(
+    id: string,
+    user: Partial<UserCreate>,
+    companyId: string
+  ): Promise<User>;
+  findById(id: string, companyId: string): Promise<User | null>;
+  findByEmail(email: string): Promise<User | null>;
+  delete(id: string, companyId: string): Promise<void>;
 }

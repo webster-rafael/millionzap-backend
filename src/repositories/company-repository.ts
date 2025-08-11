@@ -7,22 +7,41 @@ import {
 import bcrypt from "bcryptjs";
 
 class CompanyRepositoryPrisma implements CompanyRepository {
-  async create(company: CreateCompany): Promise<Company> {
-    const hashedPassword = await bcrypt.hash(company.password, 10);
-    const companyCreated = await prisma.company.create({
-      data: {
-        ...company,
-        name: company.name,
-        email: company.email,
-        phone: company.phone,
-        planId: company.planId,
-        password: hashedPassword,
-        status: true,
-        dueDate: new Date(),
-      },
+  async create(data: CreateCompany): Promise<Company> {
+    const hashedPassword = await bcrypt.hash(data.password, 10);
+
+    const company = await prisma.$transaction(async (tx) => {
+      const newCompany = await tx.company.create({
+        data: {
+          name: data.name,
+          email: data.email,
+          phone: data.phone,
+          planId: data.planId,
+          status: true,
+          dueDate: new Date(),
+        },
+      });
+
+      await tx.user.create({
+        data: {
+          name: data.name,
+          email: data.email,
+          password: hashedPassword,
+          companyId: newCompany.id,
+        },
+      });
+
+      const result = await tx.company.findUniqueOrThrow({
+        where: { id: newCompany.id },
+        include: {
+          users: true,
+        },
+      });
+
+      return result;
     });
-    const { password, ...companyWithoutPassword } = companyCreated;
-    return companyWithoutPassword as Company;
+
+    return company as Company;
   }
 
   async findAll(): Promise<Company[]> {
