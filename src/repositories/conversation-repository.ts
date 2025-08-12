@@ -3,9 +3,23 @@ import {
   Conversation,
   ConversationCreate,
   ConversationRepository,
+  NewConversationData,
 } from "../types/conversation-interface";
 
 class ConversationRepositoryPrisma implements ConversationRepository {
+  async create(
+    conversation: NewConversationData,
+    companyId: string
+  ): Promise<Conversation> {
+    const newConversation = await prisma.conversation.create({
+      data: {
+        ...conversation,
+        companyId,
+      },
+    });
+    return newConversation;
+  }
+
   async findAll(companyId: string): Promise<Conversation[]> {
     const conversations = await prisma.conversation.findMany({
       where: { companyId },
@@ -92,6 +106,15 @@ class ConversationRepositoryPrisma implements ConversationRepository {
     });
 
     return sorted as Conversation[];
+  }
+
+  async delete(id: string, companyId: string): Promise<void> {
+    await prisma.conversation.delete({
+      where: {
+        id,
+        companyId,
+      },
+    });
   }
 }
 export { ConversationRepositoryPrisma };

@@ -25,10 +25,8 @@ app.register(companyRoutes, {
 });
 
 app.register(async (instance) => {
-  // 👉 APLICA O HOOK A TODAS AS ROTAS REGISTRADAS DENTRO DESTE BLOCO
   instance.addHook("preHandler", authHook);
 
-  // Agora, registre todas as suas rotas protegidas aqui, usando "instance"
   instance.register(conversationRoutes, {
     prefix: "/conversations",
   });
@@ -58,7 +56,6 @@ app.register(async (instance) => {
   });
 });
 
-// 4. Iniciar o Servidor
 app.listen(
   {
     port: 3300,

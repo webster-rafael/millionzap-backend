@@ -1,17 +1,41 @@
 import { FastifyInstance } from "fastify";
 import { ConversationUseCase } from "../usecases/conversation-usecase";
-import { ConversationCreate } from "../types/conversation-interface";
+import {
+  ConversationCreate,
+  NewConversationData,
+} from "../types/conversation-interface";
 import { ConversationRepositoryPrisma } from "../repositories/conversation-repository";
 
 export async function conversationRoutes(fastify: FastifyInstance) {
   const conversationRepository = new ConversationRepositoryPrisma();
   const conversationUseCase = new ConversationUseCase(conversationRepository);
 
+  fastify.post<{ Body: NewConversationData }>("/", async (request, reply) => {
+    try {
+      const loggedUser = request.user;
+      if (!loggedUser?.companyId) {
+        return reply.status(401).send({
+          message: "Informações de usuário ou empresa ausentes no token.",
+        });
+      }
+
+      const conversationData = request.body;
+
+      const newConversation = await conversationUseCase.create(
+        conversationData,
+        loggedUser.companyId
+      );
+
+      reply.status(201).send(newConversation);
+    } catch (error) {
+      console.error("Erro ao criar conversa:", error);
+      reply.status(500).send({ error: "Erro interno ao criar conversa" });
+    }
+  });
+
   fastify.get("/kanban", async (request, reply) => {
     try {
       const loggedUser = request.user;
-
-      console.log("loggedUser object:", JSON.stringify(loggedUser, null, 2));
 
       if (!loggedUser) {
         return reply.status(401).send({
@@ -111,4 +135,21 @@ export async function conversationRoutes(fastify: FastifyInstance) {
       }
     }
   );
+
+  fastify.delete<{ Params: { id: string } }>("/:id", async (request, reply) => {
+    try {
+      const loggedUser = request.user;
+      if (!loggedUser?.companyId) {
+        return reply.status(401).send({
+          message: "Informações de usuário ou empresa ausentes no token.",
+        });
+      }
+
+      await conversationUseCase.delete(request.params.id, loggedUser.companyId);
+      reply.status(204).send();
+    } catch (error) {
+      console.error("Erro ao deletar conversa:", error);
+      reply.status(500).send({ error: "Erro interno ao deletar conversa." });
+    }
+  });
 }

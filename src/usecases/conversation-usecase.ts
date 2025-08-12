@@ -2,6 +2,7 @@ import {
   Conversation,
   ConversationCreate,
   ConversationRepository,
+  NewConversationData,
 } from "../types/conversation-interface";
 
 class ConversationUseCase {
@@ -9,6 +10,14 @@ class ConversationUseCase {
   constructor(conversationRepository: ConversationRepository) {
     this.conversationRepository = conversationRepository;
   }
+
+  async create(
+    conversation: NewConversationData,
+    companyId: string
+  ): Promise<Conversation> {
+    return this.conversationRepository.create(conversation, companyId);
+  }
+
   async findAll(companyId: string): Promise<Conversation[]> {
     return this.conversationRepository.findAll(companyId);
   }
@@ -26,6 +35,10 @@ class ConversationUseCase {
 
   async findForKanban(companyId: string): Promise<Conversation[]> {
     return this.conversationRepository.findForKanban(companyId);
+  }
+
+  async delete(id: string, companyId: string): Promise<void> {
+    return this.conversationRepository.delete(id, companyId);
   }
 }
 export { ConversationUseCase };

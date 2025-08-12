@@ -40,7 +40,18 @@ interface MessageInfo {
   createdAt: Date;
 }
 
+export interface NewConversationData {
+  contactId: string;
+  companyId: string;
+  userId?: string | null;
+  queueId?: string | null;
+}
+
 export interface ConversationRepository {
+  create(
+    conversation: NewConversationData,
+    companyId: string
+  ): Promise<Conversation>;
   findAll(companyId: string): Promise<Conversation[]>;
   findById(id: string, companyId: string): Promise<Conversation | null>;
   update(
@@ -48,4 +59,5 @@ export interface ConversationRepository {
     conversation: Partial<ConversationCreate>
   ): Promise<Conversation>;
   findForKanban(companyId: string): Promise<Conversation[]>;
+  delete(id: string, companyId: string): Promise<void>;
 }
