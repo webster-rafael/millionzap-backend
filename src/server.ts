@@ -10,6 +10,14 @@ import { contactRoutes } from "./routes/contact-route";
 import { conversationRoutes } from "./routes/conversation-route";
 import { companyRoutes } from "./routes/company-route";
 import { authHook } from "./hooks/auth";
+import { audioRoutes } from "./routes/audio-route";
+import { apiKeyAuthHook } from "./hooks/apiKeyN8n";
+import fastifyStatic from "@fastify/static";
+import path from "path";
+import { fileURLToPath } from "url";
+
+const __filename: string = fileURLToPath(new URL(import.meta.url));
+const __dirname: string = path.dirname(__filename);
 
 const app: FastifyInstance = Fastify({});
 
@@ -20,8 +28,21 @@ app.register(fastifyCors, {
 });
 app.register(fastifyCookie);
 
+app.register(fastifyStatic, {
+  root: path.join(__dirname, "../uploads"),
+  prefix: "/uploads/",
+});
+
 app.register(companyRoutes, {
   prefix: "/companies",
+});
+
+app.register(async (instance) => {
+  instance.addHook("onRequest", apiKeyAuthHook);
+
+  instance.register(audioRoutes, {
+    prefix: "/media",
+  });
 });
 
 app.register(async (instance) => {
@@ -54,6 +75,10 @@ app.register(async (instance) => {
   instance.register(tagsRoutes, {
     prefix: "/tags",
   });
+
+  // instance.register(audioRoutes, {
+  //   prefix: "/media",
+  // });
 });
 
 app.listen(

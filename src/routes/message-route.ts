@@ -5,7 +5,6 @@ import { MessageCreate, MessageUpdate } from "../types/message-interface";
 export async function messageRoutes(fastify: FastifyInstance) {
   const messageUseCase = new MessageUseCase();
 
-  // Rota para CRIAR uma nova mensagem
   fastify.post<{ Body: MessageCreate }>("/", async (request, reply) => {
     try {
       const message = await messageUseCase.create(request.body);
@@ -46,7 +45,6 @@ export async function messageRoutes(fastify: FastifyInstance) {
     }
   });
 
-  // Rota para ATUALIZAR uma mensagem
   fastify.put<{ Params: { id: string }; Body: MessageUpdate }>(
     "/:id",
     async (request, reply) => {

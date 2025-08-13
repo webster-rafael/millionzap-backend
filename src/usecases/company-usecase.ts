@@ -1,10 +1,10 @@
-import { CompanyRepositoryPrisma } from "../repositories/company-repository";
-import { Company, CreateCompany } from "../types/company-interface";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { UserRepositoryPrisma } from "../repositories/user-repository";
-import { Prisma } from "../generated/prisma-client";
-import { User } from "../types/user-interface";
+import { Prisma } from "../generated/prisma-client/index.js";
+import { Company, CreateCompany } from "../types/company-interface.js";
+import { CompanyRepositoryPrisma } from "../repositories/company-repository.js";
+import { UserRepositoryPrisma } from "../repositories/user-repository.js";
+import { User } from "../types/user-interface.js";
 
 type CompanyWithUsers = Prisma.CompanyGetPayload<{
   include: { users: true };
