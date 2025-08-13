@@ -15,6 +15,7 @@ import { apiKeyAuthHook } from "./hooks/apiKeyN8n";
 import fastifyStatic from "@fastify/static";
 import path from "path";
 import { fileURLToPath } from "url";
+import { photoRoutes } from "./routes/image-route";
 
 const __filename: string = fileURLToPath(new URL(import.meta.url));
 const __dirname: string = path.dirname(__filename);
@@ -42,6 +43,10 @@ app.register(async (instance) => {
 
   instance.register(audioRoutes, {
     prefix: "/media",
+  });
+
+  instance.register(photoRoutes, {
+    prefix: "/photo",
   });
 });
 
