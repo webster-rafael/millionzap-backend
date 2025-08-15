@@ -18,6 +18,7 @@ export interface Message {
   direction: "INBOUND" | "OUTBOUND";
   status: "PENDING" | "SENT" | "DELIVERED" | "READ" | "FAILED" | "RECEIVED";
   mediaUrl: string | null;
+  mediaCaption: string | null;
   timestamp: string;
   mediaType: string | null;
   isRead: boolean;

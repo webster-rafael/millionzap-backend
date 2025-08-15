@@ -14,16 +14,13 @@ import { audioRoutes } from "./routes/audio-route";
 import { apiKeyAuthHook } from "./hooks/apiKeyN8n";
 import fastifyStatic from "@fastify/static";
 import path from "path";
-import { fileURLToPath } from "url";
 import { photoRoutes } from "./routes/image-route";
-
-const __filename: string = fileURLToPath(new URL(import.meta.url));
-const __dirname: string = path.dirname(__filename);
+import { filesRoutes } from "./routes/file-route";
 
 const app: FastifyInstance = Fastify({});
 
 app.register(fastifyCors, {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173",
+  origin: process.env.FRONTEND_URL || "http://localhost:5173" || "*",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 });
@@ -47,6 +44,10 @@ app.register(async (instance) => {
 
   instance.register(photoRoutes, {
     prefix: "/photo",
+  });
+
+  instance.register(filesRoutes, {
+    prefix: "/files",
   });
 });
 

@@ -137,6 +137,7 @@ model Message {
   direction      Direction
   status         MessageStatus @default(PENDING)
   mediaUrl       String?
+  mediaCaption    String?
   timestamp      String
   mediaType      String?
   companyId      String

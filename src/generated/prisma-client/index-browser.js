@@ -203,6 +203,7 @@ exports.Prisma.MessageScalarFieldEnum = {
   direction: 'direction',
   status: 'status',
   mediaUrl: 'mediaUrl',
+  mediaCaption: 'mediaCaption',
   timestamp: 'timestamp',
   mediaType: 'mediaType',
   companyId: 'companyId',

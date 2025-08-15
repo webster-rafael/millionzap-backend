@@ -9428,6 +9428,7 @@ export namespace Prisma {
     direction: $Enums.Direction | null
     status: $Enums.MessageStatus | null
     mediaUrl: string | null
+    mediaCaption: string | null
     timestamp: string | null
     mediaType: string | null
     companyId: string | null
@@ -9444,6 +9445,7 @@ export namespace Prisma {
     direction: $Enums.Direction | null
     status: $Enums.MessageStatus | null
     mediaUrl: string | null
+    mediaCaption: string | null
     timestamp: string | null
     mediaType: string | null
     companyId: string | null
@@ -9460,6 +9462,7 @@ export namespace Prisma {
     direction: number
     status: number
     mediaUrl: number
+    mediaCaption: number
     timestamp: number
     mediaType: number
     companyId: number
@@ -9478,6 +9481,7 @@ export namespace Prisma {
     direction?: true
     status?: true
     mediaUrl?: true
+    mediaCaption?: true
     timestamp?: true
     mediaType?: true
     companyId?: true
@@ -9494,6 +9498,7 @@ export namespace Prisma {
     direction?: true
     status?: true
     mediaUrl?: true
+    mediaCaption?: true
     timestamp?: true
     mediaType?: true
     companyId?: true
@@ -9510,6 +9515,7 @@ export namespace Prisma {
     direction?: true
     status?: true
     mediaUrl?: true
+    mediaCaption?: true
     timestamp?: true
     mediaType?: true
     companyId?: true
@@ -9599,6 +9605,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status: $Enums.MessageStatus
     mediaUrl: string | null
+    mediaCaption: string | null
     timestamp: string
     mediaType: string | null
     companyId: string
@@ -9632,6 +9639,7 @@ export namespace Prisma {
     direction?: boolean
     status?: boolean
     mediaUrl?: boolean
+    mediaCaption?: boolean
     timestamp?: boolean
     mediaType?: boolean
     companyId?: boolean
@@ -9651,6 +9659,7 @@ export namespace Prisma {
     direction?: boolean
     status?: boolean
     mediaUrl?: boolean
+    mediaCaption?: boolean
     timestamp?: boolean
     mediaType?: boolean
     companyId?: boolean
@@ -9670,6 +9679,7 @@ export namespace Prisma {
     direction?: boolean
     status?: boolean
     mediaUrl?: boolean
+    mediaCaption?: boolean
     timestamp?: boolean
     mediaType?: boolean
     companyId?: boolean
@@ -9689,6 +9699,7 @@ export namespace Prisma {
     direction?: boolean
     status?: boolean
     mediaUrl?: boolean
+    mediaCaption?: boolean
     timestamp?: boolean
     mediaType?: boolean
     companyId?: boolean
@@ -9696,7 +9707,7 @@ export namespace Prisma {
     createdAt?: boolean
   }
 
-  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "conversationId" | "userId" | "content" | "messageType" | "direction" | "status" | "mediaUrl" | "timestamp" | "mediaType" | "companyId" | "isRead" | "createdAt", ExtArgs["result"]["message"]>
+  export type MessageOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "conversationId" | "userId" | "content" | "messageType" | "direction" | "status" | "mediaUrl" | "mediaCaption" | "timestamp" | "mediaType" | "companyId" | "isRead" | "createdAt", ExtArgs["result"]["message"]>
   export type MessageInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     conversation?: boolean | ConversationDefaultArgs<ExtArgs>
     user?: boolean | Message$userArgs<ExtArgs>
@@ -9729,6 +9740,7 @@ export namespace Prisma {
       direction: $Enums.Direction
       status: $Enums.MessageStatus
       mediaUrl: string | null
+      mediaCaption: string | null
       timestamp: string
       mediaType: string | null
       companyId: string
@@ -10168,6 +10180,7 @@ export namespace Prisma {
     readonly direction: FieldRef<"Message", 'Direction'>
     readonly status: FieldRef<"Message", 'MessageStatus'>
     readonly mediaUrl: FieldRef<"Message", 'String'>
+    readonly mediaCaption: FieldRef<"Message", 'String'>
     readonly timestamp: FieldRef<"Message", 'String'>
     readonly mediaType: FieldRef<"Message", 'String'>
     readonly companyId: FieldRef<"Message", 'String'>
@@ -14390,6 +14403,7 @@ export namespace Prisma {
     direction: 'direction',
     status: 'status',
     mediaUrl: 'mediaUrl',
+    mediaCaption: 'mediaCaption',
     timestamp: 'timestamp',
     mediaType: 'mediaType',
     companyId: 'companyId',
@@ -15169,6 +15183,7 @@ export namespace Prisma {
     direction?: EnumDirectionFilter<"Message"> | $Enums.Direction
     status?: EnumMessageStatusFilter<"Message"> | $Enums.MessageStatus
     mediaUrl?: StringNullableFilter<"Message"> | string | null
+    mediaCaption?: StringNullableFilter<"Message"> | string | null
     timestamp?: StringFilter<"Message"> | string
     mediaType?: StringNullableFilter<"Message"> | string | null
     companyId?: StringFilter<"Message"> | string
@@ -15188,6 +15203,7 @@ export namespace Prisma {
     direction?: SortOrder
     status?: SortOrder
     mediaUrl?: SortOrderInput | SortOrder
+    mediaCaption?: SortOrderInput | SortOrder
     timestamp?: SortOrder
     mediaType?: SortOrderInput | SortOrder
     companyId?: SortOrder
@@ -15210,6 +15226,7 @@ export namespace Prisma {
     direction?: EnumDirectionFilter<"Message"> | $Enums.Direction
     status?: EnumMessageStatusFilter<"Message"> | $Enums.MessageStatus
     mediaUrl?: StringNullableFilter<"Message"> | string | null
+    mediaCaption?: StringNullableFilter<"Message"> | string | null
     timestamp?: StringFilter<"Message"> | string
     mediaType?: StringNullableFilter<"Message"> | string | null
     companyId?: StringFilter<"Message"> | string
@@ -15229,6 +15246,7 @@ export namespace Prisma {
     direction?: SortOrder
     status?: SortOrder
     mediaUrl?: SortOrderInput | SortOrder
+    mediaCaption?: SortOrderInput | SortOrder
     timestamp?: SortOrder
     mediaType?: SortOrderInput | SortOrder
     companyId?: SortOrder
@@ -15251,6 +15269,7 @@ export namespace Prisma {
     direction?: EnumDirectionWithAggregatesFilter<"Message"> | $Enums.Direction
     status?: EnumMessageStatusWithAggregatesFilter<"Message"> | $Enums.MessageStatus
     mediaUrl?: StringNullableWithAggregatesFilter<"Message"> | string | null
+    mediaCaption?: StringNullableWithAggregatesFilter<"Message"> | string | null
     timestamp?: StringWithAggregatesFilter<"Message"> | string
     mediaType?: StringNullableWithAggregatesFilter<"Message"> | string | null
     companyId?: StringWithAggregatesFilter<"Message"> | string
@@ -16114,6 +16133,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    mediaCaption?: string | null
     timestamp: string
     mediaType?: string | null
     isRead?: boolean
@@ -16132,6 +16152,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    mediaCaption?: string | null
     timestamp: string
     mediaType?: string | null
     companyId: string
@@ -16146,6 +16167,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -16164,6 +16186,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: StringFieldUpdateOperationsInput | string
@@ -16180,6 +16203,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    mediaCaption?: string | null
     timestamp: string
     mediaType?: string | null
     companyId: string
@@ -16194,6 +16218,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -16209,6 +16234,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: StringFieldUpdateOperationsInput | string
@@ -17147,6 +17173,7 @@ export namespace Prisma {
     direction?: SortOrder
     status?: SortOrder
     mediaUrl?: SortOrder
+    mediaCaption?: SortOrder
     timestamp?: SortOrder
     mediaType?: SortOrder
     companyId?: SortOrder
@@ -17163,6 +17190,7 @@ export namespace Prisma {
     direction?: SortOrder
     status?: SortOrder
     mediaUrl?: SortOrder
+    mediaCaption?: SortOrder
     timestamp?: SortOrder
     mediaType?: SortOrder
     companyId?: SortOrder
@@ -17179,6 +17207,7 @@ export namespace Prisma {
     direction?: SortOrder
     status?: SortOrder
     mediaUrl?: SortOrder
+    mediaCaption?: SortOrder
     timestamp?: SortOrder
     mediaType?: SortOrder
     companyId?: SortOrder
@@ -18973,6 +19002,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    mediaCaption?: string | null
     timestamp: string
     mediaType?: string | null
     isRead?: boolean
@@ -18990,6 +19020,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    mediaCaption?: string | null
     timestamp: string
     mediaType?: string | null
     isRead?: boolean
@@ -19291,6 +19322,7 @@ export namespace Prisma {
     direction?: EnumDirectionFilter<"Message"> | $Enums.Direction
     status?: EnumMessageStatusFilter<"Message"> | $Enums.MessageStatus
     mediaUrl?: StringNullableFilter<"Message"> | string | null
+    mediaCaption?: StringNullableFilter<"Message"> | string | null
     timestamp?: StringFilter<"Message"> | string
     mediaType?: StringNullableFilter<"Message"> | string | null
     companyId?: StringFilter<"Message"> | string
@@ -19525,6 +19557,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    mediaCaption?: string | null
     timestamp: string
     mediaType?: string | null
     isRead?: boolean
@@ -19541,6 +19574,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    mediaCaption?: string | null
     timestamp: string
     mediaType?: string | null
     companyId: string
@@ -20406,6 +20440,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    mediaCaption?: string | null
     timestamp: string
     mediaType?: string | null
     isRead?: boolean
@@ -20422,6 +20457,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    mediaCaption?: string | null
     timestamp: string
     mediaType?: string | null
     companyId: string
@@ -21540,6 +21576,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    mediaCaption?: string | null
     timestamp: string
     mediaType?: string | null
     isRead?: boolean
@@ -21729,6 +21766,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -21746,6 +21784,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -21761,6 +21800,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -21965,6 +22005,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    mediaCaption?: string | null
     timestamp: string
     mediaType?: string | null
     companyId: string
@@ -22031,6 +22072,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -22047,6 +22089,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: StringFieldUpdateOperationsInput | string
@@ -22062,6 +22105,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: StringFieldUpdateOperationsInput | string
@@ -22356,6 +22400,7 @@ export namespace Prisma {
     direction: $Enums.Direction
     status?: $Enums.MessageStatus
     mediaUrl?: string | null
+    mediaCaption?: string | null
     timestamp: string
     mediaType?: string | null
     companyId: string
@@ -22370,6 +22415,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     isRead?: BoolFieldUpdateOperationsInput | boolean
@@ -22386,6 +22432,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: StringFieldUpdateOperationsInput | string
@@ -22401,6 +22448,7 @@ export namespace Prisma {
     direction?: EnumDirectionFieldUpdateOperationsInput | $Enums.Direction
     status?: EnumMessageStatusFieldUpdateOperationsInput | $Enums.MessageStatus
     mediaUrl?: NullableStringFieldUpdateOperationsInput | string | null
+    mediaCaption?: NullableStringFieldUpdateOperationsInput | string | null
     timestamp?: StringFieldUpdateOperationsInput | string
     mediaType?: NullableStringFieldUpdateOperationsInput | string | null
     companyId?: StringFieldUpdateOperationsInput | string

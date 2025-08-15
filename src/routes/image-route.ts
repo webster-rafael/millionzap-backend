@@ -45,7 +45,7 @@ export async function photoRoutes(fastify: FastifyInstance) {
   );
 
   fastify.get<{ Querystring: { fileName: string } }>(
-    "/photos",
+    "/",
     { onRequest: [authHook] },
     async (request, reply) => {
       try {
