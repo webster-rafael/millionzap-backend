@@ -1,0 +1,7 @@
+{
+  "explorer.fileNesting.enabled": false,
+  "search.actionsPosition": "right",
+  "search.defaultViewMode": "list",
+  "search.quickAccess.preserveInput": false,
+  "search.searchEditor.focusResultsOnSearch": false
+}

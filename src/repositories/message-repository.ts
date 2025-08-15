@@ -1,5 +1,5 @@
 import { prisma } from "../database/prisma-client";
-import { Prisma } from "../generated/prisma-client";
+import { Prisma } from "@prisma/client";
 import {
   Message,
   MessageCreate,

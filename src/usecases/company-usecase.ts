@@ -1,10 +1,10 @@
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-import { Prisma } from "../generated/prisma-client/index.js";
 import { Company, CreateCompany } from "../types/company-interface.js";
 import { CompanyRepositoryPrisma } from "../repositories/company-repository.js";
 import { UserRepositoryPrisma } from "../repositories/user-repository.js";
 import { User } from "../types/user-interface.js";
+import { Prisma } from "@prisma/client";
 
 type CompanyWithUsers = Prisma.CompanyGetPayload<{
   include: { users: true };

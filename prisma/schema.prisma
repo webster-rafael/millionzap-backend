@@ -1,6 +1,5 @@
 generator client {
   provider = "prisma-client-js"
-  output   = "../src/generated/prisma-client"
 }
 
 datasource db {
@@ -137,7 +136,7 @@ model Message {
   direction      Direction
   status         MessageStatus @default(PENDING)
   mediaUrl       String?
-  mediaCaption    String?
+  mediaCaption   String?
   timestamp      String
   mediaType      String?
   companyId      String

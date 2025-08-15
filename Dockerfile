@@ -1,21 +1,19 @@
-# Etapa 1: Build
 FROM node:18 AS build
 
-# Diretório de trabalho dentro do container
 WORKDIR /app
 
-# Copia apenas os arquivos necessários primeiro (cache de dependências)
 COPY package*.json ./
 COPY tsconfig*.json ./
+COPY prisma ./prisma
 COPY src ./src
 
-# Instalar dependências
 RUN npm ci
 
-# Compilar para JavaScript
+RUN npx prisma generate
+
+
 RUN npm run build
 
-# Etapa 2: Produção
 FROM node:18 AS production
 
 WORKDIR /app
@@ -24,13 +22,15 @@ WORKDIR /app
 COPY package*.json ./
 
 # Instalar apenas dependências de produção
-RUN npm ci --only=production
+RUN npm ci --omit=dev
 
-# Copiar arquivos compilados da etapa anterior
+# Copiar os arquivos compilados e o Prisma Client
 COPY --from=build /app/dist ./dist
+COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
+COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
 
-# Porta que o app vai expor
+# Expor a porta que o app usa
 EXPOSE 3000
 
-# Comando de inicialização
+# Rodar o servidor
 CMD ["node", "dist/server.js"]

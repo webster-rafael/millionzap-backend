@@ -1,9 +1,4 @@
-import {
-  Direction,
-  Message,
-  MessageStatus,
-  Prisma,
-} from "../generated/prisma-client";
+import { Message, Prisma } from "@prisma/client";
 import { MessageRepositoryPrisma } from "../repositories/message-repository";
 import { MessageRepository } from "../types/message-interface";
 
