@@ -29,11 +29,10 @@ export async function companyRoutes(fastify: FastifyInstance) {
 
       reply.setCookie("authToken", token, {
         path: "/",
-        domain: "localhost",
         httpOnly: true,
-        secure: process.env.NODE_ENV === "production",
-        sameSite: "lax",
-        maxAge: 60 * 60 * 24 * 7,
+        secure: true,
+        sameSite: "none",
+        maxAge: 60 * 60 * 24 * 7, // 7 dias
       });
 
       return reply.status(200).send(companyData);
