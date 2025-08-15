@@ -20,7 +20,7 @@ import { filesRoutes } from "./routes/file-route";
 const app: FastifyInstance = Fastify({});
 
 app.register(fastifyCors, {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173" || "*",
+  origin: process.env.FRONTEND_URL,
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 });
@@ -87,9 +87,12 @@ app.register(async (instance) => {
   // });
 });
 
+const PORT = Number(process.env.PORT || 3300);
+
 app.listen(
   {
-    port: 3300,
+    port: PORT,
+    host: "0.0.0.0",
   },
   () => {
     console.log("HTTP Server is Running! 🚀");
