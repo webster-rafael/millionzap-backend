@@ -1,4 +1,4 @@
-FROM node:18 AS build
+FROM node:20-alpine AS build
 
 WORKDIR /app
 
@@ -14,7 +14,7 @@ RUN npx prisma generate
 
 RUN npm run build
 
-FROM node:18 AS production
+FROM node:20-alpine AS production
 
 WORKDIR /app
 
@@ -30,7 +30,7 @@ COPY --from=build /app/node_modules/.prisma ./node_modules/.prisma
 COPY --from=build /app/node_modules/@prisma ./node_modules/@prisma
 
 # Expor a porta que o app usa
-EXPOSE 3000
+EXPOSE 3300
 
 # Rodar o servidor
-CMD ["node", "dist/server.js"]
+CMD npx prisma migrate deploy && node dist/server.js
