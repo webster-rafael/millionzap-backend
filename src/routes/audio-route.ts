@@ -60,7 +60,7 @@ export async function audioRoutes(fastify: FastifyInstance) {
         const filePath = path.join(audioFolder, fileName);
         const buffer = await fs.readFile(filePath);
 
-        reply.header("Content-Type", "audio/ogg");
+        reply.header("Content-Type", "audio/mpeg");
         return reply.send(buffer);
       } catch (err) {
         console.error("ERRO AO BUSCAR O ÁUDIO:", err);
