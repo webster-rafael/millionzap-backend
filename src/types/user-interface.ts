@@ -1,6 +1,5 @@
 import { UserRole } from "@prisma/client";
 
-
 export interface User {
   id: string;
   name: string;
@@ -9,6 +8,7 @@ export interface User {
   role: UserRole;
   isActive: boolean;
   companyId: string;
+  connectionId?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -18,9 +18,10 @@ export interface UserCreate {
   password: string;
   role: UserRole;
   companyId: string;
+  connectionId?: string | null;
 }
 
-export type UserCreateInput = Omit<User, "id" | "createdAt" | "updatedAt">;
+export type UserCreateInput = Omit<UserCreate, "id" | "createdAt" | "updatedAt">;
 
 export interface UserRepository {
   create(user: UserCreateInput, companyId: string): Promise<User>;

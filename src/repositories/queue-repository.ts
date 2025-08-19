@@ -72,6 +72,7 @@ class QueueRepositoryPrisma implements QueueRepository {
     createdAt: queue.createdAt,
     updatedAt: queue.updatedAt,
     companyId: queue.companyId,
+    connections: queue.connections ?? [],
   });
 }
 

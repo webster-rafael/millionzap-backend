@@ -28,6 +28,7 @@ class CompanyRepositoryPrisma implements CompanyRepository {
           email: data.email,
           password: hashedPassword,
           companyId: newCompany.id,
+          connectionId: "",
         },
       });
 

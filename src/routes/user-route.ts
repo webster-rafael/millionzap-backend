@@ -70,7 +70,7 @@ export async function userRoutes(fastify: FastifyInstance) {
     }
   });
 
-  fastify.put<{ Params: { id: string }; Body: UserCreate }>(
+  fastify.put<{ Params: { id: string }; Body: UserCreateInput }>(
     "/:id",
     async (request, reply) => {
       try {
@@ -89,14 +89,11 @@ export async function userRoutes(fastify: FastifyInstance) {
           return reply.status(404).send({ error: "Usuário não encontrado" });
         }
 
-        const updated = await userUseCase.update(
-          request.params.id,
-          {
-            ...existing,
-            ...request.body,
-          },
-          companyId
-        );
+         const updated = await userUseCase.update(
+        request.params.id,
+        request.body,
+        companyId
+      );
         reply.status(200).send(updated);
       } catch (error) {
         console.error("Erro ao atualizar usuário:", error);

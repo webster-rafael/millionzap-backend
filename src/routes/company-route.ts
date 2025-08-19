@@ -32,7 +32,7 @@ export async function companyRoutes(fastify: FastifyInstance) {
         httpOnly: true,
         secure: true,
         sameSite: "none",
-        maxAge: 60 * 60 * 24 * 7, // 7 dias
+        maxAge: 60 * 60 * 24 * 7,
       });
 
       return reply.status(200).send(companyData);

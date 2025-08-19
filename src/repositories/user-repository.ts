@@ -66,7 +66,11 @@ class UserRepositoryPrisma implements UserRepository {
   async update(
     id: string,
     user: Partial<
-      UserCreate & { queueIds?: string[]; queues?: any[]; companyId?: string }
+      UserCreateInput & {
+        queueIds?: string[];
+        queues?: any[];
+        companyId?: string;
+      }
     >
   ): Promise<User> {
     const { queueIds, queues, companyId, ...userData } = user;

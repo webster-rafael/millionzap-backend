@@ -2,7 +2,6 @@ import { QueueRepositoryPrisma } from "../repositories/queue-repository";
 import {
   Queue,
   QueueCreate,
-  QueueCreateInput,
   QueueRepository,
 } from "../types/queue-interface";
 

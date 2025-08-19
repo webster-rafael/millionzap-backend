@@ -28,20 +28,22 @@ model Company {
 }
 
 model User {
-  id            String         @id @default(uuid())
-  name          String
-  email         String         @unique
-  password      String
-  role          UserRole       @default(ADMIN)
-  isActive      Boolean        @default(true)
-  companyId     String
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  company       Company?       @relation(fields: [companyId], references: [id])
+  id                 String               @id @default(uuid())
+  name               String
+  email              String               @unique
+  password           String
+  role               UserRole             @default(ADMIN)
+  isActive           Boolean              @default(true)
+  companyId          String
+  createdAt          DateTime             @default(now())
+  updatedAt          DateTime             @updatedAt
+  company            Company?             @relation(fields: [companyId], references: [id])
+  connectionId       String?
   // Relacionamentos
-  conversations Conversation[]
-  messages      Message[]
-  queues        QueueUser[]
+  conversations      Conversation[]
+  messages           Message[]
+  queues             QueueUser[]
+  WhatsAppConnection WhatsAppConnection[]
 
   @@map("users")
 }
@@ -80,13 +82,26 @@ model Queue {
   updatedAt               DateTime @updatedAt
 
   // Relacionamentos
-  conversations  Conversation[]
-  users          QueueUser[]
-  quickResponses QuickResponse[]
-  prompts        Prompts[]
-  Company        Company?        @relation(fields: [companyId], references: [id])
+  conversations   Conversation[]
+  users           QueueUser[]
+  quickResponses  QuickResponse[]
+  prompts         Prompts[]
+  Company         Company?          @relation(fields: [companyId], references: [id])
+  QueueConnection QueueConnection[]
 
   @@map("queues")
+}
+
+model QueueConnection {
+  id           String @id @default(uuid())
+  queueId      String
+  connectionId String
+
+  queue      Queue              @relation(fields: [queueId], references: [id], onDelete: Cascade)
+  connection WhatsAppConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+
+  @@unique([queueId, connectionId])
+  @@map("queue_connections")
 }
 
 model QueueUser {
@@ -189,8 +204,10 @@ model Prompts {
   companyId        String
 
   // Relacionamentos
-  queue   Queue?   @relation(fields: [queueId], references: [id], onDelete: SetNull)
-  Company Company? @relation(fields: [companyId], references: [id])
+  queue                Queue?              @relation(fields: [queueId], references: [id], onDelete: SetNull)
+  Company              Company?            @relation(fields: [companyId], references: [id])
+  WhatsAppConnection   WhatsAppConnection? @relation(fields: [whatsAppConnectionId], references: [id])
+  whatsAppConnectionId String?
 
   @@map("prompts")
 }
@@ -208,6 +225,34 @@ model Tags {
   companyId     String
 
   @@map("tags")
+}
+
+model WhatsAppConnection {
+  id                      String                   @id @default(uuid())
+  name                    String
+  isDefault               Boolean
+  greetingMessage         String?
+  conclusionMessage       String?
+  outOfOfficeHoursMessage String?
+  reviewMessage           String?
+  token                   String?
+  queueId                 String?
+  integrationId           String?
+  userId                  String?
+  promptId                String?
+  transferQueueId         String?
+  timeToTransfer          String?
+  expiresInactiveMessage  String?
+  companyId               String
+  session                 String
+  qrCode                  String
+  status                  WhatsAppConnectionStatus @default(PENDING)
+  createdAt               DateTime                 @default(now())
+  updatedAt               DateTime                 @updatedAt
+
+  user            User?             @relation(fields: [userId], references: [id])
+  prompt          Prompts[]
+  QueueConnection QueueConnection[]
 }
 
 enum UserRole {
@@ -234,6 +279,12 @@ enum Priority {
 enum Direction {
   INBOUND
   OUTBOUND
+}
+
+enum WhatsAppConnectionStatus {
+  OPEN
+  PENDING
+  CLOSED
 }
 
 enum MessageStatus {

@@ -1,3 +1,5 @@
+import { WhatsAppConnection } from "./whatsAppConnection-interface";
+
 export interface Queue {
   id: string;
   name: string;
@@ -12,6 +14,7 @@ export interface Queue {
   priority?: number | null;
   schedules: Schedule[];
   companyId: string;
+  connections: WhatsAppConnection[];
 }
 
 export interface QueueCreate {
@@ -25,6 +28,7 @@ export interface QueueCreate {
   priority?: number | null;
   schedules?: Schedule[];
   companyId: string;
+  connections?: WhatsAppConnection[];
 }
 
 export interface Schedule {

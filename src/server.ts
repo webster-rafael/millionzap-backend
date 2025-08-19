@@ -16,11 +16,12 @@ import fastifyStatic from "@fastify/static";
 import path from "path";
 import { photoRoutes } from "./routes/image-route";
 import { filesRoutes } from "./routes/file-route";
+import { whatsAppConnectionRoutes } from "./routes/whatsAppConnection-route";
 
 const app: FastifyInstance = Fastify({});
 
 app.register(fastifyCors, {
-  origin: process.env.FRONTEND_URL,
+  origin: process.env.FRONTEND_URL || "http://localhost:5173",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 });
@@ -80,6 +81,10 @@ app.register(async (instance) => {
 
   instance.register(tagsRoutes, {
     prefix: "/tags",
+  });
+
+  instance.register(whatsAppConnectionRoutes, {
+    prefix: "/connections",
   });
 
   // instance.register(audioRoutes, {

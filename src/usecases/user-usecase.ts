@@ -1,4 +1,9 @@
-import { User, UserCreateInput, UserRepository } from "../types/user-interface";
+import {
+  User,
+  UserCreate,
+  UserCreateInput,
+  UserRepository,
+} from "../types/user-interface";
 import bcrypt from "bcryptjs";
 
 class UserUseCase {
@@ -6,7 +11,7 @@ class UserUseCase {
   constructor(userRepository: UserRepository) {
     this.userRepository = userRepository;
   }
-  async create(user: UserCreateInput, companyId: string): Promise<User> {
+  async create(user: UserCreate, companyId: string): Promise<User> {
     const hashedPassword = await bcrypt.hash(user.password, 10);
     const userWithHashedPassword = {
       ...user,
@@ -28,11 +33,17 @@ class UserUseCase {
     return this.userRepository.findByEmail(email);
   }
 
-  async update(id: string, user: User, companyId: string): Promise<User> {
+  async update(
+    id: string,
+    user: UserCreateInput,
+    companyId: string
+  ): Promise<User> {
     const dataToUpdate = { ...user };
 
-    if (dataToUpdate.password) {
+    if (dataToUpdate.password && dataToUpdate.password.trim() !== "") {
       dataToUpdate.password = await bcrypt.hash(dataToUpdate.password, 10);
+    } else {
+      delete (dataToUpdate as Partial<User>).password;
     }
 
     return this.userRepository.update(id, dataToUpdate, companyId);

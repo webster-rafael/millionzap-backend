@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { QueueUseCase } from "../usecases/queue-usecase";
-import { QueueCreate, QueueCreateInput } from "../types/queue-interface";
+import { QueueCreate } from "../types/queue-interface";
 
 export async function queuesRoutes(fastify: FastifyInstance) {
   const queueUseCase = new QueueUseCase();
