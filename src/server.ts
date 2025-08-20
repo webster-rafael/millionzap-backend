@@ -17,6 +17,7 @@ import path from "path";
 import { photoRoutes } from "./routes/image-route";
 import { filesRoutes } from "./routes/file-route";
 import { whatsAppConnectionRoutes } from "./routes/whatsAppConnection-route";
+import { qrcodeStatusRoutes } from "./routes/qrcode-status";
 
 const app: FastifyInstance = Fastify({});
 
@@ -90,6 +91,12 @@ app.register(async (instance) => {
   // instance.register(audioRoutes, {
   //   prefix: "/media",
   // });
+});
+
+app.register(async (instance) => {
+  instance.register(qrcodeStatusRoutes, {
+    prefix: "/",
+  });
 });
 
 const PORT = Number(process.env.PORT || 3300);
