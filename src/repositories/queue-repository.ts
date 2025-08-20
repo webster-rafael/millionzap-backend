@@ -1,70 +1,165 @@
+import { Prisma } from "@prisma/client";
 import { prisma } from "../database/prisma-client";
 import { Queue, QueueCreate, QueueRepository } from "../types/queue-interface";
 
 class QueueRepositoryPrisma implements QueueRepository {
   async create(queue: QueueCreate): Promise<Queue> {
-    const createQueue = await prisma.queue.create({
+    const { promptIds, connections, ...queueData } = queue;
+
+    const createdQueue = await prisma.queue.create({
       data: {
-        name: queue.name,
-        color: queue.color ?? "",
-        greetingMessage: queue.greetingMessage ?? "",
-        outOfOfficeHoursMessage: queue.outOfOfficeHoursMessage ?? "",
-        promptId: queue.promptId ?? "",
-        integrationId: queue.integrationId ?? "",
-        isActive: queue.isActive,
-        priority: queue.priority ?? 0,
-        schedules: queue.schedules
-          ? JSON.parse(JSON.stringify(queue.schedules))
+        name: queueData.name,
+        companyId: queueData.companyId,
+        color: queueData.color ?? "#3B82F6",
+        greetingMessage: queueData.greetingMessage ?? null,
+        outOfOfficeHoursMessage: queueData.outOfOfficeHoursMessage ?? null,
+        integrationId: queueData.integrationId ?? null,
+        isActive: queueData.isActive ?? true,
+        priority: queueData.priority ?? 0,
+        schedules: queueData.schedules
+          ? (queueData.schedules.map((s) => ({
+              weekday: s.weekday,
+              startTime: s.startTime,
+              endTime: s.endTime,
+              weekdayEn: s.weekdayEn,
+            })) as Prisma.InputJsonValue[])
           : [],
-        companyId: queue.companyId,
+      },
+      include: {
+        prompts: true,
+        QueueConnection: true,
       },
     });
 
-    return this.toQueue(createQueue);
+    if (promptIds && promptIds.length > 0) {
+      await prisma.promptQueue.createMany({
+        data: promptIds.map((promptId) => ({
+          queueId: createdQueue.id,
+          promptId,
+        })),
+      });
+    }
+
+    if (connections && connections.length > 0) {
+      await prisma.queueConnection.createMany({
+        data: connections.map((connectionId) => ({
+          queueId: createdQueue.id,
+          connectionId,
+        })),
+      });
+    }
+
+    const finalQueue = await this.findById(
+      createdQueue.id,
+      createdQueue.companyId
+    );
+    return this.toQueue(finalQueue);
   }
 
-  async findAll(): Promise<Queue[]> {
-    const queues = await prisma.queue.findMany();
+  async findAll(companyId: string): Promise<Queue[]> {
+    const queues = await prisma.queue.findMany({
+      where: { companyId },
+      include: {
+        prompts: true,
+        QueueConnection: true,
+      },
+    });
     return queues.map(this.toQueue);
   }
 
-  async findById(id: string): Promise<Queue | null> {
-    const queue = await prisma.queue.findUnique({ where: { id } });
+  async findById(id: string, companyId: string): Promise<Queue | null> {
+    const queue = await prisma.queue.findFirst({
+      where: { id, companyId },
+      include: {
+        prompts: true,
+        QueueConnection: true,
+      },
+    });
     return queue ? this.toQueue(queue) : null;
   }
 
   async update(id: string, data: Partial<QueueCreate>): Promise<Queue> {
-    const updateQueue = await prisma.queue.update({
+    const updatedQueue = await prisma.queue.update({
       where: { id },
       data: {
         name: data.name,
-        color: data.color ?? "",
-        greetingMessage: data.greetingMessage ?? "",
-        outOfOfficeHoursMessage: data.outOfOfficeHoursMessage ?? "",
-        promptId: data.promptId ?? "",
-        integrationId: data.integrationId ?? "",
+        color: data.color ?? "#3B82F6",
+        greetingMessage: data.greetingMessage ?? null,
+        outOfOfficeHoursMessage: data.outOfOfficeHoursMessage ?? null,
+        integrationId: data.integrationId ?? null,
         isActive: data.isActive ?? true,
         priority: data.priority ?? 0,
         schedules: data.schedules
-          ? JSON.parse(JSON.stringify(data.schedules))
-          : [],
+          ? (data.schedules.map((s) => ({
+              weekday: s.weekday,
+              startTime: s.startTime,
+              endTime: s.endTime,
+              weekdayEn: s.weekdayEn,
+            })) as Prisma.InputJsonValue[])
+          : undefined,
+      },
+      include: {
+        prompts: true,
+        QueueConnection: true,
       },
     });
 
-    return this.toQueue(updateQueue);
+    if (data.promptIds) {
+      await prisma.promptQueue.deleteMany({ where: { queueId: id } });
+      if (data.promptIds.length > 0) {
+        await prisma.promptQueue.createMany({
+          data: data.promptIds.map((promptId) => ({
+            queueId: id,
+            promptId,
+          })),
+        });
+      }
+    }
+
+    if (data.connections) {
+      await prisma.queueConnection.deleteMany({ where: { queueId: id } });
+      if (data.connections.length) {
+        await prisma.queueConnection.createMany({
+          data: data.connections.map((connectionId) => ({
+            queueId: id,
+            connectionId,
+          })),
+        });
+      }
+    }
+
+    const finalQueue = await this.findById(
+      updatedQueue.id,
+      updatedQueue.companyId
+    );
+
+    return this.toQueue(finalQueue);
   }
 
-  async delete(id: string): Promise<void> {
-    await prisma.queue.delete({ where: { id } });
+  async delete(id: string, companyId: string): Promise<void> {
+    await prisma.promptQueue.deleteMany({
+      where: { queueId: id },
+    });
+
+    await prisma.queueConnection.deleteMany({
+      where: { queueId: id },
+    });
+
+    await prisma.queueUser.deleteMany({
+      where: { queueId: id },
+    });
+
+    await prisma.queue.delete({
+      where: { id, companyId },
+    });
   }
 
   private toQueue = (queue: any): Queue => ({
     id: queue.id,
     name: queue.name,
-    color: queue.color ?? "",
+    color: queue.color ?? "#3B82F6",
     greetingMessage: queue.greetingMessage ?? "",
     outOfOfficeHoursMessage: queue.outOfOfficeHoursMessage ?? "",
-    promptId: queue.promptId ?? "",
     integrationId: queue.integrationId ?? "",
     isActive: queue.isActive,
     priority: queue.priority ?? 0,
@@ -72,7 +167,8 @@ class QueueRepositoryPrisma implements QueueRepository {
     createdAt: queue.createdAt,
     updatedAt: queue.updatedAt,
     companyId: queue.companyId,
-    connections: queue.connections ?? [],
+    promptIds: queue.prompts?.map((p: any) => p.promptId) ?? [],
+    connections: queue.QueueConnection?.map((qc: any) => qc.connectionId) ?? [],
   });
 }
 

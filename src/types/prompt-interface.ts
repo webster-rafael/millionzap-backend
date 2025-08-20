@@ -16,26 +16,7 @@ export interface Prompt {
   isActive?: boolean;
   createdAt: Date;
   updatedAt: Date;
-  queueId: string;
-}
-export interface PromptCreate {
-  title: string;
-  apiKey: string;
-  prompt: string;
-  maxTokens: number;
-  maxMessages: number;
-  promptTokens?: number;
-  completionTokens?: number;
-  totalTokens?: number;
-  temperature?: number;
-  assistantId?: string;
-  description?: string;
-  companyResume: string;
-  isActive?: boolean;
-  createdAt: Date;
-  updatedAt: Date;
-  queueId: string;
-  companyId: string;
+  queueIds?: string[];
 }
 
 export type PromptCreateInput = Omit<Prompt, "id" | "createdAt" | "updatedAt">;

@@ -1,12 +1,12 @@
 import { FastifyInstance } from "fastify";
 import { PromptUseCase } from "../usecases/prompt-usecase";
-import { PromptCreate, PromptCreateInput } from "../types/prompt-interface";
+import { PromptCreateInput } from "../types/prompt-interface";
 import { authHook } from "../hooks/auth";
 
 export async function promptRoutes(fastify: FastifyInstance) {
   const promptUseCase = new PromptUseCase();
   fastify.addHook("onRequest", authHook);
-  fastify.post<{ Body: PromptCreate }>("/", async (request, reply) => {
+  fastify.post<{ Body: PromptCreateInput }>("/", async (request, reply) => {
     try {
       const companyId = request.user!.companyId;
       const prompt = await promptUseCase.create(
@@ -45,7 +45,7 @@ export async function promptRoutes(fastify: FastifyInstance) {
     }
   });
 
-  fastify.put<{ Params: { id: string }; Body: PromptCreate }>(
+  fastify.put<{ Params: { id: string }; Body: PromptCreateInput }>(
     "/:id",
     async (request, reply) => {
       try {

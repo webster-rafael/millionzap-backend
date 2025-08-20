@@ -1,9 +1,5 @@
 import { QueueRepositoryPrisma } from "../repositories/queue-repository";
-import {
-  Queue,
-  QueueCreate,
-  QueueRepository,
-} from "../types/queue-interface";
+import { Queue, QueueCreate, QueueRepository } from "../types/queue-interface";
 
 class QueueUseCase {
   private queueRepository: QueueRepository;
@@ -15,20 +11,20 @@ class QueueUseCase {
     return this.queueRepository.create(queue);
   }
 
-  async findAll(): Promise<Queue[]> {
-    return this.queueRepository.findAll();
+  async findAll(companyId: string): Promise<Queue[]> {
+    return this.queueRepository.findAll(companyId);
   }
 
-  async findById(id: string): Promise<Queue | null> {
-    return this.queueRepository.findById(id);
+  async findById(id: string, companyId: string): Promise<Queue | null> {
+    return this.queueRepository.findById(id, companyId);
   }
 
   async update(id: string, queue: Queue): Promise<Queue> {
     return this.queueRepository.update(id, queue);
   }
 
-  async delete(id: string): Promise<void> {
-    return this.queueRepository.delete(id);
+  async delete(id: string, companyId: string): Promise<void> {
+    return this.queueRepository.delete(id, companyId);
   }
 }
 export { QueueUseCase };

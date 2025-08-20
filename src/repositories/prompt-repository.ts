@@ -9,83 +9,49 @@ class PromptRepositoryPrisma implements PromptRepository {
   async create(prompt: PromptCreateInput, companyId: string): Promise<Prompt> {
     const createdPrompt = await prisma.prompts.create({
       data: {
-        ...prompt,
+        title: prompt.title,
+        apiKey: prompt.apiKey,
+        prompt: prompt.prompt,
+        maxTokens: prompt.maxTokens,
+        maxMessages: prompt.maxMessages,
+        promptTokens: prompt.promptTokens ?? 0,
+        completionTokens: prompt.completionTokens ?? 0,
+        totalTokens: prompt.totalTokens ?? 0,
+        temperature: prompt.temperature ?? 0,
+        assistantId: prompt.assistantId ?? "",
+        description: prompt.description ?? "",
+        companyResume: prompt.companyResume,
+        isActive: prompt.isActive ?? true,
         companyId,
+        queue: prompt.queueIds
+          ? {
+              connect: prompt.queueIds.map((id) => ({ id })),
+            }
+          : undefined,
+      },
+      include: {
+        queue: true,
       },
     });
-    return {
-      id: createdPrompt.id,
-      title: createdPrompt.title,
-      apiKey: createdPrompt.apiKey,
-      prompt: createdPrompt.prompt,
-      maxTokens: createdPrompt.maxTokens,
-      maxMessages: createdPrompt.maxMessages,
-      promptTokens: createdPrompt.promptTokens ?? 0,
-      completionTokens: createdPrompt.completionTokens ?? 0,
-      totalTokens: createdPrompt.totalTokens ?? 0,
-      temperature: createdPrompt.temperature ?? 0,
-      assistantId: createdPrompt.assistantId ?? "",
-      description: createdPrompt.description ?? "",
-      companyResume: createdPrompt.companyResume,
-      createdAt: createdPrompt.createdAt,
-      updatedAt: createdPrompt.updatedAt,
-      queueId: createdPrompt.queueId ?? "",
-      companyId,
-    };
+
+    return this.toPrompt(createdPrompt);
   }
 
   async findAll(companyId: string): Promise<Prompt[]> {
     const prompts = await prisma.prompts.findMany({
       where: { companyId },
+      include: { queue: true },
     });
-    return prompts.map((prompt) => ({
-      id: prompt.id,
-      title: prompt.title,
-      apiKey: prompt.apiKey,
-      prompt: prompt.prompt,
-      maxTokens: prompt.maxTokens,
-      maxMessages: prompt.maxMessages,
-      promptTokens: prompt.promptTokens ?? 0,
-      completionTokens: prompt.completionTokens ?? 0,
-      totalTokens: prompt.totalTokens ?? 0,
-      temperature: prompt.temperature ?? 0,
-      assistantId: prompt.assistantId ?? "",
-      description: prompt.description ?? "",
-      companyResume: prompt.companyResume ?? "",
-      isActive: prompt.isActive,
-      createdAt: prompt.createdAt,
-      updatedAt: prompt.updatedAt,
-      queueId: prompt.queueId ?? "",
-      companyId: prompt.companyId,
-    }));
+
+    return prompts.map((p) => this.toPrompt(p));
   }
 
   async findById(id: string, companyId: string): Promise<Prompt | null> {
-    const prompt = await prisma.prompts.findUnique({
-      where: { id },
+    const prompt = await prisma.prompts.findFirst({
+      where: { id, companyId },
+      include: { queue: true },
     });
-    return prompt
-      ? {
-          id: prompt.id,
-          title: prompt.title,
-          apiKey: prompt.apiKey,
-          prompt: prompt.prompt,
-          maxTokens: prompt.maxTokens,
-          maxMessages: prompt.maxMessages,
-          promptTokens: prompt.promptTokens ?? 0,
-          completionTokens: prompt.completionTokens ?? 0,
-          totalTokens: prompt.totalTokens ?? 0,
-          temperature: prompt.temperature ?? 0,
-          assistantId: prompt.assistantId ?? "",
-          description: prompt.description ?? "",
-          companyResume: prompt.companyResume ?? "",
-          isActive: prompt.isActive,
-          createdAt: prompt.createdAt,
-          updatedAt: prompt.updatedAt,
-          queueId: prompt.queueId ?? "",
-          companyId
-        }
-      : null;
+    return prompt ? this.toPrompt(prompt) : null;
   }
 
   async update(prompt: Prompt, companyId: string): Promise<Prompt> {
@@ -105,10 +71,16 @@ class PromptRepositoryPrisma implements PromptRepository {
         description: prompt.description ?? "",
         companyResume: prompt.companyResume ?? "",
         isActive: prompt.isActive,
-        queueId: prompt.queueId ?? "",
-        companyId
+        companyId,
+        queue: prompt.queueIds
+          ? {
+              set: prompt.queueIds.map((id) => ({ id })),
+            }
+          : undefined,
       },
+      include: { queue: true },
     });
+
     return this.toPrompt(updatedPrompt);
   }
 
@@ -118,26 +90,7 @@ class PromptRepositoryPrisma implements PromptRepository {
     });
   }
 
-  private toPrompt = (data: {
-    id: string;
-    title: string;
-    apiKey: string;
-    prompt: string;
-    maxTokens: number;
-    maxMessages: number;
-    promptTokens?: number | null;
-    completionTokens?: number | null;
-    totalTokens?: number | null;
-    temperature?: number | null;
-    assistantId?: string | null;
-    description?: string | null;
-    companyResume?: string | null;
-    isActive?: boolean | null;
-    createdAt: Date;
-    updatedAt: Date;
-    queueId: string | null;
-    companyId: string;
-  }): Prompt => ({
+  private toPrompt = (data: any): Prompt => ({
     id: data.id,
     title: data.title,
     apiKey: data.apiKey,
@@ -154,7 +107,7 @@ class PromptRepositoryPrisma implements PromptRepository {
     isActive: data.isActive ?? false,
     createdAt: data.createdAt,
     updatedAt: data.updatedAt,
-    queueId: data.queueId ?? "",
+    queueIds: data.queue?.map((q: any) => q.id) ?? [],
     companyId: data.companyId,
   });
 }

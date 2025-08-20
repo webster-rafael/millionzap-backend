@@ -75,7 +75,6 @@ model Queue {
   color                   String   @default("#3B82F6")
   greetingMessage         String?
   outOfOfficeHoursMessage String?
-  promptId                String?
   integrationId           String?
   isActive                Boolean  @default(true)
   priority                Int      @default(0)
@@ -88,7 +87,7 @@ model Queue {
   conversations   Conversation[]
   users           QueueUser[]
   quickResponses  QuickResponse[]
-  prompts         Prompts[]
+  prompts         PromptQueue[]
   Company         Company?          @relation(fields: [companyId], references: [id])
   QueueConnection QueueConnection[]
 
@@ -187,7 +186,7 @@ model QuickResponse {
 }
 
 model Prompts {
-  id               String   @id @default(uuid())
+  id               String        @id @default(uuid())
   title            String
   apiKey           String
   prompt           String
@@ -200,19 +199,29 @@ model Prompts {
   assistantId      String?
   description      String?
   companyResume    String
-  isActive         Boolean  @default(true)
-  createdAt        DateTime @default(now())
-  updatedAt        DateTime @updatedAt
-  queueId          String?
+  isActive         Boolean       @default(true)
+  createdAt        DateTime      @default(now())
+  updatedAt        DateTime      @updatedAt
   companyId        String
+  queue            PromptQueue[]
 
   // Relacionamentos
-  queue                Queue?              @relation(fields: [queueId], references: [id], onDelete: SetNull)
   Company              Company?            @relation(fields: [companyId], references: [id])
   WhatsAppConnection   WhatsAppConnection? @relation(fields: [whatsAppConnectionId], references: [id])
   whatsAppConnectionId String?
 
   @@map("prompts")
+}
+
+model PromptQueue {
+  id       String @id @default(uuid())
+  promptId String
+  queueId  String
+
+  prompt Prompts @relation(fields: [promptId], references: [id])
+  queue  Queue   @relation(fields: [queueId], references: [id])
+
+  @@map("prompt_queue")
 }
 
 model Tags {

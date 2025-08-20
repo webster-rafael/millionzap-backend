@@ -1,36 +1,3 @@
-import { WhatsAppConnection } from "./whatsAppConnection-interface";
-
-export interface Queue {
-  id: string;
-  name: string;
-  color?: string | null;
-  greetingMessage?: string | null;
-  outOfOfficeHoursMessage?: string | null;
-  promptId?: string | null;
-  integrationId?: string | null;
-  createdAt: Date;
-  updatedAt: Date;
-  isActive: boolean;
-  priority?: number | null;
-  schedules: Schedule[];
-  companyId: string;
-  connections: WhatsAppConnection[];
-}
-
-export interface QueueCreate {
-  name: string;
-  color?: string | null;
-  greetingMessage?: string | null;
-  outOfOfficeHoursMessage?: string | null;
-  promptId?: string | null;
-  integrationId?: string | null;
-  isActive: boolean;
-  priority?: number | null;
-  schedules?: Schedule[];
-  companyId: string;
-  connections?: WhatsAppConnection[];
-}
-
 export interface Schedule {
   weekday: string;
   startTime: string;
@@ -38,12 +5,43 @@ export interface Schedule {
   weekdayEn: string;
 }
 
+export interface Queue {
+  id: string;
+  name: string;
+  color?: string | null;
+  greetingMessage?: string | null;
+  outOfOfficeHoursMessage?: string | null;
+  integrationId?: string | null;
+  createdAt: Date;
+  updatedAt: Date;
+  isActive: boolean;
+  priority?: number | null;
+  schedules: Schedule[];
+  companyId: string;
+  promptIds?: string[];
+  connections?: string[];
+}
+
+export interface QueueCreate {
+  name: string;
+  color?: string | null;
+  greetingMessage?: string | null;
+  outOfOfficeHoursMessage?: string | null;
+  integrationId?: string | null;
+  isActive: boolean;
+  priority?: number | null;
+  schedules?: Schedule[];
+  companyId: string;
+  promptIds?: string[];
+  connections?: string[];
+}
+
 export type QueueCreateInput = Omit<Queue, "id" | "createdAt" | "updatedAt">;
 
 export interface QueueRepository {
   create(queue: QueueCreate): Promise<Queue>;
-  findAll(): Promise<Queue[]>;
-  update(id: string, queue: Queue): Promise<Queue>;
-  findById(id: string): Promise<Queue | null>;
-  delete(id: string): Promise<void>;
+  findAll(companyId: string): Promise<Queue[]>;
+  update(id: string, queue: Partial<QueueCreate>): Promise<Queue>;
+  findById(id: string, companyId: string): Promise<Queue | null>;
+  delete(id: string, companyId: string): Promise<void>;
 }

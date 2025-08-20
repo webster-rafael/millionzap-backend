@@ -1,9 +1,11 @@
 import { FastifyInstance } from "fastify";
 import { QueueUseCase } from "../usecases/queue-usecase";
 import { QueueCreate } from "../types/queue-interface";
+import { authHook } from "../hooks/auth";
 
 export async function queuesRoutes(fastify: FastifyInstance) {
   const queueUseCase = new QueueUseCase();
+  fastify.addHook("onRequest", authHook);
   fastify.post<{ Body: QueueCreate }>("/", async (request, reply) => {
     try {
       const queue = await queueUseCase.create(request.body);
@@ -13,9 +15,10 @@ export async function queuesRoutes(fastify: FastifyInstance) {
     }
   });
 
-  fastify.get("/", async (_, reply) => {
+  fastify.get("/", async (request, reply) => {
     try {
-      const queues = await queueUseCase.findAll();
+      const companyId = request.user!.companyId;
+      const queues = await queueUseCase.findAll(companyId);
       reply.status(200).send(queues);
     } catch (error) {
       console.error("Erro ao buscar filas:", error);
@@ -25,7 +28,8 @@ export async function queuesRoutes(fastify: FastifyInstance) {
 
   fastify.get<{ Params: { id: string } }>("/:id", async (request, reply) => {
     try {
-      const queue = await queueUseCase.findById(request.params.id);
+      const companyId = request.user!.companyId;
+      const queue = await queueUseCase.findById(request.params.id, companyId);
       if (!queue) {
         return reply.status(404).send({ error: "Fila não encontrada" });
       }
@@ -40,7 +44,11 @@ export async function queuesRoutes(fastify: FastifyInstance) {
     "/:id",
     async (request, reply) => {
       try {
-        const existing = await queueUseCase.findById(request.params.id);
+        const companyId = request.user!.companyId;
+        const existing = await queueUseCase.findById(
+          request.params.id,
+          companyId
+        );
         if (!existing) {
           return reply.status(404).send({ error: "Fila não encontrada" });
         }
@@ -60,12 +68,16 @@ export async function queuesRoutes(fastify: FastifyInstance) {
 
   fastify.delete<{ Params: { id: string } }>("/:id", async (request, reply) => {
     try {
-      const existing = await queueUseCase.findById(request.params.id);
+      const companyId = request.user!.companyId;
+      const existing = await queueUseCase.findById(
+        request.params.id,
+        companyId
+      );
       if (!existing) {
         return reply.status(404).send({ error: "Fila não encontrada" });
       }
 
-      await queueUseCase.delete(request.params.id);
+      await queueUseCase.delete(request.params.id, companyId);
       reply.status(204).send();
     } catch (error) {
       console.error("Erro ao deletar fila:", error);
