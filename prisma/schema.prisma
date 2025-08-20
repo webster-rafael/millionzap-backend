@@ -25,12 +25,15 @@ model Company {
   quickResponses QuickResponse[]
   prompts        Prompts[]
   tags           Tags[]
+
+  @@map("company")
 }
 
 model User {
   id                 String               @id @default(uuid())
   name               String
   email              String               @unique
+  phone              String
   password           String
   role               UserRole             @default(ADMIN)
   isActive           Boolean              @default(true)
