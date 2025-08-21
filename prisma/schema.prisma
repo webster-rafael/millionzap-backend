@@ -47,6 +47,7 @@ model User {
   messages           Message[]
   queues             QueueUser[]
   WhatsAppConnection WhatsAppConnection[]
+  Contact            Contact[]
 
   @@map("users")
 }
@@ -61,10 +62,12 @@ model Contact {
   isCostumer Boolean?  @default(true)
   createdAt  DateTime  @default(now())
   updatedAt  DateTime? @updatedAt
+  userId     String?
 
   // Relacionamentos
   conversations Conversation[]
   Company       Company?       @relation(fields: [companyId], references: [id])
+  User          User?          @relation(fields: [userId], references: [id])
 
   @@map("contacts")
 }

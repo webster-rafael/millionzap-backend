@@ -5,6 +5,7 @@ export interface Contact {
   email?: string | null;
   whatsappId?: string | null;
   companyId: string;
+  userId?: string | null
   isCostumer?: boolean | null;
   tags?: string[];
   createdAt: Date;
@@ -16,6 +17,7 @@ export interface CreateContact {
   phone: string;
   email?: string | null;
   whatsappId?: string | null;
+  userId?: string | null;
   isCostumer?: boolean | null;
   tags?: string[];
   companyId: string;
@@ -28,7 +30,7 @@ export type ContactCreateInput = Omit<
 
 export interface ContactRepository {
   create(contact: ContactCreateInput, companyId: string): Promise<Contact>;
-  findAll(companyId: string): Promise<Contact[]>;
+  findAll(userId: string, companyId: string): Promise<Contact[]>;
   update(
     id: string,
     contact: ContactCreateInput,

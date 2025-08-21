@@ -13,6 +13,7 @@ class ContactRepositoryPrisma implements ContactRepository {
         data: {
           ...contact,
           companyId: companyId,
+          userId: contact.userId,
         },
       });
       return this.toContact(createContact, companyId);
@@ -32,8 +33,10 @@ class ContactRepositoryPrisma implements ContactRepository {
     }
   }
 
-  async findAll(companyId: string): Promise<Contact[]> {
-    const contacts = await prisma.contact.findMany({ where: { companyId } });
+  async findAll(userId: string, companyId: string): Promise<Contact[]> {
+    const contacts = await prisma.contact.findMany({
+      where: { companyId, userId },
+    });
     return contacts.map((contact) => this.toContact(contact, companyId));
   }
 
@@ -54,7 +57,7 @@ class ContactRepositoryPrisma implements ContactRepository {
     return contact ? this.toContact(contact, companyId) : null;
   }
 
-  async delete(id: string, companyId: string): Promise<void> {
+  async delete(id: string): Promise<void> {
     await prisma.contact.delete({ where: { id } });
   }
 
@@ -63,6 +66,7 @@ class ContactRepositoryPrisma implements ContactRepository {
     name: contact.name,
     phone: contact.phone,
     email: contact.email ?? "",
+    userId: contact.userId ?? "",
     companyId,
     whatsappId: contact.whatsappId ?? "",
     isCostumer: contact.isCostumer ?? true,
