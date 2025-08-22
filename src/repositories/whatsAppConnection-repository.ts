@@ -23,8 +23,12 @@ class WhatsAppConnectionRepositoryPrisma
     return this.toCreateConnection(createConnection);
   }
 
-  async findAll(): Promise<WhatsAppConnection[]> {
-    const connections = await prisma.whatsAppConnection.findMany();
+  async findAll(companyId: string): Promise<WhatsAppConnection[]> {
+    const connections = await prisma.whatsAppConnection.findMany({
+      where: {
+        companyId,
+      },
+    });
     return connections.map(this.toCreateConnection);
   }
 
