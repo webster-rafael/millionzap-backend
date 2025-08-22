@@ -17,8 +17,8 @@ class QuickResponseUseCase {
     return this.quickResponseRepository.create(quickResponse);
   }
 
-  async findAll(): Promise<QuickResponse[]> {
-    return this.quickResponseRepository.findAll();
+  async findAll(companyId: string): Promise<QuickResponse[]> {
+    return this.quickResponseRepository.findAll(companyId);
   }
 
   async findById(id: string): Promise<QuickResponse | null> {

@@ -24,7 +24,8 @@ export async function quickResponseRoutes(fastify: FastifyInstance) {
 
   fastify.get("/", async (request, reply) => {
     try {
-      const quickResponses = await quickResponseUseCase.findAll();
+      const companyId = request.user!.companyId;
+      const quickResponses = await quickResponseUseCase.findAll(companyId);
       reply.status(200).send(quickResponses);
     } catch (error) {
       reply.status(500).send({ error: "Erro ao buscar as respostas rápidas" });

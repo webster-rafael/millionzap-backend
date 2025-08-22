@@ -11,8 +11,10 @@ class QuickResponseRepositoryPrisma implements QuickResponseRepository {
     return quickResponse;
   }
 
-  async findAll(): Promise<QuickResponse[]> {
-    const quickResponses = await prisma.quickResponse.findMany();
+  async findAll(companyId: string): Promise<QuickResponse[]> {
+    const quickResponses = await prisma.quickResponse.findMany({
+      where: { companyId },
+    });
     return quickResponses;
   }
 

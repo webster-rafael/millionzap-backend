@@ -26,7 +26,7 @@ export type QuickResponseCreateInput = Omit<
 
 export interface QuickResponseRepository {
   create(data: QuickResponseCreateInput): Promise<QuickResponse>;
-  findAll(): Promise<QuickResponse[]>;
+  findAll(companyId: string): Promise<QuickResponse[]>;
   findById(id: string): Promise<QuickResponse | null>;
   update(data: QuickResponse): Promise<QuickResponse>;
   delete(id: string): Promise<QuickResponse>;
