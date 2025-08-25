@@ -18,6 +18,7 @@ import { photoRoutes } from "./routes/image-route";
 import { filesRoutes } from "./routes/file-route";
 import { whatsAppConnectionRoutes } from "./routes/whatsAppConnection-route";
 import { qrcodeStatusRoutes } from "./routes/qrcode-status";
+import { contactListRoutes } from "./routes/contactList-route";
 
 const app: FastifyInstance = Fastify({});
 
@@ -66,6 +67,10 @@ app.register(async (instance) => {
 
   instance.register(contactRoutes, {
     prefix: "/contacts",
+  });
+
+  instance.register(contactListRoutes, {
+    prefix: "/contact-lists",
   });
 
   instance.register(quickResponseRoutes, {

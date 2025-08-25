@@ -25,6 +25,7 @@ model Company {
   quickResponses QuickResponse[]
   prompts        Prompts[]
   tags           Tags[]
+  contactList    ContactList[]
 
   @@map("company")
 }
@@ -57,6 +58,7 @@ model Contact {
   name       String
   phone      String    @unique
   email      String?
+  image      String?
   tags       String[]
   companyId  String
   isCostumer Boolean?  @default(true)
@@ -66,10 +68,38 @@ model Contact {
 
   // Relacionamentos
   conversations Conversation[]
-  Company       Company?       @relation(fields: [companyId], references: [id])
-  User          User?          @relation(fields: [userId], references: [id])
+  Company       Company?               @relation(fields: [companyId], references: [id])
+  User          User?                  @relation(fields: [userId], references: [id])
+  contactLists  ContactListOnContact[]
 
   @@map("contacts")
+}
+
+model ContactList {
+  id          String   @id @default(uuid())
+  name        String
+  description String?
+  isActive    Boolean
+  companyId   String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  // Relacionamentos
+  contacts ContactListOnContact[]
+  Company  Company?               @relation(fields: [companyId], references: [id])
+
+  @@map("contact_list")
+}
+
+model ContactListOnContact {
+  contactId     String
+  contactListId String
+
+  contact     Contact     @relation(fields: [contactId], references: [id])
+  contactList ContactList @relation(fields: [contactListId], references: [id])
+
+  @@id([contactId, contactListId])
+  @@map("contact_list_on_contact")
 }
 
 model Queue {
