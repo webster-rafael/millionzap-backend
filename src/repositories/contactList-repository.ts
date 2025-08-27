@@ -3,6 +3,7 @@ import { Contact } from "../types/contact-interface";
 import {
   ContactList,
   ContactListCreateInput,
+  ContactListUpdateInput,
   CreateContactList,
 } from "../types/contactList-interface";
 
@@ -12,21 +13,32 @@ class ContactListRepository {
     companyId: string
   ): Promise<ContactList> {
     try {
-      const { contactIds, ...listData } = contactListInput;
+      const { contactIds, campaign, ...listData } = contactListInput;
 
-      const createContactList = await prisma.contactList.create({
-        data: {
-          ...listData,
-          companyId: companyId,
-          contacts: {
-            create: contactIds?.map((contactId) => ({
-              contact: { connect: { id: contactId } },
-            })),
-          },
+      const createData: any = {
+        ...listData,
+        companyId: companyId,
+        contacts: {
+          create: contactIds?.map((contactId) => ({
+            contact: { connect: { id: contactId } },
+          })),
         },
-        include: { contacts: true },
+      };
+
+      if (campaign) {
+        createData.campaign = {
+          create: campaign,
+        };
+      }
+
+      const createdContactList = await prisma.contactList.create({
+        data: createData,
+        include: {
+          contacts: { include: { contact: true } },
+          campaign: true,
+        },
       });
-      return this.toContactList(createContactList, companyId);
+      return this.toContactList(createdContactList, companyId);
     } catch (error) {
       throw error;
     }
@@ -43,6 +55,7 @@ class ContactListRepository {
             contact: true,
           },
         },
+        campaign: true,
       },
     });
   }
@@ -59,27 +72,33 @@ class ContactListRepository {
             contact: true,
           },
         },
+        campaign: true,
       },
     });
   }
 
   async update(
     id: string,
-    payload: {
-      name?: string;
-      description?: string | null;
-      isActive?: boolean;
-      contactIds?: string[];
-    },
+    payload: ContactListUpdateInput,
     companyId: string
   ): Promise<ContactList> {
-    const { contactIds, ...listData } = payload;
+    const { contactIds, campaign, ...listData } = payload;
 
     return await prisma.$transaction(async (tx) => {
       if (Object.keys(listData).length > 0) {
         await tx.contactList.update({
           where: { id: id, companyId: companyId },
-          data: listData,
+          data: {
+            ...listData,
+            ...(campaign && {
+              campaign: {
+                upsert: {
+                  create: campaign.upsert.create,
+                  update: campaign.upsert.update,
+                },
+              },
+            }),
+          },
         });
       }
 
@@ -101,11 +120,8 @@ class ContactListRepository {
       return await tx.contactList.findUniqueOrThrow({
         where: { id },
         include: {
-          contacts: {
-            include: {
-              contact: true,
-            },
-          },
+          contacts: { include: { contact: true } },
+          campaign: true,
         },
       });
     });
@@ -131,6 +147,7 @@ class ContactListRepository {
     createdAt: contactList.createdAt,
     companyId,
     contacts: contactList.contacts ?? [],
+    campaign: contactList.campaign ?? null,
   });
 }
 

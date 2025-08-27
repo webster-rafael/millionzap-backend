@@ -1,7 +1,10 @@
 import { FastifyInstance } from "fastify";
 import { ContactListUseCase } from "../usecases/contactList-usecase";
 import { authHook } from "../hooks/auth";
-import { CreateContactList } from "../types/contactList-interface";
+import {
+  CreateContactList,
+  UpdateContactList,
+} from "../types/contactList-interface";
 
 export async function contactListRoutes(fastify: FastifyInstance) {
   const contactListUseCase = new ContactListUseCase();
@@ -56,44 +59,37 @@ export async function contactListRoutes(fastify: FastifyInstance) {
 
   fastify.put<{
     Params: { id: string };
-    Body: {
-      name?: string;
-      description?: string | null;
-      isActive?: boolean;
-      contactIds?: string[];
-    };
+    Body: UpdateContactList;
   }>("/:id", async (request, reply) => {
     try {
       const companyId = request.user!.companyId;
-      const existing = await contactListUseCase.findById(
-        request.params.id,
-        companyId
-      );
+      const { id } = request.params;
+
+      const existing = await contactListUseCase.findById(id, companyId);
       if (!existing) {
         return reply
           .status(404)
           .send({ error: "Lista de contatos não encontrada" });
       }
 
-      const currentContactIds = existing.contacts.map(
-        (contactRelation) => contactRelation.contactId
-      );
+      const { name, description, isActive, contactIds, campaign } =
+        request.body;
 
-      const payloadForUpdate: CreateContactList = {
-        name: request.body.name ?? existing.name,
-        description: request.body.description ?? existing.description,
-        isActive: request.body.isActive ?? existing.isActive,
-        contactIds: request.body.contactIds ?? currentContactIds,
-        companyId: existing.companyId,
+      const payload: UpdateContactList = {
+        name,
+        description,
+        isActive,
+        contactIds,
+        campaign,
       };
 
-      const updated = await contactListUseCase.update(
-        request.params.id,
-        payloadForUpdate,
+      const updatedList = await contactListUseCase.update(
+        id,
+        payload,
         companyId
       );
 
-      reply.status(200).send(updated);
+      reply.status(200).send(updatedList);
     } catch (error) {
       console.error("Erro ao atualizar lista de contatos:", error);
       if (error instanceof Error) {

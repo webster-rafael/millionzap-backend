@@ -1,5 +1,10 @@
 import { ContactListRepository } from "../repositories/contactList-repository";
-import { ContactList, CreateContactList } from "../types/contactList-interface";
+import {
+  ContactList,
+  ContactListUpdateInput,
+  CreateContactList,
+  UpdateContactList,
+} from "../types/contactList-interface";
 
 class ContactListUseCase {
   private contactListRepository: ContactListRepository;
@@ -24,10 +29,26 @@ class ContactListUseCase {
 
   async update(
     id: string,
-    contactList: CreateContactList,
+    payload: UpdateContactList,
     companyId: string
   ): Promise<ContactList> {
-    return this.contactListRepository.update(id, contactList, companyId);
+    const { campaign, contactIds, ...listData } = payload;
+
+    const dataForRepository: ContactListUpdateInput = {
+      ...listData,
+      contactIds,
+    };
+
+    if (campaign) {
+      dataForRepository.campaign = {
+        upsert: {
+          create: campaign,
+          update: campaign,
+        },
+      };
+    }
+
+    return this.contactListRepository.update(id, dataForRepository, companyId);
   }
 
   async delete(id: string, companyId: string): Promise<void> {

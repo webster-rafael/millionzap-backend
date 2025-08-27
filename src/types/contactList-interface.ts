@@ -1,4 +1,11 @@
-import { ContactListOnContact } from "@prisma/client";
+import { Campaign, ContactListOnContact } from "@prisma/client";
+
+type CampaignDataInput = {
+  body: string;
+  title?: string | null;
+  imageUrl?: string | null;
+  footer?: string | null;
+};
 
 export interface ContactList {
   id: string;
@@ -9,6 +16,7 @@ export interface ContactList {
   companyId: string;
   updatedAt?: Date | null;
   contacts: ContactListOnContact[];
+  campaign?: Campaign | null;
 }
 
 export interface CreateContactList {
@@ -17,6 +25,7 @@ export interface CreateContactList {
   isActive: boolean;
   companyId: string;
   contactIds: string[];
+  campaign?: CampaignDataInput;
 }
 
 export type ContactListCreateInput = Omit<
@@ -29,7 +38,29 @@ export type ContactListCreateInput = Omit<
     };
   };
   contactIds?: string[];
+  campaign?: {
+    create: CampaignDataInput;
+  };
 };
+
+export type ContactListUpdateInput = Partial<
+  Omit<ContactListCreateInput, "campaign">
+> & {
+  campaign?: {
+    upsert: {
+      create: CampaignDataInput;
+      update: CampaignDataInput;
+    };
+  };
+};
+
+export interface UpdateContactList {
+  name?: string;
+  description?: string | null;
+  isActive?: boolean;
+  contactIds?: string[];
+  campaign?: CampaignDataInput;
+}
 
 export interface ContactListRepository {
   create(
@@ -38,6 +69,6 @@ export interface ContactListRepository {
   ): Promise<ContactList>;
   findAll(companyId: string): Promise<ContactList[]>;
   findById(id: string, companyId: string): Promise<ContactList | null>;
-  update(id: string, contactList: ContactListCreateInput): Promise<ContactList>;
+  update(id: string, data: ContactListUpdateInput): Promise<ContactList>;
   delete(id: string, companyId: string): Promise<void>;
 }

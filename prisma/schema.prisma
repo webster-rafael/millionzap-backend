@@ -56,7 +56,7 @@ model User {
 model Contact {
   id         String    @id @default(uuid())
   name       String
-  phone      String    @unique
+  phone      String @unique
   email      String?
   image      String?
   tags       String[]
@@ -87,6 +87,7 @@ model ContactList {
   // Relacionamentos
   contacts ContactListOnContact[]
   Company  Company?               @relation(fields: [companyId], references: [id])
+  campaign Campaign?
 
   @@map("contact_list")
 }
@@ -100,6 +101,22 @@ model ContactListOnContact {
 
   @@id([contactId, contactListId])
   @@map("contact_list_on_contact")
+}
+
+model Campaign {
+  id        String   @id @default(uuid())
+  body      String
+  title     String?
+  imageUrl  String?
+  footer    String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relacionamentos
+  contactListId String      @unique
+  contactList   ContactList @relation(fields: [contactListId], references: [id], onDelete: Cascade)
+
+  @@map("campaigns")
 }
 
 model Queue {
