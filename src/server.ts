@@ -19,6 +19,8 @@ import { filesRoutes } from "./routes/file-route";
 import { whatsAppConnectionRoutes } from "./routes/whatsAppConnection-route";
 import { qrcodeStatusRoutes } from "./routes/qrcode-status";
 import { contactListRoutes } from "./routes/contactList-route";
+import fastifyMultipart from "@fastify/multipart";
+import { templateImageRoutes } from "./routes/template-route";
 
 const app: FastifyInstance = Fastify({});
 
@@ -27,6 +29,8 @@ app.register(fastifyCors, {
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 });
+
+app.register(fastifyMultipart);
 app.register(fastifyCookie);
 
 app.register(fastifyStatic, {
@@ -91,6 +95,10 @@ app.register(async (instance) => {
 
   instance.register(whatsAppConnectionRoutes, {
     prefix: "/connections",
+  });
+
+  instance.register(templateImageRoutes, {
+    prefix: "/templates-images",
   });
 
   // instance.register(audioRoutes, {
