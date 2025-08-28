@@ -21,6 +21,7 @@ import { qrcodeStatusRoutes } from "./routes/qrcode-status";
 import { contactListRoutes } from "./routes/contactList-route";
 import fastifyMultipart from "@fastify/multipart";
 import { templateImageRoutes } from "./routes/template-route";
+import { configurationRoutes } from "./routes/configuration-route";
 
 const app: FastifyInstance = Fastify({});
 
@@ -60,6 +61,10 @@ app.register(async (instance) => {
 
 app.register(async (instance) => {
   instance.addHook("preHandler", authHook);
+
+  instance.register(configurationRoutes, {
+    prefix: "/configurations",
+  });
 
   instance.register(conversationRoutes, {
     prefix: "/conversations",
