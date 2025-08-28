@@ -1,7 +1,6 @@
 import { FastifyInstance } from "fastify";
 import fs from "fs/promises";
 import path from "path";
-import { apiKeyAuthHook } from "../hooks/apiKeyN8n.js";
 import { authHook } from "../hooks/auth.js";
 
 export async function audioRoutes(fastify: FastifyInstance) {
@@ -15,7 +14,6 @@ export async function audioRoutes(fastify: FastifyInstance) {
 
   fastify.post<{ Body: { fileName: string; data: string; mimeType: string } }>(
     "/audios/save",
-    { onRequest: [apiKeyAuthHook] },
     async (request, reply) => {
       try {
         const { fileName, data } = request.body;
@@ -46,7 +44,6 @@ export async function audioRoutes(fastify: FastifyInstance) {
 
   fastify.get<{ Querystring: { fileName: string } }>(
     "/audios",
-    { onRequest: [authHook] },
     async (request, reply) => {
       try {
         const { fileName } = request.query;

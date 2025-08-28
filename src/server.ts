@@ -44,7 +44,15 @@ app.register(companyRoutes, {
 });
 
 app.register(async (instance) => {
-  instance.addHook("onRequest", apiKeyAuthHook);
+  instance.addHook("preHandler", authHook);
+
+  instance.register(configurationRoutes, {
+    prefix: "/configurations",
+  });
+
+  instance.register(conversationRoutes, {
+    prefix: "/conversations",
+  });
 
   instance.register(audioRoutes, {
     prefix: "/media",
@@ -56,18 +64,6 @@ app.register(async (instance) => {
 
   instance.register(filesRoutes, {
     prefix: "/files",
-  });
-});
-
-app.register(async (instance) => {
-  instance.addHook("preHandler", authHook);
-
-  instance.register(configurationRoutes, {
-    prefix: "/configurations",
-  });
-
-  instance.register(conversationRoutes, {
-    prefix: "/conversations",
   });
 
   instance.register(userRoutes, {
