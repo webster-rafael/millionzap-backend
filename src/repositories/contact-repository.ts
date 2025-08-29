@@ -2,6 +2,7 @@ import { prisma } from "../database/prisma-client";
 import { Prisma } from "@prisma/client";
 import {
   Contact,
+  ContactCreateInput,
   ContactRepository,
   CreateContact,
 } from "../types/contact-interface";
@@ -45,14 +46,14 @@ class ContactRepositoryPrisma implements ContactRepository {
 
   async update(
     id: string,
-    contact: Partial<CreateContact>,
+    contact: Partial<ContactCreateInput>,
     companyId: string
   ): Promise<Contact> {
     const updateContact = await prisma.contact.update({
       where: { id },
       data: contact,
     });
-    return this.toContact(updateContact, companyId);
+    return this.toContact(updateContact as Contact, companyId);
   }
 
   async findById(id: string, companyId: string): Promise<Contact | null> {

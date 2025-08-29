@@ -1,6 +1,6 @@
 import { FastifyInstance } from "fastify";
 import { ContactUseCase } from "../usecases/contact-usecase";
-import { CreateContact } from "../types/contact-interface";
+import { ContactCreateInput, CreateContact } from "../types/contact-interface";
 import { authHook } from "../hooks/auth";
 
 export async function contactRoutes(fastify: FastifyInstance) {
@@ -53,7 +53,7 @@ export async function contactRoutes(fastify: FastifyInstance) {
     }
   });
 
-  fastify.put<{ Params: { id: string }; Body: Partial<CreateContact> }>(
+  fastify.put<{ Params: { id: string }; Body: Partial<ContactCreateInput> }>(
     "/:id",
     async (request, reply) => {
       try {
@@ -68,12 +68,10 @@ export async function contactRoutes(fastify: FastifyInstance) {
 
         const updated = await contactUseCase.update(
           request.params.id,
-          {
-            ...existing,
-            ...request.body,
-          },
+          request.body as ContactCreateInput,
           companyId
         );
+
         reply.status(200).send(updated);
       } catch (error) {
         console.error("Erro ao atualizar contato:", error);

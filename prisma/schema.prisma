@@ -97,7 +97,7 @@ model ContactListOnContact {
   contactId     String
   contactListId String
 
-  contact     Contact     @relation(fields: [contactId], references: [id])
+  contact     Contact     @relation(fields: [contactId], references: [id], onDelete: Cascade)
   contactList ContactList @relation(fields: [contactListId], references: [id])
 
   @@id([contactId, contactListId])

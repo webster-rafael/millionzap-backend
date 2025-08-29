@@ -5,7 +5,7 @@ export interface Contact {
   email?: string | null;
   whatsappId?: string | null;
   companyId: string;
-  userId?: string | null
+  userId?: string | null;
   isCostumer?: boolean | null;
   tags?: string[];
   createdAt: Date;
@@ -33,9 +33,10 @@ export interface ContactRepository {
   findAll(userId: string, companyId: string): Promise<Contact[]>;
   update(
     id: string,
-    contact: ContactCreateInput,
+    contact: Partial<ContactCreateInput>,
     companyId: string
   ): Promise<Contact>;
+
   findById(id: string, companyId: string): Promise<Contact | null>;
   delete(id: string, companyId: string): Promise<void>;
 }
