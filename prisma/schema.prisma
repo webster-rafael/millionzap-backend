@@ -98,7 +98,7 @@ model ContactListOnContact {
   contactListId String
 
   contact     Contact     @relation(fields: [contactId], references: [id], onDelete: Cascade)
-  contactList ContactList @relation(fields: [contactListId], references: [id])
+  contactList ContactList @relation(fields: [contactListId], references: [id], onDelete: Cascade)
 
   @@id([contactId, contactListId])
   @@map("contact_list_on_contact")
