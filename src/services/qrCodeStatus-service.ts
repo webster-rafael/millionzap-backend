@@ -9,10 +9,10 @@ export class QrCodeStatusService {
 
   constructor(apikey: string) {
     this.evolutionApi = axios.create({
-      baseURL: "https://evolution.omnizap.com.br/instance",
+      baseURL: "https://evo.omnizap.com.br/instance",
       headers: {
         "Content-Type": "application/json",
-        "apikey": apikey,
+        apikey: apikey,
       },
     });
   }
