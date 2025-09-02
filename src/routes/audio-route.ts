@@ -1,7 +1,6 @@
 import { FastifyInstance } from "fastify";
 import fs from "fs/promises";
 import path from "path";
-import { authHook } from "../hooks/auth.js";
 
 export async function audioRoutes(fastify: FastifyInstance) {
   const audioFolder = path.resolve(process.cwd(), "uploads", "audios");

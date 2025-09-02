@@ -1,8 +1,6 @@
 import { FastifyInstance } from "fastify";
 import fs from "fs/promises";
 import path from "path";
-import { apiKeyAuthHook } from "../hooks/apiKeyN8n.js";
-import { authHook } from "../hooks/auth.js";
 
 export async function filesRoutes(fastify: FastifyInstance) {
   const filesFolder = path.resolve(process.cwd(), "uploads", "files");

@@ -39,7 +39,9 @@ class ContactRepositoryPrisma implements ContactRepository {
       where: {
         OR: [{ tags: { has: "LEADS" } }, { userId, companyId }],
         companyId,
+        // ordena pelo ulimo criado primeiro
       },
+      orderBy: { createdAt: "desc" },
     });
     return contacts.map((contact) => this.toContact(contact, companyId));
   }
