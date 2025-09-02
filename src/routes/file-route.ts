@@ -15,7 +15,6 @@ export async function filesRoutes(fastify: FastifyInstance) {
 
   fastify.post<{ Body: { fileName: string; data: string; mimeType?: string } }>(
     "/save",
-    { onRequest: [apiKeyAuthHook] },
     async (request, reply) => {
       try {
         const { fileName, data, mimeType } = request.body;
@@ -49,7 +48,6 @@ export async function filesRoutes(fastify: FastifyInstance) {
 
   fastify.get<{ Querystring: { fileName: string } }>(
     "/",
-    { onRequest: [authHook] },
     async (request, reply) => {
       try {
         const { fileName } = request.query;
