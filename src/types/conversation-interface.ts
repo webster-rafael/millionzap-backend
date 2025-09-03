@@ -27,6 +27,7 @@ interface ContactInfo {
   id: string;
   name: string;
   phone: string;
+  
 }
 
 interface UserInfo {

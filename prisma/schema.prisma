@@ -60,9 +60,10 @@ model Contact {
   phone      String
   email      String?
   image      String?
+  notes      String?
   tags       String[]
   companyId  String
-  isCostumer Boolean?  @default(true)
+  isCustomer Boolean?  @default(true)
   createdAt  DateTime  @default(now())
   updatedAt  DateTime? @updatedAt
   userId     String?

@@ -39,7 +39,6 @@ class ContactRepositoryPrisma implements ContactRepository {
       where: {
         OR: [{ tags: { has: "LEADS" } }, { userId, companyId }],
         companyId,
-        // ordena pelo ulimo criado primeiro
       },
       orderBy: { createdAt: "desc" },
     });
@@ -72,10 +71,12 @@ class ContactRepositoryPrisma implements ContactRepository {
     name: contact.name,
     phone: contact.phone,
     email: contact.email ?? "",
+    image: contact.image ?? "",
+    notes: contact.notes ?? "",
     userId: contact.userId ?? "",
     companyId,
     whatsappId: contact.whatsappId ?? "",
-    isCostumer: contact.isCostumer ?? true,
+    isCustomer: contact.isCustomer ?? true,
     tags: contact.tags ?? [],
     createdAt: contact.createdAt,
     updatedAt: contact.updatedAt ?? null,
