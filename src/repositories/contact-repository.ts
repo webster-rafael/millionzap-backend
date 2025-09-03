@@ -10,14 +10,16 @@ import {
 class ContactRepositoryPrisma implements ContactRepository {
   async create(contact: CreateContact, companyId: string): Promise<Contact> {
     try {
-      const createContact = await prisma.contact.create({
+      const { notes, ...createData } = contact;
+
+      const newContact = await prisma.contact.create({
         data: {
-          ...contact,
+          ...createData,
           companyId: companyId,
           userId: contact.userId,
         },
       });
-      return this.toContact(createContact, companyId);
+      return this.toContact({ ...newContact, notes: [] }, companyId);
     } catch (error: unknown) {
       if (
         error instanceof Prisma.PrismaClientKnownRequestError &&
@@ -40,6 +42,13 @@ class ContactRepositoryPrisma implements ContactRepository {
         OR: [{ tags: { has: "LEADS" } }, { userId, companyId }],
         companyId,
       },
+      include: {
+        notes: {
+          include: {
+            user: true,
+          },
+        },
+      },
       orderBy: { createdAt: "desc" },
     });
     return contacts.map((contact) => this.toContact(contact, companyId));
@@ -58,7 +67,19 @@ class ContactRepositoryPrisma implements ContactRepository {
   }
 
   async findById(id: string, companyId: string): Promise<Contact | null> {
-    const contact = await prisma.contact.findUnique({ where: { id } });
+    const contact = await prisma.contact.findUnique({
+      where: { id },
+      include: {
+        notes: {
+          include: {
+            user: true,
+          },
+          orderBy: {
+            createdAt: "desc",
+          },
+        },
+      },
+    });
     return contact ? this.toContact(contact, companyId) : null;
   }
 
@@ -72,7 +93,7 @@ class ContactRepositoryPrisma implements ContactRepository {
     phone: contact.phone,
     email: contact.email ?? "",
     image: contact.image ?? "",
-    notes: contact.notes ?? "",
+    notes: contact.notes ?? [],
     userId: contact.userId ?? "",
     companyId,
     whatsappId: contact.whatsappId ?? "",

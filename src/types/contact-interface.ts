@@ -1,10 +1,21 @@
+export interface Note {
+  id: string;
+  content: string;
+  userId: string;
+  user?: {
+    id: string;
+    name: string;
+  };
+  createdAt: Date;
+  contactId: string;
+}
 export interface Contact {
   id: string;
   name: string;
   phone: string;
   email?: string | null;
   image?: string | null;
-  notes?: string | null;
+  notes?: Note[];
   whatsappId?: string | null;
   companyId: string;
   userId?: string | null;
@@ -19,7 +30,7 @@ export interface CreateContact {
   phone: string;
   email?: string | null;
   image?: string | null;
-  notes?: string | null;
+  notes?: Note[];
   whatsappId?: string | null;
   userId?: string | null;
   isCustomer?: boolean | null;
@@ -29,7 +40,7 @@ export interface CreateContact {
 
 export type ContactCreateInput = Omit<
   Contact,
-  "id" | "createdAt" | "updatedAt"
+  "id" | "createdAt" | "updatedAt" | "companyId" | "notes"
 >;
 
 export interface ContactRepository {

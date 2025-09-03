@@ -50,6 +50,7 @@ model User {
   queues             QueueUser[]
   WhatsAppConnection WhatsAppConnection[]
   Contact            Contact[]
+  notes              Note[]
 
   @@map("users")
 }
@@ -60,7 +61,6 @@ model Contact {
   phone      String
   email      String?
   image      String?
-  notes      String?
   tags       String[]
   companyId  String
   isCustomer Boolean?  @default(true)
@@ -73,6 +73,7 @@ model Contact {
   Company       Company?               @relation(fields: [companyId], references: [id])
   User          User?                  @relation(fields: [userId], references: [id])
   contactLists  ContactListOnContact[]
+  notes         Note[]
 
   @@map("contacts")
 }
@@ -103,6 +104,20 @@ model ContactListOnContact {
 
   @@id([contactId, contactListId])
   @@map("contact_list_on_contact")
+}
+
+model Note {
+  id        String   @id @default(uuid())
+  content   String   @db.Text
+  createdAt DateTime @default(now())
+  contactId String
+
+  // Relacionamentos
+  contact Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  userId  String
+  user    User    @relation(fields: [userId], references: [id])
+
+  @@map("notes")
 }
 
 model Campaign {
