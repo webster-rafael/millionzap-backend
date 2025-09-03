@@ -22,6 +22,7 @@ import { contactListRoutes } from "./routes/contactList-route";
 import fastifyMultipart from "@fastify/multipart";
 import { templateImageRoutes } from "./routes/template-route";
 import { configurationRoutes } from "./routes/configuration-route";
+import { noteRoutes } from "./routes/notes-route";
 
 const app: FastifyInstance = Fastify({});
 
@@ -80,6 +81,10 @@ app.register(async (instance) => {
 
   instance.register(contactListRoutes, {
     prefix: "/contact-lists",
+  });
+
+  instance.register(noteRoutes, {
+    prefix: "/notes",
   });
 
   instance.register(quickResponseRoutes, {

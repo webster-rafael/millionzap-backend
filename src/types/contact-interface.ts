@@ -1,14 +1,5 @@
-export interface Note {
-  id: string;
-  content: string;
-  userId: string;
-  user?: {
-    id: string;
-    name: string;
-  };
-  createdAt: Date;
-  contactId: string;
-}
+import { Note } from "./note-interface";
+
 export interface Contact {
   id: string;
   name: string;
