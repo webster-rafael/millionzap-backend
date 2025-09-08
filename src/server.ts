@@ -23,6 +23,7 @@ import fastifyMultipart from "@fastify/multipart";
 import { templateImageRoutes } from "./routes/template-route";
 import { configurationRoutes } from "./routes/configuration-route";
 import { noteRoutes } from "./routes/notes-route";
+import { conversationInstagramRoutes } from "./routes/conversationInstagram-route";
 
 const app: FastifyInstance = Fastify({});
 
@@ -69,6 +70,10 @@ app.register(async (instance) => {
 
   instance.register(conversationRoutes, {
     prefix: "/conversations",
+  });
+
+  instance.register(conversationInstagramRoutes, {
+    prefix: "/conversations-instagram",
   });
 
   instance.register(userRoutes, {

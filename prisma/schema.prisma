@@ -8,49 +8,53 @@ datasource db {
 }
 
 model Company {
-  id             String          @id @default(uuid())
-  name           String
-  phone          String
-  email          String          @unique
-  status         Boolean
-  planId         String
-  dueDate        DateTime
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
-  users          User[]
-  contacts       Contact[]
-  conversations  Conversation[]
-  messages       Message[]
-  queues         Queue[]
-  quickResponses QuickResponse[]
-  prompts        Prompts[]
-  tags           Tags[]
-  contactList    ContactList[]
-  Configuration  Configuration?
+  id                    String                  @id @default(uuid())
+  name                  String
+  phone                 String
+  email                 String                  @unique
+  status                Boolean
+  planId                String
+  dueDate               DateTime
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  users                 User[]
+  contacts              Contact[]
+  conversations         Conversation[]
+  messages              Message[]
+  queues                Queue[]
+  quickResponses        QuickResponse[]
+  prompts               Prompts[]
+  tags                  Tags[]
+  contactList           ContactList[]
+  Configuration         Configuration?
+  ConversationInstagram ConversationInstagram[]
+  MessageInstagram      MessageInstagram[]
 
   @@map("company")
 }
 
 model User {
-  id                 String               @id @default(uuid())
-  name               String
-  email              String               @unique
-  phone              String
-  password           String
-  role               UserRole             @default(ADMIN)
-  isActive           Boolean              @default(true)
-  companyId          String
-  createdAt          DateTime             @default(now())
-  updatedAt          DateTime             @updatedAt
-  company            Company?             @relation(fields: [companyId], references: [id])
-  connectionId       String?
+  id                    String                  @id @default(uuid())
+  name                  String
+  email                 String                  @unique
+  phone                 String
+  password              String
+  role                  UserRole                @default(ADMIN)
+  isActive              Boolean                 @default(true)
+  companyId             String
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  company               Company?                @relation(fields: [companyId], references: [id])
+  connectionId          String?
   // Relacionamentos
-  conversations      Conversation[]
-  messages           Message[]
-  queues             QueueUser[]
-  WhatsAppConnection WhatsAppConnection[]
-  Contact            Contact[]
-  notes              Note[]
+  conversations         Conversation[]
+  messages              Message[]
+  queues                QueueUser[]
+  WhatsAppConnection    WhatsAppConnection[]
+  Contact               Contact[]
+  notes                 Note[]
+  ConversationInstagram ConversationInstagram[]
+  MessageInstagram      MessageInstagram[]
 
   @@map("users")
 }
@@ -151,12 +155,13 @@ model Queue {
   updatedAt               DateTime @updatedAt
 
   // Relacionamentos
-  conversations   Conversation[]
-  users           QueueUser[]
-  quickResponses  QuickResponse[]
-  prompts         PromptQueue[]
-  Company         Company?          @relation(fields: [companyId], references: [id])
-  QueueConnection QueueConnection[]
+  conversations         Conversation[]
+  users                 QueueUser[]
+  quickResponses        QuickResponse[]
+  prompts               PromptQueue[]
+  Company               Company?                @relation(fields: [companyId], references: [id])
+  QueueConnection       QueueConnection[]
+  ConversationInstagram ConversationInstagram[]
 
   @@map("queues")
 }
@@ -211,6 +216,28 @@ model Conversation {
   @@map("conversations")
 }
 
+model ConversationInstagram {
+  id        String    @id @default(uuid())
+  name      String
+  username  String
+  image     String
+  userId    String?
+  tagId     String?
+  queueId   String?
+  companyId String
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+
+  // Relacionamentos
+  user     User?              @relation(fields: [userId], references: [id])
+  queue    Queue?             @relation(fields: [queueId], references: [id])
+  tag      Tags?              @relation(fields: [tagId], references: [id], onDelete: SetNull)
+  messages MessageInstagram[]
+  Company  Company?           @relation(fields: [companyId], references: [id])
+
+  @@map("conversation_ig")
+}
+
 model Message {
   id             String        @id @default(uuid())
   conversationId String
@@ -233,6 +260,26 @@ model Message {
   Company      Company?     @relation(fields: [companyId], references: [id])
 
   @@map("messages")
+}
+
+model MessageInstagram {
+  id                      String    @id @default(uuid())
+  content                 String
+  userId                  String?
+  direction               Direction
+  messageType             String
+  createdAt               DateTime  @default(now())
+  updatedAt               DateTime? @updatedAt
+  timestamp               String
+  companyId               String?
+  plataform               String?
+  conversationInstagramId String
+
+  ConversationInstagram ConversationInstagram @relation(fields: [conversationInstagramId], references: [id], onDelete: Cascade)
+  user                  User?                 @relation(fields: [userId], references: [id])
+  Company               Company?              @relation(fields: [companyId], references: [id])
+
+  @@map("message-ig")
 }
 
 model QuickResponse {
@@ -292,16 +339,17 @@ model PromptQueue {
 }
 
 model Tags {
-  id            String         @id @default(uuid())
-  title         String
-  color         String
-  order         Int            @default(0)
-  description   String?
-  conversations Conversation[]
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  Company       Company?       @relation(fields: [companyId], references: [id])
-  companyId     String
+  id                    String                  @id @default(uuid())
+  title                 String
+  color                 String
+  order                 Int                     @default(0)
+  description           String?
+  conversations         Conversation[]
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @updatedAt
+  Company               Company?                @relation(fields: [companyId], references: [id])
+  companyId             String
+  ConversationInstagram ConversationInstagram[]
 
   @@map("tags")
 }

@@ -21,7 +21,6 @@ export interface Conversation {
 }
 
 export type ConversationCreate = Prisma.ConversationCreateInput;
-type ConversationUpdate = Prisma.ConversationUpdateInput;
 
 interface ContactInfo {
   id: string;
