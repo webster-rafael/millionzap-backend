@@ -25,7 +25,9 @@ import { configurationRoutes } from "./routes/configuration-route";
 import { noteRoutes } from "./routes/notes-route";
 import { conversationInstagramRoutes } from "./routes/conversationInstagram-route";
 
-const app: FastifyInstance = Fastify({});
+const app: FastifyInstance = Fastify({
+  bodyLimit: 10 * 1024 * 1024, // 10MB
+});
 
 app.register(fastifyCors, {
   origin: process.env.FRONTEND_URL || "http://localhost:5173",
