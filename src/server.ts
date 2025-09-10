@@ -55,10 +55,6 @@ app.register(async (instance) => {
   instance.register(photoRoutes, {
     prefix: "/photo",
   });
-
-  instance.register(filesRoutes, {
-    prefix: "/files",
-  });
 });
 
 app.register(async (instance) => {
@@ -114,6 +110,10 @@ app.register(async (instance) => {
 
   instance.register(templateImageRoutes, {
     prefix: "/templates-images",
+  });
+
+  instance.register(filesRoutes, {
+    prefix: "/files",
   });
 
   // instance.register(audioRoutes, {
