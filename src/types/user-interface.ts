@@ -8,9 +8,11 @@ export interface User {
   password: string;
   role: UserRole;
   isActive: boolean;
-  tokenIg: string | null;
+  tokenIg?: string | null;
+  instagramId?: string | null;
   companyId: string;
   connectionId?: string | null;
+  instagramAuthenticated?: boolean | null;
   createdAt: Date;
   updatedAt: Date;
 }
