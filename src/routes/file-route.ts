@@ -77,4 +77,42 @@ export async function filesRoutes(fastify: FastifyInstance) {
       }
     }
   );
+
+  fastify.post<{ Querystring: { fileName: string } }>(
+    "/upload/raw",
+    async (request, reply) => {
+      try {
+        const { fileName } = request.query;
+
+        if (!fileName) {
+          return reply
+            .status(400)
+            .send({ error: "O parâmetro 'fileName' é obrigatório na URL." });
+        }
+
+        const fileBuffer = request.body;
+        if (!fileBuffer || (fileBuffer as Buffer).length === 0) {
+          return reply
+            .status(400)
+            .send({ error: "Corpo da requisição (arquivo) está vazio." });
+        }
+
+        const filePath = path.join(filesFolder, fileName);
+
+        await fs.writeFile(filePath, fileBuffer as Buffer);
+
+        const publicUrl = `${process.env.BACKEND_URL}/uploads/files/${fileName}`;
+
+        return reply.status(201).send({
+          message: "Arquivo salvo com sucesso via upload direto",
+          url: publicUrl,
+        });
+      } catch (err) {
+        console.error("ERRO AO SALVAR O ARQUIVO (UPLOAD DIRETO):", err);
+        return reply
+          .status(500)
+          .send({ error: "Erro interno ao salvar o arquivo" });
+      }
+    }
+  );
 }

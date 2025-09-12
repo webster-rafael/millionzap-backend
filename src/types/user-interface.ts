@@ -8,6 +8,7 @@ export interface User {
   password: string;
   role: UserRole;
   isActive: boolean;
+  tokenIg: string | null;
   companyId: string;
   connectionId?: string | null;
   createdAt: Date;

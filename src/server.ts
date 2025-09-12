@@ -29,6 +29,16 @@ const app: FastifyInstance = Fastify({
   bodyLimit: 10 * 1024 * 1024, // 10MB
 });
 
+app.addContentTypeParser('*', (request, payload, done) => {
+  const chunks: any[] = [];
+  payload.on('data', (chunk) => {
+    chunks.push(chunk);
+  });
+  payload.on('end', () => {
+    done(null, Buffer.concat(chunks));
+  });
+});
+
 app.register(fastifyCors, {
   origin: process.env.FRONTEND_URL || "http://localhost:5173",
   methods: ["GET", "POST", "PUT", "DELETE"],
