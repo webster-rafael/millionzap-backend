@@ -74,13 +74,13 @@ class WhatsAppConnectionRepositoryPrisma
     transferQueueId: data.transferQueueId ?? "",
     timeToTransfer: data.timeToTransfer ?? "",
     expiresInactiveMessage: data.expiresInactiveMessage ?? "",
-    session: data.session,
+    session: data.session ?? "",
     instanceName: data.instanceName ?? "",
     instanceId: data.instanceId ?? "",
     status: data.status,
     companyId: data.companyId,
     createdAt: data.createdAt,
-    updatedAt: data.updatedAt,
+    updatedAt: data.updatedAt ?? null,
   });
 }
 

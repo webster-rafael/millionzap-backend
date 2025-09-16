@@ -17,12 +17,12 @@ export interface WhatsAppConnection {
   timeToTransfer?: string | null;
   expiresInactiveMessage?: string | null;
   companyId: string;
-  session: string;
+  session?: string | null;
   instanceName?: string | null;
   instanceId?: string | null;
   status: WhatsAppConnectionStatus;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt?: Date | null;
 }
 
 export interface CreateWhatsAppConnection {
@@ -39,7 +39,7 @@ export interface CreateWhatsAppConnection {
   transferQueueId?: string | null;
   timeToTransfer?: string | null;
   expiresInactiveMessage?: string | null;
-  session: string;
+  session?: string | null;
   instanceName?: string | null;
   instanceId?: string | null;
   status: WhatsAppConnectionStatus;
