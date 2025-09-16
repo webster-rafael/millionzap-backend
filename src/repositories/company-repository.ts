@@ -30,6 +30,7 @@ class CompanyRepositoryPrisma implements CompanyRepository {
           password: hashedPassword,
           companyId: newCompany.id,
           connectionId: "",
+          role: "OWNER",
         },
       });
 

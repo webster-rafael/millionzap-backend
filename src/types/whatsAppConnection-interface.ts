@@ -18,7 +18,8 @@ export interface WhatsAppConnection {
   expiresInactiveMessage?: string | null;
   companyId: string;
   session: string;
-  qrCode: string;
+  instanceName?: string | null;
+  instanceId?: string | null;
   status: WhatsAppConnectionStatus;
   createdAt: Date;
   updatedAt: Date;
@@ -39,7 +40,8 @@ export interface CreateWhatsAppConnection {
   timeToTransfer?: string | null;
   expiresInactiveMessage?: string | null;
   session: string;
-  qrCode: string;
+  instanceName?: string | null;
+  instanceId?: string | null;
   status: WhatsAppConnectionStatus;
 }
 

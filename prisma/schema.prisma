@@ -376,7 +376,8 @@ model WhatsAppConnection {
   expiresInactiveMessage  String?
   companyId               String
   session                 String
-  qrCode                  String
+  instanceName            String?
+  instanceId              String?
   status                  WhatsAppConnectionStatus @default(PENDING)
   createdAt               DateTime                 @default(now())
   updatedAt               DateTime                 @updatedAt
@@ -400,6 +401,7 @@ model Configuration {
 enum UserRole {
   ADMIN
   USER
+  OWNER
 }
 
 enum ConversationStatus {
