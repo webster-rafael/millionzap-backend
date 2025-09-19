@@ -24,17 +24,18 @@ import { templateImageRoutes } from "./routes/template-route";
 import { configurationRoutes } from "./routes/configuration-route";
 import { noteRoutes } from "./routes/notes-route";
 import { conversationInstagramRoutes } from "./routes/conversationInstagram-route";
+import { todosRoutes } from "./routes/todo-route";
 
 const app: FastifyInstance = Fastify({
   bodyLimit: 10 * 1024 * 1024, // 10MB
 });
 
-app.addContentTypeParser('*', (request, payload, done) => {
+app.addContentTypeParser("*", (request, payload, done) => {
   const chunks: any[] = [];
-  payload.on('data', (chunk) => {
+  payload.on("data", (chunk) => {
     chunks.push(chunk);
   });
-  payload.on('end', () => {
+  payload.on("end", () => {
     done(null, Buffer.concat(chunks));
   });
 });
@@ -118,6 +119,10 @@ app.register(async (instance) => {
 
   instance.register(tagsRoutes, {
     prefix: "/tags",
+  });
+
+  instance.register(todosRoutes, {
+    prefix: "/todos",
   });
 
   instance.register(whatsAppConnectionRoutes, {

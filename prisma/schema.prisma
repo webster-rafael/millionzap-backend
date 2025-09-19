@@ -29,6 +29,7 @@ model Company {
   Configuration         Configuration?
   ConversationInstagram ConversationInstagram[]
   MessageInstagram      MessageInstagram[]
+  ToDo                  ToDo[]
 
   @@map("company")
 }
@@ -59,6 +60,8 @@ model User {
   notes                 Note[]
   ConversationInstagram ConversationInstagram[]
   MessageInstagram      MessageInstagram[]
+  todosCreated          ToDo[]                  @relation("ToDoCreator")
+  todosResponsible      ToDo[]                  @relation("ToDoResponsible")
 
   @@map("users")
 }
@@ -358,6 +361,26 @@ model Tags {
   @@map("tags")
 }
 
+model ToDo {
+  id            String    @id @default(uuid())
+  title         String
+  description   String?
+  completed     Boolean   @default(false)
+  priority      Priority
+  responsibleId String?
+  createdById   String?
+  companyId     String?
+  dueDate       DateTime? @db.Date
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  responsible User?    @relation("ToDoResponsible", fields: [responsibleId], references: [id])
+  createdBy   User?    @relation("ToDoCreator", fields: [createdById], references: [id])
+  Company     Company? @relation(fields: [companyId], references: [id])
+
+  @@map("todo")
+}
+
 model WhatsAppConnection {
   id                      String                   @id @default(uuid())
   name                    String
@@ -380,7 +403,7 @@ model WhatsAppConnection {
   instanceId              String?
   status                  WhatsAppConnectionStatus @default(PENDING)
   createdAt               DateTime                 @default(now())
-  updatedAt               DateTime?                 @updatedAt
+  updatedAt               DateTime?                @updatedAt
 
   user            User?             @relation(fields: [userId], references: [id])
   prompt          Prompts[]

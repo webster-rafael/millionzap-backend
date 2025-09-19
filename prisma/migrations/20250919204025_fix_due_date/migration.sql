@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "todo" ALTER COLUMN "dueDate" SET DATA TYPE DATE;
