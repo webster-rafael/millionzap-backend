@@ -198,19 +198,23 @@ model QueueUser {
 }
 
 model Conversation {
-  id            String             @id @default(uuid())
-  contactId     String
-  userId        String?
-  queueId       String?
-  tagId         String?
-  status        ConversationStatus @default(WAITING)
-  priority      Priority?          @default(MEDIUM)
-  subject       String?
-  lastMessageAt DateTime?
-  closedAt      DateTime?
-  companyId     String
-  createdAt     DateTime           @default(now())
-  updatedAt     DateTime?          @updatedAt
+  id              String             @id @default(uuid())
+  contactId       String
+  userId          String?
+  queueId         String?
+  tagId           String?
+  status          ConversationStatus @default(WAITING)
+  priority        Priority?          @default(MEDIUM)
+  subject         String?
+  lastMessageAt   DateTime?
+  closedAt        DateTime?
+  companyId       String
+  copilot         Boolean?           @default(false)
+  copilotIndex    Int?               @default(0)
+  copilotFeedback Json?
+  statusCopilot   String?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime?          @updatedAt
 
   // Relacionamentos
   user     User?     @relation(fields: [userId], references: [id])

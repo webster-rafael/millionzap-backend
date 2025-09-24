@@ -12,6 +12,10 @@ export interface Conversation {
   lastMessageAt?: Date | null;
   closedAt?: Date | null;
   companyId: string;
+  copilot?: boolean | null;
+  statusCopilot?: string | null;
+  copilotIndex?: number | null;
+  copilotFeedback?: Prisma.JsonValue | null;
   createdAt: Date;
   updatedAt?: Date | null;
 
@@ -26,7 +30,6 @@ interface ContactInfo {
   id: string;
   name: string;
   phone: string;
-  
 }
 
 interface UserInfo {
