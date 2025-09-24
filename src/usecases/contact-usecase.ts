@@ -18,8 +18,8 @@ class ContactUseCase {
     return this.contactRepository.create(contact, companyId);
   }
 
-  async findAll(userId: string, companyId: string): Promise<Contact[]> {
-    return this.contactRepository.findAll(userId, companyId);
+  async findAll(companyId: string): Promise<Contact[]> {
+    return this.contactRepository.findAll(companyId);
   }
 
   async update(

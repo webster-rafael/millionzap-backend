@@ -26,9 +26,8 @@ export async function contactRoutes(fastify: FastifyInstance) {
 
   fastify.get("/", async (request, reply) => {
     try {
-      const userId = request.user!.id;
       const companyId = request.user!.companyId;
-      const contacts = await contactUseCase.findAll(userId, companyId);
+      const contacts = await contactUseCase.findAll(companyId);
       reply.status(200).send(contacts);
     } catch (error) {
       console.error("Erro ao buscar contatos:", error);

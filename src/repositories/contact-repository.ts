@@ -36,10 +36,9 @@ class ContactRepositoryPrisma implements ContactRepository {
     }
   }
 
-  async findAll(userId: string, companyId: string): Promise<Contact[]> {
+  async findAll(companyId: string): Promise<Contact[]> {
     const contacts = await prisma.contact.findMany({
       where: {
-        OR: [{ tags: { has: "LEADS" } }, { userId, companyId }],
         companyId,
       },
       include: {

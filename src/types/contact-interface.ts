@@ -36,7 +36,7 @@ export type ContactCreateInput = Omit<
 
 export interface ContactRepository {
   create(contact: ContactCreateInput, companyId: string): Promise<Contact>;
-  findAll(userId: string, companyId: string): Promise<Contact[]>;
+  findAll(companyId: string): Promise<Contact[]>;
   update(
     id: string,
     contact: Partial<ContactCreateInput>,
