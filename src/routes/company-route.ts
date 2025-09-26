@@ -48,7 +48,15 @@ export async function companyRoutes(fastify: FastifyInstance) {
           id: request.user?.id,
         },
         include: {
-          company: true,
+          company: {
+            include: {
+              subscriptions: {
+                orderBy: { createdAt: "desc" },
+                take: 1,
+                include: { plan: true },
+              },
+            },
+          },
           queues: {
             include: {
               queue: true,
@@ -63,12 +71,7 @@ export async function companyRoutes(fastify: FastifyInstance) {
           .send({ error: "Usuário do token não encontrado." });
       }
 
-      const { company, ...restUser } = userWithDetails;
-
-      return reply.status(200).send({
-        ...restUser,
-        companyName: company?.name ?? null,
-      });
+      return reply.status(200).send(userWithDetails);
     } catch (error) {
       reply
         .status(500)

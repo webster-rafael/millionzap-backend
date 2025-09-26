@@ -25,6 +25,7 @@ import { configurationRoutes } from "./routes/configuration-route";
 import { noteRoutes } from "./routes/notes-route";
 import { conversationInstagramRoutes } from "./routes/conversationInstagram-route";
 import { todosRoutes } from "./routes/todo-route";
+import { subscriptionPlanRoutes } from "./routes/subscriptionPlans-route";
 
 const app: FastifyInstance = Fastify({
   bodyLimit: 10 * 1024 * 1024, // 10MB
@@ -131,6 +132,10 @@ app.register(async (instance) => {
 
   instance.register(templateImageRoutes, {
     prefix: "/templates-images",
+  });
+
+  instance.register(subscriptionPlanRoutes, {
+    prefix: "/subscription-plans",
   });
 
   // instance.register(audioRoutes, {

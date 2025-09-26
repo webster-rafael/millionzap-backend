@@ -120,6 +120,11 @@ class UserRepositoryPrisma implements UserRepository {
             queue: true,
           },
         },
+        company: {
+          include: {
+            SubscriptionPlan: true,
+          },
+        },
       },
     });
 

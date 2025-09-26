@@ -16,11 +16,23 @@ class CompanyRepositoryPrisma implements CompanyRepository {
           name: data.name,
           email: data.email,
           phone: data.phone,
-          subscriptionPlanId: data.subscriptionPlanId,
           status: true,
           dueDate: new Date(),
         },
       });
+
+      if (data.subscriptionPlanId) {
+        await tx.companySubscription.create({
+          data: {
+            companyId: newCompany.id,
+            planId: data.subscriptionPlanId,
+            startDate: new Date(),
+            endDate: new Date(new Date().setMonth(new Date().getMonth() + 1)),
+            status: "ACTIVE",
+            paymentStatus: "PAID",
+          },
+        });
+      }
 
       await tx.user.create({
         data: {
@@ -57,7 +69,28 @@ class CompanyRepositoryPrisma implements CompanyRepository {
       where: {
         id,
       },
+      include: {
+        subscriptions: {
+          orderBy: { createdAt: "desc" },
+          take: 1,
+          include: {
+            plan: true,
+          },
+        },
+      },
     });
+    if (!company) return null;
+
+    const subscription = company.subscriptions[0];
+    if (subscription) {
+      const today = new Date();
+      const endDate = new Date(subscription.endDate);
+      const timeDiff = endDate.getTime() - today.getTime();
+      const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
+
+      (subscription as any).daysLeft = daysLeft;
+    }
+
     return company;
   }
 

@@ -8,32 +8,50 @@ datasource db {
 }
 
 model Company {
-  id                 String          @id @default(uuid())
-  name               String
-  phone              String
-  email              String          @unique
-  status             Boolean
-  dueDate            DateTime
-  createdAt          DateTime        @default(now())
-  updatedAt          DateTime        @updatedAt
-  users              User[]
-  contacts           Contact[]
-  conversations      Conversation[]
-  messages           Message[]
-  queues             Queue[]
-  quickResponses     QuickResponse[]
-  prompts            Prompts[]
-  tags               Tags[]
-  contactList        ContactList[]
-  subscriptionPlanId String?
+  id             String          @id @default(uuid())
+  name           String
+  phone          String
+  email          String          @unique
+  status         Boolean
+  dueDate        DateTime
+  createdAt      DateTime        @default(now())
+  updatedAt      DateTime        @updatedAt
+  users          User[]
+  contacts       Contact[]
+  conversations  Conversation[]
+  messages       Message[]
+  queues         Queue[]
+  quickResponses QuickResponse[]
+  prompts        Prompts[]
+  tags           Tags[]
+  contactList    ContactList[]
 
   Configuration         Configuration?
   ConversationInstagram ConversationInstagram[]
   MessageInstagram      MessageInstagram[]
   ToDo                  ToDo[]
+  subscriptions         CompanySubscription[]
   SubscriptionPlan      SubscriptionPlan?       @relation(fields: [subscriptionPlanId], references: [id])
+  subscriptionPlanId    String?
 
   @@map("company")
+}
+
+model CompanySubscription {
+  id            String             @id @default(uuid())
+  companyId     String
+  planId        String
+  startDate     DateTime           @default(now())
+  endDate       DateTime
+  status        SubscriptionStatus @default(ACTIVE)
+  paymentStatus PaymentStatus      @default(PENDING)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  company Company          @relation(fields: [companyId], references: [id])
+  plan    SubscriptionPlan @relation(fields: [planId], references: [id])
+
+  @@map("company_subscriptions")
 }
 
 model User {
@@ -434,11 +452,13 @@ model SubscriptionPlan {
   price       Decimal
   features    Json
   status      PlanStatus @default(INACTIVE)
+  checkoutUrl String?
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
   // Relacionamento
-  companies Company[]
+  companies           Company[]
+  CompanySubscription CompanySubscription[]
 
   @@map("subscription_plans")
 }
@@ -491,4 +511,16 @@ enum PlanStatus {
   PENDING
   EXPIRED
   CANCELLED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  EXPIRED
+  CANCELLED
+}
+
+enum PaymentStatus {
+  PENDING
+  PAID
+  OVERDUE
 }
