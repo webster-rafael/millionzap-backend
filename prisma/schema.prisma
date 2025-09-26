@@ -8,28 +8,30 @@ datasource db {
 }
 
 model Company {
-  id                    String                  @id @default(uuid())
-  name                  String
-  phone                 String
-  email                 String                  @unique
-  status                Boolean
-  planId                String
-  dueDate               DateTime
-  createdAt             DateTime                @default(now())
-  updatedAt             DateTime                @updatedAt
-  users                 User[]
-  contacts              Contact[]
-  conversations         Conversation[]
-  messages              Message[]
-  queues                Queue[]
-  quickResponses        QuickResponse[]
-  prompts               Prompts[]
-  tags                  Tags[]
-  contactList           ContactList[]
+  id                 String          @id @default(uuid())
+  name               String
+  phone              String
+  email              String          @unique
+  status             Boolean
+  dueDate            DateTime
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+  users              User[]
+  contacts           Contact[]
+  conversations      Conversation[]
+  messages           Message[]
+  queues             Queue[]
+  quickResponses     QuickResponse[]
+  prompts            Prompts[]
+  tags               Tags[]
+  contactList        ContactList[]
+  subscriptionPlanId String?
+
   Configuration         Configuration?
   ConversationInstagram ConversationInstagram[]
   MessageInstagram      MessageInstagram[]
   ToDo                  ToDo[]
+  SubscriptionPlan      SubscriptionPlan?       @relation(fields: [subscriptionPlanId], references: [id])
 
   @@map("company")
 }
@@ -425,6 +427,22 @@ model Configuration {
   @@map("configurations")
 }
 
+model SubscriptionPlan {
+  id          String     @id @default(uuid())
+  name        String     @unique
+  description String?
+  price       Decimal
+  features    Json
+  status      PlanStatus @default(INACTIVE)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  // Relacionamento
+  companies Company[]
+
+  @@map("subscription_plans")
+}
+
 enum UserRole {
   ADMIN
   USER
@@ -465,4 +483,12 @@ enum MessageStatus {
   READ
   FAILED
   RECEIVED
+}
+
+enum PlanStatus {
+  ACTIVE
+  INACTIVE
+  PENDING
+  EXPIRED
+  CANCELLED
 }

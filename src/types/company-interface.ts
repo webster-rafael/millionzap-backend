@@ -1,13 +1,16 @@
+import { SubscriptionPlan } from "@prisma/client";
+
 export interface Company {
   id: string;
   name: string;
   phone: string;
   email: string;
-  planId: string;
+  subscriptionPlanId: string;
   status: boolean;
   dueDate: Date;
   createdAt: Date;
   updatedAt: Date;
+  subscriptionPlan?: SubscriptionPlan;
 }
 
 export interface CreateCompany {
@@ -15,7 +18,7 @@ export interface CreateCompany {
   phone: string;
   email: string;
   password: string;
-  planId: string;
+  subscriptionPlanId: string;
 }
 
 export interface CompanyRepository {

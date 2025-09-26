@@ -16,7 +16,7 @@ class CompanyRepositoryPrisma implements CompanyRepository {
           name: data.name,
           email: data.email,
           phone: data.phone,
-          planId: data.planId,
+          subscriptionPlanId: data.subscriptionPlanId,
           status: true,
           dueDate: new Date(),
         },
