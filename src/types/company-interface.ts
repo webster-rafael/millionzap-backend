@@ -5,7 +5,7 @@ export interface Company {
   name: string;
   phone: string;
   email: string;
-  subscriptionPlanId: string;
+  subscriptionPlanId?: string | null;
   status: boolean;
   dueDate: Date;
   createdAt: Date;
@@ -18,7 +18,7 @@ export interface CreateCompany {
   phone: string;
   email: string;
   password: string;
-  subscriptionPlanId: string;
+  subscriptionPlanId?: string | null;
 }
 
 export interface CompanyRepository {
