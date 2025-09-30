@@ -84,7 +84,7 @@ class CompanyRepositoryPrisma implements CompanyRepository {
     const subscription = company.subscriptions[0];
     if (subscription) {
       const today = new Date();
-      const endDate = new Date(subscription.endDate);
+      const endDate = new Date(subscription.endDate || "");
       const timeDiff = endDate.getTime() - today.getTime();
       const daysLeft = Math.ceil(timeDiff / (1000 * 60 * 60 * 24));
 

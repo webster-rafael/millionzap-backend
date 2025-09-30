@@ -42,7 +42,7 @@ model CompanySubscription {
   companyId     String
   planId        String
   startDate     DateTime           @default(now())
-  endDate       DateTime
+  endDate       DateTime?
   status        SubscriptionStatus @default(ACTIVE)
   paymentStatus PaymentStatus      @default(PENDING)
   createdAt     DateTime           @default(now())
@@ -515,6 +515,7 @@ enum PlanStatus {
 
 enum SubscriptionStatus {
   ACTIVE
+  PENDING
   EXPIRED
   CANCELLED
 }
@@ -523,4 +524,5 @@ enum PaymentStatus {
   PENDING
   PAID
   OVERDUE
+  FAILED
 }
