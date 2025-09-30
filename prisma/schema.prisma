@@ -518,6 +518,7 @@ enum SubscriptionStatus {
   PENDING
   EXPIRED
   CANCELLED
+  TESTING
 }
 
 enum PaymentStatus {
