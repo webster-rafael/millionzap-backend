@@ -71,6 +71,7 @@ class PromptRepositoryPrisma implements PromptRepository {
         description: prompt.description ?? "",
         companyResume: prompt.companyResume ?? "",
         isActive: prompt.isActive,
+        isDefault: prompt.isDefault,
         companyId,
         queue: prompt.queueIds
           ? {
