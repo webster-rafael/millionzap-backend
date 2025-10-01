@@ -79,6 +79,7 @@ class CompanyRepositoryPrisma implements CompanyRepository {
             "Esse prompt serve para iniciar um atendimento automatizado no CRM, coletando as informações essenciais do cliente antes de direcionar o contato. Ideal para bots de WhatsApp, sites ou formulários de cadastro.",
           companyResume: "Crie um resumo básico de empresa.",
           isActive: true,
+          isDefault: true,
           companyId: newCompany.id,
           createdAt: now,
           updatedAt: now,
@@ -110,6 +111,7 @@ class CompanyRepositoryPrisma implements CompanyRepository {
           companyResume: `Retorne apenas "true" ou "false". 
 Jamais mande algo que não seja "true" ou "false".`,
           isActive: true,
+          isDefault: true,
           companyId: newCompany.id,
           createdAt: now,
           updatedAt: now,
