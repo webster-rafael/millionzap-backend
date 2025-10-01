@@ -26,7 +26,7 @@ class CompanyRepositoryPrisma implements CompanyRepository {
       if (!planIdToUse) {
         const firstPlan = await tx.subscriptionPlan.findFirst({
           where: {
-            id: process.env.PLAN_TEST_ID || "",
+            status: "TESTING",
           },
         });
 
