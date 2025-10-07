@@ -12,16 +12,17 @@ export async function configurationRoutes(fastify: FastifyInstance) {
         request.body,
         companyId
       );
+
       reply.status(201).send(configuration);
     } catch (error: any) {
       console.error("Erro ao criar configuração:", error);
+
       if (error?.code === "P2002") {
         return reply.status(400).send({
           code: "P2002",
           message: "Configuração já cadastrada.",
         });
       }
-
       reply.status(500).send({ error: "Erro interno ao criar configuração" });
     }
   });
@@ -30,7 +31,8 @@ export async function configurationRoutes(fastify: FastifyInstance) {
     try {
       const companyId = request.user!.companyId;
       const configurations = await configurationUseCase.findAll(companyId);
-      reply.status(200).send(configurations);
+
+      reply.status(200).send(configurations || []);
     } catch (error) {
       console.error("Erro ao buscar configurações:", error);
       reply.status(500).send({ error: "Erro ao buscar configurações" });
@@ -44,9 +46,11 @@ export async function configurationRoutes(fastify: FastifyInstance) {
         request.params.id,
         companyId
       );
+
       if (!configuration) {
         return reply.status(404).send({ error: "Configuração não encontrada" });
       }
+
       reply.status(200).send(configuration);
     } catch (error) {
       console.error("Erro ao buscar configuração:", error);
@@ -63,6 +67,7 @@ export async function configurationRoutes(fastify: FastifyInstance) {
           request.params.id,
           companyId
         );
+
         if (!existing) {
           return reply
             .status(404)
@@ -71,12 +76,10 @@ export async function configurationRoutes(fastify: FastifyInstance) {
 
         const updated = await configurationUseCase.update(
           request.params.id,
-          {
-            ...existing,
-            ...request.body,
-          },
+          request.body,
           companyId
         );
+
         reply.status(200).send(updated);
       } catch (error) {
         console.error("Erro ao atualizar configuração:", error);
@@ -94,11 +97,13 @@ export async function configurationRoutes(fastify: FastifyInstance) {
         request.params.id,
         companyId
       );
+
       if (!existing) {
         return reply.status(404).send({ error: "Configuração não encontrada" });
       }
 
       await configurationUseCase.delete(request.params.id, companyId);
+
       reply.status(204).send();
     } catch (error) {
       console.error("Erro ao deletar configuração:", error);

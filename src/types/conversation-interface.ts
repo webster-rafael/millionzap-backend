@@ -12,6 +12,8 @@ export interface Conversation {
   lastMessageAt?: Date | null;
   closedAt?: Date | null;
   companyId: string;
+  isInFollowUp?: boolean | null;
+  followUpStart?: Date | null;
   copilot?: boolean | null;
   statusCopilot?: string | null;
   copilotIndex?: number | null;

@@ -229,6 +229,8 @@ model Conversation {
   lastMessageAt   DateTime?
   closedAt        DateTime?
   companyId       String
+  isInFollowUp    Boolean?           @default(false)
+  followUpStart   DateTime?
   copilot         Boolean?           @default(false)
   copilotIndex    Int?               @default(0)
   copilotFeedback Json?
@@ -438,6 +440,7 @@ model WhatsAppConnection {
 model Configuration {
   id                  String   @id @default(uuid())
   followupTimeInHours Int      @default(72)
+  businessHours       Json?
   companyId           String   @unique
   createdAt           DateTime @default(now())
   updatedAt           DateTime @updatedAt
