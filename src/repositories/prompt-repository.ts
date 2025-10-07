@@ -111,6 +111,8 @@ class PromptRepositoryPrisma implements PromptRepository {
     updatedAt: data.updatedAt,
     queueIds: data.queue?.map((q: any) => q.id) ?? [],
     companyId: data.companyId,
+    isInitialPrompt: data.isInitialPrompt ?? false,
+    isFollowUp: data.isFollowUp ?? false,
   });
 }
 

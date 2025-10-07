@@ -83,6 +83,8 @@ class CompanyRepositoryPrisma implements CompanyRepository {
           createdAt: now,
           updatedAt: now,
           whatsAppConnectionId: null,
+          isInitialPrompt: true,
+          isFollowUp: false,
         },
       });
 
@@ -115,6 +117,8 @@ Jamais mande algo que não seja "true" ou "false".`,
           createdAt: now,
           updatedAt: now,
           whatsAppConnectionId: null,
+          isInitialPrompt: false,
+          isFollowUp: true,
         },
       });
 
