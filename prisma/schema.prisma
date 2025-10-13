@@ -65,8 +65,7 @@ model User {
   tokenIg                String?
   instagramId            String?
   instagramAuthenticated Boolean?          @default(false)
-  instagramProfileId     String?
-  instagramProfile       InstagramProfile? @relation(fields: [instagramProfileId], references: [id])
+  instagramProfile       InstagramProfile?
   companyId              String
 
   createdAt             DateTime                @default(now())
@@ -478,7 +477,8 @@ model InstagramProfile {
   image          String?
   followersCount Int
   followsCount   Int
-  User           User[]
+  userId         String  @unique
+  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("instagram_profiles")
 }
