@@ -1,4 +1,4 @@
-import { UserRole } from "@prisma/client";
+import { InstagramProfile, UserRole } from "@prisma/client";
 
 export interface User {
   id: string;
@@ -13,6 +13,7 @@ export interface User {
   companyId: string;
   connectionId?: string | null;
   instagramAuthenticated?: boolean | null;
+  instagramProfile?: InstagramProfile | null;
   createdAt: Date;
   updatedAt: Date;
 }

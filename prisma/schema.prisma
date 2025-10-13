@@ -55,16 +55,18 @@ model CompanySubscription {
 }
 
 model User {
-  id                     String   @id @default(uuid())
+  id                     String            @id @default(uuid())
   name                   String
-  email                  String   @unique
+  email                  String            @unique
   phone                  String
   password               String
-  role                   UserRole @default(ADMIN)
-  isActive               Boolean  @default(true)
+  role                   UserRole          @default(ADMIN)
+  isActive               Boolean           @default(true)
   tokenIg                String?
   instagramId            String?
-  instagramAuthenticated Boolean? @default(false)
+  instagramAuthenticated Boolean?          @default(false)
+  instagramProfileId     String?
+  instagramProfile       InstagramProfile? @relation(fields: [instagramProfileId], references: [id])
   companyId              String
 
   createdAt             DateTime                @default(now())
@@ -467,6 +469,18 @@ model SubscriptionPlan {
   CompanySubscription CompanySubscription[]
 
   @@map("subscription_plans")
+}
+
+model InstagramProfile {
+  id             String  @id @default(uuid())
+  name           String
+  username       String
+  image          String?
+  followersCount Int
+  followsCount   Int
+  User           User[]
+
+  @@map("instagram_profiles")
 }
 
 enum UserRole {

@@ -58,6 +58,7 @@ class UserRepositoryPrisma implements UserRepository {
             queue: true,
           },
         },
+        instagramProfile: true,
       },
     });
     return users;
@@ -125,6 +126,7 @@ class UserRepositoryPrisma implements UserRepository {
             SubscriptionPlan: true,
           },
         },
+        instagramProfile: true,
       },
     });
 
