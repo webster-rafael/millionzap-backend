@@ -62,6 +62,7 @@ export async function companyRoutes(fastify: FastifyInstance) {
               queue: true,
             },
           },
+          instagramProfile: true,
         },
       });
 

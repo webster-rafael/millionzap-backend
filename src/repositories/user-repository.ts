@@ -113,25 +113,17 @@ class UserRepositoryPrisma implements UserRepository {
   }
 
   async findById(id: string, companyId: string): Promise<User | null> {
-    const user = await prisma.user.findUnique({
-      where: { id, companyId },
-      include: {
-        queues: {
-          include: {
-            queue: true,
-          },
-        },
-        company: {
-          include: {
-            SubscriptionPlan: true,
-          },
-        },
-        instagramProfile: true,
-      },
-    });
+  const user = await prisma.user.findFirst({
+    where: { id, companyId },
+    include: {
+      queues: { include: { queue: true } },
+      company: { include: { SubscriptionPlan: true } },
+      instagramProfile: true,
+    },
+  });
+  return user;
+}
 
-    return user;
-  }
 
   async findByEmail(email: string): Promise<User | null> {
     const user = await prisma.user.findUnique({
