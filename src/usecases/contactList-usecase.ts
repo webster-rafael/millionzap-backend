@@ -42,16 +42,8 @@ class ContactListUseCase {
       ...listData,
       contactIds,
       contactsData,
+      campaign,
     };
-
-    if (campaign) {
-      dataForRepository.campaign = {
-        upsert: {
-          create: campaign,
-          update: campaign,
-        },
-      };
-    }
 
     return this.contactListRepository.update(id, dataForRepository, companyId);
   }

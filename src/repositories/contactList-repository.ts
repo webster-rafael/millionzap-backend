@@ -65,73 +65,87 @@ class ContactListRepository {
   }
 
   async update(
-    id: string,
-    payload: ContactListUpdateInput & {
-      contactsData?: { id?: string; name: string; phone: string }[];
-    },
-    companyId: string
-  ): Promise<ContactList> {
-    const {
-      contactIds = [],
-      campaign,
-      contactsData = [],
-      ...listData
-    } = payload;
+  id: string,
+  payload: ContactListUpdateInput & {
+    contactsData?: { id?: string; name: string; phone: string }[];
+  },
+  companyId: string
+): Promise<ContactList> {
+  const { contactIds, campaign, contactsData = [], ...listData } = payload;
 
-    let newContactIds: string[] = [];
+  let newContactIds: string[] = [];
 
-    if (contactsData.length > 0) {
-      const formattedContacts = contactsData.map((c) => ({
-        ...c,
-        phone: c.phone.replace(/\D/g, ""),
-      }));
+  if (contactsData.length > 0) {
+    const formattedContacts = contactsData.map((c) => ({
+      ...c,
+      phone: c.phone.replace(/\D/g, ""),
+    }));
 
-      await prisma.contact.createMany({
-        data: formattedContacts.map((c) => ({
-          name: c.name,
-          phone: c.phone,
-          companyId,
-        })),
-        skipDuplicates: true,
-      });
+    await prisma.contact.createMany({
+      data: formattedContacts.map((c) => ({
+        name: c.name,
+        phone: c.phone,
+        companyId,
+      })),
+      skipDuplicates: true,
+    });
 
-      const foundContacts = await prisma.contact.findMany({
-        where: {
-          phone: {
-            in: formattedContacts.map((c) => c.phone),
-          },
-          companyId,
-        },
-        select: { id: true },
-      });
+    const foundContacts = await prisma.contact.findMany({
+      where: {
+        phone: { in: formattedContacts.map((c) => c.phone) },
+        companyId,
+      },
+      select: { id: true },
+    });
 
-      newContactIds = foundContacts.map((c) => c.id);
-    }
+    newContactIds = foundContacts.map((c) => c.id);
+  }
 
-    return prisma.$transaction(async (tx) => {
-      if (Object.keys(listData).length > 0 || campaign) {
-        const campaignData = campaign
-          ? {
-              campaign: {
-          upsert: {
-            create: campaign as any,
-            update: campaign as any,
-          },
-              },
-            }
-          : {};
+  return prisma.$transaction(async (tx) => {
+    const existing = await tx.contactList.findUnique({
+      where: { id, companyId },
+      include: {
+        contacts: true,
+        campaign: true,
+      },
+    });
 
-        await tx.contactList.update({
-          where: { id, companyId },
+    if (!existing) throw new Error("Lista não encontrada");
+
+    if (campaign) {
+      if (existing.campaign) {
+        await tx.campaign.update({
+          where: { id: existing.campaign.id },
           data: {
-            ...listData,
-            ...campaignData,
+            title: campaign.title ?? existing.campaign.title ?? "",
+            body: campaign.body ?? existing.campaign.body ?? "",
+            imageUrl: campaign.imageUrl ?? existing.campaign.imageUrl ?? "",
+            footer: campaign.footer ?? existing.campaign.footer ?? "",
+          },
+        });
+      } else {
+        await tx.campaign.create({
+          data: {
+            title: campaign.title ?? "",
+            body: campaign.body ?? "",
+            imageUrl: campaign.imageUrl ?? "",
+            footer: campaign.footer ?? "",
+            contactList: { connect: { id } },
           },
         });
       }
+    }
 
+    if (Object.keys(listData).length > 0) {
+      await tx.contactList.update({
+        where: { id, companyId },
+        data: listData,
+      });
+    }
+
+    if ((contactIds && contactIds.length > 0) || newContactIds.length > 0) {
       const mergedContactIds = Array.from(
-        new Set([...contactIds, ...newContactIds])
+        new Set([...(contactIds || []), ...newContactIds])
       );
 
       await tx.contactListOnContact.deleteMany({
@@ -146,16 +160,19 @@ class ContactListRepository {
           })),
         });
       }
+    }
 
-      return tx.contactList.findUniqueOrThrow({
-        where: { id },
-        include: {
-          contacts: { include: { contact: true } },
-          campaign: true,
-        },
-      });
+    return tx.contactList.findUniqueOrThrow({
+      where: { id },
+      include: {
+        contacts: { include: { contact: true } },
+        campaign: true,
+      },
     });
-  }
+  });
+}
+
+
 
   async delete(id: string, companyId: string): Promise<void> {
     await prisma.contactList.delete({

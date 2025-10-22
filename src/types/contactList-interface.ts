@@ -1,24 +1,21 @@
 import { Campaign, ContactListOnContact } from "@prisma/client";
-
-export type CampaignDataInput = {
-  body: string;
+export interface CampaignDataInput {
   title?: string | null;
+  body: string;
   imageUrl?: string | null;
   footer?: string | null;
-};
-
+}
 export interface ContactList {
   id: string;
   name: string;
   description?: string | null;
   isActive: boolean;
   createdAt: Date;
-  companyId: string;
   updatedAt?: Date | null;
+  companyId: string;
   contacts: ContactListOnContact[];
   campaign?: Campaign | null;
 }
-
 export interface CreateContactList {
   name: string;
   description?: string | null;
@@ -32,33 +29,23 @@ export type ContactListCreateInput = Omit<
   ContactList,
   "id" | "createdAt" | "updatedAt" | "contacts"
 > & {
-  contacts?: {
-    createMany: {
-      data: { contactId: string }[];
-    };
-  };
   contactIds?: string[];
   campaign?: {
     create: CampaignDataInput;
   };
 };
-
-export type ContactListUpdateInput = Partial<
-  Omit<ContactListCreateInput, "campaign">
-> & {
-  campaign?: {
-    upsert: {
-      create: CampaignDataInput;
-      update: CampaignDataInput;
-    };
-  };
-  // ✅ adiciona suporte ao novo campo
+export interface ContactListUpdateInput {
+  name?: string;
+  description?: string | null;
+  isActive?: boolean;
+  contactIds?: string[];
+  campaign?: CampaignDataInput;
   contactsData?: {
     id?: string;
     name: string;
     phone: string;
   }[];
-};
+}
 
 export interface UpdateContactList {
   name?: string;
@@ -66,7 +53,6 @@ export interface UpdateContactList {
   isActive?: boolean;
   contactIds?: string[];
   campaign?: CampaignDataInput;
-  // ✅ idem aqui
   contactsData?: {
     id?: string;
     name: string;
@@ -78,12 +64,16 @@ export interface ContactListRepository {
     contactList: ContactListCreateInput,
     companyId: string
   ): Promise<ContactList>;
+
   findAll(companyId: string): Promise<ContactList[]>;
+
   findById(id: string, companyId: string): Promise<ContactList | null>;
+
   update(
     id: string,
     data: ContactListUpdateInput,
     companyId: string
   ): Promise<ContactList>;
+
   delete(id: string, companyId: string): Promise<void>;
 }
