@@ -29,14 +29,19 @@ class ContactListUseCase {
 
   async update(
     id: string,
-    payload: UpdateContactList,
+    payload: UpdateContactList & {
+      contactsData?: { id?: string; name: string; phone: string }[];
+    },
     companyId: string
   ): Promise<ContactList> {
-    const { campaign, contactIds, ...listData } = payload;
+    const { campaign, contactIds, contactsData, ...listData } = payload;
 
-    const dataForRepository: ContactListUpdateInput = {
+    const dataForRepository: ContactListUpdateInput & {
+      contactsData?: { id?: string; name: string; phone: string }[];
+    } = {
       ...listData,
       contactIds,
+      contactsData,
     };
 
     if (campaign) {

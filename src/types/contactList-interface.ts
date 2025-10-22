@@ -1,6 +1,6 @@
 import { Campaign, ContactListOnContact } from "@prisma/client";
 
-type CampaignDataInput = {
+export type CampaignDataInput = {
   body: string;
   title?: string | null;
   imageUrl?: string | null;
@@ -52,6 +52,12 @@ export type ContactListUpdateInput = Partial<
       update: CampaignDataInput;
     };
   };
+  // ✅ adiciona suporte ao novo campo
+  contactsData?: {
+    id?: string;
+    name: string;
+    phone: string;
+  }[];
 };
 
 export interface UpdateContactList {
@@ -60,8 +66,13 @@ export interface UpdateContactList {
   isActive?: boolean;
   contactIds?: string[];
   campaign?: CampaignDataInput;
+  // ✅ idem aqui
+  contactsData?: {
+    id?: string;
+    name: string;
+    phone: string;
+  }[];
 }
-
 export interface ContactListRepository {
   create(
     contactList: ContactListCreateInput,
@@ -69,6 +80,10 @@ export interface ContactListRepository {
   ): Promise<ContactList>;
   findAll(companyId: string): Promise<ContactList[]>;
   findById(id: string, companyId: string): Promise<ContactList | null>;
-  update(id: string, data: ContactListUpdateInput): Promise<ContactList>;
+  update(
+    id: string,
+    data: ContactListUpdateInput,
+    companyId: string
+  ): Promise<ContactList>;
   delete(id: string, companyId: string): Promise<void>;
 }

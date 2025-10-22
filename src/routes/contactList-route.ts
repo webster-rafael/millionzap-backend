@@ -59,7 +59,9 @@ export async function contactListRoutes(fastify: FastifyInstance) {
 
   fastify.put<{
     Params: { id: string };
-    Body: UpdateContactList;
+    Body: UpdateContactList & {
+      contactsData?: { id?: string; name: string; phone: string }[];
+    };
   }>("/:id", async (request, reply) => {
     try {
       const companyId = request.user!.companyId;
@@ -72,15 +74,23 @@ export async function contactListRoutes(fastify: FastifyInstance) {
           .send({ error: "Lista de contatos não encontrada" });
       }
 
-      const { name, description, isActive, contactIds, campaign } =
-        request.body;
-
-      const payload: UpdateContactList = {
+      // Inclui contactsData aqui!
+      const {
         name,
         description,
         isActive,
         contactIds,
         campaign,
+        contactsData,
+      } = request.body;
+
+      const payload = {
+        name,
+        description,
+        isActive,
+        contactIds,
+        campaign,
+        contactsData, // ✅ passa para o use case
       };
 
       const updatedList = await contactListUseCase.update(
