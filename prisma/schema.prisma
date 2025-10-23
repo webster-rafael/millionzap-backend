@@ -8,24 +8,24 @@ datasource db {
 }
 
 model Company {
-  id             String          @id @default(uuid())
-  name           String
-  phone          String
-  email          String          @unique
-  status         Boolean
-  dueDate        DateTime?
-  createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @default(now())
-  users          User[]
-  contacts       Contact[]
-  conversations  Conversation[]
-  messages       Message[]
-  queues         Queue[]
-  quickResponses QuickResponse[]
-  prompts        Prompts[]
-  tags           Tags[]
-  contactList    ContactList[]
-
+  id                    String                  @id @default(uuid())
+  name                  String
+  phone                 String
+  email                 String                  @unique
+  status                Boolean
+  dueDate               DateTime?
+  createdAt             DateTime                @default(now())
+  updatedAt             DateTime                @default(now())
+  users                 User[]
+  contacts              Contact[]
+  conversations         Conversation[]
+  messages              Message[]
+  queues                Queue[]
+  quickResponses        QuickResponse[]
+  prompts               Prompts[]
+  tags                  Tags[]
+  contactList           ContactList[]
+  superAdmin            Boolean?                @default(false)
   Configuration         Configuration?
   ConversationInstagram ConversationInstagram[]
   MessageInstagram      MessageInstagram[]
@@ -69,7 +69,7 @@ model User {
   companyId              String
 
   createdAt             DateTime                @default(now())
-  updatedAt             DateTime                @updatedAt
+  updatedAt             DateTime                @default(now())
   company               Company?                @relation(fields: [companyId], references: [id])
   connectionId          String?
   // Relacionamentos

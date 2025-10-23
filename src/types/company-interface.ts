@@ -8,6 +8,7 @@ export interface Company {
   subscriptionPlanId?: string | null;
   status: boolean;
   dueDate?: Date | null;
+  superAdmin?: boolean | null;
   createdAt: Date;
   updatedAt: Date;
   subscriptionPlan?: SubscriptionPlan;
@@ -18,6 +19,7 @@ export interface CreateCompany {
   phone: string;
   email: string;
   password: string;
+  superAdmin?: boolean | null;
   subscriptionPlanId?: string | null;
 }
 
