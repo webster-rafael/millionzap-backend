@@ -215,7 +215,15 @@ Jamais mande algo que não seja "true" ou "false".`,
   }
 
   async findAll(): Promise<Company[]> {
-    const companies = await prisma.company.findMany();
+    const companies = await prisma.company.findMany({
+      include: {
+        subscriptions: {
+          include: {
+            plan: true,
+          },
+        },
+      },
+    });
     return companies;
   }
 
