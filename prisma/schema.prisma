@@ -15,7 +15,7 @@ model Company {
   status         Boolean
   dueDate        DateTime?
   createdAt      DateTime        @default(now())
-  updatedAt      DateTime        @updatedAt
+  updatedAt      DateTime        @default(now())
   users          User[]
   contacts       Contact[]
   conversations  Conversation[]
