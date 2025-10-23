@@ -7,7 +7,7 @@ export interface Company {
   email: string;
   subscriptionPlanId?: string | null;
   status: boolean;
-  dueDate: Date;
+  dueDate?: Date | null;
   createdAt: Date;
   updatedAt: Date;
   subscriptionPlan?: SubscriptionPlan;
