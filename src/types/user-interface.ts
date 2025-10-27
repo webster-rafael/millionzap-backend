@@ -42,5 +42,6 @@ export interface UserRepository {
   ): Promise<User>;
   findById(id: string, companyId: string): Promise<User | null>;
   findByEmail(email: string): Promise<User | null>;
+  resetPasswordByCompany(companyId: string, newPassword: string): Promise<void>;
   delete(id: string, companyId: string): Promise<void>;
 }

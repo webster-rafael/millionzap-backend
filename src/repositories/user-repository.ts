@@ -6,6 +6,7 @@ import {
   UserCreateInput,
   UserRepository,
 } from "../types/user-interface";
+import bcrypt from "bcryptjs";
 
 class UserRepositoryPrisma implements UserRepository {
   async create(
@@ -77,32 +78,41 @@ class UserRepositoryPrisma implements UserRepository {
     const { queueIds, queues, companyId, ...userData } = user;
 
     const transactionResult = await prisma.$transaction(async (tx) => {
-      await tx.user.update({
+      const updatedUser = await tx.user.update({
         where: { id },
         data: userData,
       });
+
+      if (updatedUser.role === "OWNER") {
+        await tx.company.update({
+          where: { id: updatedUser.companyId },
+          data: {
+            name: updatedUser.name,
+            email: updatedUser.email,
+            phone: updatedUser.phone,
+          },
+        });
+      }
 
       if (Array.isArray(queueIds)) {
         await tx.queueUser.deleteMany({
           where: { userId: id },
         });
+
         if (queueIds.length > 0) {
           await tx.queueUser.createMany({
             data: queueIds.map((queueId: string) => ({
               userId: id,
-              queueId: queueId,
+              queueId,
             })),
           });
         }
       }
+
       const result = await tx.user.findUniqueOrThrow({
         where: { id },
         include: {
-          queues: {
-            include: {
-              queue: true,
-            },
-          },
+          queues: { include: { queue: true } },
         },
       });
 
@@ -113,17 +123,16 @@ class UserRepositoryPrisma implements UserRepository {
   }
 
   async findById(id: string, companyId: string): Promise<User | null> {
-  const user = await prisma.user.findFirst({
-    where: { id, companyId },
-    include: {
-      queues: { include: { queue: true } },
-      company: { include: { SubscriptionPlan: true } },
-      instagramProfile: true,
-    },
-  });
-  return user;
-}
-
+    const user = await prisma.user.findFirst({
+      where: { id, companyId },
+      include: {
+        queues: { include: { queue: true } },
+        company: { include: { SubscriptionPlan: true } },
+        instagramProfile: true,
+      },
+    });
+    return user;
+  }
 
   async findByEmail(email: string): Promise<User | null> {
     const user = await prisma.user.findUnique({
@@ -131,6 +140,17 @@ class UserRepositoryPrisma implements UserRepository {
     });
 
     return user;
+  }
+
+  async resetPasswordByCompany(
+    companyId: string,
+    newPassword: string
+  ): Promise<void> {
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    await prisma.user.updateMany({
+      where: { companyId },
+      data: { password: hashedPassword },
+    });
   }
 
   async delete(id: string, companyId: string): Promise<void> {

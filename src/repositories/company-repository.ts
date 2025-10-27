@@ -267,16 +267,47 @@ Jamais mande algo que não seja "true" ou "false".`,
   }
 
   async update(id: string, company: Company): Promise<Company> {
-    const companyUpdated = await prisma.company.update({
-      where: {
-        id,
-      },
-      data: {
-        ...company,
-        dueDate: company.dueDate || "",
-      },
+    const dataToUpdate: any = { ...company };
+
+    if (dataToUpdate.dueDate) {
+      const parsedDate = new Date(dataToUpdate.dueDate);
+      if (isNaN(parsedDate.getTime())) {
+        delete dataToUpdate.dueDate;
+      } else {
+        dataToUpdate.dueDate = parsedDate;
+      }
+    } else {
+      delete dataToUpdate.dueDate;
+    }
+
+    const result = await prisma.$transaction(async (tx) => {
+      const updatedCompany = await tx.company.update({
+        where: { id },
+        data: dataToUpdate,
+      });
+
+      await tx.user.updateMany({
+        where: { companyId: id, role: "OWNER" },
+        data: {
+          name: updatedCompany.name,
+          email: updatedCompany.email,
+          phone: updatedCompany.phone,
+        },
+      });
+
+      return tx.company.findUniqueOrThrow({
+        where: { id },
+        include: {
+          users: true,
+          subscriptions: {
+            include: { plan: true },
+            orderBy: { createdAt: "desc" },
+          },
+        },
+      });
     });
-    return companyUpdated;
+
+    return result as Company;
   }
 
   async delete(id: string): Promise<void> {

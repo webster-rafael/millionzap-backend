@@ -49,6 +49,13 @@ class UserUseCase {
     return this.userRepository.update(id, dataToUpdate, companyId);
   }
 
+  async resetPasswordByCompany(
+    companyId: string,
+    newPassword: string
+  ): Promise<void> {
+    await this.userRepository.resetPasswordByCompany(companyId, newPassword);
+  }
+
   async delete(id: string, companyId: string): Promise<void> {
     return this.userRepository.delete(id, companyId);
   }

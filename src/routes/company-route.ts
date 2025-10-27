@@ -3,9 +3,13 @@ import { CompanyUseCase, LoginCredentials } from "../usecases/company-usecase";
 import { CreateCompany } from "../types/company-interface";
 import { authHook } from "../hooks/auth";
 import { prisma } from "../database/prisma-client";
+import { UserUseCase } from "../usecases/user-usecase";
+import { UserRepositoryPrisma } from "../repositories/user-repository";
 
 export async function companyRoutes(fastify: FastifyInstance) {
   const companyUseCase = new CompanyUseCase();
+  const userRepository = new UserRepositoryPrisma();
+  const userUseCase = new UserUseCase(userRepository);
 
   fastify.post<{ Body: CreateCompany }>("/", async (request, reply) => {
     try {
@@ -106,6 +110,33 @@ export async function companyRoutes(fastify: FastifyInstance) {
         request.body as any
       );
       reply.status(200).send(updated);
+    }
+  );
+
+  fastify.put<{ Params: { id: string }; Body: { password: string } }>(
+    "/:id/reset-password",
+    { onRequest: [authHook] },
+    async (request, reply) => {
+      const { id } = request.params;
+      const { password } = request.body;
+
+      if (!password || password.trim().length < 4) {
+        return reply.status(400).send({
+          error: "A nova senha deve ter pelo menos 4 caracteres.",
+        });
+      }
+
+      try {
+        await userUseCase.resetPasswordByCompany(id, password);
+        return reply
+          .status(200)
+          .send({ message: "Senha redefinida com sucesso." });
+      } catch (error) {
+        console.error("Erro ao redefinir senha:", error);
+        return reply
+          .status(500)
+          .send({ error: "Erro interno ao redefinir senha." });
+      }
     }
   );
 
