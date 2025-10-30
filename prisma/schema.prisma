@@ -33,6 +33,7 @@ model Company {
   subscriptions         CompanySubscription[]
   SubscriptionPlan      SubscriptionPlan?       @relation(fields: [subscriptionPlanId], references: [id])
   subscriptionPlanId    String?
+  instagramProfile      InstagramProfile?
 
   @@map("company")
 }
@@ -477,14 +478,16 @@ model SubscriptionPlan {
 }
 
 model InstagramProfile {
-  id             String  @id @default(uuid())
+  id             String   @id @default(uuid())
   name           String
   username       String
   image          String?
   followersCount Int
   followsCount   Int
-  userId         String  @unique
-  user           User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId         String?  @unique
+  companyId      String?  @unique
+  user           User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  Company        Company? @relation(fields: [companyId], references: [id])
 
   @@map("instagram_profiles")
 }

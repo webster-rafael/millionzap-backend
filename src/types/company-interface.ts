@@ -1,5 +1,16 @@
 import { SubscriptionPlan } from "@prisma/client";
 
+export interface InstagramProfile {
+  id: string;
+  name: string;
+  username: string;
+  image?: string | null;
+  followersCount: number;
+  followsCount: number;
+  companyId?: string | null;
+  userId?: string | null;
+}
+
 export interface Company {
   id: string;
   name: string;
@@ -12,6 +23,7 @@ export interface Company {
   createdAt: Date;
   updatedAt: Date;
   subscriptionPlan?: SubscriptionPlan;
+  instagramProfile?: InstagramProfile | null;
 }
 
 export interface CreateCompany {

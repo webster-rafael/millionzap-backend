@@ -240,6 +240,7 @@ Jamais mande algo que não seja "true" ou "false".`,
             plan: true,
           },
         },
+        instagramProfile: true,
       },
     });
     if (!company) return null;
@@ -303,6 +304,7 @@ Jamais mande algo que não seja "true" ou "false".`,
             include: { plan: true },
             orderBy: { createdAt: "desc" },
           },
+          instagramProfile: true,
         },
       });
     });

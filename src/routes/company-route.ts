@@ -33,7 +33,6 @@ export async function companyRoutes(fastify: FastifyInstance) {
 
       reply.setCookie("authToken", token, {
         path: "/",
-        httpOnly: true,
         secure: true,
         sameSite: "none",
         maxAge: 60 * 60 * 24 * 7,
@@ -59,6 +58,7 @@ export async function companyRoutes(fastify: FastifyInstance) {
                 take: 1,
                 include: { plan: true },
               },
+              instagramProfile: true,
             },
           },
           queues: {
@@ -66,7 +66,6 @@ export async function companyRoutes(fastify: FastifyInstance) {
               queue: true,
             },
           },
-          instagramProfile: true,
         },
       });
 
