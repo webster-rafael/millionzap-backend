@@ -26,13 +26,21 @@ class ConversationInstagramRepositoryPrisma
     const conversations = await prisma.conversationInstagram.findMany({
       where: { companyId },
       include: {
-        messages: {
-          orderBy: {
-            createdAt: "asc",
-          },
-        },
         user: true,
         queue: true,
+        messages: {
+          orderBy: { createdAt: "asc" },
+          select: {
+            id: true,
+            content: true,
+            direction: true,
+            timestamp: true,
+            messageType: true,
+            createdAt: true,
+            thumbnailUrl: true,
+            permalink: true,
+          },
+        },
       },
     });
 
@@ -43,7 +51,6 @@ class ConversationInstagramRepositoryPrisma
         b.messages.length > 0 ? b.messages[b.messages.length - 1] : null;
       const timestampA = lastMessageA ? Number(lastMessageA.timestamp) : 0;
       const timestampB = lastMessageB ? Number(lastMessageB.timestamp) : 0;
-
       return timestampB - timestampA;
     });
 
@@ -57,9 +64,21 @@ class ConversationInstagramRepositoryPrisma
     const conversation = await prisma.conversationInstagram.findUnique({
       where: { id, companyId },
       include: {
-        messages: { orderBy: { createdAt: "asc" } },
         user: true,
         queue: true,
+        messages: {
+          orderBy: { createdAt: "asc" },
+          select: {
+            id: true,
+            content: true,
+            direction: true,
+            timestamp: true,
+            messageType: true,
+            createdAt: true,
+            thumbnailUrl: true,
+            permalink: true,
+          },
+        },
       },
     });
     return conversation;
@@ -73,9 +92,21 @@ class ConversationInstagramRepositoryPrisma
       where: { id },
       data: conversation,
       include: {
-        messages: { orderBy: { createdAt: "asc" } },
         user: true,
         queue: true,
+        messages: {
+          orderBy: { createdAt: "asc" },
+          select: {
+            id: true,
+            content: true,
+            direction: true,
+            timestamp: true,
+            messageType: true,
+            createdAt: true,
+            thumbnailUrl: true,
+            permalink: true,
+          },
+        },
       },
     });
 
@@ -89,10 +120,18 @@ class ConversationInstagramRepositoryPrisma
         include: {
           user: true,
           messages: {
-            orderBy: {
-              createdAt: "desc",
-            },
+            orderBy: { createdAt: "desc" },
             take: 1,
+            select: {
+              id: true,
+              content: true,
+              direction: true,
+              timestamp: true,
+              messageType: true,
+              createdAt: true,
+              thumbnailUrl: true,
+              permalink: true,
+            },
           },
         },
       });
@@ -119,4 +158,5 @@ class ConversationInstagramRepositoryPrisma
     });
   }
 }
+
 export { ConversationInstagramRepositoryPrisma };

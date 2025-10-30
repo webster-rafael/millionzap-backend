@@ -307,6 +307,8 @@ model MessageInstagram {
   timestamp               String
   companyId               String?
   plataform               String?
+  thumbnailUrl            String?
+  permalink               String?
   conversationInstagramId String
 
   ConversationInstagram ConversationInstagram @relation(fields: [conversationInstagramId], references: [id], onDelete: Cascade)
@@ -441,13 +443,17 @@ model WhatsAppConnection {
 }
 
 model Configuration {
-  id                  String   @id @default(uuid())
-  followupTimeInHours Int      @default(72)
-  businessHours       Json?
-  companyId           String   @unique
-  createdAt           DateTime @default(now())
-  updatedAt           DateTime @updatedAt
-  Company             Company? @relation(fields: [companyId], references: [id])
+  id                    String   @id @default(uuid())
+  followupTimeInHours   Int      @default(72)
+  businessHours         Json?
+  companyId             String   @unique
+  clientIdInstagram     String?
+  clientSecretInstagram String?
+  appIdInstagram        String?
+  tokenInstagram        String?
+  createdAt             DateTime @default(now())
+  updatedAt             DateTime @updatedAt
+  Company               Company? @relation(fields: [companyId], references: [id])
 
   @@map("configurations")
 }

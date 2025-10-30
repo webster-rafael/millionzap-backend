@@ -14,6 +14,10 @@ export interface Configuration {
   companyId: string;
   followupTimeInHours: number;
   businessHours: BusinessHours;
+  clientIdInstagram?: string | null;
+  clientSecretInstagram?: string | null;
+  appIdInstagram?: string | null;
+  tokenInstagram?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }

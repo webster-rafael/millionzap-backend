@@ -12,6 +12,8 @@ export interface ConversationInstagram {
   createdAt: Date;
   updatedAt?: Date | null;
   user?: UserInfo | null;
+  thumbnailUrl?: string | null;
+  permalink?: string | null;
   messages?: MessageInfo[];
 }
 
@@ -27,6 +29,8 @@ interface MessageInfo {
   id: string;
   content: string;
   createdAt: Date;
+  thumbnailUrl?: string | null;
+  permalink?: string | null;
 }
 
 export interface NewConversationData {

@@ -73,6 +73,10 @@ class ConfigurationRepositoryPrisma implements ConfigurationRepository {
         followupTimeInHours: data.followupTimeInHours,
         companyId,
         businessHours: businessHoursToSave as InputJsonValue,
+        clientIdInstagram: data.clientIdInstagram ?? "",
+        clientSecretInstagram: data.clientSecretInstagram ?? "",
+        appIdInstagram: data.appIdInstagram ?? "",
+        tokenInstagram: data.tokenInstagram ?? "",
       },
     });
 
@@ -81,6 +85,10 @@ class ConfigurationRepositoryPrisma implements ConfigurationRepository {
       companyId: created.companyId,
       followupTimeInHours: created.followupTimeInHours,
       businessHours: sortBusinessHours(created.businessHours as any),
+      clientIdInstagram: created.clientIdInstagram ?? null,
+      clientSecretInstagram: created.clientSecretInstagram ?? null,
+      appIdInstagram: created.appIdInstagram ?? null,
+      tokenInstagram: created.tokenInstagram ?? null,
       createdAt: created.createdAt,
       updatedAt: created.updatedAt,
     };
@@ -96,6 +104,10 @@ class ConfigurationRepositoryPrisma implements ConfigurationRepository {
       companyId: c.companyId,
       followupTimeInHours: c.followupTimeInHours,
       businessHours: sortBusinessHours(c.businessHours as any),
+      clientIdInstagram: c.clientIdInstagram,
+      clientSecretInstagram: c.clientSecretInstagram,
+      appIdInstagram: c.appIdInstagram,
+      tokenInstagram: c.tokenInstagram,
       createdAt: c.createdAt,
       updatedAt: c.updatedAt,
     }));
@@ -113,6 +125,10 @@ class ConfigurationRepositoryPrisma implements ConfigurationRepository {
       companyId: c.companyId,
       followupTimeInHours: c.followupTimeInHours,
       businessHours: sortBusinessHours(c.businessHours as any),
+      clientIdInstagram: c.clientIdInstagram,
+      clientSecretInstagram: c.clientSecretInstagram,
+      appIdInstagram: c.appIdInstagram,
+      tokenInstagram: c.tokenInstagram,
       createdAt: c.createdAt,
       updatedAt: c.updatedAt,
     };
@@ -142,12 +158,42 @@ class ConfigurationRepositoryPrisma implements ConfigurationRepository {
           )
         : data.businessHours;
 
+    const updateData: {
+      followupTimeInHours?: number;
+      businessHours?: InputJsonValue;
+      clientIdInstagram?: string | null;
+      clientSecretInstagram?: string | null;
+      appIdInstagram?: string | null;
+      tokenInstagram?: string | null;
+    } = {};
+
+    if (data.followupTimeInHours !== undefined) {
+      updateData.followupTimeInHours = data.followupTimeInHours;
+    }
+
+    if (businessHoursToSave !== undefined) {
+      updateData.businessHours = businessHoursToSave as InputJsonValue;
+    }
+
+    if (data.clientIdInstagram !== undefined) {
+      updateData.clientIdInstagram = data.clientIdInstagram ?? null;
+    }
+
+    if (data.clientSecretInstagram !== undefined) {
+      updateData.clientSecretInstagram = data.clientSecretInstagram ?? null;
+    }
+
+    if (data.appIdInstagram !== undefined) {
+      updateData.appIdInstagram = data.appIdInstagram ?? null;
+    }
+
+    if (data.tokenInstagram !== undefined) {
+      updateData.tokenInstagram = data.tokenInstagram ?? null;
+    }
+
     const updated = await prisma.configuration.update({
       where: { id },
-      data: {
-        followupTimeInHours: data.followupTimeInHours,
-        businessHours: businessHoursToSave as InputJsonValue | undefined,
-      },
+      data: updateData,
     });
 
     return {
@@ -155,6 +201,10 @@ class ConfigurationRepositoryPrisma implements ConfigurationRepository {
       companyId: updated.companyId,
       followupTimeInHours: updated.followupTimeInHours,
       businessHours: sortBusinessHours(updated.businessHours as any),
+      clientIdInstagram: updated.clientIdInstagram ?? null,
+      clientSecretInstagram: updated.clientSecretInstagram ?? null,
+      appIdInstagram: updated.appIdInstagram ?? null,
+      tokenInstagram: updated.tokenInstagram ?? null,
       createdAt: updated.createdAt,
       updatedAt: updated.updatedAt,
     };

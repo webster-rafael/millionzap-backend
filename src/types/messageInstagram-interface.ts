@@ -23,6 +23,8 @@ export interface MessageInstagram {
   createdAt: Date;
   updatedAt: Date | null;
   companyId: string | null;
+  thumbnailUrl: string | null;
+  permalink: string | null;
   user?: UserInfo | null;
   conversation?: ConversationInstagramInfo;
 }

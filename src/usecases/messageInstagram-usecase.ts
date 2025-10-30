@@ -1,6 +1,8 @@
-import { MessageInstagram, Prisma } from "@prisma/client";
-import { MessageRepositoryPrisma } from "../repositories/message-repository";
-import { MessageInstagramRepository } from "../types/messageInstagram-interface";
+import { Prisma } from "@prisma/client";
+import {
+  MessageInstagram,
+  MessageInstagramRepository,
+} from "../types/messageInstagram-interface";
 import { MessageInstagramRepositoryPrisma } from "../repositories/messageInstagram-repository";
 
 export class MessageInstagramUseCase {
@@ -26,7 +28,7 @@ export class MessageInstagramUseCase {
 
   async update(
     id: string,
-    data: Prisma.MessageUpdateInput
+    data: Prisma.MessageInstagramUpdateInput
   ): Promise<MessageInstagram> {
     return this.messageInstagramRepository.update(id, data);
   }
