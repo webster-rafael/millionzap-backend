@@ -1,3 +1,4 @@
+import { TriggerStatus } from "@prisma/client";
 import { Note } from "./note-interface";
 
 export interface Contact {
@@ -11,6 +12,7 @@ export interface Contact {
   companyId: string;
   userId?: string | null;
   isCustomer?: boolean | null;
+  triggerStatus?: TriggerStatus | null;
   tags?: string[];
   createdAt: Date;
   updatedAt?: Date | null;
@@ -25,6 +27,7 @@ export interface CreateContact {
   whatsappId?: string | null;
   userId?: string | null;
   isCustomer?: boolean | null;
+  triggerStatus?: TriggerStatus | null;
   tags?: string[];
   companyId: string;
 }

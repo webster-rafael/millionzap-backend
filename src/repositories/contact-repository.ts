@@ -97,6 +97,7 @@ class ContactRepositoryPrisma implements ContactRepository {
     companyId,
     whatsappId: contact.whatsappId ?? "",
     isCustomer: contact.isCustomer ?? true,
+    triggerStatus: contact.triggerStatus ?? null,
     tags: contact.tags ?? [],
     createdAt: contact.createdAt,
     updatedAt: contact.updatedAt ?? null,

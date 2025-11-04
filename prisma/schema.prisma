@@ -97,6 +97,7 @@ model Contact {
   userId        String?
   image         String?
   isCustomer    Boolean?               @default(true)
+  triggerStatus TriggerStatus?         @default(WAITING)
   contactLists  ContactListOnContact[]
   Company       Company                @relation(fields: [companyId], references: [id])
   User          User?                  @relation(fields: [userId], references: [id])
@@ -524,5 +525,11 @@ enum PaymentStatus {
   PENDING
   PAID
   OVERDUE
+  FAILED
+}
+
+enum TriggerStatus {
+  WAITING
+  COMPLETED
   FAILED
 }
