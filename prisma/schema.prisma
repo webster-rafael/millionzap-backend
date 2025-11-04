@@ -16,24 +16,24 @@ model Company {
   dueDate               DateTime?
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @default(now())
-  users                 User[]
+  subscriptionPlanId    String?
+  superAdmin            Boolean?                @default(false)
+  SubscriptionPlan      SubscriptionPlan?       @relation(fields: [subscriptionPlanId], references: [id])
+  subscriptions         CompanySubscription[]
+  Configuration         Configuration?
+  contactList           ContactList[]
   contacts              Contact[]
+  ConversationInstagram ConversationInstagram[]
   conversations         Conversation[]
+  instagramProfile      InstagramProfile?
+  MessageInstagram      MessageInstagram[]
   messages              Message[]
+  prompts               Prompts[]
   queues                Queue[]
   quickResponses        QuickResponse[]
-  prompts               Prompts[]
   tags                  Tags[]
-  contactList           ContactList[]
-  superAdmin            Boolean?                @default(false)
-  Configuration         Configuration?
-  ConversationInstagram ConversationInstagram[]
-  MessageInstagram      MessageInstagram[]
   ToDo                  ToDo[]
-  subscriptions         CompanySubscription[]
-  SubscriptionPlan      SubscriptionPlan?       @relation(fields: [subscriptionPlanId], references: [id])
-  subscriptionPlanId    String?
-  instagramProfile      InstagramProfile?
+  users                 User[]
 
   @@map("company")
 }
@@ -48,82 +48,75 @@ model CompanySubscription {
   paymentStatus PaymentStatus      @default(PENDING)
   createdAt     DateTime           @default(now())
   updatedAt     DateTime           @updatedAt
-
-  company Company          @relation(fields: [companyId], references: [id])
-  plan    SubscriptionPlan @relation(fields: [planId], references: [id])
+  company       Company            @relation(fields: [companyId], references: [id])
+  plan          SubscriptionPlan   @relation(fields: [planId], references: [id])
 
   @@map("company_subscriptions")
 }
 
 model User {
-  id                     String            @id @default(uuid())
+  id                     String                  @id @default(uuid())
   name                   String
-  email                  String            @unique
-  phone                  String
+  email                  String                  @unique
+  role                   UserRole                @default(ADMIN)
+  isActive               Boolean                 @default(true)
+  createdAt              DateTime                @default(now())
+  updatedAt              DateTime                @default(now())
   password               String
-  role                   UserRole          @default(ADMIN)
-  isActive               Boolean           @default(true)
+  companyId              String
+  connectionId           String?
+  phone                  String
   tokenIg                String?
   instagramId            String?
-  instagramAuthenticated Boolean?          @default(false)
+  instagramAuthenticated Boolean?                @default(false)
+  WhatsAppConnection     WhatsAppConnection[]
+  Contact                Contact[]
+  ConversationInstagram  ConversationInstagram[]
+  conversations          Conversation[]
   instagramProfile       InstagramProfile?
-  companyId              String
-
-  createdAt             DateTime                @default(now())
-  updatedAt             DateTime                @default(now())
-  company               Company?                @relation(fields: [companyId], references: [id])
-  connectionId          String?
-  // Relacionamentos
-  conversations         Conversation[]
-  messages              Message[]
-  queues                QueueUser[]
-  WhatsAppConnection    WhatsAppConnection[]
-  Contact               Contact[]
-  notes                 Note[]
-  ConversationInstagram ConversationInstagram[]
-  MessageInstagram      MessageInstagram[]
-  todosCreated          ToDo[]                  @relation("ToDoCreator")
-  todosResponsible      ToDo[]                  @relation("ToDoResponsible")
+  MessageInstagram       MessageInstagram[]
+  messages               Message[]
+  notes                  Note[]
+  queues                 QueueUser[]
+  todosCreated           ToDo[]                  @relation("ToDoCreator")
+  todosResponsible       ToDo[]                  @relation("ToDoResponsible")
+  company                Company                 @relation(fields: [companyId], references: [id])
 
   @@map("users")
 }
 
 model Contact {
-  id         String    @id @default(uuid())
-  name       String
-  phone      String
-  email      String?
-  image      String?
-  tags       String[]
-  companyId  String
-  isCustomer Boolean?  @default(true)
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime? @updatedAt
-  userId     String?
-
-  // Relacionamentos
-  conversations Conversation[]
-  Company       Company?               @relation(fields: [companyId], references: [id])
-  User          User?                  @relation(fields: [userId], references: [id])
+  id            String                 @id @default(uuid())
+  name          String
+  phone         String
+  email         String?
+  tags          String[]
+  createdAt     DateTime               @default(now())
+  updatedAt     DateTime?              @updatedAt
+  companyId     String
+  userId        String?
+  image         String?
+  isCustomer    Boolean?               @default(true)
   contactLists  ContactListOnContact[]
+  Company       Company                @relation(fields: [companyId], references: [id])
+  User          User?                  @relation(fields: [userId], references: [id])
+  conversations Conversation[]
   notes         Note[]
 
   @@map("contacts")
 }
 
 model ContactList {
-  id          String   @id @default(uuid())
+  id          String                 @id @default(uuid())
   name        String
   description String?
   isActive    Boolean
+  createdAt   DateTime               @default(now())
+  updatedAt   DateTime               @updatedAt
   companyId   String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
-
-  // Relacionamentos
-  contacts ContactListOnContact[]
-  Company  Company?               @relation(fields: [companyId], references: [id])
-  campaign Campaign?
+  campaign    Campaign?
+  Company     Company                @relation(fields: [companyId], references: [id])
+  contacts    ContactListOnContact[]
 
   @@map("contact_list")
 }
@@ -131,9 +124,8 @@ model ContactList {
 model ContactListOnContact {
   contactId     String
   contactListId String
-
-  contact     Contact     @relation(fields: [contactId], references: [id], onDelete: Cascade)
-  contactList ContactList @relation(fields: [contactListId], references: [id], onDelete: Cascade)
+  contact       Contact     @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  contactList   ContactList @relation(fields: [contactListId], references: [id], onDelete: Cascade)
 
   @@id([contactId, contactListId])
   @@map("contact_list_on_contact")
@@ -141,28 +133,24 @@ model ContactListOnContact {
 
 model Note {
   id        String   @id @default(uuid())
-  content   String   @db.Text
+  content   String
   createdAt DateTime @default(now())
   contactId String
-
-  // Relacionamentos
-  contact Contact @relation(fields: [contactId], references: [id], onDelete: Cascade)
-  userId  String
-  user    User    @relation(fields: [userId], references: [id])
+  userId    String
+  contact   Contact  @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  user      User     @relation(fields: [userId], references: [id])
 
   @@map("notes")
 }
 
 model Campaign {
-  id        String   @id @default(uuid())
-  body      String
-  title     String?
-  imageUrl  String?
-  footer    String?
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
-
-  // Relacionamentos
+  id            String      @id @default(uuid())
+  body          String
+  title         String?
+  imageUrl      String?
+  footer        String?
+  createdAt     DateTime    @default(now())
+  updatedAt     DateTime    @updatedAt
   contactListId String      @unique
   contactList   ContactList @relation(fields: [contactListId], references: [id], onDelete: Cascade)
 
@@ -170,38 +158,35 @@ model Campaign {
 }
 
 model Queue {
-  id                      String   @id @default(uuid())
+  id                      String                  @id @default(uuid())
   name                    String
-  color                   String   @default("#3B82F6")
+  color                   String                  @default("#3B82F6")
+  isActive                Boolean                 @default(true)
+  priority                Int                     @default(0)
+  createdAt               DateTime                @default(now())
+  updatedAt               DateTime                @updatedAt
   greetingMessage         String?
-  outOfOfficeHoursMessage String?
   integrationId           String?
-  isActive                Boolean  @default(true)
-  priority                Int      @default(0)
-  schedules               Json[]   @default([])
+  outOfOfficeHoursMessage String?
+  schedules               Json[]                  @default([])
   companyId               String
-  createdAt               DateTime @default(now())
-  updatedAt               DateTime @updatedAt
-
-  // Relacionamentos
-  conversations         Conversation[]
-  users                 QueueUser[]
-  quickResponses        QuickResponse[]
-  prompts               PromptQueue[]
-  Company               Company?                @relation(fields: [companyId], references: [id])
-  QueueConnection       QueueConnection[]
-  ConversationInstagram ConversationInstagram[]
+  ConversationInstagram   ConversationInstagram[]
+  conversations           Conversation[]
+  prompts                 PromptQueue[]
+  QueueConnection         QueueConnection[]
+  users                   QueueUser[]
+  Company                 Company                 @relation(fields: [companyId], references: [id])
+  quickResponses          QuickResponse[]
 
   @@map("queues")
 }
 
 model QueueConnection {
-  id           String @id @default(uuid())
+  id           String             @id @default(uuid())
   queueId      String
   connectionId String
-
-  queue      Queue              @relation(fields: [queueId], references: [id], onDelete: Cascade)
-  connection WhatsAppConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+  connection   WhatsAppConnection @relation(fields: [connectionId], references: [id], onDelete: Cascade)
+  queue        Queue              @relation(fields: [queueId], references: [id], onDelete: Cascade)
 
   @@unique([queueId, connectionId])
   @@map("queue_connections")
@@ -211,9 +196,8 @@ model QueueUser {
   id      String @id @default(uuid())
   userId  String
   queueId String
-
-  user  User  @relation(fields: [userId], references: [id], onDelete: Cascade)
-  queue Queue @relation(fields: [queueId], references: [id], onDelete: Cascade)
+  queue   Queue  @relation(fields: [queueId], references: [id], onDelete: Cascade)
+  user    User   @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@unique([userId, queueId])
   @@map("queue_users")
@@ -224,35 +208,34 @@ model Conversation {
   contactId       String
   userId          String?
   queueId         String?
-  tagId           String?
   status          ConversationStatus @default(WAITING)
   priority        Priority?          @default(MEDIUM)
   subject         String?
   lastMessageAt   DateTime?
   closedAt        DateTime?
+  createdAt       DateTime           @default(now())
+  updatedAt       DateTime?          @updatedAt
+  tagId           String?
   companyId       String
-  isInFollowUp    Boolean?           @default(false)
-  followUpStart   DateTime?
   copilot         Boolean?           @default(false)
   copilotIndex    Int?               @default(0)
   copilotFeedback Json?
   statusCopilot   String?
-  createdAt       DateTime           @default(now())
-  updatedAt       DateTime?          @updatedAt
-
-  // Relacionamentos
-  user     User?     @relation(fields: [userId], references: [id])
-  queue    Queue?    @relation(fields: [queueId], references: [id])
-  tag      Tags?     @relation(fields: [tagId], references: [id], onDelete: SetNull)
-  messages Message[]
-  contact  Contact   @relation(fields: [contactId], references: [id], onDelete: Cascade)
-  Company  Company?  @relation(fields: [companyId], references: [id])
+  isInFollowUp    Boolean?           @default(false)
+  followUpStart   DateTime?          @db.Timestamptz()
+  timeToFolowUp   DateTime?          @db.Timestamptz()
+  Company         Company            @relation(fields: [companyId], references: [id])
+  contact         Contact            @relation(fields: [contactId], references: [id], onDelete: Cascade)
+  queue           Queue?             @relation(fields: [queueId], references: [id])
+  tag             Tags?              @relation(fields: [tagId], references: [id])
+  user            User?              @relation(fields: [userId], references: [id])
+  messages        Message[]
 
   @@map("conversations")
 }
 
 model ConversationInstagram {
-  id        String    @id @default(uuid())
+  id        String             @id @default(uuid())
   name      String
   username  String
   image     String
@@ -260,15 +243,13 @@ model ConversationInstagram {
   tagId     String?
   queueId   String?
   companyId String
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
-
-  // Relacionamentos
-  user     User?              @relation(fields: [userId], references: [id])
-  queue    Queue?             @relation(fields: [queueId], references: [id])
-  tag      Tags?              @relation(fields: [tagId], references: [id], onDelete: SetNull)
-  messages MessageInstagram[]
-  Company  Company?           @relation(fields: [companyId], references: [id])
+  updatedAt DateTime?          @updatedAt
+  createdAt DateTime           @default(now())
+  Company   Company            @relation(fields: [companyId], references: [id])
+  queue     Queue?             @relation(fields: [queueId], references: [id])
+  tag       Tags?              @relation(fields: [tagId], references: [id])
+  user      User?              @relation(fields: [userId], references: [id])
+  messages  MessageInstagram[]
 
   @@map("conversation_ig")
 }
@@ -278,43 +259,40 @@ model Message {
   conversationId String
   userId         String?
   content        String
-  messageType    String
   direction      Direction
   status         MessageStatus @default(PENDING)
   mediaUrl       String?
-  mediaCaption   String?
-  timestamp      String
   mediaType      String?
-  companyId      String
   isRead         Boolean       @default(false)
   createdAt      DateTime      @default(now())
-
-  // Relacionamentos
-  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
-  user         User?        @relation(fields: [userId], references: [id])
-  Company      Company?     @relation(fields: [companyId], references: [id])
+  messageType    String
+  timestamp      String
+  companyId      String
+  mediaCaption   String?
+  Company        Company       @relation(fields: [companyId], references: [id])
+  conversation   Conversation  @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  user           User?         @relation(fields: [userId], references: [id])
 
   @@map("messages")
 }
 
 model MessageInstagram {
-  id                      String    @id @default(uuid())
+  id                      String                @id @default(uuid())
   content                 String
   userId                  String?
   direction               Direction
   messageType             String
-  createdAt               DateTime  @default(now())
-  updatedAt               DateTime? @updatedAt
+  createdAt               DateTime              @default(now())
+  updatedAt               DateTime?             @updatedAt
   timestamp               String
   companyId               String?
   plataform               String?
-  thumbnailUrl            String?
-  permalink               String?
   conversationInstagramId String
-
-  ConversationInstagram ConversationInstagram @relation(fields: [conversationInstagramId], references: [id], onDelete: Cascade)
-  user                  User?                 @relation(fields: [userId], references: [id])
-  Company               Company?              @relation(fields: [companyId], references: [id])
+  permalink               String?
+  thumbnailUrl            String?
+  Company                 Company?              @relation(fields: [companyId], references: [id])
+  ConversationInstagram   ConversationInstagram @relation(fields: [conversationInstagramId], references: [id], onDelete: Cascade)
+  user                    User?                 @relation(fields: [userId], references: [id])
 
   @@map("message-ig")
 }
@@ -322,58 +300,53 @@ model MessageInstagram {
 model QuickResponse {
   id        String   @id @default(uuid())
   title     String
-  message   String
   shortcut  String
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
   queueId   String
+  message   String
   companyId String
-
-  // Relacionamentos
-  queue   Queue?   @relation(fields: [queueId], references: [id], onDelete: Cascade)
-  Company Company? @relation(fields: [companyId], references: [id])
+  Company   Company  @relation(fields: [companyId], references: [id])
+  queue     Queue    @relation(fields: [queueId], references: [id], onDelete: Cascade)
 
   @@map("quick_responses")
 }
 
 model Prompts {
-  id               String        @id @default(uuid())
-  title            String
-  apiKey           String
-  prompt           String
-  maxTokens        Int
-  maxMessages      Int
-  promptTokens     Int?
-  completionTokens Int?
-  totalTokens      Int?
-  temperature      Float?
-  assistantId      String?
-  description      String?
-  companyResume    String
-  isFollowUp       Boolean?      @default(false)
-  isInitialPrompt  Boolean?      @default(false)
-  isActive         Boolean       @default(true)
-  isDefault        Boolean?      @default(false)
-  createdAt        DateTime      @default(now())
-  updatedAt        DateTime      @updatedAt
-  companyId        String
-  queue            PromptQueue[]
-
-  // Relacionamentos
-  Company              Company?            @relation(fields: [companyId], references: [id])
-  WhatsAppConnection   WhatsAppConnection? @relation(fields: [whatsAppConnectionId], references: [id])
+  id                   String              @id @default(uuid())
+  title                String
+  apiKey               String
+  prompt               String
+  maxTokens            Int
+  maxMessages          Int
+  promptTokens         Int?
+  completionTokens     Int?
+  totalTokens          Int?
+  temperature          Float?
+  assistantId          String?
+  description          String?
+  companyResume        String
+  createdAt            DateTime            @default(now())
+  updatedAt            DateTime            @updatedAt
+  isActive             Boolean             @default(true)
+  companyId            String
   whatsAppConnectionId String?
+  isDefault            Boolean?            @default(false)
+  isFollowUp           Boolean?            @default(false)
+  isInitialPrompt      Boolean?            @default(false)
+  queue                PromptQueue[]
+  Company              Company             @relation(fields: [companyId], references: [id])
+  WhatsAppConnection   WhatsAppConnection? @relation(fields: [whatsAppConnectionId], references: [id])
 
   @@map("prompts")
 }
 
 model PromptQueue {
-  id       String @id @default(uuid())
+  id       String  @id @default(uuid())
   promptId String
   queueId  String
-
-  prompt Prompts @relation(fields: [promptId], references: [id])
-  queue  Queue   @relation(fields: [queueId], references: [id])
+  prompt   Prompts @relation(fields: [promptId], references: [id])
+  queue    Queue   @relation(fields: [queueId], references: [id])
 
   @@map("prompt_queue")
 }
@@ -383,13 +356,13 @@ model Tags {
   title                 String
   color                 String
   order                 Int                     @default(0)
-  description           String?
-  conversations         Conversation[]
   createdAt             DateTime                @default(now())
   updatedAt             DateTime                @updatedAt
-  Company               Company?                @relation(fields: [companyId], references: [id])
+  description           String?
   companyId             String
   ConversationInstagram ConversationInstagram[]
+  conversations         Conversation[]
+  Company               Company                 @relation(fields: [companyId], references: [id])
 
   @@map("tags")
 }
@@ -400,16 +373,15 @@ model ToDo {
   description   String?
   completed     Boolean   @default(false)
   priority      Priority
-  responsibleId String?
-  createdById   String?
   companyId     String?
-  dueDate       DateTime? @db.Date
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-
-  responsible User?    @relation("ToDoResponsible", fields: [responsibleId], references: [id])
-  createdBy   User?    @relation("ToDoCreator", fields: [createdById], references: [id])
-  Company     Company? @relation(fields: [companyId], references: [id])
+  createdById   String?
+  responsibleId String?
+  dueDate       DateTime? @db.Date
+  Company       Company?  @relation(fields: [companyId], references: [id])
+  createdBy     User?     @relation("ToDoCreator", fields: [createdById], references: [id])
+  responsible   User?     @relation("ToDoResponsible", fields: [responsibleId], references: [id])
 
   @@map("todo")
 }
@@ -432,45 +404,42 @@ model WhatsAppConnection {
   expiresInactiveMessage  String?
   companyId               String
   session                 String?
-  instanceName            String?
-  instanceId              String?
   status                  WhatsAppConnectionStatus @default(PENDING)
   createdAt               DateTime                 @default(now())
   updatedAt               DateTime?                @updatedAt
-
-  user            User?             @relation(fields: [userId], references: [id])
-  prompt          Prompts[]
-  QueueConnection QueueConnection[]
+  instanceId              String?
+  instanceName            String?
+  user                    User?                    @relation(fields: [userId], references: [id])
+  prompt                  Prompts[]
+  QueueConnection         QueueConnection[]
 }
 
 model Configuration {
   id                    String   @id @default(uuid())
   followupTimeInHours   Int      @default(72)
-  businessHours         Json?
   companyId             String   @unique
-  clientIdInstagram     String?
-  clientSecretInstagram String?
-  appIdInstagram        String?
-  tokenInstagram        String?
   createdAt             DateTime @default(now())
   updatedAt             DateTime @updatedAt
-  Company               Company? @relation(fields: [companyId], references: [id])
+  businessHours         Json?
+  appIdInstagram        String?
+  clientIdInstagram     String?
+  clientSecretInstagram String?
+  tokenInstagram        String?
+  Company               Company  @relation(fields: [companyId], references: [id])
 
   @@map("configurations")
 }
 
 model SubscriptionPlan {
-  id          String     @id @default(uuid())
-  name        String     @unique
-  description String?
-  price       Decimal
-  features    Json
-  status      PlanStatus @default(INACTIVE)
-  checkoutUrl String?
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
-
-  // Relacionamento
+  id                  String                @id @default(uuid())
+  name                String                @unique
+  description         String?
+  price               Decimal
+  features            Json
+  status              PlanStatus            @default(INACTIVE)
+  createdAt           DateTime              @default(now())
+  updatedAt           DateTime              @updatedAt
+  checkoutUrl         String?
   companies           Company[]
   CompanySubscription CompanySubscription[]
 
@@ -486,8 +455,8 @@ model InstagramProfile {
   followsCount   Int
   userId         String?  @unique
   companyId      String?  @unique
-  user           User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
   Company        Company? @relation(fields: [companyId], references: [id])
+  user           User?    @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@map("instagram_profiles")
 }
@@ -499,12 +468,12 @@ enum UserRole {
 }
 
 enum ConversationStatus {
-  OPEN
-  PENDING
   WAITING
   SERVING
   RESOLVED
   CLOSED
+  OPEN
+  PENDING
 }
 
 enum Priority {
@@ -545,9 +514,9 @@ enum PlanStatus {
 
 enum SubscriptionStatus {
   ACTIVE
-  PENDING
   EXPIRED
   CANCELLED
+  PENDING
   TESTING
 }
 
