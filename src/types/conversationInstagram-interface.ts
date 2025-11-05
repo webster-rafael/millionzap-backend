@@ -8,7 +8,7 @@ export interface ConversationInstagram {
   userId?: string | null;
   queueId?: string | null;
   tagId?: string | null;
-  status?: ConversationIgStatus;
+  status: ConversationIgStatus;
   companyId: string;
   createdAt: Date;
   updatedAt?: Date | null;
@@ -20,6 +20,13 @@ export interface ConversationInstagram {
 
 export type ConversationInstagramCreate =
   Prisma.ConversationInstagramCreateInput;
+
+export type ConversationInstagramUpdate = Partial<
+  Pick<
+    ConversationInstagram,
+    "name" | "username" | "image" | "userId" | "queueId" | "tagId" | "status"
+  >
+>;
 
 interface UserInfo {
   id: string;
@@ -41,6 +48,7 @@ export interface NewConversationData {
   companyId: string;
   userId?: string | null;
   queueId?: string | null;
+  status?: ConversationIgStatus;
 }
 
 export interface ConversationInstagramRepository {
@@ -55,7 +63,7 @@ export interface ConversationInstagramRepository {
   ): Promise<ConversationInstagram | null>;
   update(
     id: string,
-    conversation: Partial<ConversationInstagramCreate>
+    conversation: ConversationInstagramUpdate
   ): Promise<ConversationInstagram>;
   findForKanban(companyId: string): Promise<ConversationInstagram[]>;
   delete(id: string, companyId: string): Promise<void>;

@@ -3,7 +3,7 @@ import {
   ConversationInstagram,
   ConversationInstagramRepository,
   NewConversationData,
-  ConversationInstagramCreate,
+  ConversationInstagramUpdate,
 } from "../types/conversationInstagram-interface";
 
 class ConversationInstagramRepositoryPrisma
@@ -86,7 +86,7 @@ class ConversationInstagramRepositoryPrisma
 
   async update(
     id: string,
-    conversation: Partial<ConversationInstagramCreate>
+    conversation: ConversationInstagramUpdate
   ): Promise<ConversationInstagram> {
     const updatedConversation = await prisma.conversationInstagram.update({
       where: { id },

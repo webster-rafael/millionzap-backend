@@ -3,7 +3,7 @@ import { ConversationInstagramRepositoryPrisma } from "../repositories/conversat
 import { ConversationInstagramUseCase } from "../usecases/conversationInstagram-usecase";
 import {
   NewConversationData,
-  ConversationInstagramCreate,
+  ConversationInstagramUpdate,
 } from "../types/conversationInstagram-interface";
 
 export async function conversationInstagramRoutes(fastify: FastifyInstance) {
@@ -102,7 +102,7 @@ export async function conversationInstagramRoutes(fastify: FastifyInstance) {
     }
   });
 
-  fastify.put<{ Params: { id: string }; Body: ConversationInstagramCreate }>(
+  fastify.put<{ Params: { id: string }; Body: ConversationInstagramUpdate }>(
     "/:id",
     async (request, reply) => {
       try {

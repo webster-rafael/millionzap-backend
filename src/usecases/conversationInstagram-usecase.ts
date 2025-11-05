@@ -1,8 +1,8 @@
 import {
   ConversationInstagram,
-  ConversationInstagramCreate,
   ConversationInstagramRepository,
   NewConversationData,
+  ConversationInstagramUpdate,
 } from "../types/conversationInstagram-interface";
 
 class ConversationInstagramUseCase {
@@ -31,7 +31,7 @@ class ConversationInstagramUseCase {
 
   async update(
     id: string,
-    conversation: ConversationInstagramCreate
+    conversation: ConversationInstagramUpdate
   ): Promise<ConversationInstagram> {
     return this.conversationRepository.update(id, conversation);
   }
