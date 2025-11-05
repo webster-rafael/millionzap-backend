@@ -17,6 +17,8 @@ export interface Prompt {
   isDefault?: boolean;
   isInitialPrompt?: boolean;
   isFollowUp?: boolean;
+  isIgCommentPrompt?: boolean;
+  isIgDMsPrompt?: boolean;
   createdAt: Date;
   updatedAt: Date;
   queueIds?: string[];

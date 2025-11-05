@@ -113,6 +113,8 @@ class PromptRepositoryPrisma implements PromptRepository {
     companyId: data.companyId,
     isInitialPrompt: data.isInitialPrompt ?? false,
     isFollowUp: data.isFollowUp ?? false,
+    isIgCommentPrompt: data.isIgCommentPrompt ?? false,
+    isIgDMsPrompt: data.isIgDMsPrompt ?? false,
   });
 }
 

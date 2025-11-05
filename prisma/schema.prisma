@@ -335,6 +335,8 @@ model Prompts {
   isDefault            Boolean?            @default(false)
   isFollowUp           Boolean?            @default(false)
   isInitialPrompt      Boolean?            @default(false)
+  isIgCommentPrompt    Boolean?            @default(false)
+  isIgDMsPrompt        Boolean?            @default(false)
   queue                PromptQueue[]
   Company              Company             @relation(fields: [companyId], references: [id])
   WhatsAppConnection   WhatsAppConnection? @relation(fields: [whatsAppConnectionId], references: [id])
