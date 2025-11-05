@@ -1,4 +1,4 @@
-import { Prisma } from "@prisma/client";
+import { ConversationIgStatus, Prisma } from "@prisma/client";
 
 export interface ConversationInstagram {
   id: string;
@@ -8,6 +8,7 @@ export interface ConversationInstagram {
   userId?: string | null;
   queueId?: string | null;
   tagId?: string | null;
+  status?: ConversationIgStatus;
   companyId: string;
   createdAt: Date;
   updatedAt?: Date | null;

@@ -244,6 +244,7 @@ model ConversationInstagram {
   tagId     String?
   queueId   String?
   companyId String
+  status    ConversationIgStatus @default(WAITING)
   updatedAt DateTime?          @updatedAt
   createdAt DateTime           @default(now())
   Company   Company            @relation(fields: [companyId], references: [id])
@@ -477,6 +478,11 @@ enum ConversationStatus {
   CLOSED
   OPEN
   PENDING
+}
+
+enum ConversationIgStatus {
+  WAITING
+  SERVING
 }
 
 enum Priority {
