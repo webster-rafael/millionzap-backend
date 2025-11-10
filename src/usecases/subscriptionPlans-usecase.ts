@@ -12,8 +12,19 @@ class SubscriptionPlanUseCase {
     this.subscriptionPlanRepository = new SubscriptionPlanRepositoryPrisma();
   }
 
+  private applyDefaultValues(
+    data: CreateSubscriptionPlan
+  ): CreateSubscriptionPlan {
+    return {
+      ...data,
+      firstMonth: data.firstMonth ?? false,
+      nextMonthsPrice: data.nextMonthsPrice ?? data.price,
+    };
+  }
+
   async create(data: CreateSubscriptionPlan): Promise<SubscriptionPlan> {
-    return this.subscriptionPlanRepository.create(data);
+    const payload = this.applyDefaultValues(data);
+    return this.subscriptionPlanRepository.create(payload);
   }
 
   async findAll(): Promise<SubscriptionPlan[]> {

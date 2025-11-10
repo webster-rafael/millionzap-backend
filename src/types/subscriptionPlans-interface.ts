@@ -8,6 +8,8 @@ export interface SubscriptionPlan {
   price: Decimal;
   features: string[];
   status: PlanStatus;
+  firstMonth?: boolean | null;
+  nextMonthsPrice?: Decimal | null;
   checkoutUrl: string | null;
   createdAt: Date;
   updatedAt: Date;
@@ -20,6 +22,8 @@ export interface CreateSubscriptionPlan {
   features: string[];
   description?: string | null;
   status?: PlanStatus;
+  firstMonth?: boolean | null;
+  nextMonthsPrice?: Decimal | null;
   checkoutUrl?: string | null;
 }
 

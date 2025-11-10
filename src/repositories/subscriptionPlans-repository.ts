@@ -4,16 +4,25 @@ import {
   SubscriptionPlanRepository,
 } from "../types/subscriptionPlans-interface";
 import { prisma } from "../database/prisma-client";
+import { SubscriptionPlan as PrismaSubscriptionPlan } from "@prisma/client";
 
 class SubscriptionPlanRepositoryPrisma implements SubscriptionPlanRepository {
+  private formatSubscriptionPlan(
+    plan: PrismaSubscriptionPlan
+  ): SubscriptionPlan {
+    return {
+      ...plan,
+      features: (plan.features as string[]) ?? [],
+      firstMonth: plan.firstMonth ?? false,
+      nextMonthsPrice: plan.nextMonthsPrice ?? plan.price,
+    };
+  }
+
   async create(data: CreateSubscriptionPlan): Promise<SubscriptionPlan> {
     const subscriptionPlan = await prisma.subscriptionPlan.create({
       data,
     });
-    return {
-      ...subscriptionPlan,
-      features: subscriptionPlan.features as string[],
-    };
+    return this.formatSubscriptionPlan(subscriptionPlan);
   }
 
   async findAll(): Promise<SubscriptionPlan[]> {
@@ -22,10 +31,7 @@ class SubscriptionPlanRepositoryPrisma implements SubscriptionPlanRepository {
         createdAt: "asc",
       },
     });
-    return subscriptionPlans.map((plan) => ({
-      ...plan,
-      features: plan.features as string[],
-    }));
+    return subscriptionPlans.map((plan) => this.formatSubscriptionPlan(plan));
   }
 
   async findById(id: string): Promise<SubscriptionPlan | null> {
@@ -37,10 +43,7 @@ class SubscriptionPlanRepositoryPrisma implements SubscriptionPlanRepository {
       return null;
     }
 
-    return {
-      ...subscriptionPlan,
-      features: subscriptionPlan.features as string[],
-    };
+    return this.formatSubscriptionPlan(subscriptionPlan);
   }
 
   async update(
@@ -52,10 +55,7 @@ class SubscriptionPlanRepositoryPrisma implements SubscriptionPlanRepository {
       data,
     });
 
-    return {
-      ...updatedSubscriptionPlan,
-      features: updatedSubscriptionPlan.features as string[],
-    };
+    return this.formatSubscriptionPlan(updatedSubscriptionPlan);
   }
 
   async delete(id: string): Promise<void> {

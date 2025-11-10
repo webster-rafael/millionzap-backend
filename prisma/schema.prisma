@@ -236,7 +236,7 @@ model Conversation {
 }
 
 model ConversationInstagram {
-  id        String             @id @default(uuid())
+  id        String               @id @default(uuid())
   name      String
   username  String
   image     String
@@ -245,12 +245,12 @@ model ConversationInstagram {
   queueId   String?
   companyId String
   status    ConversationIgStatus @default(WAITING)
-  updatedAt DateTime?          @updatedAt
-  createdAt DateTime           @default(now())
-  Company   Company            @relation(fields: [companyId], references: [id])
-  queue     Queue?             @relation(fields: [queueId], references: [id])
-  tag       Tags?              @relation(fields: [tagId], references: [id])
-  user      User?              @relation(fields: [userId], references: [id])
+  updatedAt DateTime?            @updatedAt
+  createdAt DateTime             @default(now())
+  Company   Company              @relation(fields: [companyId], references: [id])
+  queue     Queue?               @relation(fields: [queueId], references: [id])
+  tag       Tags?                @relation(fields: [tagId], references: [id])
+  user      User?                @relation(fields: [userId], references: [id])
   messages  MessageInstagram[]
 
   @@map("conversation_ig")
@@ -441,6 +441,8 @@ model SubscriptionPlan {
   price               Decimal
   features            Json
   status              PlanStatus            @default(INACTIVE)
+  firstMonth          Boolean?              @default(false)
+  nextMonthsPrice     Decimal?              @default(0)
   createdAt           DateTime              @default(now())
   updatedAt           DateTime              @updatedAt
   checkoutUrl         String?
