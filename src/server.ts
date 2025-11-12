@@ -26,6 +26,7 @@ import { noteRoutes } from "./routes/notes-route";
 import { conversationInstagramRoutes } from "./routes/conversationInstagram-route";
 import { todosRoutes } from "./routes/todo-route";
 import { subscriptionPlanRoutes } from "./routes/subscriptionPlans-route";
+import { schedulingRoutes } from "./routes/scheduling-route";
 
 const app: FastifyInstance = Fastify({
   bodyLimit: 10 * 1024 * 1024, // 10MB
@@ -124,6 +125,10 @@ app.register(async (instance) => {
 
   instance.register(todosRoutes, {
     prefix: "/todos",
+  });
+
+  instance.register(schedulingRoutes, {
+    prefix: "/schedulings",
   });
 
   instance.register(whatsAppConnectionRoutes, {

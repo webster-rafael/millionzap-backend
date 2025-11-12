@@ -34,6 +34,7 @@ model Company {
   tags                  Tags[]
   ToDo                  ToDo[]
   users                 User[]
+  schedulings           Scheduling[]
 
   @@map("company")
 }
@@ -103,6 +104,7 @@ model Contact {
   User          User?                  @relation(fields: [userId], references: [id])
   conversations Conversation[]
   notes         Note[]
+  schedulings   Scheduling[]
 
   @@map("contacts")
 }
@@ -467,6 +469,31 @@ model InstagramProfile {
   @@map("instagram_profiles")
 }
 
+model Scheduling {
+  id           String           @id @default(uuid())
+  title        String
+  description  String?
+  date         String
+  time         String
+  endTime      String
+  duration     Int?
+  type         String
+  status       StatusScheduling
+  priority     Priority
+  companyId    String?
+  contactId    String
+  reminder     Boolean          @default(false)
+  reminderTime String?
+  createdAt    DateTime         @default(now())
+  updatedAt    DateTime         @updatedAt
+
+  // Relacionamentoss 
+  Company Company? @relation(fields: [companyId], references: [id])
+  Contact Contact? @relation(fields: [contactId], references: [id], onDelete: Cascade)
+
+  @@map("scheduling")
+}
+
 enum UserRole {
   ADMIN
   USER
@@ -542,4 +569,13 @@ enum TriggerStatus {
   WAITING
   COMPLETED
   FAILED
+}
+
+enum StatusScheduling {
+  SCHEDULING
+  PENDING
+  CONFIRMED
+  COMPLETED
+  CANCELLED
+  EXPIRED
 }
