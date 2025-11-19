@@ -42,7 +42,7 @@ class CompanyRepositoryPrisma implements CompanyRepository {
             companyId: newCompany.id,
             planId: planIdToUse,
             startDate: new Date(),
-            endDate: new Date(new Date().setDate(new Date().getDate() + 3)),
+            endDate: new Date(new Date().setDate(new Date().getDate() + 30)),
             status: "TESTING",
             paymentStatus: "PAID",
           },
@@ -282,7 +282,7 @@ Objetivo: engajar nos comentários, criar conexão e incentivar o lead a continu
             createdAt: now,
             updatedAt: now,
           },
-             {
+          {
             title: "Instagram",
             color: "#E91E63",
             order: 3,
