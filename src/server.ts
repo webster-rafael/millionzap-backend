@@ -42,8 +42,18 @@ app.addContentTypeParser("*", (request, payload, done) => {
   });
 });
 
+const allowedOrigins = ["http://localhost:5173", "https://app.millionzap.com"];
+
 app.register(fastifyCors, {
-  origin: process.env.FRONTEND_URL || "http://localhost:5173" || "https://app.millionzap.com",
+  origin: (origin, cb) => {
+    if (!origin) return cb(null, true);
+
+    if (allowedOrigins.includes(origin)) {
+      return cb(null, true);
+    }
+
+    return cb(new Error("Not allowed by CORS"), false);
+  },
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 });
