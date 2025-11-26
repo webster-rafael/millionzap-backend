@@ -6,6 +6,9 @@ import { prisma } from "../database/prisma-client";
 import { UserUseCase } from "../usecases/user-usecase";
 import { UserRepositoryPrisma } from "../repositories/user-repository";
 
+const isProduction = process.env.NODE_ENV === "production";
+const cookieDomain = process.env.COOKIE_DOMAIN;
+
 export async function companyRoutes(fastify: FastifyInstance) {
   const companyUseCase = new CompanyUseCase();
   const userRepository = new UserRepositoryPrisma();
@@ -33,9 +36,11 @@ export async function companyRoutes(fastify: FastifyInstance) {
 
       reply.setCookie("authToken", token, {
         path: "/",
-        secure: true,
-        sameSite: "none",
+        httpOnly: true,
+        secure: isProduction,
+        sameSite: isProduction ? "none" : "lax",
         maxAge: 60 * 60 * 24 * 7,
+        ...(cookieDomain ? { domain: cookieDomain } : {}),
       });
 
       return reply.status(200).send(companyData);

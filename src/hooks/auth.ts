@@ -2,9 +2,11 @@ import { FastifyRequest, FastifyReply } from "fastify";
 import jwt from "jsonwebtoken";
 import { prisma } from "../database/prisma-client";
 import "fastify";
+
 interface TokenPayload {
   id: string;
 }
+
 declare module "fastify" {
   export interface FastifyRequest {
     user?: {
@@ -16,8 +18,32 @@ declare module "fastify" {
   }
 }
 
+const getTokenFromHeader = (authHeader?: string) => {
+  if (!authHeader) return null;
+  const [scheme, value] = authHeader.split(" ");
+  if (scheme !== "Bearer" || !value) return null;
+  return value;
+};
+
+const getTokenFromCookieHeader = (cookieHeader?: string | string[]) => {
+  if (!cookieHeader) return null;
+  const headerValue = Array.isArray(cookieHeader)
+    ? cookieHeader.join(";")
+    : cookieHeader;
+
+  return headerValue
+    .split(";")
+    .map((part) => part.trim())
+    .map((part) => part.split("="))
+    .find(([name]) => name === "authToken")?.[1] ?? null;
+};
+
 export async function authHook(request: FastifyRequest, reply: FastifyReply) {
-  const token = request.cookies.authToken;
+  const cookieToken =
+    request.cookies?.authToken ??
+    getTokenFromCookieHeader(request.headers.cookie);
+  const headerToken = getTokenFromHeader(request.headers.authorization);
+  const token = cookieToken ?? headerToken;
 
   if (!token) {
     return reply
@@ -28,13 +54,11 @@ export async function authHook(request: FastifyRequest, reply: FastifyReply) {
   try {
     const decoded = jwt.verify(
       token,
-      process.env.JWT_SECRET as string
+      process.env.JWT_SECRET as string,
     ) as TokenPayload;
 
     const user = await prisma.user.findUnique({
-      where: {
-        id: decoded.id,
-      },
+      where: { id: decoded.id },
     });
 
     if (!user) {
@@ -43,9 +67,9 @@ export async function authHook(request: FastifyRequest, reply: FastifyReply) {
         .send({ message: "Usuário não encontrado ou token revogado." });
     }
 
-    const { password: _, ...loggedUser } = user;
+    const { password: _password, ...loggedUser } = user;
     request.user = loggedUser;
-  } catch (error) {
+  } catch {
     return reply.status(401).send({ message: "Token inválido ou expirado." });
   }
 }
