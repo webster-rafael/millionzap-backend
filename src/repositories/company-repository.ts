@@ -42,7 +42,7 @@ class CompanyRepositoryPrisma implements CompanyRepository {
             companyId: newCompany.id,
             planId: planIdToUse,
             startDate: new Date(),
-            endDate: new Date(new Date().setDate(new Date().getDate() + 30)),
+            endDate: new Date(new Date().setDate(new Date().getDate() + 3)),
             status: "TESTING",
             paymentStatus: "PAID",
           },
