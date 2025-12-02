@@ -168,7 +168,7 @@ Objetivo: qualificar leads, criar conexão e converter conversas do Instagram em
           createdAt: now,
           updatedAt: now,
           whatsAppConnectionId: null,
-          isInitialPrompt: true,
+          isInitialPrompt: false,
           isFollowUp: false,
           isIgDMsPrompt: true,
           isIgCommentPrompt: false,
