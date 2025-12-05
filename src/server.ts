@@ -43,7 +43,7 @@ app.addContentTypeParser("*", (request, payload, done) => {
 });
 
 app.register(fastifyCors, {
-  origin: process.env.FRONTEND_URL,
+  origin: process.env.FRONTEND_URL || "https://app.millionzap.com",
   methods: ["GET", "POST", "PUT", "DELETE"],
   credentials: true,
 });
